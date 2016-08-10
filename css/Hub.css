@@ -1,0 +1,6 @@
+.hub.card { padding: 21px; text-align: left; font-size: 18px; width: 80%; display: block; margin-left: auto; margin-right: auto; }
+.hub .intro { font-weight: lighter; font-size: 16px; margin-top: 7px; }
+.hub .avatars { float: right; }
+.hub .button-join { float: right; margin-left: 20px; }
+.hub .avatar { margin-left: 5px }
+.hubselect { padding-top: 30px }

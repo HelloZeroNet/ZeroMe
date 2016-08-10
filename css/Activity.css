@@ -1,0 +1,17 @@
+.activity-list { margin-bottom: 30px }
+.activity-list .items a { color: #555; font-weight: bold }
+
+.activity-list .items { position: relative; margin-left: -6px; margin-bottom: -10px }
+.activity-list .bg-line {
+	height: calc(100% - 40px); width: 2px; position: absolute; background-color: #c7c7c8;
+	margin-left: 12px; margin-top: 5px; box-sizing: border-box; z-index: 0;
+}
+
+.activity-list .circle {
+	width: 8px; height: 8px; border: 2px solid #c5c5c5; position: absolute; pointer-events: none;
+	margin-left: -28px; border-radius: 15px; background-color: #f6f7f8
+}
+
+.activity { padding-left: 35px; padding-bottom: 19px; font-family: Roboto, Helvetica, Arial; font-size: 15px; line-height: 1.5em; color: #888 }
+.activity .body { top: -5px; position: relative; }
+.activity:last-child { background-color: #F6F7F8 }

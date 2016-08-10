@@ -1,0 +1,27 @@
+.post {
+	background-color: white; padding: 16px 20px; padding-left: 80px; border-radius: 4px;
+	border: 1px solid #EEF0F1; border-bottom: 2px solid #ECEDEE; margin-bottom: 12px;
+}
+.post .user { padding-bottom: 15px; height: 21px; line-height: 19px; }
+.post .user .address, .post .added, .post .sep { font-size: 14px; color: #AAA;}
+.post .body { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; line-height: 1.5em; color: #333; }
+.post .actions { height: 30px; margin-left: -5px; }
+.post .actions .icon { margin-right: 1px }
+.post .actions .link { color: #AAA; font-size: 12px; height: 30px; vertical-align: middle; line-height: 30px; display: inline-block; padding-right: 10px }
+.post .actions .link.active { color: #5d68ff; }
+.post .actions .like { width: 35px; margin-right: 0px; transition: width 0.3s, margin-right 0.3s; white-space: nowrap; }
+.post .actions .like.like-zero { width: 20px; margin-right: 5px; }
+
+.post-create { transition: all 0.6s }
+.post-create .postfield {
+	font-family: Roboto; font-size: 16px; border: 1px solid white; padding: 15px 15px;
+	font-size: 16px; width: 100%; height: 51px; box-sizing: border-box; background-color: white;
+}
+.post-create .user { margin-bottom: 0px; height: auto; padding-bottom: 0px; }
+.post-create .postbuttons { height: 55px; box-sizing: border-box; transform: scale(1); overflow: hidden; transition: all 0.3s; text-align: right }
+.post-create:not(.editing) .postbuttons { opacity: 0; height: 0px; height: 0px }
+.post-create.editing .postfield { border: 1px solid #c6caff }
+.post-create.editing { box-shadow: 0px 1px 13px 1px #eaeaea }
+.post-create .select-user-container { width: 100%; text-align: center; margin-bottom: -100px; height: 100px; z-index: 1; position: relative; margin-left: -35px; }
+
+.post-list-empty { text-align: center; padding-top: 100px }

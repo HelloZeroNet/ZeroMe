@@ -1,0 +1,70 @@
+{
+ "address": "1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH",
+ "background-color": "#F2F4F6",
+ "description": "ZeroMe",
+ "files": {
+  "css/all.css": {
+   "sha512": "6ae696529deeefd1344e92a2622aaf0776e8a1b9ace27621f6d194cf8dd51921",
+   "size": 116601
+  },
+  "dbschema.json": {
+   "sha512": "f32d615dce15c30dfb48ef7856ea60b46668475296c72567f0bd8ff440d0e39d",
+   "size": 2823
+  },
+  "img/loading-circle.gif": {
+   "sha512": "339baf1bccb9b80ae29c2493e73b40cf0588c96fc095954b475dea0538aaa929",
+   "size": 2346
+  },
+  "img/loading.gif": {
+   "sha512": "8a42b98962faea74618113166886be488c09dad10ca47fe97005edc5fb40cc00",
+   "size": 723
+  },
+  "img/logo.png": {
+   "sha512": "d78789ff8f7095d45ad484943b3d4e214289aea942cd5bec03dcde3f20a4c7a7",
+   "size": 3771
+  },
+  "img/unkown.png": {
+   "sha512": "a972f05819097c3a38801b9004bf5011a2dcca257b915617d8ea44c202f2cdbd",
+   "size": 595
+  },
+  "index.html": {
+   "sha512": "638654b07d4fbbc3dc858cfbfdff5892b7cecad06c885dd6066de6d34cb2b721",
+   "size": 612
+  },
+  "js-external/pngencoder.js": {
+   "sha512": "ecaadaad552d2610336995b48360253cd6d847b6aa590fc3d96e7245a5d5fe11",
+   "size": 53602
+  },
+  "js/all.js": {
+   "sha512": "f333379c280ade7d7da004adbc01f965e218f53b7e7b06aa65a7c1f32f0c86e4",
+   "size": 199577
+  }
+ },
+ "ignore": "(merged-.*|(js|css)/(?!all.(js|css)))",
+ "inner_path": "content.json",
+ "modified": 1470837985.396,
+ "postmessage_nonce_security": true,
+ "settings": {
+  "default_hubs": {
+   "1BLueGvui1GdbtsjcKqCf4F67uKfritG49": {
+    "description": "Hub for ZeroMe users. Runner: Nofish",
+    "title": "Blue hub"
+   },
+   "1RedkCkVaXuVXrqCMpoXQS29bwaqsuFdL": {
+    "description": "Hub for ZeroMe users. Runner: Nofish",
+    "title": "Red hub"
+   }
+  }
+ },
+ "sign": [
+  110948105486279959611413659669131704729027586619339149714476092929816973146340,
+  52223804688441424973627428066806239722329433729068609123045495269451631601524
+ ],
+ "signers_sign": "G/UCyELE5shc5f/FSJSe2KvxGlZiS5fzvn7Ezhha0gN/QOFeznJtZWS61J20FfkGfHdp1HcpWv//anioez1iOW0=",
+ "signs": {
+  "1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH": "G3GBut8Q89NfzGJvTHkyIuvqfvQaCJilBqas0L4ZnLWWvTjsY8E5l4x/nTJZWVoB2RJiDTPhCmVly2vihm3N38A="
+ },
+ "signs_required": 1,
+ "title": "ZeroMe",
+ "zeronet_version": "0.4.0"
+}
