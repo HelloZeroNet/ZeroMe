@@ -67,17 +67,17 @@ class Post extends Class
 				@field_comment.setValue("")
 
 	handleCommentSave: (comment_id, body, cb) =>
-		Page.user.getData Page.user.hub, (data) =>
+		Page.user.getData @row.site, (data) =>
 			comment_index = i for comment, i in data.comment when comment.comment_id == comment_id
 			data.comment[comment_index].body = body
-			Page.user.save data, Page.user.hub, (res) =>
+			Page.user.save data, @row.site, (res) =>
 				cb(res)
 
 	handleCommentDelete: (comment_id, cb) =>
-		Page.user.getData Page.user.hub, (data) =>
+		Page.user.getData @row.site, (data) =>
 			comment_index = i for comment, i in data.comment when comment.comment_id == comment_id
 			data.comment.splice(comment_index, 1)
-			Page.user.save data, Page.user.hub, (res) =>
+			Page.user.save data, @row.site, (res) =>
 				cb(res)
 
 	handleMoreCommentsClick: =>
