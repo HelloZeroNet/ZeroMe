@@ -11,9 +11,9 @@ class User extends Class
 		@hub = row.hub
 		@auth_address = row.auth_address
 
-	get: (hub, auth_address, cb=null) ->
-		params = { hub: hub, directory: "data/users/"+auth_address }
-		Page.cmd "dbQuery", ["SELECT * FROM json WHERE hub = :hub AND directory = :directory LIMIT 1", params], (res) =>
+	get: (site, auth_address, cb=null) ->
+		params = { site: site, directory: "data/users/"+auth_address }
+		Page.cmd "dbQuery", ["SELECT * FROM json WHERE site = :site AND directory = :directory LIMIT 1", params], (res) =>
 			row = res[0]
 			if row
 				row.auth_address = row.directory.replace("data/users/", "")
