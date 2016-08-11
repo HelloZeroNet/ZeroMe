@@ -20,6 +20,8 @@ class ContentUsers extends Class
 			h("div.users.cards", [
 				@user_list_recent.render("card")
 			])
+			if @user_list_recent.users.length
+				h("h5", {style: "text-align: center"}, "Total: #{@user_list_recent.users.length} registered users")
 		])
 		###
 			h("a.more", {href: "#"}, "Show more..."),
