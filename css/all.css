@@ -150,6 +150,13 @@
 .post-create .select-user-container { width: 100%; text-align: center; margin-bottom: -100px; height: 100px; z-index: 1; position: relative; margin-left: -35px; }
 
 .post-list-empty { text-align: center; padding-top: 100px }
+.post-list-type { text-align: right; }
+.post-list-type a {
+	margin-right: 10px; padding-bottom: 5px; display: inline-block; border-bottom: 2px solid rgba(0,0,0,0);
+	color: #999; margin-bottom: 7px; margin-top: 10px; margin-left: 10px; transition: all 0.3s
+}
+.post-list-type .active { border-bottom: 2px solid #606aff; color: #606aff; }
+.post-list-type a:hover { border-bottom: 2px solid #606aff; color: #606aff; -webkit-transition: none; -moz-transition: none; -o-transition: none; -ms-transition: none; transition: none ; text-decoration: none }
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Uploadable.css ---- */
@@ -181,7 +188,7 @@
 .user .address, .user .cert_user_id { font-size: 13px; color: #AAA; }
 .user .avatar { position: absolute; margin-left: -67px }
 
-.user.card { padding: 15px; padding-left: 75px }
+.user.card { padding: 15px; padding-left: 75px; overflow: hidden }
 .user.card.profile { margin-bottom: 30px; }
 .user.card .avatar { margin-top: -4px; position: absolute; margin-left: -60px; }
 .user.card .follow-container { margin-left: -57px; text-align: center; margin-top: 30px; margin-bottom: 20px; }
@@ -246,7 +253,7 @@ h2.sep { border-top: 1px solid #EEE; padding-top: 20px }
 .avatar.empty { vertical-align: top; font-size: 11px; line-height: 51px; text-align: center; text-decoration: none; color: #666; font-weight: bold; }
 
 /* More */
-.more { width: 100%; display: block; clear: both; text-align: center; padding: 20px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; -webkit-box-shadow: inset 0px 9px 25px -20px #5d68ff; -moz-box-shadow: inset 0px 9px 25px -20px #5d68ff; -o-box-shadow: inset 0px 9px 25px -20px #5d68ff; -ms-box-shadow: inset 0px 9px 25px -20px #5d68ff; box-shadow: inset 0px 9px 25px -20px #5d68ff ; }
+.more { width: 100%; display: block; clear: both; text-align: center; padding: 20px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; -webkit-box-shadow: inset 0px 30px 25px -40px #5d68ff ; -moz-box-shadow: inset 0px 30px 25px -40px #5d68ff ; -o-box-shadow: inset 0px 30px 25px -40px #5d68ff ; -ms-box-shadow: inset 0px 30px 25px -40px #5d68ff ; box-shadow: inset 0px 30px 25px -40px #5d68ff  }
 .more.small {  font-size: 14px; -webkit-box-shadow: none; -moz-box-shadow: none; -o-box-shadow: none; -ms-box-shadow: none; box-shadow: none ; padding: 10px }
 
 /* Animate */

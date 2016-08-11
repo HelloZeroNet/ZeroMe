@@ -2,10 +2,11 @@
  "address": "1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH",
  "background-color": "#F2F4F6",
  "description": "ZeroMe",
+ "domain": "Me.ZeroNetwork.bit",
  "files": {
   "css/all.css": {
-   "sha512": "6ae696529deeefd1344e92a2622aaf0776e8a1b9ace27621f6d194cf8dd51921",
-   "size": 116601
+   "sha512": "f93866da1536abee2fe883c941b4f7d3ec43c97f95aa270d2cfc699a5a12c423",
+   "size": 117174
   },
   "dbschema.json": {
    "sha512": "f32d615dce15c30dfb48ef7856ea60b46668475296c72567f0bd8ff440d0e39d",
@@ -36,13 +37,13 @@
    "size": 53602
   },
   "js/all.js": {
-   "sha512": "f333379c280ade7d7da004adbc01f965e218f53b7e7b06aa65a7c1f32f0c86e4",
-   "size": 199577
+   "sha512": "a9bd3bd68d03a3737247459635acad98cdb14ff0eda028b274c771f28bb16c6b",
+   "size": 206386
   }
  },
  "ignore": "(merged-.*|(js|css)/(?!all.(js|css)))",
  "inner_path": "content.json",
- "modified": 1470837985.396,
+ "modified": 1470913049.782,
  "postmessage_nonce_security": true,
  "settings": {
   "default_hubs": {
@@ -57,12 +58,12 @@
   }
  },
  "sign": [
-  110948105486279959611413659669131704729027586619339149714476092929816973146340,
-  52223804688441424973627428066806239722329433729068609123045495269451631601524
+  21177958529341694759594939628334120037124913298641820174360912950774286774613,
+  28292884177698259630595542622759063922745601121710759312398796046176212345853
  ],
  "signers_sign": "G/UCyELE5shc5f/FSJSe2KvxGlZiS5fzvn7Ezhha0gN/QOFeznJtZWS61J20FfkGfHdp1HcpWv//anioez1iOW0=",
  "signs": {
-  "1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH": "G3GBut8Q89NfzGJvTHkyIuvqfvQaCJilBqas0L4ZnLWWvTjsY8E5l4x/nTJZWVoB2RJiDTPhCmVly2vihm3N38A="
+  "1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH": "G9NuEyh35gZacHoZnKLUMLyxCkZAiZx5RUDllH4oH6Ay5iVsjKWQywfZIArE6g5TO+16xsWQXM/29/o5B/uK28A="
  },
  "signs_required": 1,
  "title": "ZeroMe",

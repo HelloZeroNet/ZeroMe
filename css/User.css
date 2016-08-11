@@ -17,7 +17,7 @@
 .user .address, .user .cert_user_id { font-size: 13px; color: #AAA; }
 .user .avatar { position: absolute; margin-left: -67px }
 
-.user.card { padding: 15px; padding-left: 75px }
+.user.card { padding: 15px; padding-left: 75px; overflow: hidden }
 .user.card.profile { margin-bottom: 30px; }
 .user.card .avatar { margin-top: -4px; position: absolute; margin-left: -60px; }
 .user.card .follow-container { margin-left: -57px; text-align: center; margin-top: 30px; margin-bottom: 20px; }

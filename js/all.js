@@ -2628,7 +2628,7 @@ function clone(obj) {
               directory: directories
             }
           ], function(subject_rows) {
-            var subject_db, subject_row, _base, _base1, _base2, _j, _k, _len1, _len2;
+            var last_row, row_group, row_groups, subject_db, subject_row, _base, _base1, _base2, _j, _k, _l, _len1, _len2, _len3;
             subject_db = {};
             for (_j = 0, _len1 = subject_rows.length; _j < _len1; _j++) {
               subject_row = subject_rows[_j];
@@ -2651,7 +2651,23 @@ function clone(obj) {
                 _base2.user_name = row.subject_user_name;
               }
             }
-            return cb(rows);
+            last_row = null;
+            row_group = [];
+            row_groups = [];
+            for (_l = 0, _len3 = rows.length; _l < _len3; _l++) {
+              row = rows[_l];
+              if (!last_row || (row.auth_address === (last_row != null ? last_row.auth_address : void 0) && row.type === (last_row != null ? last_row.type : void 0))) {
+                row_group.push(row);
+              } else {
+                row_groups.push(row_group);
+                row_group = [row];
+              }
+              last_row = row;
+            }
+            if (row_group.length) {
+              row_groups.push(row_group);
+            }
+            return cb(row_groups);
           });
         };
       })(this));
@@ -2675,58 +2691,63 @@ function clone(obj) {
       return false;
     };
 
-    ActivityList.prototype.renderActivity = function(activity) {
-      var activity_user_link, body, subject_user_link;
-      if (!activity.subject.user_name) {
-        return;
+    ActivityList.prototype.renderActivity = function(activity_group) {
+      var activity, activity_user_link, back, body, subject_user_link, _i, _len;
+      back = [];
+      for (_i = 0, _len = activity_group.length; _i < _len; _i++) {
+        activity = activity_group[_i];
+        if (!activity.subject.user_name) {
+          continue;
+        }
+        activity_user_link = "?Profile/" + activity.hub + "/" + activity.auth_address + "/" + activity.cert_user_id;
+        subject_user_link = "?Profile/" + activity.subject.hub + "/" + activity.subject.auth_address + "/" + activity.subject.cert_user_id;
+        if (activity.type === "post_like") {
+          body = [
+            h("a", {
+              href: activity_user_link,
+              onclick: this.Page.handleLinkClick
+            }, activity.user_name), " liked ", h("a", {
+              href: subject_user_link,
+              onclick: this.Page.handleLinkClick
+            }, activity.subject.user_name), "'s ", h("a", {
+              href: subject_user_link,
+              onclick: this.Page.handleLinkClick
+            }, "post")
+          ];
+        } else if (activity.type === "comment") {
+          body = [
+            h("a", {
+              href: activity_user_link,
+              onclick: this.Page.handleLinkClick
+            }, activity.user_name), " commented on ", h("a", {
+              href: subject_user_link,
+              onclick: this.Page.handleLinkClick
+            }, activity.subject.user_name), "'s ", h("a", {
+              href: subject_user_link,
+              onclick: this.Page.handleLinkClick
+            }, "post"), ": " + activity.body
+          ];
+        } else if (activity.type === "follow") {
+          body = [
+            h("a", {
+              href: activity_user_link,
+              onclick: this.Page.handleLinkClick
+            }, activity.user_name), " started following ", h("a", {
+              href: subject_user_link,
+              onclick: this.Page.handleLinkClick
+            }, activity.subject.user_name)
+          ];
+        } else {
+          body = activity.body;
+        }
+        back.push(h("div.activity", {
+          key: activity.cert_user_id + "_" + activity.date_added,
+          title: Time.since(activity.date_added),
+          enterAnimation: Animation.slideDown,
+          exitAnimation: Animation.slideUp
+        }, [h("div.circle"), h("div.body", body)]));
       }
-      activity_user_link = "?Profile/" + activity.hub + "/" + activity.auth_address + "/" + activity.cert_user_id;
-      subject_user_link = "?Profile/" + activity.subject.hub + "/" + activity.subject.auth_address + "/" + activity.subject.cert_user_id;
-      if (activity.type === "post_like") {
-        body = [
-          h("a", {
-            href: activity_user_link,
-            onclick: this.Page.handleLinkClick
-          }, activity.user_name), " liked ", h("a", {
-            href: subject_user_link,
-            onclick: this.Page.handleLinkClick
-          }, activity.subject.user_name), "'s ", h("a", {
-            href: subject_user_link,
-            onclick: this.Page.handleLinkClick
-          }, "post")
-        ];
-      } else if (activity.type === "comment") {
-        body = [
-          h("a", {
-            href: activity_user_link,
-            onclick: this.Page.handleLinkClick
-          }, activity.user_name), " commented on ", h("a", {
-            href: subject_user_link,
-            onclick: this.Page.handleLinkClick
-          }, activity.subject.user_name), "'s ", h("a", {
-            href: subject_user_link,
-            onclick: this.Page.handleLinkClick
-          }, "post"), ": " + activity.body
-        ];
-      } else if (activity.type === "follow") {
-        body = [
-          h("a", {
-            href: activity_user_link,
-            onclick: this.Page.handleLinkClick
-          }, activity.user_name), " started following ", h("a", {
-            href: subject_user_link,
-            onclick: this.Page.handleLinkClick
-          }, activity.subject.user_name)
-        ];
-      } else {
-        body = activity.body;
-      }
-      return h("div.activity", {
-        key: activity.cert_user_id + "_" + activity.date_added,
-        title: Time.since(activity.date_added),
-        enterAnimation: Animation.slideDown,
-        exitAnimation: Animation.slideUp
-      }, [h("div.circle"), h("div.body", body)]);
+      return back;
     };
 
     ActivityList.prototype.render = function() {
@@ -2930,7 +2951,7 @@ function clone(obj) {
       return Page.cmd("mergerSiteList", true, (function(_this) {
         return function(sites) {
           var address, content, _ref, _results;
-          Page.cmd("dbQuery", "SELECT * FROM json WHERE avatar IN ('jpg', 'png')", function(users) {
+          Page.cmd("dbQuery", "SELECT * FROM json", function(users) {
             var address, hubs, site, site_users, user, _i, _len, _name;
             site_users = {};
             for (_i = 0, _len = users.length; _i < _len; _i++) {
@@ -2974,6 +2995,8 @@ function clone(obj) {
     };
 
     ContentCreateProfile.prototype.renderHub = function(hub) {
+      var rendered;
+      rendered = 0;
       return h("div.hub.card", {
         key: hub.address + hub.type,
         enterAnimation: Animation.slideDown,
@@ -2990,17 +3013,21 @@ function clone(obj) {
         }, "Join!"), h("div.avatars", [
           hub.users.map((function(_this) {
             return function(user) {
-              var avatar;
+              var avatar, _ref;
+              if (((_ref = user.avatar) !== "jpg" && _ref !== "png") || rendered >= 4) {
+                return "";
+              }
               avatar = "merged-ZeroMe/" + hub.address + "/" + user.directory + "/avatar." + user.avatar;
+              rendered += 1;
               return h("a.avatar", {
                 title: user.user_name,
                 href: "#",
                 style: "background-image: url('" + avatar + "')"
               });
             };
-          })(this)), hub.users.length > 4 ? h("a.avatar.empty", {
+          })(this)), hub.users.length - rendered > 0 ? h("a.avatar.empty", {
             href: "#"
-          }, "+" + (hub.users.length - 4)) : void 0
+          }, "+" + (hub.users.length - rendered)) : void 0
         ]), h("div.name", hub.content.title), h("div.intro", hub.content.description)
       ]);
     };
@@ -3091,13 +3118,21 @@ function clone(obj) {
     function ContentFeed() {
       this.update = __bind(this.update, this);
       this.render = __bind(this.render, this);
+      this.handleListTypeClick = __bind(this.handleListTypeClick, this);
       this.post_create = new PostCreate();
       this.post_list = new PostList();
       this.activity_list = new ActivityList();
       this.user_list = new UserList();
       this.need_update = true;
+      this.type = "followed";
       this.update();
     }
+
+    ContentFeed.prototype.handleListTypeClick = function(e) {
+      this.type = e.currentTarget.attributes.type.value;
+      this.update();
+      return false;
+    };
 
     ContentFeed.prototype.render = function() {
       var followed, key;
@@ -3108,18 +3143,22 @@ function clone(obj) {
         this.log("Updating");
         this.need_update = false;
         this.user_list.need_update = true;
-        this.post_list.directories = (function() {
-          var _ref, _results;
-          _ref = Page.user.followed_users;
-          _results = [];
-          for (key in _ref) {
-            followed = _ref[key];
-            _results.push("data/users/" + (key.split('/')[1]));
+        if (this.type === "followed") {
+          this.post_list.directories = (function() {
+            var _ref, _results;
+            _ref = Page.user.followed_users;
+            _results = [];
+            for (key in _ref) {
+              followed = _ref[key];
+              _results.push("data/users/" + (key.split('/')[1]));
+            }
+            return _results;
+          })();
+          if (Page.user.hub) {
+            this.post_list.directories.push("data/users/" + Page.user.auth_address);
           }
-          return _results;
-        })();
-        if (Page.user.hub) {
-          this.post_list.directories.push("data/users/" + Page.user.auth_address);
+        } else {
+          this.post_list.directories = "all";
         }
         this.post_list.need_update = true;
         this.activity_list.directories = (function() {
@@ -3135,7 +3174,23 @@ function clone(obj) {
         this.activity_list.need_update = true;
       }
       return h("div#Content.center", [
-        h("div.col-center", [this.post_create.render(), this.post_list.render()]), h("div.col-right", [
+        h("div.col-center", [
+          this.post_create.render(), h("div.post-list-type", h("a.link", {
+            href: "#Everyone",
+            onclick: this.handleListTypeClick,
+            type: "everyone",
+            classes: {
+              active: this.type === "everyone"
+            }
+          }, "Everyone"), h("a.link", {
+            href: "#Followed+users",
+            onclick: this.handleListTypeClick,
+            type: "followed",
+            classes: {
+              active: this.type === "followed"
+            }
+          }, "Followed users")), this.post_list.render()
+        ]), h("div.col-right", [
           this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", [
             "New users", h("a.link", {
               href: "?Users",
@@ -3273,10 +3328,8 @@ function clone(obj) {
                 followed: this.user.isFollowed()
               }
             }, [
-              this.owned ? this.uploadable_avatar.render(this.user.renderAvatar) : this.user.renderAvatar(), h("a.name.link", {
-                href: this.user.getLink(),
-                style: "color: " + (Text.toColor(this.user.row.auth_address)),
-                onclick: Page.handleLinkClick
+              this.owned ? this.uploadable_avatar.render(this.user.renderAvatar) : this.user.renderAvatar(), h("span.name.link", {
+                style: "color: " + (Text.toColor(this.user.row.auth_address))
               }, this.owned ? this.editable_user_name.render(this.user.row.user_name) : this.user.row.user_name), h("div.cert_user_id", this.user.row.cert_user_id), h("div.intro-full", this.owned ? this.editable_intro.render(this.user.row.intro) : this.user.row.intro), h("div.follow-container", [
                 h("a.button.button-follow-big", {
                   href: "#",
@@ -3386,83 +3439,6 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentSignup.coffee ---- */
-
-
-(function() {
-  var ContentSignup,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-
-  ContentSignup = (function() {
-    function ContentSignup() {
-      this.render = __bind(this.render, this);
-      this.loaded = true;
-    }
-
-    ContentSignup.prototype.render = function() {
-      if (this.loaded && !Page.on_loaded.resolved) {
-        Page.on_loaded.resolve();
-      }
-      return h("div#Content.center.content-signup", [
-        h("h1", "Create new profile"), h("a.button.button-submit.button-certselect.certselect", {
-          href: "#Select+ID"
-        }, [h("div.icon.icon-profile"), "Select ID..."]), h("div.hubselect", [
-          h("h2", "Join HUB"), h("div.hubs", [
-            h("div.hub.card", [
-              h("a.button.button-join", {
-                href: "#"
-              }, "Join!"), h("div.avatars", [
-                h("a.avatar", {
-                  href: "#",
-                  style: "background-image: url('img/1.png')"
-                }), h("a.avatar", {
-                  href: "#",
-                  style: "background-image: url('img/1.png')"
-                }), h("a.avatar", {
-                  href: "#",
-                  style: "background-image: url('img/1.png')"
-                }), h("a.avatar", {
-                  href: "#",
-                  style: "background-image: url('img/1.png')"
-                }), h("a.avatar.empty", {
-                  href: "#"
-                }, "+120")
-              ]), h("div.name", "ZeroHub #1"), h("div.intro", "Welcome to ZeroMe! Runner: Nofish")
-            ]), h("div.hub.card", [
-              h("a.button.button-join", {
-                href: "#"
-              }, "Join!"), h("div.avatars", [
-                h("a.avatar", {
-                  href: "#",
-                  style: "background-image: url('img/1.png')"
-                }), h("a.avatar", {
-                  href: "#",
-                  style: "background-image: url('img/1.png')"
-                }), h("a.avatar", {
-                  href: "#",
-                  style: "background-image: url('img/1.png')"
-                }), h("a.avatar", {
-                  href: "#",
-                  style: "background-image: url('img/1.png')"
-                }), h("a.avatar.empty", {
-                  href: "#"
-                }, "+120")
-              ]), h("div.name", "ZeroHub #1"), h("div.intro", "Welcome to ZeroMe! Runner: Nofish")
-            ])
-          ])
-        ])
-      ]);
-    };
-
-    return ContentSignup;
-
-  })();
-
-  window.ContentSignup = ContentSignup;
-
-}).call(this);
-
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentUsers.coffee ---- */
 
 
@@ -3496,7 +3472,11 @@ function clone(obj) {
           _ref.need_update = true;
         }
       }
-      return h("div#Content.center", [h("h2", "New users in ZeroMe"), h("div.users.cards", [this.user_list_recent.render("card")])]);
+      return h("div#Content.center", [
+        h("h2", "New users in ZeroMe"), h("div.users.cards", [this.user_list_recent.render("card")]), this.user_list_recent.users.length ? h("h5", {
+          style: "text-align: center"
+        }, "Total: " + this.user_list_recent.users.length + " registered users") : void 0
+      ]);
 
       /*
       			h("a.more", {href: "#"}, "Show more..."),
@@ -3525,7 +3505,6 @@ function clone(obj) {
   window.ContentUsers = ContentUsers;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Head.coffee ---- */
@@ -3763,7 +3742,7 @@ function clone(obj) {
     };
 
     Post.prototype.handleCommentSave = function(comment_id, body, cb) {
-      return Page.user.getData(Page.user.hub, (function(_this) {
+      return Page.user.getData(this.row.site, (function(_this) {
         return function(data) {
           var comment, comment_index, i, _i, _len, _ref;
           _ref = data.comment;
@@ -3774,7 +3753,7 @@ function clone(obj) {
             }
           }
           data.comment[comment_index].body = body;
-          return Page.user.save(data, Page.user.hub, function(res) {
+          return Page.user.save(data, _this.row.site, function(res) {
             return cb(res);
           });
         };
@@ -3782,7 +3761,7 @@ function clone(obj) {
     };
 
     Post.prototype.handleCommentDelete = function(comment_id, cb) {
-      return Page.user.getData(Page.user.hub, (function(_this) {
+      return Page.user.getData(this.row.site, (function(_this) {
         return function(data) {
           var comment, comment_index, i, _i, _len, _ref;
           _ref = data.comment;
@@ -3793,7 +3772,7 @@ function clone(obj) {
             }
           }
           data.comment.splice(comment_index, 1);
-          return Page.user.save(data, Page.user.hub, function(res) {
+          return Page.user.save(data, _this.row.site, function(res) {
             return cb(res);
           });
         };
@@ -3926,6 +3905,7 @@ function clone(obj) {
 }).call(this);
 
 
+
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostCreate.coffee ---- */
 
 
@@ -4029,6 +4009,7 @@ function clone(obj) {
 
     function PostList() {
       this.render = __bind(this.render, this);
+      this.handleMoreClick = __bind(this.handleMoreClick, this);
       this.update = __bind(this.update, this);
       this.queryComments = __bind(this.queryComments, this);
       this.item_list = new ItemList(Post, "key");
@@ -4036,11 +4017,12 @@ function clone(obj) {
       this.need_update = true;
       this.directories = [];
       this.loaded = false;
+      this.limit = 10;
     }
 
     PostList.prototype.queryComments = function(post_uris, cb) {
       var query;
-      query = "SELECT post_uri, comment.body, comment.date_added, comment.comment_id, json.cert_auth_type, json.cert_user_id, json.user_name, json.hub, json.directory FROM comment LEFT JOIN json USING (json_id) WHERE ? ORDER BY date_added DESC";
+      query = "SELECT post_uri, comment.body, comment.date_added, comment.comment_id, json.cert_auth_type, json.cert_user_id, json.user_name, json.hub, json.directory, json.site FROM comment LEFT JOIN json USING (json_id) WHERE ? ORDER BY date_added DESC";
       return Page.cmd("dbQuery", [
         query, {
           post_uri: post_uris
@@ -4049,15 +4031,20 @@ function clone(obj) {
     };
 
     PostList.prototype.update = function() {
-      var query;
+      var param, query, where;
       this.log("Updating");
       this.need_update = false;
-      query = "SELECT (SELECT COUNT(*) FROM post_like WHERE 'data/users/' || post_uri =  directory || '_' || post_id) AS likes, * FROM json LEFT JOIN post ON (post.json_id = json.json_id) WHERE ? AND post_id IS NOT NULL ORDER BY date_added DESC LIMIT 30";
-      return Page.cmd("dbQuery", [
-        query, {
+      if (this.directories === "all") {
+        param = {};
+        where = "WHERE post_id IS NOT NULL";
+      } else {
+        param = {
           "directory": this.directories
-        }
-      ], (function(_this) {
+        };
+        where = "WHERE ? AND post_id IS NOT NULL";
+      }
+      query = "SELECT (SELECT COUNT(*) FROM post_like WHERE 'data/users/' || post_uri =  directory || '_' || post_id) AS likes, * FROM json LEFT JOIN post ON (post.json_id = json.json_id) " + where + " ORDER BY date_added DESC LIMIT " + (this.limit + 1);
+      return Page.cmd("dbQuery", [query, param], (function(_this) {
         return function(rows) {
           var items, post_uris, row, _i, _len;
           items = [];
@@ -4073,14 +4060,14 @@ function clone(obj) {
             comment_db = {};
             for (_j = 0, _len1 = comment_rows.length; _j < _len1; _j++) {
               comment_row = comment_rows[_j];
-              if (comment_db[_name = comment_row.post_uri] == null) {
+              if (comment_db[_name = comment_row.site + "/" + comment_row.post_uri] == null) {
                 comment_db[_name] = [];
               }
-              comment_db[comment_row.post_uri].push(comment_row);
+              comment_db[comment_row.site + "/" + comment_row.post_uri].push(comment_row);
             }
             for (_k = 0, _len2 = rows.length; _k < _len2; _k++) {
               row = rows[_k];
-              row["comments"] = comment_db[row.post_uri];
+              row["comments"] = comment_db[row.site + "/" + row.post_uri];
             }
             _this.item_list.sync(rows);
             _this.loaded = true;
@@ -4088,6 +4075,12 @@ function clone(obj) {
           });
         };
       })(this));
+    };
+
+    PostList.prototype.handleMoreClick = function() {
+      this.limit += 10;
+      this.update();
+      return false;
     };
 
     PostList.prototype.render = function() {
@@ -4111,18 +4104,25 @@ function clone(obj) {
           ]);
         }
       }
-      return h("div.post-list", this.posts.map((function(_this) {
-        return function(post) {
-          var err;
-          try {
-            return post.render();
-          } catch (_error) {
-            err = _error;
-            h("div.error", ["Post render error:", err.message]);
-            return Debug.formatException(err);
-          }
-        };
-      })(this)));
+      return [
+        h("div.post-list", this.posts.slice(0, +this.limit + 1 || 9e9).map((function(_this) {
+          return function(post) {
+            var err;
+            try {
+              return post.render();
+            } catch (_error) {
+              err = _error;
+              h("div.error", ["Post render error:", err.message]);
+              return Debug.formatException(err);
+            }
+          };
+        })(this))), this.posts.length > this.limit ? h("a.more.small", {
+          href: "#More",
+          onclick: this.handleMoreClick,
+          enterAnimation: Animation.slideDown,
+          exitAnimation: Animation.slideUp
+        }, "Show more posts...") : void 0
+      ];
     };
 
     return PostList;
@@ -4168,16 +4168,16 @@ function clone(obj) {
       return this.auth_address = row.auth_address;
     };
 
-    User.prototype.get = function(hub, auth_address, cb) {
+    User.prototype.get = function(site, auth_address, cb) {
       var params;
       if (cb == null) {
         cb = null;
       }
       params = {
-        hub: hub,
+        site: site,
         directory: "data/users/" + auth_address
       };
-      return Page.cmd("dbQuery", ["SELECT * FROM json WHERE hub = :hub AND directory = :directory LIMIT 1", params], (function(_this) {
+      return Page.cmd("dbQuery", ["SELECT * FROM json WHERE site = :site AND directory = :directory LIMIT 1", params], (function(_this) {
         return function(res) {
           var row;
           row = res[0];
@@ -4572,7 +4572,7 @@ function clone(obj) {
         title = "Follow";
       }
       return h("div.user" + classname, {
-        key: this.auth_address,
+        key: this.hub + "/" + this.auth_address,
         classes: {
           followed: followed
         },
