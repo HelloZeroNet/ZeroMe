@@ -80,8 +80,8 @@ class ContentProfile extends Class
 				h("div.users", [
 					h("div.user.card.profile", {classes: {followed: @user.isFollowed()}}, [
 						if @owned then @uploadable_avatar.render(@user.renderAvatar) else @user.renderAvatar()
-						h("a.name.link",
-							{href: @user.getLink(), style: "color: #{Text.toColor(@user.row.auth_address)}", onclick: Page.handleLinkClick},
+						h("span.name.link",
+							{style: "color: #{Text.toColor(@user.row.auth_address)}"},
 							if @owned then @editable_user_name.render(@user.row.user_name) else @user.row.user_name
 						),
 						h("div.cert_user_id", @user.row.cert_user_id)
