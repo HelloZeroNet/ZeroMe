@@ -5,7 +5,13 @@ class ContentFeed extends Class
 		@activity_list = new ActivityList()
 		@user_list = new UserList()
 		@need_update = true
+		@type = "followed"
 		@update()
+
+	handleListTypeClick: (e) =>
+		@type = e.currentTarget.attributes.type.value
+		@update()
+		return false
 
 	render: =>
 		if @post_list.loaded and not Page.on_loaded.resolved then Page.on_loaded.resolve()
@@ -17,9 +23,12 @@ class ContentFeed extends Class
 			@user_list.need_update = true
 
 			# Post list
-			@post_list.directories = ("data/users/#{key.split('/')[1]}" for key, followed of Page.user.followed_users)
-			if Page.user.hub  # Also show my posts
-				@post_list.directories.push("data/users/"+Page.user.auth_address)
+			if @type == "followed"
+				@post_list.directories = ("data/users/#{key.split('/')[1]}" for key, followed of Page.user.followed_users)
+				if Page.user.hub  # Also show my posts
+					@post_list.directories.push("data/users/"+Page.user.auth_address)
+			else
+				@post_list.directories = "all"
 			@post_list.need_update = true
 
 			# Activity list
@@ -30,6 +39,10 @@ class ContentFeed extends Class
 		h("div#Content.center", [
 			h("div.col-center", [
 				@post_create.render(),
+				h("div.post-list-type",
+					h("a.link", {href: "#Everyone", onclick: @handleListTypeClick, type: "everyone", classes: {active: @type == "everyone"}}, "Everyone")
+					h("a.link", {href: "#Followed+users", onclick: @handleListTypeClick, type: "followed", classes: {active: @type == "followed"}}, "Followed users")
+				),
 				@post_list.render()
 			]),
 			h("div.col-right", [
