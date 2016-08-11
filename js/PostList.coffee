@@ -5,6 +5,7 @@ class PostList extends Class
 		@need_update = true
 		@directories = []
 		@loaded = false
+		@limit = 10
 
 	queryComments: (post_uris, cb) =>
 		query = "
@@ -31,7 +32,7 @@ class PostList extends Class
 			LEFT JOIN post ON (post.json_id = json.json_id)
 			WHERE ? AND post_id IS NOT NULL
 			ORDER BY date_added DESC
-			LIMIT 30
+			LIMIT #{@limit+1}
 		"
 
 		Page.cmd "dbQuery", [query, {"directory": @directories}], (rows) =>
@@ -54,6 +55,11 @@ class PostList extends Class
 				@loaded = true
 				Page.projector.scheduleRender()
 
+	handleMoreClick: =>
+		@limit += 10
+		@update()
+		return false
+
 	render: =>
 		if @need_update then @update()
 		if not @posts.length
@@ -66,12 +72,17 @@ class PostList extends Class
 						h("a", {href: "?Users", onclick: Page.handleLinkClick}, "Let's follow some users!")
 					])
 				])
-		h("div.post-list", @posts.map (post) =>
-			try
-				post.render()
-			catch err
-				h("div.error", ["Post render error:", err.message])
-				Debug.formatException(err)
-		)
+
+		return [
+			h("div.post-list", @posts[0..@limit].map (post) =>
+				try
+					post.render()
+				catch err
+					h("div.error", ["Post render error:", err.message])
+					Debug.formatException(err)
+			),
+			if @posts.length > @limit
+				h("a.more.small", {href: "#More", onclick: @handleMoreClick, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, "Show more posts...")
+		]
 
 window.PostList = PostList
