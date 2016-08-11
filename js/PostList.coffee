@@ -9,7 +9,7 @@ class PostList extends Class
 	queryComments: (post_uris, cb) =>
 		query = "
 			SELECT
-			 post_uri, comment.body, comment.date_added, comment.comment_id, json.cert_auth_type, json.cert_user_id, json.user_name, json.hub, json.directory
+			 post_uri, comment.body, comment.date_added, comment.comment_id, json.cert_auth_type, json.cert_user_id, json.user_name, json.hub, json.directory, json.site
 			FROM
 			 comment
 			LEFT JOIN json USING (json_id)
@@ -46,10 +46,10 @@ class PostList extends Class
 			@queryComments post_uris, (comment_rows) =>
 				comment_db = {}  # {Post id: posts}
 				for comment_row in comment_rows
-					comment_db[comment_row.post_uri] ?= []
-					comment_db[comment_row.post_uri].push(comment_row)
+					comment_db[comment_row.site+"/"+comment_row.post_uri] ?= []
+					comment_db[comment_row.site+"/"+comment_row.post_uri].push(comment_row)
 				for row in rows
-					row["comments"] = comment_db[row.post_uri]
+					row["comments"] = comment_db[row.site+"/"+row.post_uri]
 				@item_list.sync(rows)
 				@loaded = true
 				Page.projector.scheduleRender()
