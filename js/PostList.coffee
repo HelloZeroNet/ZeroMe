@@ -23,6 +23,14 @@ class PostList extends Class
 	update: =>
 		@log "Updating"
 		@need_update = false
+
+		if @directories == "all"
+			param  = {}
+			where = "WHERE post_id IS NOT NULL"
+		else
+			param  = {"directory": @directories}
+			where = "WHERE ? AND post_id IS NOT NULL"
+
 		query = "
 			SELECT
 			 (SELECT COUNT(*) FROM post_like WHERE 'data/users/' || post_uri =  directory || '_' || post_id) AS likes,
@@ -30,12 +38,11 @@ class PostList extends Class
 			FROM
 			 json
 			LEFT JOIN post ON (post.json_id = json.json_id)
-			WHERE ? AND post_id IS NOT NULL
+			#{where}
 			ORDER BY date_added DESC
 			LIMIT #{@limit+1}
 		"
-
-		Page.cmd "dbQuery", [query, {"directory": @directories}], (rows) =>
+		Page.cmd "dbQuery", [query, param], (rows) =>
 			items = []
 			post_uris = []
 			for row in rows
