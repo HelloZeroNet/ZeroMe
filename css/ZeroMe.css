@@ -48,7 +48,7 @@ h2.sep { border-top: 1px solid #EEE; padding-top: 20px }
 .avatar.empty { vertical-align: top; font-size: 11px; line-height: 51px; text-align: center; text-decoration: none; color: #666; font-weight: bold; }
 
 /* More */
-.more { width: 100%; display: block; clear: both; text-align: center; padding: 20px; box-sizing: border-box; box-shadow: inset 0px 9px 25px -20px #5d68ff; }
+.more { width: 100%; display: block; clear: both; text-align: center; padding: 20px; box-sizing: border-box; box-shadow: inset 0px 30px 25px -40px #5d68ff }
 .more.small {  font-size: 14px; box-shadow: none; padding: 10px }
 
 /* Animate */
