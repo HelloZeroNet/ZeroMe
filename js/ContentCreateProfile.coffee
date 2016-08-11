@@ -43,7 +43,7 @@ class ContentCreateProfile extends Class
 	updateHubs: =>
 		Page.cmd "mergerSiteList", true, (sites) =>
 			# Get userlist
-			Page.cmd "dbQuery", "SELECT * FROM json WHERE avatar IN ('jpg', 'png')", (users) =>
+			Page.cmd "dbQuery", "SELECT * FROM json", (users) =>
 				site_users = {}
 				for user in users
 					site_users[user.hub] ?= []
@@ -69,6 +69,7 @@ class ContentCreateProfile extends Class
 
 
 	renderHub: (hub) =>
+		rendered = 0
 		h("div.hub.card", {key: hub.address+hub.type, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, [
 			if hub.type == "available"
 				h("a.button.button-join", {href: "#Download:#{hub.address}", address: hub.address, onclick: @handleDownloadClick}, "Download")
@@ -76,10 +77,13 @@ class ContentCreateProfile extends Class
 				h("a.button.button-join", {href: "#Join:#{hub.address}", address: hub.address, onclick: @handleJoinClick}, "Join!")
 			h("div.avatars", [
 				hub.users.map (user) =>
+					if user.avatar not in ["jpg", "png"] or rendered >= 4
+						return ""
 					avatar = "merged-ZeroMe/#{hub.address}/#{user.directory}/avatar.#{user.avatar}"
+					rendered += 1
 					h("a.avatar", {title: user.user_name, href: "#", style: "background-image: url('#{avatar}')"})
-				if hub.users.length > 4
-					h("a.avatar.empty", {href: "#"}, "+#{hub.users.length-4}")
+				if hub.users.length - rendered > 0
+					h("a.avatar.empty", {href: "#"}, "+#{hub.users.length - rendered}")
 			])
 			h("div.name", hub.content.title),
 			h("div.intro", hub.content.description)
