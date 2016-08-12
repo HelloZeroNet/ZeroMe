@@ -113,6 +113,9 @@ class User extends Class
 
 	save: (data, site=@hub, cb=null) ->
 		Page.cmd "fileWrite", [@getPath(site)+"/data.json", Text.fileEncode(data)], (res_write) =>
+			if Page.server_info.rev > 1400
+				# Accidently left an unwanted modification in rev1400 fix
+				Page.content.update()
 			cb?(res_write)
 			Page.cmd "sitePublish", {"inner_path": @getPath(site)+"/data.json"}, (res_sign) =>
 				@log "Save result", res_write, res_sign
