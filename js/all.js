@@ -2052,6 +2052,7 @@ function clone(obj) {
       text = text.replace(/(https?:\/\/[^\s]+)/g, function(match) {
         return "<a href=\"" + (match.replace(/&amp;/g, '&')) + "\">" + match + "</a>";
       });
+      text = text.replace(/\n/g, '<br>');
       return text;
     };
 
@@ -2225,7 +2226,6 @@ function clone(obj) {
   window.Text = new Text();
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Time.coffee ---- */
@@ -3093,7 +3093,7 @@ function clone(obj) {
           }, [h("h2", "Seeded HUBs"), this.renderSeededHubs()]) : void 0, this.default_hubs.length ? h("div.hubselect.default", {
             enterAnimation: Animation.slideDown,
             exitAnimation: Animation.slideUp
-          }, [h("h2", "Available HUBs"), this.renderDefaultHubs()]) : void 0
+          }, [h("h2", "Available HUBs"), this.renderDefaultHubs()]) : void 0, h("h5", "(Whit this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)")
         ]) : void 0
       ]);
     };
@@ -3618,6 +3618,7 @@ function clone(obj) {
       this.item_list = _at_item_list;
       this.render = __bind(this.render, this);
       this.renderComments = __bind(this.renderComments, this);
+      this.handleReplyClick = __bind(this.handleReplyClick, this);
       this.handleMoreCommentsClick = __bind(this.handleMoreCommentsClick, this);
       this.handleCommentDelete = __bind(this.handleCommentDelete, this);
       this.handleCommentSave = __bind(this.handleCommentSave, this);
@@ -3793,6 +3794,18 @@ function clone(obj) {
       return false;
     };
 
+    Post.prototype.handleReplyClick = function(e) {
+      var user_name;
+      user_name = e.currentTarget.attributes.user_name.value;
+      if (this.field_comment.attrs.value) {
+        this.field_comment.setValue(this.field_comment.attrs.value + "\n@" + user_name + ": ");
+      } else {
+        this.field_comment.setValue("@" + user_name + ": ");
+      }
+      this.handleCommentClick(e);
+      return false;
+    };
+
     Post.prototype.getEditableComment = function(comment_uri) {
       var comment_id, handleCommentDelete, handleCommentSave, user_address, _ref;
       if (!this.editable_comments[comment_uri]) {
@@ -3848,7 +3861,11 @@ function clone(obj) {
                 }, comment.cert_user_id), h("span.sep", " \u2015 "), h("a.added.link", {
                   href: "#",
                   title: Time.date(comment.date_added, "long")
-                }, Time.since(comment.date_added))
+                }, Time.since(comment.date_added)), h("a.icon.icon-reply", {
+                  href: "#Reply",
+                  onclick: _this.handleReplyClick,
+                  user_name: comment.user_name
+                }, "Reply")
               ]), owned ? _this.getEditableComment(comment_uri).render(comment.body) : h("div.body", {
                 innerHTML: Text.renderLinks(comment.body)
               })
@@ -3915,6 +3932,7 @@ function clone(obj) {
   window.Post = Post;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostCreate.coffee ---- */

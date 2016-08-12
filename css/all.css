@@ -73,6 +73,9 @@
 .comment { padding-top: 10px; padding-bottom: 10px }
 .comment-list .comment .user { padding-bottom: 0px }
 .comment .body { white-space: pre-wrap; padding-top: 4px }
+.comment .icon-reply { opacity: 0; -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
+.comment:hover .icon-reply { opacity: 0.5 }
+.comment .icon-reply:hover { opacity: 1; -webkit-transition: none ; -moz-transition: none ; -o-transition: none ; -ms-transition: none ; transition: none  }
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Editable.css ---- */
@@ -233,6 +236,7 @@ h1 { font-size: 34px; }
 h1, h2, h3 { font-weight: lighter }
 h2 a { font-size: 13px; margin-left: 10px; font-weight: normal; margin-top: 8px; }
 h2.sep { border-top: 1px solid #EEE; padding-top: 20px }
+h5 { font-weight: normal; color: rgba(0, 0, 0, 0.5) }
 
 .center { width: 960px; margin-left: auto; margin-right: auto; }
 
@@ -412,7 +416,7 @@ h2.sep { border-top: 1px solid #EEE; padding-top: 20px }
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAOVBMVEUAAAC9w8e9w8e9w8e9w8e/xMi9w8e9w8e+w8e9w8e9w8e9w8e9w8e9w8e9w8e+w8e/xMi9w8e9w8fvY4+KAAAAEnRSTlMASPv3WQbwOTCkt4/psX4YDMWr+RRCAAAAUUlEQVQY06XLORKAMAxDUTs7kA3d/7AYGju0UfffjIgoHkxm0vB5bZyxKHx9eX0FJw0Y4bcXKQ4/CTtS5yqp5GFFOjGpVGl00k1pNDIb3Nv9AHC7BOZC4ZjvAAAAAElFTkSuQmCC+d0ckOwyAMRVGHUOO0gUyd+P8f7WApz4Iki9wFmyOEATrXLZcFp5LrGogPOxKp6zfFf9fZ1/I/cY7YZSS3U6S3XFZJmGBwL+FuJX/F1K0wUUlZyZGlXgXESthTEs4B8fh7xoVUDPGYJnsfkCRarKAgz8cAKbpD6pqDPz3XB8K6HdUEeN9NAAAAAElFTkSuQmCC);
 }
 .icon-reply {
-	padding-left: 30px; padding-right: 10px; background-position: 5px 6px;
+	padding-left: 25px; margin-left: 5px; padding-right: 10px; background-position: 5px 6px; height: 19px; line-height: 19px; background-position: 5px 0px;
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAIVBMVEUAAABmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmYs5FxxAAAAC3RSTlMAgBFwYExAMHgoCDJmUTYAAAA3SURBVAjXY8APGGEMQZgAjCEoKBwEEQCCAoiIh6AQVM1kMaguJhGYOSJQjexiUMbiAChDCclCAOHqBBdHpwQTAAAAAElFTkSuQmCC);
 }
 .icon-reply:empty { padding-right: 0px }

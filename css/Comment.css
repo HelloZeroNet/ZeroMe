@@ -8,3 +8,6 @@
 .comment { padding-top: 10px; padding-bottom: 10px }
 .comment-list .comment .user { padding-bottom: 0px }
 .comment .body { white-space: pre-wrap; padding-top: 4px }
+.comment .icon-reply { opacity: 0; transition: all 0.3s }
+.comment:hover .icon-reply { opacity: 0.5 }
+.comment .icon-reply:hover { opacity: 1; transition: none }

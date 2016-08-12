@@ -84,6 +84,15 @@ class Post extends Class
 		@comment_limit += 10
 		return false
 
+	handleReplyClick: (e) =>
+		user_name = e.currentTarget.attributes.user_name.value
+		if @field_comment.attrs.value
+			@field_comment.setValue("#{@field_comment.attrs.value}\n@#{user_name}: ")
+		else
+			@field_comment.setValue("@#{user_name}: ")
+		@handleCommentClick(e)
+		return false
+
 	getEditableComment: (comment_uri) ->
 		if not @editable_comments[comment_uri]
 			[user_address, comment_id] = comment_uri.split("_")
@@ -119,6 +128,7 @@ class Post extends Class
 						h("span.address", {title: user_address}, comment.cert_user_id),
 						h("span.sep", " \u2015 "),
 						h("a.added.link", {href: "#", title: Time.date(comment.date_added, "long")}, Time.since(comment.date_added)),
+						h("a.icon.icon-reply", {href: "#Reply", onclick: @handleReplyClick, user_name: comment.user_name}, "Reply")
 					])
 					if owned
 						@getEditableComment(comment_uri).render(comment.body)
