@@ -46,7 +46,7 @@ class Autosize extends Class
 
 	handleInput: (e=null) =>
 		@attrs.value = e.target.value
-		@autoHeight()
+		RateLimit 300, @autoHeight
 
 	handleKeydown: (e=null) =>
 		if e.which == 13 and not e.shiftKey and @attrs.onsubmit and @attrs.value.trim()
