@@ -2014,6 +2014,7 @@ function clone(obj) {
 
   Text = (function() {
     function Text() {
+      this.renderLinks = __bind(this.renderLinks, this);
       this.renderMarked = __bind(this.renderMarked, this);
     }
 
@@ -2043,8 +2044,15 @@ function clone(obj) {
       options["renderer"] = marked_renderer;
       text = this.fixReply(text);
       text = marked(text, options);
-      text = this.emailLinks(text);
       return this.fixHtmlLinks(text);
+    };
+
+    Text.prototype.renderLinks = function(text) {
+      text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      text = text.replace(/(https?:\/\/[^\s]+)/g, function(match) {
+        return "<a href=\"" + (match.replace(/&amp;/g, '&')) + "\">" + match + "</a>";
+      });
+      return text;
     };
 
     Text.prototype.emailLinks = function(text) {
@@ -2217,6 +2225,7 @@ function clone(obj) {
   window.Text = new Text();
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Time.coffee ---- */
@@ -3799,6 +3808,7 @@ function clone(obj) {
           };
         })(this);
         this.editable_comments[comment_uri] = new Editable("div.body", handleCommentSave, handleCommentDelete);
+        this.editable_comments[comment_uri].render_function = Text.renderLinks;
       }
       return this.editable_comments[comment_uri];
     };
@@ -3839,7 +3849,9 @@ function clone(obj) {
                   href: "#",
                   title: Time.date(comment.date_added, "long")
                 }, Time.since(comment.date_added))
-              ]), owned ? _this.getEditableComment(comment_uri).render(comment.body) : h("div.body", comment.body)
+              ]), owned ? _this.getEditableComment(comment_uri).render(comment.body) : h("div.body", {
+                innerHTML: Text.renderLinks(comment.body)
+              })
             ]);
           };
         })(this)) : void 0, ((_ref1 = this.row.comments) != null ? _ref1.length : void 0) > this.comment_limit ? h("a.more", {
@@ -4607,7 +4619,6 @@ function clone(obj) {
   window.User = User;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/UserList.coffee ---- */

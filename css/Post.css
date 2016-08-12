@@ -12,6 +12,12 @@
 .post .actions .like { width: 35px; margin-right: 0px; transition: width 0.3s, margin-right 0.3s; white-space: nowrap; }
 .post .actions .like.like-zero { width: 20px; margin-right: 5px; }
 
+code { background-color: #FBFBFB; padding: 3px 4px; border: solid 1px #e1e4e5; font-family: Consolas, Monaco, monospace; font-size: 13px }
+pre code {
+	border: none; padding: 0px; background-color: transparent; border: none; overflow-x: auto; display: inline-block; max-width: 100%;
+	border: solid 1px #e1e4e5; padding: 10px; background-color: #FBFBFB; font-family: Consolas, Monaco, monospace; border-bottom: 2px solid #e1e4e5; line-height: 1em;
+}
+
 .post-create { transition: all 0.6s }
 .post-create .postfield {
 	font-family: Roboto; font-size: 16px; border: 1px solid white; padding: 15px 15px;
