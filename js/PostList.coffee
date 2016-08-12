@@ -26,7 +26,7 @@ class PostList extends Class
 
 		if @directories == "all"
 			param  = {}
-			where = "WHERE post_id IS NOT NULL"
+			where = "WHERE post_id IS NOT NULL AND post.date_added < #{Time.timestamp()+120}"
 		else
 			param  = {"directory": @directories}
 			where = "WHERE ? AND post_id IS NOT NULL"
