@@ -270,8 +270,8 @@ class ZeroMe extends ZeroFrame
 			else if file_name.indexOf(site_info.auth_address) != -1
 				# User's data changed, update immedietly
 				@content.update()
-			else
-				# Rate limit other changes
+			else if not file_name.endsWith("content.json") or file_name.indexOf(@userdb) != -1
+				# Check only on data changes on hub sites and every file on userdb
 				if site_info.tasks > 100
 					RateLimit 3000, @content.update
 				else if site_info.tasks > 20
