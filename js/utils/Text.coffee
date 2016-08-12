@@ -18,8 +18,13 @@ class Text
 		options["renderer"] = marked_renderer
 		text = @fixReply(text)
 		text = marked(text, options)
-		text = @emailLinks text
 		return @fixHtmlLinks text
+
+	renderLinks: (text) =>
+		text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+		text = text.replace /(https?:\/\/[^\s]+)/g, (match) ->
+			return "<a href=\"#{match.replace(/&amp;/g, '&')}\">#{match}</a>"
+		return text
 
 	emailLinks: (text) ->
 		return text.replace(/([a-zA-Z0-9]+)@zeroid.bit/g, "<a href='?to=$1' onclick='return Page.message_create.show(\"$1\")'>$1@zeroid.bit</a>")
