@@ -21,9 +21,11 @@ class Text
 		return @fixHtmlLinks text
 
 	renderLinks: (text) =>
-		text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+		text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')  # Sanitize html tags
 		text = text.replace /(https?:\/\/[^\s]+)/g, (match) ->
-			return "<a href=\"#{match.replace(/&amp;/g, '&')}\">#{match}</a>"
+			return "<a href=\"#{match.replace(/&amp;/g, '&')}\">#{match}</a>"  # UnSanitize &amp; -> & in links
+		text = text.replace(/\n/g, '<br>')
+
 		return text
 
 	emailLinks: (text) ->
