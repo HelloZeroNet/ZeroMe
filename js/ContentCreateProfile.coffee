@@ -134,6 +134,7 @@ class ContentCreateProfile extends Class
 							h("h2", "Available HUBs")
 							@renderDefaultHubs()
 						])
+					h("h5", "(With this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)")
 				])
 		])
 
