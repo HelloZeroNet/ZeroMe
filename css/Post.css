@@ -5,6 +5,7 @@
 .post .user { padding-bottom: 15px; height: 21px; line-height: 19px; }
 .post .user .address, .post .added, .post .sep { font-size: 14px; color: #AAA;}
 .post .body { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; line-height: 1.5em; color: #333; word-break: break-word; }
+.post .reply-name { font-size: 14px; font-family: Roboto, Helvetica, Arial; color: #000 }
 .post .actions { height: 30px; margin-left: -5px; }
 .post .actions .icon { margin-right: 1px }
 .post .actions .link { color: #AAA; font-size: 12px; height: 30px; vertical-align: middle; line-height: 30px; display: inline-block; padding-right: 10px }
