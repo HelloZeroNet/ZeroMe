@@ -18,7 +18,7 @@
 }
 
 .activity { padding-left: 35px; padding-bottom: 19px; font-family: Roboto, Helvetica, Arial; font-size: 15px; line-height: 1.5em; color: #888 }
-.activity .body { top: -5px; position: relative; max-height: 43px; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; display: -webkit-box; }
+.activity .body { top: -5px; position: relative; max-height: 65px; overflow: hidden; -webkit-line-clamp: 3; -webkit-box-orient: vertical; display: -webkit-box; }
 .activity:last-child { background-color: #F6F7F8 }
 
 
@@ -133,6 +133,7 @@
 .post .user { padding-bottom: 15px; height: 21px; line-height: 19px; }
 .post .user .address, .post .added, .post .sep { font-size: 14px; color: #AAA;}
 .post .body { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; line-height: 1.5em; color: #333; word-break: break-word; }
+.post .reply-name { font-size: 14px; font-family: Roboto, Helvetica, Arial; color: #000 }
 .post .actions { height: 30px; margin-left: -5px; }
 .post .actions .icon { margin-right: 1px }
 .post .actions .link { color: #AAA; font-size: 12px; height: 30px; vertical-align: middle; line-height: 30px; display: inline-block; padding-right: 10px }
@@ -220,7 +221,7 @@ body.loaded { height: 100%; overflow: auto }
 
 p, h1, h2, h3, h4 { margin: 0px; padding-bottom: 0.6em; }
 
-input.text, textarea { border: 1px solid #EEE; padding: 15px 15px; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; }
+input.text, textarea { border: 1px solid #EEE; padding: 15px 15px; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; line-height: 1.4em; }
 input.text:disabled, textarea:disabled { background-color: #FAFAFA; color: #9A9A9A }
 input.big { font-size: 20px; font-weight: 100; font-family: Roboto, Helvetica, Arial }
 input.search { -webkit-border-radius: 50px; -moz-border-radius: 50px; -o-border-radius: 50px; -ms-border-radius: 50px; border-radius: 50px ; padding-left: 30px; }

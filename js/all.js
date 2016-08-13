@@ -2053,6 +2053,7 @@ function clone(obj) {
         return "<a href=\"" + (match.replace(/&amp;/g, '&')) + "\">" + match + "</a>";
       });
       text = text.replace(/\n/g, '<br>');
+      text = text.replace(/(@[A-Za-z0-9 ]+):/g, '<b class="reply-name">$1</b>:');
       return text;
     };
 
@@ -2587,6 +2588,7 @@ function clone(obj) {
       this.directories = [];
       this.need_update = true;
       this.limit = 10;
+      this.found = 0;
       this.loading = true;
     }
 
@@ -2676,6 +2678,7 @@ function clone(obj) {
             if (row_group.length) {
               row_groups.push(row_group);
             }
+            _this.found = rows.length;
             return cb(row_groups);
           });
         };
@@ -2770,7 +2773,7 @@ function clone(obj) {
         this.activities.length > 0 ? h("h2", {
           enterAnimation: Animation.slideDown,
           exitAnimation: Animation.slideUp
-        }, "Activity feed") : void 0, h("div.items", [h("div.bg-line"), this.activities.slice(0, +(this.limit - 1) + 1 || 9e9).map(this.renderActivity)]), this.activities.length > this.limit ? h("a.more.small", {
+        }, "Activity feed") : void 0, h("div.items", [h("div.bg-line"), this.activities.slice(0, +(this.limit - 1) + 1 || 9e9).map(this.renderActivity)]), this.found > this.limit ? h("a.more.small", {
           href: "#More",
           onclick: this.handleMoreClick,
           enterAnimation: Animation.slideDown,
@@ -3093,7 +3096,7 @@ function clone(obj) {
           }, [h("h2", "Seeded HUBs"), this.renderSeededHubs()]) : void 0, this.default_hubs.length ? h("div.hubselect.default", {
             enterAnimation: Animation.slideDown,
             exitAnimation: Animation.slideUp
-          }, [h("h2", "Available HUBs"), this.renderDefaultHubs()]) : void 0, h("h5", "(Whit this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)")
+          }, [h("h2", "Available HUBs"), this.renderDefaultHubs()]) : void 0, h("h5", "(With this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)")
         ]) : void 0
       ]);
     };
@@ -3249,6 +3252,7 @@ function clone(obj) {
       this.user_list = null;
       this.auth_address = null;
       this.user = new User();
+      this.activity_list = new ActivityList();
       this.owned = false;
       this.need_update = true;
       this.loaded = false;
@@ -3286,7 +3290,7 @@ function clone(obj) {
     };
 
     ContentProfile.prototype.render = function() {
-      var _ref, _ref1, _ref2;
+      var _ref, _ref1, _ref2, _ref3;
       if (this.need_update) {
         this.log("Updating");
         this.need_update = false;
@@ -3296,10 +3300,14 @@ function clone(obj) {
         if ((_ref1 = this.user_list) != null) {
           _ref1.need_update = true;
         }
+        if ((_ref2 = this.activity_list) != null) {
+          _ref2.need_update = true;
+        }
+        this.activity_list.directories = ["data/users/" + this.auth_address];
         this.user.get(this.hub, this.auth_address, (function(_this) {
           return function() {
-            var _ref2;
-            _this.owned = _this.user.auth_address === ((_ref2 = Page.user) != null ? _ref2.auth_address : void 0);
+            var _ref3;
+            _this.owned = _this.user.auth_address === ((_ref3 = Page.user) != null ? _ref3.auth_address : void 0);
             if (_this.owned && !_this.editable_intro) {
               _this.editable_intro = new Editable("div", _this.handleIntroSave);
               _this.editable_intro.render_function = Text.renderMarked;
@@ -3320,7 +3328,7 @@ function clone(obj) {
           })(this));
         }
       }
-      if (!((_ref2 = this.user) != null ? _ref2.row : void 0)) {
+      if (!((_ref3 = this.user) != null ? _ref3.row : void 0)) {
         return h("div#Content.center." + this.auth_address, []);
       }
       if (!Page.merged_sites[this.hub]) {
@@ -3339,7 +3347,9 @@ function clone(obj) {
             }, [
               this.owned ? this.uploadable_avatar.render(this.user.renderAvatar) : this.user.renderAvatar(), h("span.name.link", {
                 style: "color: " + (Text.toColor(this.user.row.auth_address))
-              }, this.owned ? this.editable_user_name.render(this.user.row.user_name) : this.user.row.user_name), h("div.cert_user_id", this.user.row.cert_user_id), h("div.intro-full", this.owned ? this.editable_intro.render(this.user.row.intro) : this.user.row.intro), h("div.follow-container", [
+              }, this.owned ? this.editable_user_name.render(this.user.row.user_name) : this.user.row.user_name), h("div.cert_user_id", this.user.row.cert_user_id), this.owned ? h("div.intro-full", this.editable_intro.render(this.user.row.intro)) : h("div.intro-full", {
+                innerHTML: Text.renderMarked(this.user.row.intro)
+              }), h("div.follow-container", [
                 h("a.button.button-follow-big", {
                   href: "#",
                   onclick: this.user.handleFollowClick,
@@ -3349,7 +3359,7 @@ function clone(obj) {
                 }, h("span.icon-follow", "+"), this.user.isFollowed() ? "Unfollow" : "Follow")
               ])
             ])
-          ]), this.user_list.users.length > 0 ? h("h2.sep", {
+          ]), this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
             afterCreate: Animation.show
           }, ["Following"]) : void 0, this.user_list.render(".gray")
         ]), h("div.col-center", [this.post_list.render()])
@@ -3932,7 +3942,6 @@ function clone(obj) {
   window.Post = Post;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostCreate.coffee ---- */
@@ -4997,7 +5006,7 @@ function clone(obj) {
           if ((res != null ? res.length : void 0) > 0) {
             _this.log("Found row for user", res[0]);
             _this.user = new User({
-              hub: res[0]["site"],
+              hub: res[0]["hub"],
               auth_address: _this.site_info.auth_address
             });
             _this.user.row = res[0];
