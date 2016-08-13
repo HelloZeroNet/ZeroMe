@@ -88,9 +88,10 @@ class ContentProfile extends Class
 							if @owned then @editable_user_name.render(@user.row.user_name) else @user.row.user_name
 						),
 						h("div.cert_user_id", @user.row.cert_user_id)
-						h("div.intro-full",
-							if @owned then @editable_intro.render(@user.row.intro) else @user.row.intro
-						),
+						if @owned
+							h("div.intro-full", @editable_intro.render(@user.row.intro))
+						else
+							h("div.intro-full", {innerHTML: Text.renderMarked(@user.row.intro)})
 						h("div.follow-container", [
 							h("a.button.button-follow-big", {href: "#", onclick: @user.handleFollowClick, classes: {loading: @user.submitting_follow}},
 								h("span.icon-follow", "+"),
