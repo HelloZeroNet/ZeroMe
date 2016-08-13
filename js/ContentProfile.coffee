@@ -5,6 +5,7 @@ class ContentProfile extends Class
 		@user_list = null
 		@auth_address = null
 		@user = new User()
+		@activity_list = new ActivityList()
 		@owned = false
 		@need_update = true
 		@loaded = false
@@ -48,6 +49,8 @@ class ContentProfile extends Class
 			# Update components
 			@post_list?.need_update = true
 			@user_list?.need_update = true
+			@activity_list?.need_update = true
+			@activity_list.directories = ["data/users/#{@auth_address}"]
 
 			# Update profile details
 			@user.get @hub, @auth_address, =>
@@ -96,6 +99,7 @@ class ContentProfile extends Class
 						])
 					])
 				]),
+				@activity_list.render(),
 				if @user_list.users.length > 0
 					h("h2.sep", {afterCreate: Animation.show}, [
 						"Following",
