@@ -57,7 +57,6 @@
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Dollar.coffee ---- */
 
 
@@ -69,7 +68,6 @@
   };
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Promise.coffee ---- */
@@ -202,7 +200,6 @@
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Property.coffee ---- */
 
 
@@ -212,7 +209,6 @@
   };
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Prototypes.coffee ---- */
@@ -240,7 +236,6 @@
   };
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/RateLimitCb.coffee ---- */
@@ -321,7 +316,6 @@
    */
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/anime.min.js ---- */
@@ -1368,7 +1362,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Autosize.coffee ---- */
 
 
@@ -1507,7 +1500,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Debug.coffee ---- */
 
 
@@ -1539,7 +1531,6 @@ function clone(obj) {
   window.Debug = new Debug();
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Editable.coffee ---- */
@@ -1652,7 +1643,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/ItemList.coffee ---- */
 
 
@@ -1704,7 +1694,6 @@ function clone(obj) {
   window.ItemList = ItemList;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Menu.coffee ---- */
@@ -1837,7 +1826,6 @@ function clone(obj) {
   });
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Text.coffee ---- */
@@ -2082,7 +2070,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Time.coffee ---- */
 
 
@@ -2149,7 +2136,6 @@ function clone(obj) {
   window.Time = new Time;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Uploadable.coffee ---- */
@@ -2266,7 +2252,6 @@ function clone(obj) {
   window.Uploadable = Uploadable;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/ZeroFrame.coffee ---- */
@@ -2421,7 +2406,6 @@ function clone(obj) {
   window.ZeroFrame = ZeroFrame;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ActivityList.coffee ---- */
@@ -2648,7 +2632,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/AnonUser.coffee ---- */
 
 
@@ -2739,7 +2722,6 @@ function clone(obj) {
   window.AnonUser = AnonUser;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentCreateProfile.coffee ---- */
@@ -2974,7 +2956,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentFeed.coffee ---- */
 
 
@@ -3085,7 +3066,6 @@ function clone(obj) {
   window.ContentFeed = ContentFeed;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentProfile.coffee ---- */
@@ -3319,7 +3299,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentUsers.coffee ---- */
 
 
@@ -3386,7 +3365,6 @@ function clone(obj) {
   window.ContentUsers = ContentUsers;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Head.coffee ---- */
@@ -3473,7 +3451,6 @@ function clone(obj) {
   window.Head = Head;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Post.coffee ---- */
@@ -3808,7 +3785,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostCreate.coffee ---- */
 
 
@@ -3896,7 +3872,6 @@ function clone(obj) {
   window.PostCreate = PostCreate;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostList.coffee ---- */
@@ -4036,7 +4011,6 @@ function clone(obj) {
   window.PostList = PostList;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/User.coffee ---- */
@@ -4515,7 +4489,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/UserList.coffee ---- */
 
 
@@ -4609,7 +4582,6 @@ function clone(obj) {
   window.UserList = UserList;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ZeroMe.coffee ---- */
@@ -4872,6 +4844,7 @@ function clone(obj) {
         }
       ], (function(_this) {
         return function(res) {
+          var row, _i, _len;
           if ((res != null ? res.length : void 0) > 0) {
             _this.log("Found row for user", res[0]);
             _this.user = new User({
@@ -4879,6 +4852,12 @@ function clone(obj) {
               auth_address: _this.site_info.auth_address
             });
             _this.user.row = res[0];
+            for (_i = 0, _len = res.length; _i < _len; _i++) {
+              row = res[_i];
+              if (row.site === row.hub) {
+                _this.user.row = row;
+              }
+            }
             _this.user.updateInfo(cb);
           } else {
             _this.user = new AnonUser();

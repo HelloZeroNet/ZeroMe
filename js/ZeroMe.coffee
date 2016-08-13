@@ -186,6 +186,9 @@ class ZeroMe extends ZeroFrame
 				@log "Found row for user", res[0]
 				@user = new User({hub: res[0]["hub"], auth_address: @site_info.auth_address})
 				@user.row = res[0]
+				for row in res
+					if row.site == row.hub
+						@user.row = row
 				@user.updateInfo(cb)
 			else
 				# No currently seeded user with that cert_user_id
