@@ -57,6 +57,7 @@
 }).call(this);
 
 
+
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Dollar.coffee ---- */
 
 
@@ -68,6 +69,7 @@
   };
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Promise.coffee ---- */
@@ -200,6 +202,7 @@
 }).call(this);
 
 
+
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Property.coffee ---- */
 
 
@@ -209,6 +212,7 @@
   };
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Prototypes.coffee ---- */
@@ -236,6 +240,7 @@
   };
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/RateLimitCb.coffee ---- */
@@ -316,6 +321,7 @@
    */
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/anime.min.js ---- */
@@ -1362,6 +1368,7 @@ function clone(obj) {
 }).call(this);
 
 
+
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Autosize.coffee ---- */
 
 
@@ -1500,62 +1507,6 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Class.coffee ---- */
-
-
-(function() {
-  var Class,
-    __slice = [].slice;
-
-  Class = (function() {
-    function Class() {}
-
-    Class.prototype.trace = true;
-
-    Class.prototype.log = function() {
-      var args;
-      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-      if (!this.trace) {
-        return;
-      }
-      if (typeof console === 'undefined') {
-        return;
-      }
-      args.unshift("[" + this.constructor.name + "]");
-      console.log.apply(console, args);
-      return this;
-    };
-
-    Class.prototype.logStart = function() {
-      var args, name;
-      name = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-      if (!this.trace) {
-        return;
-      }
-      this.logtimers || (this.logtimers = {});
-      this.logtimers[name] = +(new Date);
-      if (args.length > 0) {
-        this.log.apply(this, ["" + name].concat(__slice.call(args), ["(started)"]));
-      }
-      return this;
-    };
-
-    Class.prototype.logEnd = function() {
-      var args, ms, name;
-      name = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-      ms = +(new Date) - this.logtimers[name];
-      this.log.apply(this, ["" + name].concat(__slice.call(args), ["(Done in " + ms + "ms)"]));
-      return this;
-    };
-
-    return Class;
-
-  })();
-
-  window.Class = Class;
-
-}).call(this);
-
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Debug.coffee ---- */
 
@@ -1589,18 +1540,6 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Dollar.coffee ---- */
-
-
-(function() {
-  window.$ = function(selector) {
-    if (selector.startsWith("#")) {
-      return document.getElementById(selector.replace("#", ""));
-    }
-  };
-
-}).call(this);
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Editable.coffee ---- */
@@ -1713,6 +1652,7 @@ function clone(obj) {
 }).call(this);
 
 
+
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/ItemList.coffee ---- */
 
 
@@ -1764,6 +1704,7 @@ function clone(obj) {
   window.ItemList = ItemList;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Menu.coffee ---- */
@@ -1897,94 +1838,6 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Prototypes.coffee ---- */
-
-
-(function() {
-  String.prototype.startsWith = function(s) {
-    return this.slice(0, s.length) === s;
-  };
-
-  String.prototype.endsWith = function(s) {
-    return s === '' || this.slice(-s.length) === s;
-  };
-
-  String.prototype.repeat = function(count) {
-    return new Array(count + 1).join(this);
-  };
-
-  window.isEmpty = function(obj) {
-    var key;
-    for (key in obj) {
-      return false;
-    }
-    return true;
-  };
-
-}).call(this);
-
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/RateLimitCb.coffee ---- */
-
-
-(function() {
-  var calling, last_time,
-    __slice = [].slice;
-
-  last_time = {};
-
-  calling = {};
-
-  window.RateLimitCb = function(interval, fn, args) {
-    var cb;
-    if (args == null) {
-      args = [];
-    }
-    cb = function() {
-      var left;
-      left = interval - (Date.now() - last_time[fn]);
-      if (left <= 0) {
-        delete last_time[fn];
-        if (calling[fn]) {
-          RateLimitCb(interval, fn, calling[fn]);
-        }
-        return delete calling[fn];
-      } else {
-        return setTimeout((function() {
-          delete last_time[fn];
-          if (calling[fn]) {
-            RateLimitCb(interval, fn, calling[fn]);
-          }
-          return delete calling[fn];
-        }), left);
-      }
-    };
-    if (last_time[fn]) {
-      return calling[fn] = args;
-    } else {
-      last_time[fn] = Date.now();
-      return fn.apply(this, [cb].concat(__slice.call(args)));
-    }
-  };
-
-
-  /*
-  window.s = Date.now()
-  window.load = (done, num) ->
-    console.log "Loading #{num}...", Date.now()-window.s
-    setTimeout (-> done()), 1000
-  
-  RateLimit 500, window.load, [0] # Called instantly
-  RateLimit 500, window.load, [1]
-  setTimeout (-> RateLimit 500, window.load, [300]), 300
-  setTimeout (-> RateLimit 500, window.load, [600]), 600 # Called after 1000ms
-  setTimeout (-> RateLimit 500, window.load, [1000]), 1000
-  setTimeout (-> RateLimit 500, window.load, [1200]), 1200  # Called after 2000ms
-  setTimeout (-> RateLimit 500, window.load, [3000]), 3000  # Called after 3000ms
-   */
-
-}).call(this);
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Text.coffee ---- */
@@ -2229,6 +2082,7 @@ function clone(obj) {
 }).call(this);
 
 
+
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Time.coffee ---- */
 
 
@@ -2295,6 +2149,7 @@ function clone(obj) {
   window.Time = new Time;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Uploadable.coffee ---- */
@@ -2411,6 +2266,7 @@ function clone(obj) {
   window.Uploadable = Uploadable;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/ZeroFrame.coffee ---- */
@@ -2565,6 +2421,7 @@ function clone(obj) {
   window.ZeroFrame = ZeroFrame;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ActivityList.coffee ---- */
@@ -2791,6 +2648,7 @@ function clone(obj) {
 }).call(this);
 
 
+
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/AnonUser.coffee ---- */
 
 
@@ -2881,6 +2739,7 @@ function clone(obj) {
   window.AnonUser = AnonUser;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentCreateProfile.coffee ---- */
@@ -3115,6 +2974,7 @@ function clone(obj) {
 }).call(this);
 
 
+
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentFeed.coffee ---- */
 
 
@@ -3225,6 +3085,7 @@ function clone(obj) {
   window.ContentFeed = ContentFeed;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentProfile.coffee ---- */
@@ -3458,6 +3319,7 @@ function clone(obj) {
 }).call(this);
 
 
+
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentUsers.coffee ---- */
 
 
@@ -3524,6 +3386,7 @@ function clone(obj) {
   window.ContentUsers = ContentUsers;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Head.coffee ---- */
@@ -3610,6 +3473,7 @@ function clone(obj) {
   window.Head = Head;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Post.coffee ---- */
@@ -3944,6 +3808,7 @@ function clone(obj) {
 }).call(this);
 
 
+
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostCreate.coffee ---- */
 
 
@@ -4031,6 +3896,7 @@ function clone(obj) {
   window.PostCreate = PostCreate;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostList.coffee ---- */
@@ -4170,6 +4036,7 @@ function clone(obj) {
   window.PostList = PostList;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/User.coffee ---- */
@@ -4648,6 +4515,7 @@ function clone(obj) {
 }).call(this);
 
 
+
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/UserList.coffee ---- */
 
 
@@ -4741,6 +4609,7 @@ function clone(obj) {
   window.UserList = UserList;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ZeroMe.coffee ---- */
