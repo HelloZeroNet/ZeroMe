@@ -6,7 +6,7 @@
 
 .comment-create textarea { width: 100%; margin-bottom: 11px; box-sizing: border-box; }
 .comment { padding-top: 10px; padding-bottom: 10px }
-.comment-list .comment .user { padding-bottom: 0px }
+.comment-list .comment .user { padding-bottom: 0px; white-space: nowrap; }
 .comment .body { white-space: pre-wrap; padding-top: 4px }
 .comment .icon-reply { opacity: 0; transition: all 0.3s }
 .comment:hover .icon-reply { opacity: 0.5 }
