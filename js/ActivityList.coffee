@@ -4,6 +4,7 @@ class ActivityList extends Class
 		@directories = []
 		@need_update = true
 		@limit = 10
+		@found = 0
 		@loading = true
 
 	queryActivities: (cb) ->
@@ -148,7 +149,7 @@ class ActivityList extends Class
 				h("div.bg-line"),
 				@activities[0..@limit-1].map(@renderActivity)
 			]),
-			if @activities.length > @limit
+			if @found > @limit
 				h("a.more.small", {href: "#More", onclick: @handleMoreClick, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, "Show more...")
 			# if @loading
 			# 	h("span.more.small", {enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, "Loading...", )
