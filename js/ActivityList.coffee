@@ -52,6 +52,7 @@ class ActivityList extends Class
 			for row in rows
 				row.auth_address = row.directory.replace("data/users/", "")
 				subject_address = row.subject.replace(/_.*/, "").replace(/.*\//, "")  # Only keep user's address
+				row.post_id = row.subject.replace(/.*_/, "").replace(/.*\//, "")
 				row.subject_address = subject_address
 				directory = "data/users/#{subject_address}"
 				if directory not in directories
@@ -69,7 +70,24 @@ class ActivityList extends Class
 					row.subject.auth_address ?= row.subject_auth_address
 					row.subject.hub ?= row.subject_hub
 					row.subject.user_name ?= row.subject_user_name
-				cb(rows)
+
+				# Merge same activities from same user to one line
+				last_row = null
+				row_group = []
+				row_groups = []
+				for row in rows
+					if not last_row or (row.auth_address == last_row?.auth_address and row.type == last_row?.type)
+						row_group.push row
+					else
+						row_groups.push row_group
+						row_group = [row]
+					last_row = row
+				if row_group.length
+					row_groups.push row_group
+
+				@found = rows.length
+
+				cb(row_groups)
 
 
 	update: =>
@@ -85,34 +103,38 @@ class ActivityList extends Class
 		@update()
 		return false
 
-	renderActivity: (activity) ->
-		if not activity.subject.user_name
-			return
-		activity_user_link = "?Profile/#{activity.hub}/#{activity.auth_address}/#{activity.cert_user_id}"
-		subject_user_link = "?Profile/#{activity.subject.hub}/#{activity.subject.auth_address}/#{activity.subject.cert_user_id}"
-		if activity.type == "post_like"
-			body = [
-				h("a", {href: activity_user_link, onclick: @Page.handleLinkClick}, activity.user_name), " liked ",
-				h("a", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity.subject.user_name), "'s ",
-				h("a", {href: subject_user_link, onclick: @Page.handleLinkClick}, "post")
-			]
-		else if activity.type == "comment"
-			body = [
-				h("a", {href: activity_user_link, onclick: @Page.handleLinkClick}, activity.user_name), " commented on ",
-				h("a", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity.subject.user_name), "'s ",
-				h("a", {href: subject_user_link, onclick: @Page.handleLinkClick}, "post"), ": #{activity.body}"
-			]
-		else if activity.type == "follow"
-			body = [
-				h("a", {href: activity_user_link, onclick: @Page.handleLinkClick}, activity.user_name), " started following ",
-				h("a", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity.subject.user_name)
-			]
-		else
-			body = activity.body
-		h("div.activity", {key: "#{activity.cert_user_id}_#{activity.date_added}", title: Time.since(activity.date_added), enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, [
-			h("div.circle"),
-			h("div.body", body)
-		])
+	renderActivity: (activity_group) ->
+		back = []
+		for activity in activity_group
+			if not activity.subject.user_name
+				continue
+			activity_user_link = "?Profile/#{activity.hub}/#{activity.auth_address}/#{activity.cert_user_id}"
+			subject_user_link = "?Profile/#{activity.subject.hub}/#{activity.subject.auth_address}/#{activity.subject.cert_user_id}"
+			subject_post_link = "?Post/#{activity.subject.hub}/#{activity.subject.auth_address}/#{activity.post_id}"
+			if activity.type == "post_like"
+				body = [
+					h("a.link", {href: activity_user_link, onclick: @Page.handleLinkClick}, activity.user_name), " liked ",
+					h("a.link", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity.subject.user_name), "'s ",
+					h("a.link", {href: subject_post_link, onclick: @Page.handleLinkClick}, "post")
+				]
+			else if activity.type == "comment"
+				body = [
+					h("a.link", {href: activity_user_link, onclick: @Page.handleLinkClick}, activity.user_name), " commented on ",
+					h("a.link", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity.subject.user_name), "'s ",
+					h("a.link", {href: subject_post_link, onclick: @Page.handleLinkClick}, "post"), ": #{activity.body}"
+				]
+			else if activity.type == "follow"
+				body = [
+					h("a.link", {href: activity_user_link, onclick: @Page.handleLinkClick}, activity.user_name), " started following ",
+					h("a.link", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity.subject.user_name)
+				]
+			else
+				body = activity.body
+			back.push h("div.activity", {key: "#{activity.cert_user_id}_#{activity.date_added}", title: Time.since(activity.date_added), enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, [
+				h("div.circle"),
+				h("div.body", body)
+			])
+		return back
 
 	render: =>
 		if @need_update then @update()
