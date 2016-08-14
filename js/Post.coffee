@@ -20,6 +20,9 @@ class Post extends Class
 			@editable_body = new Editable("div.body", @handlePostSave, @handlePostDelete)
 			@editable_body.render_function = Text.renderMarked
 
+	getLink: ->
+		"?Post/#{@user.hub}/#{@user.auth_address}/#{@row.post_id}"
+
 	handlePostSave: (body, cb) =>
 		Page.user.getData Page.user.hub, (data) =>
 			post_index = i for post, i in data.post when post.post_id == @row.post_id
