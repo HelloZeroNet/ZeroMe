@@ -67,21 +67,27 @@ class ZeroMe extends ZeroFrame
 		@params = Text.queryParse(query)
 		@log "Route", @params
 
-		if @content
-			@projector.detach(@content.render)
-
 		if @params.urls[0] == "Create+profile"
-			@content = @content_create_profile
+			content = @content_create_profile
 		else if @params.urls[0] == "Users" and
-			@content = @content_users
+			content = @content_users
 		else if @params.urls[0] == "Profile"
-			@content = @content_profile
-			@content_profile.setUser(@params.urls[1], @params.urls[2], @params.urls[3])
+			content = @content_profile
+			changed = (@content_profile.auth_address != @params.urls[2])
+			@content_profile.setUser(@params.urls[1], @params.urls[2]).filter(null)
+		else if @params.urls[0] == "Post"
+			content = @content_profile
+			changed = (@content_profile.auth_address != @params.urls[2])
+			@content_profile.setUser(@params.urls[1], @params.urls[2]).filter(@params.urls[3])
 		else
-			@content = @content_feed
+			content = @content_feed
 		setTimeout ( => @content.update() ), 100
-		@on_user_info.then =>
-			@projector.replace($("#Content"), @content.render)
+		if @content != content or changed
+			if @content
+				@projector.detach(@content.render)
+			@content = content
+			@on_user_info.then =>
+				@projector.replace($("#Content"), @content.render)
 
 
 	setUrl: (url) ->
