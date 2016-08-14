@@ -39,8 +39,8 @@ class PostList extends Class
 			 (SELECT COUNT(*) FROM post_like WHERE 'data/users/' || post_uri =  directory || '_' || post_id) AS likes,
 			 *
 			FROM
-			 json
-			LEFT JOIN post ON (post.json_id = json.json_id)
+			 post
+			LEFT JOIN json ON (post.json_id = json.json_id)
 			#{where}
 			ORDER BY date_added DESC
 			LIMIT #{@limit+1}
