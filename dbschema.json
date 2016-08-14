@@ -48,8 +48,8 @@
 				["date_added", "INTEGER"],
 				["json_id", "INTEGER REFERENCES json (json_id)"]
 			],
-			"indexes": ["CREATE UNIQUE INDEX post_key ON post(json_id, post_id)", "CREATE INDEX post_id ON post(post_id)"],
-			"schema_changed": 2
+			"indexes": ["CREATE UNIQUE INDEX post_key ON post(json_id, post_id)", "CREATE INDEX post_id ON post(post_id)", "CREATE INDEX added ON post(date_added)"],
+			"schema_changed": 3
 		},
 		"post_like": {
 			"cols": [
