@@ -8,7 +8,11 @@ class ActivityList extends Class
 		@loading = true
 
 	queryActivities: (cb) ->
-		directories_sql = ("'#{directory}'" for directory in @directories).join(",")
+		if @directories == "all"
+			where = "WHERE date_added > #{Time.timestamp()-60*60*6}"
+		else
+			where = "WHERE json.directory IN #{Text.sqlIn(@directories)}"
+
 		query = """
 			SELECT
 			 'comment' AS type, json.*,
@@ -17,8 +21,7 @@ class ActivityList extends Class
 			FROM
 			 json
 			LEFT JOIN comment USING (json_id)
-			WHERE
-			 json.directory IN (#{directories_sql})
+			 #{where}
 
 			UNION ALL
 
@@ -29,8 +32,7 @@ class ActivityList extends Class
 			FROM
 			 json
 			LEFT JOIN post_like USING (json_id)
-			WHERE
-			 json.directory IN (#{directories_sql})
+			 #{where}
 
 			UNION ALL
 
@@ -41,11 +43,12 @@ class ActivityList extends Class
 			FROM
 			 json
 			LEFT JOIN follow USING (json_id)
-			WHERE
-			 json.directory IN (#{directories_sql})
+			 #{where}
 			ORDER BY date_added DESC
 			LIMIT #{@limit+1}
 		"""
+		@logStart("Update")
+
 		Page.cmd "dbQuery", [query, {directories: @directories}], (rows) =>
 			# Resolve subject's name
 			directories = []
@@ -85,7 +88,7 @@ class ActivityList extends Class
 					last_row = row
 				if row_group.length
 					row_groups.push row_group
-
+				@logEnd("Update")
 				@found = rows.length
 
 				cb(row_groups)

@@ -32,7 +32,7 @@ class ContentFeed extends Class
 			@post_list.need_update = true
 
 			# Activity list
-			@activity_list.directories = ("data/users/#{key.split('/')[1]}" for key, followed of Page.user.followed_users)
+			@activity_list.directories = @post_list.directories
 			@activity_list.need_update = true
 
 
