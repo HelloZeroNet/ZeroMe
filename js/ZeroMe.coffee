@@ -181,7 +181,7 @@ class ZeroMe extends ZeroFrame
 			@user.updateInfo(cb)
 			return false
 
-		Page.cmd "dbQuery", ["SELECT * FROM json WHERE cert_user_id = :cert_user_id AND user_name IS NOT NULL AND file_name = 'data.json'", {cert_user_id: @site_info.cert_user_id}], (res) =>
+		Page.cmd "dbQuery", ["SELECT * FROM json WHERE directory='data/users/#{@site_info.auth_address}' AND user_name IS NOT NULL AND file_name = 'data.json'", {cert_user_id: @site_info.cert_user_id}], (res) =>
 			if res?.length > 0
 				@log "Found row for user", res[0]
 				@user = new User({hub: res[0]["hub"], auth_address: @site_info.auth_address})
