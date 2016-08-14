@@ -187,14 +187,14 @@ class ZeroMe extends ZeroFrame
 			@user.updateInfo(cb)
 			return false
 
-		Page.cmd "dbQuery", ["SELECT * FROM json WHERE directory='data/users/#{@site_info.auth_address}' AND user_name IS NOT NULL AND file_name = 'data.json'", {cert_user_id: @site_info.cert_user_id}], (res) =>
+		Page.cmd "dbQuery", ["SELECT * FROM json WHERE directory = :directory AND user_name IS NOT NULL AND file_name = 'data.json'", {directory: "data/users/#{@site_info.auth_address}"}], (res) =>
 			if res?.length > 0
-				@log "Found row for user", res[0]
 				@user = new User({hub: res[0]["hub"], auth_address: @site_info.auth_address})
 				@user.row = res[0]
 				for row in res
 					if row.site == row.hub
 						@user.row = row
+				@log "Choosen site for user", @user.row.site, @user.row
 				@user.updateInfo(cb)
 			else
 				# No currently seeded user with that cert_user_id
