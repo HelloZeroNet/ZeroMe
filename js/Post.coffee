@@ -115,11 +115,15 @@ class Post extends Class
 	renderComments: =>
 		if not @row.comments and not @commenting
 			return []
+		if @row.selected
+			comment_limit = 50
+		else
+			comment_limit = @comment_limit
 		h("div.comment-list", {enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, animate_noscale: true}, [
 			if @commenting then h("div.comment-create", {enterAnimation: Animation.slideDown},
 				@field_comment.render()
 			),
-			@row.comments?[0..@comment_limit-1].map (comment) =>
+			@row.comments?[0..comment_limit-1].map (comment) =>
 				user_address = comment.directory.replace("data/users/", "")
 				comment_uri = user_address+"_"+comment.comment_id
 				owned = user_address == Page.user?.auth_address
@@ -138,13 +142,13 @@ class Post extends Class
 					else
 						h("div.body", {innerHTML: Text.renderLinks(comment.body) })
 				])
-			if @row.comments?.length > @comment_limit
+			if @row.comments?.length > comment_limit
 				h("a.more", {href: "#More", onclick: @handleMoreCommentsClick, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, "Show more comments...")
 		])
 
 	render: =>
 		[site, post_uri] = @row.key.split("-")
-		h("div.post", {key: @row.key, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, [
+		h("div.post", {key: @row.key, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, classes: {selected: @row.selected}}, [
 			h("div.user", [
 				@user.renderAvatar({href: @user.getLink(), onclick: Page.handleLinkClick}),
 				h("a.name.link", {href: @user.getLink(), onclick: Page.handleLinkClick, style: "color: #{Text.toColor(@user.auth_address)}"},
@@ -153,7 +157,7 @@ class Post extends Class
 				h("span.sep", " \u00B7 "),
 				h("span.address", {title: @user.auth_address}, @row.cert_user_id),
 				h("span.sep", " \u2015 "),
-				h("a.added.link", {href: "?Post:#{@row.key}", title: Time.date(@row.date_added, "long")}, Time.since(@row.date_added)),
+				h("a.added.link", {href: @getLink(), title: Time.date(@row.date_added, "long"), onclick: Page.handleLinkClick}, Time.since(@row.date_added)),
 			])
 			if @owned
 				@editable_body.render(@row.body)
