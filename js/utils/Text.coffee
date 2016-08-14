@@ -34,10 +34,15 @@ class Text
 
 	# Convert zeronet html links to relaitve
 	fixHtmlLinks: (text) ->
+		# Fix site links
 		if window.is_proxy
-			return text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="http://zero')
+			text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="http://zero')
 		else
-			return text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="')
+			text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="')
+		# Add no-refresh linking to local links
+		text = text.replace('href="?', 'onclick="return Page.handleLinkClick(window.event)" href="?')
+		return text
+
 
 	# Convert a single link to relative
 	fixLink: (link) ->

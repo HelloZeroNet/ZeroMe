@@ -118,6 +118,7 @@ class ZeroMe extends ZeroFrame
 			document.body.className = ""
 
 			@setUrl e.currentTarget.search
+			return false
 
 
 	# Add/remove/change parameter to current site url
