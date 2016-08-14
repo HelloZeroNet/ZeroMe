@@ -143,6 +143,9 @@ class Text
 				back.push(h("span.highlight", {key: i}, search))
 		return back
 
+	sqlIn: (values) ->
+		return "("+("'#{value}'" for value in values).join(',')+")"
+
 window.is_proxy = (document.location.host == "zero" or window.location.pathname == "/")
 window.marked_renderer = new MarkedRenderer()
 window.Text = new Text()
