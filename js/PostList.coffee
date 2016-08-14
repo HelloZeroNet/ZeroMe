@@ -5,6 +5,7 @@ class PostList extends Class
 		@need_update = true
 		@directories = []
 		@loaded = false
+		@filter_post_id = null
 		@limit = 10
 
 	queryComments: (post_uris, cb) =>
@@ -21,15 +22,17 @@ class PostList extends Class
 		return Page.cmd "dbQuery", [query, {post_uri: post_uris}], cb
 
 	update: =>
-		@log "Updating"
 		@need_update = false
 
+		param  = {}
 		if @directories == "all"
-			param  = {}
-			where = "WHERE post_id IS NOT NULL AND post.date_added < #{Time.timestamp()+120}"
+			where = "WHERE post_id IS NOT NULL AND post.date_added < #{Time.timestamp()+120} "
 		else
-			param  = {"directory": @directories}
-			where = "WHERE ? AND post_id IS NOT NULL"
+			where = "WHERE directory IN #{Text.sqlIn(@directories)} AND post_id IS NOT NULL "
+
+		if @filter_post_id
+			where += "AND post_id = :post_id "
+			param.post_id = @filter_post_id
 
 		query = "
 			SELECT
@@ -42,6 +45,7 @@ class PostList extends Class
 			ORDER BY date_added DESC
 			LIMIT #{@limit+1}
 		"
+		@log "Updating", param
 		Page.cmd "dbQuery", [query, param], (rows) =>
 			items = []
 			post_uris = []
@@ -58,6 +62,8 @@ class PostList extends Class
 					comment_db[comment_row.site+"/"+comment_row.post_uri].push(comment_row)
 				for row in rows
 					row["comments"] = comment_db[row.site+"/"+row.post_uri]
+					if row.post_id == parseInt(@filter_post_id)
+						row.selected = true
 				@item_list.sync(rows)
 				@loaded = true
 				Page.projector.scheduleRender()
