@@ -45,7 +45,7 @@ class PostList extends Class
 			ORDER BY date_added DESC
 			LIMIT #{@limit+1}
 		"
-		@log "Updating", param
+		@logStart "Update"
 		Page.cmd "dbQuery", [query, param], (rows) =>
 			items = []
 			post_uris = []
@@ -66,6 +66,7 @@ class PostList extends Class
 						row.selected = true
 				@item_list.sync(rows)
 				@loaded = true
+				@logEnd "Update"
 				Page.projector.scheduleRender()
 
 	handleMoreClick: =>
