@@ -1904,10 +1904,12 @@ function clone(obj) {
 
     Text.prototype.fixHtmlLinks = function(text) {
       if (window.is_proxy) {
-        return text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="http://zero');
+        text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="http://zero');
       } else {
-        return text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="');
+        text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="');
       }
+      text = text.replace('href="?', 'onclick="return Page.handleLinkClick(window.event)" href="?');
+      return text;
     };
 
     Text.prototype.fixLink = function(link) {
@@ -2447,25 +2449,21 @@ function clone(obj) {
     }
 
     ActivityList.prototype.queryActivities = function(cb) {
-      var directories_sql, directory, query;
-      directories_sql = ((function() {
-        var _i, _len, _ref, _results;
-        _ref = this.directories;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          directory = _ref[_i];
-          _results.push("'" + directory + "'");
-        }
-        return _results;
-      }).call(this)).join(",");
-      query = "SELECT\n 'comment' AS type, json.*,\n json.site || \"/\" || post_uri AS subject, body, date_added,\n NULL AS subject_auth_address, NULL AS subject_hub, NULL AS subject_user_name\nFROM\n json\nLEFT JOIN comment USING (json_id)\nWHERE\n json.directory IN (" + directories_sql + ")\n\nUNION ALL\n\nSELECT\n 'post_like' AS type, json.*,\n json.site || \"/\" || post_uri AS subject, '' AS body, date_added,\n NULL AS subject_auth_address, NULL AS subject_hub, NULL AS subject_user_name\nFROM\n json\nLEFT JOIN post_like USING (json_id)\nWHERE\n json.directory IN (" + directories_sql + ")\n\nUNION ALL\n\nSELECT\n 'follow' AS type, json.*,\n follow.hub || \"/\" || follow.auth_address AS subject, '' AS body, date_added,\n follow.auth_address AS subject_auth_address, follow.hub AS subject_hub, follow.user_name AS subject_user_name\nFROM\n json\nLEFT JOIN follow USING (json_id)\nWHERE\n json.directory IN (" + directories_sql + ")\nORDER BY date_added DESC\nLIMIT " + (this.limit + 1);
+      var query, where;
+      if (this.directories === "all") {
+        where = "WHERE date_added > " + (Time.timestamp() - 60 * 60 * 6);
+      } else {
+        where = "WHERE json.directory IN " + (Text.sqlIn(this.directories));
+      }
+      query = "SELECT\n 'comment' AS type, json.*,\n json.site || \"/\" || post_uri AS subject, body, date_added,\n NULL AS subject_auth_address, NULL AS subject_hub, NULL AS subject_user_name\nFROM\n json\nLEFT JOIN comment USING (json_id)\n " + where + "\n\nUNION ALL\n\nSELECT\n 'post_like' AS type, json.*,\n json.site || \"/\" || post_uri AS subject, '' AS body, date_added,\n NULL AS subject_auth_address, NULL AS subject_hub, NULL AS subject_user_name\nFROM\n json\nLEFT JOIN post_like USING (json_id)\n " + where + "\n\nUNION ALL\n\nSELECT\n 'follow' AS type, json.*,\n follow.hub || \"/\" || follow.auth_address AS subject, '' AS body, date_added,\n follow.auth_address AS subject_auth_address, follow.hub AS subject_hub, follow.user_name AS subject_user_name\nFROM\n json\nLEFT JOIN follow USING (json_id)\n " + where + "\nORDER BY date_added DESC\nLIMIT " + (this.limit + 1);
+      this.logStart("Update");
       return Page.cmd("dbQuery", [
         query, {
           directories: this.directories
         }
       ], (function(_this) {
         return function(rows) {
-          var directories, row, subject_address, _i, _len;
+          var directories, directory, row, subject_address, _i, _len;
           directories = [];
           rows = (function() {
             var _i, _len, _results;
@@ -2534,6 +2532,7 @@ function clone(obj) {
               row_groups.push(row_group);
             }
             _this.found = rows.length;
+            _this.logEnd("Update");
             return cb(row_groups);
           });
         };
@@ -2559,8 +2558,9 @@ function clone(obj) {
     };
 
     ActivityList.prototype.renderActivity = function(activity_group) {
-      var activity, activity_user_link, back, body, subject_post_link, subject_user_link, _i, _len;
+      var activity, activity_user_link, back, body, now, subject_post_link, subject_user_link, _i, _len;
       back = [];
+      now = Time.timestamp();
       for (_i = 0, _len = activity_group.length; _i < _len; _i++) {
         activity = activity_group[_i];
         if (!activity.subject.user_name) {
@@ -2611,6 +2611,9 @@ function clone(obj) {
         back.push(h("div.activity", {
           key: activity.cert_user_id + "_" + activity.date_added,
           title: Time.since(activity.date_added),
+          classes: {
+            latest: now - activity.date_added < 600
+          },
           enterAnimation: Animation.slideDown,
           exitAnimation: Animation.slideUp
         }, [h("div.circle"), h("div.body", body)]));
@@ -2645,6 +2648,7 @@ function clone(obj) {
   window.ActivityList = ActivityList;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/AnonUser.coffee ---- */
@@ -3029,16 +3033,7 @@ function clone(obj) {
           this.post_list.directories = "all";
         }
         this.post_list.need_update = true;
-        this.activity_list.directories = (function() {
-          var _ref, _results;
-          _ref = Page.user.followed_users;
-          _results = [];
-          for (key in _ref) {
-            followed = _ref[key];
-            _results.push("data/users/" + (key.split('/')[1]));
-          }
-          return _results;
-        })();
+        this.activity_list.directories = this.post_list.directories;
         this.activity_list.need_update = true;
       }
       return h("div#Content.center", [
@@ -3968,7 +3963,7 @@ function clone(obj) {
         param.post_id = this.filter_post_id;
       }
       query = "SELECT (SELECT COUNT(*) FROM post_like WHERE 'data/users/' || post_uri =  directory || '_' || post_id) AS likes, * FROM post LEFT JOIN json ON (post.json_id = json.json_id) " + where + " ORDER BY date_added DESC LIMIT " + (this.limit + 1);
-      this.log("Updating", param);
+      this.logStart("Update");
       return Page.cmd("dbQuery", [query, param], (function(_this) {
         return function(rows) {
           var items, post_uris, row, _i, _len;
@@ -3999,6 +3994,7 @@ function clone(obj) {
             }
             _this.item_list.sync(rows);
             _this.loaded = true;
+            _this.logEnd("Update");
             return Page.projector.scheduleRender();
           });
         };
@@ -4785,7 +4781,8 @@ function clone(obj) {
         this.history_state["scrollTop"] = 0;
         this.on_loaded.resolved = false;
         document.body.className = "";
-        return this.setUrl(e.currentTarget.search);
+        this.setUrl(e.currentTarget.search);
+        return false;
       }
     };
 
