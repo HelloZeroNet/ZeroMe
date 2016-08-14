@@ -2057,6 +2057,19 @@ function clone(obj) {
       return back;
     };
 
+    Text.prototype.sqlIn = function(values) {
+      var value;
+      return "(" + ((function() {
+        var _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = values.length; _i < _len; _i++) {
+          value = values[_i];
+          _results.push("'" + value + "'");
+        }
+        return _results;
+      })()).join(',') + ")";
+    };
+
     return Text;
 
   })();
@@ -2469,6 +2482,7 @@ function clone(obj) {
             row = rows[_i];
             row.auth_address = row.directory.replace("data/users/", "");
             subject_address = row.subject.replace(/_.*/, "").replace(/.*\//, "");
+            row.post_id = row.subject.replace(/.*_/, "").replace(/.*\//, "");
             row.subject_address = subject_address;
             directory = "data/users/" + subject_address;
             if (__indexOf.call(directories, directory) < 0) {
@@ -2545,7 +2559,7 @@ function clone(obj) {
     };
 
     ActivityList.prototype.renderActivity = function(activity_group) {
-      var activity, activity_user_link, back, body, subject_user_link, _i, _len;
+      var activity, activity_user_link, back, body, subject_post_link, subject_user_link, _i, _len;
       back = [];
       for (_i = 0, _len = activity_group.length; _i < _len; _i++) {
         activity = activity_group[_i];
@@ -2554,38 +2568,39 @@ function clone(obj) {
         }
         activity_user_link = "?Profile/" + activity.hub + "/" + activity.auth_address + "/" + activity.cert_user_id;
         subject_user_link = "?Profile/" + activity.subject.hub + "/" + activity.subject.auth_address + "/" + activity.subject.cert_user_id;
+        subject_post_link = "?Post/" + activity.subject.hub + "/" + activity.subject.auth_address + "/" + activity.post_id;
         if (activity.type === "post_like") {
           body = [
-            h("a", {
+            h("a.link", {
               href: activity_user_link,
               onclick: this.Page.handleLinkClick
-            }, activity.user_name), " liked ", h("a", {
+            }, activity.user_name), " liked ", h("a.link", {
               href: subject_user_link,
               onclick: this.Page.handleLinkClick
-            }, activity.subject.user_name), "'s ", h("a", {
-              href: subject_user_link,
+            }, activity.subject.user_name), "'s ", h("a.link", {
+              href: subject_post_link,
               onclick: this.Page.handleLinkClick
             }, "post")
           ];
         } else if (activity.type === "comment") {
           body = [
-            h("a", {
+            h("a.link", {
               href: activity_user_link,
               onclick: this.Page.handleLinkClick
-            }, activity.user_name), " commented on ", h("a", {
+            }, activity.user_name), " commented on ", h("a.link", {
               href: subject_user_link,
               onclick: this.Page.handleLinkClick
-            }, activity.subject.user_name), "'s ", h("a", {
-              href: subject_user_link,
+            }, activity.subject.user_name), "'s ", h("a.link", {
+              href: subject_post_link,
               onclick: this.Page.handleLinkClick
             }, "post"), ": " + activity.body
           ];
         } else if (activity.type === "follow") {
           body = [
-            h("a", {
+            h("a.link", {
               href: activity_user_link,
               onclick: this.Page.handleLinkClick
-            }, activity.user_name), " started following ", h("a", {
+            }, activity.user_name), " started following ", h("a.link", {
               href: subject_user_link,
               onclick: this.Page.handleLinkClick
             }, activity.subject.user_name)
@@ -3082,11 +3097,12 @@ function clone(obj) {
 
     function ContentProfile() {
       this.update = __bind(this.update, this);
+      this.render = __bind(this.render, this);
       this.handleAvatarUpload = __bind(this.handleAvatarUpload, this);
       this.handleUserNameSave = __bind(this.handleUserNameSave, this);
       this.handleIntroSave = __bind(this.handleIntroSave, this);
+      this.filter = __bind(this.filter, this);
       this.setUser = __bind(this.setUser, this);
-      this.render = __bind(this.render, this);
       this.renderNotSeeded = __bind(this.renderNotSeeded, this);
       this.post_list = null;
       this.activity_list = null;
@@ -3096,6 +3112,7 @@ function clone(obj) {
       this.activity_list = new ActivityList();
       this.owned = false;
       this.need_update = true;
+      this.filter_post_id = null;
       this.loaded = false;
     }
 
@@ -3130,88 +3147,10 @@ function clone(obj) {
       ]);
     };
 
-    ContentProfile.prototype.render = function() {
-      var _ref, _ref1, _ref2, _ref3;
-      if (this.need_update) {
-        this.log("Updating");
-        this.need_update = false;
-        if ((_ref = this.post_list) != null) {
-          _ref.need_update = true;
-        }
-        if ((_ref1 = this.user_list) != null) {
-          _ref1.need_update = true;
-        }
-        if ((_ref2 = this.activity_list) != null) {
-          _ref2.need_update = true;
-        }
-        this.activity_list.directories = ["data/users/" + this.auth_address];
-        this.user.get(this.hub, this.auth_address, (function(_this) {
-          return function() {
-            var _ref3;
-            _this.owned = _this.user.auth_address === ((_ref3 = Page.user) != null ? _ref3.auth_address : void 0);
-            if (_this.owned && !_this.editable_intro) {
-              _this.editable_intro = new Editable("div", _this.handleIntroSave);
-              _this.editable_intro.render_function = Text.renderMarked;
-              _this.editable_user_name = new Editable("span", _this.handleUserNameSave);
-              _this.uploadable_avatar = new Uploadable(_this.handleAvatarUpload);
-            }
-            Page.projector.scheduleRender();
-            return _this.loaded = true;
-          };
-        })(this));
-        if (!Page.merged_sites[this.hub]) {
-          Page.queryUserdb(this.auth_address, (function(_this) {
-            return function(row) {
-              _this.user.setRow(row);
-              Page.projector.scheduleRender();
-              return _this.loaded = true;
-            };
-          })(this));
-        }
-      }
-      if (!((_ref3 = this.user) != null ? _ref3.row : void 0)) {
-        return h("div#Content.center." + this.auth_address, []);
-      }
-      if (!Page.merged_sites[this.hub]) {
-        return this.renderNotSeeded();
-      }
-      if (this.post_list.loaded && !Page.on_loaded.resolved) {
-        Page.on_loaded.resolve();
-      }
-      return h("div#Content.center." + this.auth_address, [
-        h("div.col-left", [
-          h("div.users", [
-            h("div.user.card.profile", {
-              classes: {
-                followed: this.user.isFollowed()
-              }
-            }, [
-              this.owned ? this.uploadable_avatar.render(this.user.renderAvatar) : this.user.renderAvatar(), h("span.name.link", {
-                style: "color: " + (Text.toColor(this.user.row.auth_address))
-              }, this.owned ? this.editable_user_name.render(this.user.row.user_name) : this.user.row.user_name), h("div.cert_user_id", this.user.row.cert_user_id), this.owned ? h("div.intro-full", this.editable_intro.render(this.user.row.intro)) : h("div.intro-full", {
-                innerHTML: Text.renderMarked(this.user.row.intro)
-              }), h("div.follow-container", [
-                h("a.button.button-follow-big", {
-                  href: "#",
-                  onclick: this.user.handleFollowClick,
-                  classes: {
-                    loading: this.user.submitting_follow
-                  }
-                }, h("span.icon-follow", "+"), this.user.isFollowed() ? "Unfollow" : "Follow")
-              ])
-            ])
-          ]), this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
-            afterCreate: Animation.show
-          }, ["Following"]) : void 0, this.user_list.render(".gray")
-        ]), h("div.col-center", [this.post_list.render()])
-      ]);
-    };
-
-    ContentProfile.prototype.setUser = function(_at_hub, _at_auth_address, _at_cert_user_id) {
+    ContentProfile.prototype.setUser = function(_at_hub, _at_auth_address) {
       this.hub = _at_hub;
       this.auth_address = _at_auth_address;
-      this.cert_user_id = _at_cert_user_id;
-      this.log("setUser", this.cert_user_id);
+      this.log("setUser", this.hub, this.auth_address);
       if (!this.post_list || this.post_list.directories[0] !== "data/users/" + this.auth_address) {
         this.post_list = new PostList();
         this.activity_list = new ActivityList();
@@ -3220,8 +3159,15 @@ function clone(obj) {
         this.post_list.directories = ["data/users/" + this.auth_address];
         this.user_list.followed_by = this.user;
         this.user_list.limit = 50;
-        return this.need_update = true;
+        this.need_update = true;
       }
+      return this;
+    };
+
+    ContentProfile.prototype.filter = function(post_id) {
+      this.log("Filter", post_id);
+      this.filter_post_id = post_id;
+      return this.need_update = true;
     };
 
     ContentProfile.prototype.handleIntroSave = function(intro, cb) {
@@ -3280,6 +3226,91 @@ function clone(obj) {
           });
         };
       })(this));
+    };
+
+    ContentProfile.prototype.render = function() {
+      var _ref, _ref1, _ref2, _ref3;
+      if (this.need_update) {
+        this.log("Updating");
+        this.need_update = false;
+        this.post_list.filter_post_id = this.filter_post_id;
+        if ((_ref = this.post_list) != null) {
+          _ref.need_update = true;
+        }
+        if ((_ref1 = this.user_list) != null) {
+          _ref1.need_update = true;
+        }
+        if ((_ref2 = this.activity_list) != null) {
+          _ref2.need_update = true;
+        }
+        this.activity_list.directories = ["data/users/" + this.auth_address];
+        this.user.get(this.hub, this.auth_address, (function(_this) {
+          return function() {
+            var _ref3;
+            _this.owned = _this.user.auth_address === ((_ref3 = Page.user) != null ? _ref3.auth_address : void 0);
+            if (_this.owned && !_this.editable_intro) {
+              _this.editable_intro = new Editable("div", _this.handleIntroSave);
+              _this.editable_intro.render_function = Text.renderMarked;
+              _this.editable_user_name = new Editable("span", _this.handleUserNameSave);
+              _this.uploadable_avatar = new Uploadable(_this.handleAvatarUpload);
+            }
+            Page.projector.scheduleRender();
+            return _this.loaded = true;
+          };
+        })(this));
+        if (!Page.merged_sites[this.hub]) {
+          Page.queryUserdb(this.auth_address, (function(_this) {
+            return function(row) {
+              _this.user.setRow(row);
+              Page.projector.scheduleRender();
+              return _this.loaded = true;
+            };
+          })(this));
+        }
+      }
+      if (!((_ref3 = this.user) != null ? _ref3.row : void 0)) {
+        return h("div#Content.center." + this.auth_address, []);
+      }
+      if (!Page.merged_sites[this.hub]) {
+        return this.renderNotSeeded();
+      }
+      if (this.post_list.loaded && !Page.on_loaded.resolved) {
+        Page.on_loaded.resolve();
+      }
+      return h("div#Content.center." + this.auth_address, [
+        h("div.col-left", {
+          classes: {
+            faded: this.filter_post_id
+          }
+        }, [
+          h("div.users", [
+            h("div.user.card.profile", {
+              classes: {
+                followed: this.user.isFollowed()
+              }
+            }, [
+              this.owned ? this.uploadable_avatar.render(this.user.renderAvatar) : this.user.renderAvatar(), h("span.name.link", {
+                style: "color: " + (Text.toColor(this.user.row.auth_address))
+              }, this.owned ? this.editable_user_name.render(this.user.row.user_name) : h("a", {
+                href: this.user.getLink(),
+                onclick: Page.handleLinkClick
+              }, this.user.row.user_name)), h("div.cert_user_id", this.user.row.cert_user_id), this.owned ? h("div.intro-full", this.editable_intro.render(this.user.row.intro)) : h("div.intro-full", {
+                innerHTML: Text.renderMarked(this.user.row.intro)
+              }), h("div.follow-container", [
+                h("a.button.button-follow-big", {
+                  href: "#",
+                  onclick: this.user.handleFollowClick,
+                  classes: {
+                    loading: this.user.submitting_follow
+                  }
+                }, h("span.icon-follow", "+"), this.user.isFollowed() ? "Unfollow" : "Follow")
+              ])
+            ])
+          ]), this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
+            afterCreate: Animation.show
+          }, ["Following"]) : void 0, this.user_list.render(".gray")
+        ]), h("div.col-center", [this.post_list.render()])
+      ]);
     };
 
     ContentProfile.prototype.update = function() {
@@ -3509,6 +3540,10 @@ function clone(obj) {
       }
     };
 
+    Post.prototype.getLink = function() {
+      return "?Post/" + this.user.hub + "/" + this.user.auth_address + "/" + this.row.post_id;
+    };
+
     Post.prototype.handlePostSave = function(body, cb) {
       return Page.user.getData(Page.user.hub, (function(_this) {
         return function(data) {
@@ -3678,9 +3713,14 @@ function clone(obj) {
     };
 
     Post.prototype.renderComments = function() {
-      var _ref, _ref1;
+      var comment_limit, _ref, _ref1;
       if (!this.row.comments && !this.commenting) {
         return [];
+      }
+      if (this.row.selected) {
+        comment_limit = 50;
+      } else {
+        comment_limit = this.comment_limit;
       }
       return h("div.comment-list", {
         enterAnimation: Animation.slideDown,
@@ -3689,7 +3729,7 @@ function clone(obj) {
       }, [
         this.commenting ? h("div.comment-create", {
           enterAnimation: Animation.slideDown
-        }, this.field_comment.render()) : void 0, (_ref = this.row.comments) != null ? _ref.slice(0, +(this.comment_limit - 1) + 1 || 9e9).map((function(_this) {
+        }, this.field_comment.render()) : void 0, (_ref = this.row.comments) != null ? _ref.slice(0, +(comment_limit - 1) + 1 || 9e9).map((function(_this) {
           return function(comment) {
             var comment_uri, owned, user_address, user_link, _ref1;
             user_address = comment.directory.replace("data/users/", "");
@@ -3722,7 +3762,7 @@ function clone(obj) {
               })
             ]);
           };
-        })(this)) : void 0, ((_ref1 = this.row.comments) != null ? _ref1.length : void 0) > this.comment_limit ? h("a.more", {
+        })(this)) : void 0, ((_ref1 = this.row.comments) != null ? _ref1.length : void 0) > comment_limit ? h("a.more", {
           href: "#More",
           onclick: this.handleMoreCommentsClick,
           enterAnimation: Animation.slideDown,
@@ -3737,7 +3777,10 @@ function clone(obj) {
       return h("div.post", {
         key: this.row.key,
         enterAnimation: Animation.slideDown,
-        exitAnimation: Animation.slideUp
+        exitAnimation: Animation.slideUp,
+        classes: {
+          selected: this.row.selected
+        }
       }, [
         h("div.user", [
           this.user.renderAvatar({
@@ -3750,8 +3793,9 @@ function clone(obj) {
           }, this.row.user_name), h("span.sep", " \u00B7 "), h("span.address", {
             title: this.user.auth_address
           }, this.row.cert_user_id), h("span.sep", " \u2015 "), h("a.added.link", {
-            href: "?Post:" + this.row.key,
-            title: Time.date(this.row.date_added, "long")
+            href: this.getLink(),
+            title: Time.date(this.row.date_added, "long"),
+            onclick: Page.handleLinkClick
           }, Time.since(this.row.date_added))
         ]), this.owned ? this.editable_body.render(this.row.body) : h("div.body", {
           innerHTML: Text.renderMarked(this.row.body)
@@ -3896,6 +3940,7 @@ function clone(obj) {
       this.need_update = true;
       this.directories = [];
       this.loaded = false;
+      this.filter_post_id = null;
       this.limit = 10;
     }
 
@@ -3911,18 +3956,19 @@ function clone(obj) {
 
     PostList.prototype.update = function() {
       var param, query, where;
-      this.log("Updating");
       this.need_update = false;
+      param = {};
       if (this.directories === "all") {
-        param = {};
-        where = "WHERE post_id IS NOT NULL AND post.date_added < " + (Time.timestamp() + 120);
+        where = "WHERE post_id IS NOT NULL AND post.date_added < " + (Time.timestamp() + 120) + " ";
       } else {
-        param = {
-          "directory": this.directories
-        };
-        where = "WHERE ? AND post_id IS NOT NULL";
+        where = "WHERE directory IN " + (Text.sqlIn(this.directories)) + " AND post_id IS NOT NULL ";
       }
-      query = "SELECT (SELECT COUNT(*) FROM post_like WHERE 'data/users/' || post_uri =  directory || '_' || post_id) AS likes, * FROM json LEFT JOIN post ON (post.json_id = json.json_id) " + where + " ORDER BY date_added DESC LIMIT " + (this.limit + 1);
+      if (this.filter_post_id) {
+        where += "AND post_id = :post_id ";
+        param.post_id = this.filter_post_id;
+      }
+      query = "SELECT (SELECT COUNT(*) FROM post_like WHERE 'data/users/' || post_uri =  directory || '_' || post_id) AS likes, * FROM post LEFT JOIN json ON (post.json_id = json.json_id) " + where + " ORDER BY date_added DESC LIMIT " + (this.limit + 1);
+      this.log("Updating", param);
       return Page.cmd("dbQuery", [query, param], (function(_this) {
         return function(rows) {
           var items, post_uris, row, _i, _len;
@@ -3947,6 +3993,9 @@ function clone(obj) {
             for (_k = 0, _len2 = rows.length; _k < _len2; _k++) {
               row = rows[_k];
               row["comments"] = comment_db[row.site + "/" + row.post_uri];
+              if (row.post_id === parseInt(_this.filter_post_id)) {
+                row.selected = true;
+              }
             }
             _this.item_list.sync(rows);
             _this.loaded = true;
@@ -4676,31 +4725,40 @@ function clone(obj) {
     };
 
     ZeroMe.prototype.route = function(query) {
+      var changed, content;
       this.params = Text.queryParse(query);
       this.log("Route", this.params);
-      if (this.content) {
-        this.projector.detach(this.content.render);
-      }
       if (this.params.urls[0] === "Create+profile") {
-        this.content = this.content_create_profile;
-      } else if (this.params.urls[0] === "Users" && (this.content = this.content_users)) {
+        content = this.content_create_profile;
+      } else if (this.params.urls[0] === "Users" && (content = this.content_users)) {
 
       } else if (this.params.urls[0] === "Profile") {
-        this.content = this.content_profile;
-        this.content_profile.setUser(this.params.urls[1], this.params.urls[2], this.params.urls[3]);
+        content = this.content_profile;
+        changed = this.content_profile.auth_address !== this.params.urls[2];
+        this.content_profile.setUser(this.params.urls[1], this.params.urls[2]).filter(null);
+      } else if (this.params.urls[0] === "Post") {
+        content = this.content_profile;
+        changed = this.content_profile.auth_address !== this.params.urls[2];
+        this.content_profile.setUser(this.params.urls[1], this.params.urls[2]).filter(this.params.urls[3]);
       } else {
-        this.content = this.content_feed;
+        content = this.content_feed;
       }
       setTimeout(((function(_this) {
         return function() {
           return _this.content.update();
         };
       })(this)), 100);
-      return this.on_user_info.then((function(_this) {
-        return function() {
-          return _this.projector.replace($("#Content"), _this.content.render);
-        };
-      })(this));
+      if (this.content !== content || changed) {
+        if (this.content) {
+          this.projector.detach(this.content.render);
+        }
+        this.content = content;
+        return this.on_user_info.then((function(_this) {
+          return function() {
+            return _this.projector.replace($("#Content"), _this.content.render);
+          };
+        })(this));
+      }
     };
 
     ZeroMe.prototype.setUrl = function(url) {
@@ -4839,14 +4897,13 @@ function clone(obj) {
         return false;
       }
       return Page.cmd("dbQuery", [
-        "SELECT * FROM json WHERE cert_user_id = :cert_user_id AND user_name IS NOT NULL AND file_name = 'data.json'", {
-          cert_user_id: this.site_info.cert_user_id
+        "SELECT * FROM json WHERE directory = :directory AND user_name IS NOT NULL AND file_name = 'data.json'", {
+          directory: "data/users/" + this.site_info.auth_address
         }
       ], (function(_this) {
         return function(res) {
           var row, _i, _len;
           if ((res != null ? res.length : void 0) > 0) {
-            _this.log("Found row for user", res[0]);
             _this.user = new User({
               hub: res[0]["hub"],
               auth_address: _this.site_info.auth_address
@@ -4858,6 +4915,7 @@ function clone(obj) {
                 _this.user.row = row;
               }
             }
+            _this.log("Choosen site for user", _this.user.row.site, _this.user.row);
             _this.user.updateInfo(cb);
           } else {
             _this.user = new AnonUser();

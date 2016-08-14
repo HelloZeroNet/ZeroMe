@@ -71,7 +71,7 @@
 
 .comment-create textarea { width: 100%; margin-bottom: 11px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; }
 .comment { padding-top: 10px; padding-bottom: 10px }
-.comment-list .comment .user { padding-bottom: 0px }
+.comment-list .comment .user { padding-bottom: 0px; white-space: nowrap; }
 .comment .body { white-space: pre-wrap; padding-top: 4px }
 .comment .icon-reply { opacity: 0; -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
 .comment:hover .icon-reply { opacity: 0.5 }
@@ -128,8 +128,9 @@
 
 .post {
 	background-color: white; padding: 16px 20px; padding-left: 80px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -o-border-radius: 4px; -ms-border-radius: 4px; border-radius: 4px ;
-	border: 1px solid #EEF0F1; border-bottom: 2px solid #ECEDEE; margin-bottom: 12px;
+	border: 1px solid #EEF0F1; border-bottom: 2px solid #ECEDEE; margin-bottom: 12px; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ;
 }
+.post.selected { -webkit-box-shadow: 0px 0px 40px rgba(0,0,0,0.1); -moz-box-shadow: 0px 0px 40px rgba(0,0,0,0.1); -o-box-shadow: 0px 0px 40px rgba(0,0,0,0.1); -ms-box-shadow: 0px 0px 40px rgba(0,0,0,0.1); box-shadow: 0px 0px 40px rgba(0,0,0,0.1) ; }
 .post .user { padding-bottom: 15px; height: 21px; line-height: 19px; }
 .post .user .address, .post .added, .post .sep { font-size: 14px; color: #AAA;}
 .post .body { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; line-height: 1.5em; color: #333; word-break: break-word; }
@@ -249,8 +250,9 @@ h5 { font-weight: normal; color: rgba(0, 0, 0, 0.5) }
 
 /* Cols */
 .col-left, .col-center, .col-right { width: 66%; display: inline-block; vertical-align: top; -webkit-box-sizing: border-box ; -moz-box-sizing: border-box ; -o-box-sizing: border-box ; -ms-box-sizing: border-box ; box-sizing: border-box  }
-.col-left, .col-right { width: 33%; padding-left: 20px; margin-top: 90px; }
-.col-left { padding-left: 0px; padding-right: 20px; margin-top: 0px }
+.col-left, .col-right { width: 33%; padding-left: 20px; margin-top: 90px; -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
+.col-left { padding-left: 0px; padding-right: 20px; margin-top: 0px; -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
+.col-left.faded { opacity: 0.3 }
 
 /* Card */
 .cards { margin-right: -20px }
