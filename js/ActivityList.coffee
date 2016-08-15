@@ -93,18 +93,9 @@ class ActivityList extends Class
 				@logEnd("Update")
 				cb(row_groups)
 
-
-	update: =>
-		@need_update = false
-		@loading = true
-		@queryActivities (res) =>
-			@activities = res
-			@loading = false
-			Page.projector.scheduleRender()
-
 	handleMoreClick: =>
 		@limit += 20
-		@update()
+		@update(0)
 		return false
 
 	renderActivity: (activity_group) ->
@@ -143,7 +134,12 @@ class ActivityList extends Class
 		return back
 
 	render: =>
-		if @need_update then @update()
+		if @need_update
+			@queryActivities (res) =>
+				@activities = res
+				@need_update = false
+				Page.projector.scheduleRender()
+
 		if @activities == null # Not loaded yet
 			return null
 
@@ -160,5 +156,11 @@ class ActivityList extends Class
 			# 	h("span.more.small", {enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, "Loading...", )
 
 		])
+
+	update: (delay=600) =>
+		setTimeout ( =>
+			@need_update = true
+			Page.projector.scheduleRender()
+		), delay
 
 window.ActivityList = ActivityList

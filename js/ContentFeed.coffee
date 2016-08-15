@@ -33,7 +33,7 @@ class ContentFeed extends Class
 
 			# Activity list
 			@activity_list.directories = @post_list.directories
-			@activity_list.need_update = true
+			@activity_list.update()
 
 
 		h("div#Content.center", [
