@@ -119,7 +119,7 @@ class Post extends Class
 			comment_limit = 50
 		else
 			comment_limit = @comment_limit
-		h("div.comment-list", {enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, animate_noscale: true}, [
+		h("div.comment-list", {enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, animate_scrollfix: true, animate_noscale: true}, [
 			if @commenting then h("div.comment-create", {enterAnimation: Animation.slideDown},
 				@field_comment.render()
 			),
@@ -128,7 +128,7 @@ class Post extends Class
 				comment_uri = user_address+"_"+comment.comment_id
 				owned = user_address == Page.user?.auth_address
 				user_link = "?Profile/"+comment.hub+"/"+user_address+"/"+comment.cert_user_id
-				h("div.comment", {id: comment_uri, key: comment_uri, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, [
+				h("div.comment", {id: comment_uri, key: comment_uri, animate_scrollfix: true, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, [
 					h("div.user", [
 						h("a.name.link", {href: user_link, style: "color: #{Text.toColor(user_address)}", onclick: Page.handleLinkClick}, comment.user_name),
 						h("span.sep", " \u00B7 "),
@@ -148,7 +148,7 @@ class Post extends Class
 
 	render: =>
 		[site, post_uri] = @row.key.split("-")
-		h("div.post", {key: @row.key, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, classes: {selected: @row.selected}}, [
+		h("div.post", {key: @row.key, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, animate_scrollfix: true, classes: {selected: @row.selected}}, [
 			h("div.user", [
 				@user.renderAvatar({href: @user.getLink(), onclick: Page.handleLinkClick}),
 				h("a.name.link", {href: @user.getLink(), onclick: Page.handleLinkClick, style: "color: #{Text.toColor(@user.auth_address)}"},

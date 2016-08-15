@@ -10,6 +10,25 @@ class Animation
 		border_bottom_width = cstyle.borderBottomWidth
 		transition = cstyle.transition
 
+		if props.animate_scrollfix and elem.getBoundingClientRect().top < 0
+			# Keep objects in the screen at same position
+			top_after = document.body.scrollHeight
+			next_elem = elem.nextSibling
+			parent = elem.parentNode
+			parent.removeChild(elem)
+			top_before = document.body.scrollHeight
+			console.log("Scrollcorrection down", (top_before - top_after))
+			window.scrollTo(window.scrollX, window.scrollY - (top_before - top_after))
+			if next_elem
+				parent.insertBefore(elem, next_elem)
+			else
+				parent.appendChild(elem)
+			return
+
+		if props.animate_scrollfix and elem.getBoundingClientRect().top > 2000
+			# console.log "Skip down", elem
+			return
+
 		elem.style.boxSizing = "border-box"
 		elem.style.overflow = "hidden"
 		if not props.animate_noscale
@@ -56,6 +75,27 @@ class Animation
 
 
 	slideUp: (elem, remove_func, props) ->
+		if props.animate_scrollfix and elem.getBoundingClientRect().top < 0 and elem.nextSibling
+			# Keep objects in the screen at same position
+			top_after = document.body.scrollHeight
+			next_elem = elem.nextSibling
+			parent = elem.parentNode
+			parent.removeChild(elem)
+			top_before = document.body.scrollHeight
+			console.log("Scrollcorrection down", (top_before - top_after))
+			window.scrollTo(window.scrollX, window.scrollY + (top_before - top_after))
+			if next_elem
+				parent.insertBefore(elem, next_elem)
+			else
+				parent.appendChild(elem)
+			remove_func()
+			return
+
+		if props.animate_scrollfix and elem.getBoundingClientRect().top > 2000
+			remove_func()
+			# console.log "Skip up", elem
+			return
+
 		elem.className += " animate-inout"
 		elem.style.boxSizing = "border-box"
 		elem.style.height = elem.offsetHeight+"px"
