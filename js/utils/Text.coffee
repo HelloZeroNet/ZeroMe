@@ -22,7 +22,7 @@ class Text
 
 	renderLinks: (text) =>
 		text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')  # Sanitize html tags
-		text = text.replace /(https?:\/\/[^\s]+)/g, (match) ->
+		text = text.replace /(https?:\/\/[^\s)]+)/g, (match) ->
 			return "<a href=\"#{match.replace(/&amp;/g, '&')}\">#{match}</a>"  # UnSanitize &amp; -> & in links
 		text = text.replace(/\n/g, '<br>')
 		text = text.replace(/(@[A-Za-z0-9 ]+):/g, '<b class="reply-name">$1</b>:')
