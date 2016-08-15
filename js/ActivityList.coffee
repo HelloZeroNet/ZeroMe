@@ -105,7 +105,7 @@ class ActivityList extends Class
 			if not activity.subject.user_name
 				continue
 			activity_user_link = "?Profile/#{activity.hub}/#{activity.auth_address}/#{activity.cert_user_id}"
-			subject_user_link = "?Profile/#{activity.subject.hub}/#{activity.subject.auth_address}/#{activity.subject.cert_user_id}"
+			subject_user_link = "?Profile/#{activity.subject.hub}/#{activity.subject.auth_address}/#{activity.subject.cert_user_id or ''}"
 			subject_post_link = "?Post/#{activity.subject.hub}/#{activity.subject.auth_address}/#{activity.post_id}"
 			if activity.type == "post_like"
 				body = [
