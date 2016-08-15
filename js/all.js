@@ -1163,7 +1163,7 @@ function clone(obj) {
     function Animation() {}
 
     Animation.prototype.slideDown = function(elem, props) {
-      var border_bottom_width, border_top_width, cstyle, h, margin_bottom, margin_top, padding_bottom, padding_top, transition;
+      var border_bottom_width, border_top_width, cstyle, h, margin_bottom, margin_top, next_elem, padding_bottom, padding_top, parent, top_after, top_before, transition;
       h = elem.offsetHeight;
       cstyle = window.getComputedStyle(elem);
       margin_top = cstyle.marginTop;
@@ -1173,6 +1173,24 @@ function clone(obj) {
       border_top_width = cstyle.borderTopWidth;
       border_bottom_width = cstyle.borderBottomWidth;
       transition = cstyle.transition;
+      if (props.animate_scrollfix && elem.getBoundingClientRect().top < 0) {
+        top_after = document.body.scrollHeight;
+        next_elem = elem.nextSibling;
+        parent = elem.parentNode;
+        parent.removeChild(elem);
+        top_before = document.body.scrollHeight;
+        console.log("Scrollcorrection down", top_before - top_after);
+        window.scrollTo(window.scrollX, window.scrollY - (top_before - top_after));
+        if (next_elem) {
+          parent.insertBefore(elem, next_elem);
+        } else {
+          parent.appendChild(elem);
+        }
+        return;
+      }
+      if (props.animate_scrollfix && elem.getBoundingClientRect().top > 2000) {
+        return;
+      }
       elem.style.boxSizing = "border-box";
       elem.style.overflow = "hidden";
       if (!props.animate_noscale) {
@@ -1231,6 +1249,27 @@ function clone(obj) {
     };
 
     Animation.prototype.slideUp = function(elem, remove_func, props) {
+      var next_elem, parent, top_after, top_before;
+      if (props.animate_scrollfix && elem.getBoundingClientRect().top < 0 && elem.nextSibling) {
+        top_after = document.body.scrollHeight;
+        next_elem = elem.nextSibling;
+        parent = elem.parentNode;
+        parent.removeChild(elem);
+        top_before = document.body.scrollHeight;
+        console.log("Scrollcorrection down", top_before - top_after);
+        window.scrollTo(window.scrollX, window.scrollY + (top_before - top_after));
+        if (next_elem) {
+          parent.insertBefore(elem, next_elem);
+        } else {
+          parent.appendChild(elem);
+        }
+        remove_func();
+        return;
+      }
+      if (props.animate_scrollfix && elem.getBoundingClientRect().top > 2000) {
+        remove_func();
+        return;
+      }
       elem.className += " animate-inout";
       elem.style.boxSizing = "border-box";
       elem.style.height = elem.offsetHeight + "px";
@@ -1392,6 +1431,7 @@ function clone(obj) {
       this.attrs.onkeydown = this.handleKeydown;
       this.attrs.afterCreate = this.storeNode;
       this.attrs.rows = 1;
+      this.attrs.value = null;
       this.attrs.disabled = false;
     }
 
@@ -1479,7 +1519,7 @@ function clone(obj) {
       if (body == null) {
         body = null;
       }
-      if (body && !this.attrs.value) {
+      if (body && this.attrs.value === null) {
         this.setValue(body);
       }
       if (this.loading) {
@@ -2437,9 +2477,9 @@ function clone(obj) {
     __extends(ActivityList, _super);
 
     function ActivityList() {
+      this.update = __bind(this.update, this);
       this.render = __bind(this.render, this);
       this.handleMoreClick = __bind(this.handleMoreClick, this);
-      this.update = __bind(this.update, this);
       this.activities = null;
       this.directories = [];
       this.need_update = true;
@@ -2539,21 +2579,9 @@ function clone(obj) {
       })(this));
     };
 
-    ActivityList.prototype.update = function() {
-      this.need_update = false;
-      this.loading = true;
-      return this.queryActivities((function(_this) {
-        return function(res) {
-          _this.activities = res;
-          _this.loading = false;
-          return Page.projector.scheduleRender();
-        };
-      })(this));
-    };
-
     ActivityList.prototype.handleMoreClick = function() {
       this.limit += 20;
-      this.update();
+      this.update(0);
       return false;
     };
 
@@ -2623,7 +2651,13 @@ function clone(obj) {
 
     ActivityList.prototype.render = function() {
       if (this.need_update) {
-        this.update();
+        this.queryActivities((function(_this) {
+          return function(res) {
+            _this.activities = res;
+            _this.need_update = false;
+            return Page.projector.scheduleRender();
+          };
+        })(this));
       }
       if (this.activities === null) {
         return null;
@@ -2641,6 +2675,18 @@ function clone(obj) {
       ]);
     };
 
+    ActivityList.prototype.update = function(delay) {
+      if (delay == null) {
+        delay = 600;
+      }
+      return setTimeout(((function(_this) {
+        return function() {
+          _this.need_update = true;
+          return Page.projector.scheduleRender();
+        };
+      })(this)), delay);
+    };
+
     return ActivityList;
 
   })(Class);
@@ -2648,7 +2694,6 @@ function clone(obj) {
   window.ActivityList = ActivityList;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/AnonUser.coffee ---- */
@@ -2893,13 +2938,10 @@ function clone(obj) {
               rendered += 1;
               return h("a.avatar", {
                 title: user.user_name,
-                href: "#",
                 style: "background-image: url('" + avatar + "')"
               });
             };
-          })(this)), hub.users.length - rendered > 0 ? h("a.avatar.empty", {
-            href: "#"
-          }, "+" + (hub.users.length - rendered)) : void 0
+          })(this)), hub.users.length - rendered > 0 ? h("a.avatar.empty", "+" + (hub.users.length - rendered)) : void 0
         ]), h("div.name", hub.content.title), h("div.intro", hub.content.description)
       ]);
     };
@@ -2975,6 +3017,7 @@ function clone(obj) {
 }).call(this);
 
 
+
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentFeed.coffee ---- */
 
 
@@ -3034,7 +3077,7 @@ function clone(obj) {
         }
         this.post_list.need_update = true;
         this.activity_list.directories = this.post_list.directories;
-        this.activity_list.need_update = true;
+        this.activity_list.update();
       }
       return h("div#Content.center", [
         h("div.col-center", [
@@ -3720,6 +3763,7 @@ function clone(obj) {
       return h("div.comment-list", {
         enterAnimation: Animation.slideDown,
         exitAnimation: Animation.slideUp,
+        animate_scrollfix: true,
         animate_noscale: true
       }, [
         this.commenting ? h("div.comment-create", {
@@ -3734,6 +3778,7 @@ function clone(obj) {
             return h("div.comment", {
               id: comment_uri,
               key: comment_uri,
+              animate_scrollfix: true,
               enterAnimation: Animation.slideDown,
               exitAnimation: Animation.slideUp
             }, [
@@ -3773,6 +3818,7 @@ function clone(obj) {
         key: this.row.key,
         enterAnimation: Animation.slideDown,
         exitAnimation: Animation.slideUp,
+        animate_scrollfix: true,
         classes: {
           selected: this.row.selected
         }
@@ -4483,7 +4529,7 @@ function clone(obj) {
     };
 
     User.prototype.renderList = function(type) {
-      var classname, followed, link, title;
+      var classname, followed, link, seeding, title;
       if (type == null) {
         type = "normal";
       }
@@ -4493,6 +4539,7 @@ function clone(obj) {
       }
       link = this.getLink();
       followed = this.isFollowed();
+      seeding = this.isSeeding();
       if (followed) {
         title = "Unfollow";
       } else {
@@ -4501,7 +4548,8 @@ function clone(obj) {
       return h("div.user" + classname, {
         key: this.hub + "/" + this.auth_address,
         classes: {
-          followed: followed
+          followed: followed,
+          notseeding: !seeding
         },
         enterAnimation: Animation.slideDown,
         exitAnimation: Animation.slideUp
