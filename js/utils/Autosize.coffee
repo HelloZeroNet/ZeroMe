@@ -8,7 +8,6 @@ class Autosize extends Class
 		@attrs.onkeydown = @handleKeydown
 		@attrs.afterCreate = @storeNode
 		@attrs.rows = 1
-		@attrs.value = null
 		@attrs.disabled = false
 
 	@property 'loading',
@@ -58,7 +57,7 @@ class Autosize extends Class
 			return false
 
 	render: (body=null) =>
-		if body and @attrs.value == null
+		if body and @attrs.value == undefined
 			@setValue(body)
 		if @loading
 			attrs = clone(@attrs)
