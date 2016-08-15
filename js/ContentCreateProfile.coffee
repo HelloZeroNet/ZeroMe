@@ -81,9 +81,9 @@ class ContentCreateProfile extends Class
 						return ""
 					avatar = "merged-ZeroMe/#{hub.address}/#{user.directory}/avatar.#{user.avatar}"
 					rendered += 1
-					h("a.avatar", {title: user.user_name, href: "#", style: "background-image: url('#{avatar}')"})
+					h("a.avatar", {title: user.user_name, style: "background-image: url('#{avatar}')"})
 				if hub.users.length - rendered > 0
-					h("a.avatar.empty", {href: "#"}, "+#{hub.users.length - rendered}")
+					h("a.avatar.empty", "+#{hub.users.length - rendered}")
 			])
 			h("div.name", hub.content.title),
 			h("div.intro", hub.content.description)
