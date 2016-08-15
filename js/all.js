@@ -1431,7 +1431,6 @@ function clone(obj) {
       this.attrs.onkeydown = this.handleKeydown;
       this.attrs.afterCreate = this.storeNode;
       this.attrs.rows = 1;
-      this.attrs.value = null;
       this.attrs.disabled = false;
     }
 
@@ -1519,7 +1518,7 @@ function clone(obj) {
       if (body == null) {
         body = null;
       }
-      if (body && this.attrs.value === null) {
+      if (body && this.attrs.value === void 0) {
         this.setValue(body);
       }
       if (this.loading) {
@@ -1930,7 +1929,7 @@ function clone(obj) {
 
     Text.prototype.renderLinks = function(text) {
       text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-      text = text.replace(/(https?:\/\/[^\s]+)/g, function(match) {
+      text = text.replace(/(https?:\/\/[^\s)]+)/g, function(match) {
         return "<a href=\"" + (match.replace(/&amp;/g, '&')) + "\">" + match + "</a>";
       });
       text = text.replace(/\n/g, '<br>');
@@ -2595,7 +2594,7 @@ function clone(obj) {
           continue;
         }
         activity_user_link = "?Profile/" + activity.hub + "/" + activity.auth_address + "/" + activity.cert_user_id;
-        subject_user_link = "?Profile/" + activity.subject.hub + "/" + activity.subject.auth_address + "/" + activity.subject.cert_user_id;
+        subject_user_link = "?Profile/" + activity.subject.hub + "/" + activity.subject.auth_address + "/" + (activity.subject.cert_user_id || '');
         subject_post_link = "?Post/" + activity.subject.hub + "/" + activity.subject.auth_address + "/" + activity.post_id;
         if (activity.type === "post_like") {
           body = [
@@ -3017,7 +3016,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentFeed.coffee ---- */
 
 
@@ -3076,7 +3074,20 @@ function clone(obj) {
           this.post_list.directories = "all";
         }
         this.post_list.need_update = true;
-        this.activity_list.directories = this.post_list.directories;
+        if (this.type === "followed") {
+          this.activity_list.directories = (function() {
+            var _ref, _results;
+            _ref = Page.user.followed_users;
+            _results = [];
+            for (key in _ref) {
+              followed = _ref[key];
+              _results.push("data/users/" + (key.split('/')[1]));
+            }
+            return _results;
+          })();
+        } else {
+          this.activity_list.directories = "all";
+        }
         this.activity_list.update();
       }
       return h("div#Content.center", [
@@ -3119,6 +3130,7 @@ function clone(obj) {
   window.ContentFeed = ContentFeed;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentProfile.coffee ---- */
@@ -4181,7 +4193,7 @@ function clone(obj) {
           return p_followed_users.resolve();
         };
       })(this));
-      Page.cmd("dbQuery", ["SELECT * FROM post_like WHERE json_id = " + this.row.json_id], (function(_this) {
+      Page.cmd("dbQuery", ["SELECT post_like.* FROM json LEFT JOIN post_like USING (json_id) WHERE directory = 'data/users/" + this.auth_address + "' AND post_uri IS NOT NULL"], (function(_this) {
         return function(res) {
           var row, _i, _len;
           _this.likes = {};
