@@ -209,6 +209,7 @@ pre code {
 .users.gray .name { color: #333; }
 
 .user .uploadable .icon-upload { position: absolute; margin-left: -48px; z-index: 999; margin-top: 7px }
+.user.notseeding .button-follow { border-color: #E0E0E0; }
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/ZeroMe.css ---- */
