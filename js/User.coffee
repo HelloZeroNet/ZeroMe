@@ -35,7 +35,7 @@ class User extends Class
 			p_followed_users.resolve()
 
 		# Load likes
-		Page.cmd "dbQuery", ["SELECT * FROM post_like WHERE json_id = #{@row.json_id}"], (res) =>
+		Page.cmd "dbQuery", ["SELECT post_like.* FROM json LEFT JOIN post_like USING (json_id) WHERE directory = 'data/users/#{@auth_address}' AND post_uri IS NOT NULL"], (res) =>
 			@likes = {}
 			for row in res
 				@likes[row.post_uri] = true
