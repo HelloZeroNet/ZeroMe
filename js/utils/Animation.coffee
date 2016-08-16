@@ -116,8 +116,8 @@ class Animation
 		), 1
 		elem.addEventListener "transitionend", (e) ->
 			if e.propertyName == "opacity" or e.elapsedTime >= 0.6
-				remove_func()
 				elem.removeEventListener "transitionend", arguments.callee, false
+				remove_func()
 
 
 	showRight: (elem, props) ->
