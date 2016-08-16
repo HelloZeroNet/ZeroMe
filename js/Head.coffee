@@ -75,7 +75,7 @@ class Head extends Class
 				 'comment' AS type,
 				 comment.date_added AS date_added,
 				 'Your post' AS title,
-				 comment.body AS body,
+				 '@' || json.user_name || ': ' || comment.body AS body,
 				 '?Post/' || site || '/' || REPLACE(post_uri, '_', '/') AS url
 				FROM comment
 				LEFT JOIN json USING (json_id)
