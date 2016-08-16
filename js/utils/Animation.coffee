@@ -10,7 +10,7 @@ class Animation
 		border_bottom_width = cstyle.borderBottomWidth
 		transition = cstyle.transition
 
-		if props.animate_scrollfix and elem.getBoundingClientRect().top < 0
+		if props.animate_scrollfix and window.scrollY > 1000 and elem.getBoundingClientRect().top < 0
 			# Keep objects in the screen at same position
 			top_after = document.body.scrollHeight
 			next_elem = elem.nextSibling
@@ -75,7 +75,7 @@ class Animation
 
 
 	slideUp: (elem, remove_func, props) ->
-		if props.animate_scrollfix and elem.getBoundingClientRect().top < 0 and elem.nextSibling
+		if props.animate_scrollfix and window.scrollY > 1000 and elem.getBoundingClientRect().top < 0 and elem.nextSibling
 			# Keep objects in the screen at same position
 			top_after = document.body.scrollHeight
 			next_elem = elem.nextSibling
