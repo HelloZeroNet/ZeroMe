@@ -173,6 +173,8 @@ class ContentProfile extends Class
 				@user_list.render(".gray"),
 			]),
 			h("div.col-center", [
+				if @owned and not @filter_post_id
+					h("div.post-create-container", {enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, @post_create.render())
 				@post_list.render()
 				#if @filter_post_id
 				#	h("a.more.small", {style: "color: #AAA", key: "all", href: @user.getLink(), onclick: Page.handleLinkClick, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, "Show more posts by this user...")
