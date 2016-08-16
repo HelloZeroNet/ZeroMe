@@ -42,6 +42,7 @@ class ContentProfile extends Class
 		])
 
 	setUser: (@hub, @auth_address) =>
+		@loaded = false
 		@log "setUser", @hub, @auth_address
 		if not @post_list or @post_list.directories[0] != "data/users/"+@auth_address
 			# Changed user, create clean status objects
@@ -115,15 +116,23 @@ class ContentProfile extends Class
 			@activity_list.directories = ["data/users/#{@auth_address}"]
 
 			# Update profile details
-			@user.get @hub, @auth_address, =>
-				@owned = @user.auth_address == Page.user?.auth_address
-				if @owned and not @editable_intro
-					@editable_intro = new Editable("div", @handleIntroSave)
-					@editable_intro.render_function = Text.renderMarked
-					@editable_user_name = new Editable("span", @handleUserNameSave)
-					@uploadable_avatar = new Uploadable(@handleAvatarUpload)
-				Page.projector.scheduleRender()
-				@loaded = true
+			@user.get @hub, @auth_address, (res) =>
+				if res
+					@owned = @user.auth_address == Page.user?.auth_address
+					if @owned and not @editable_intro
+						@editable_intro = new Editable("div", @handleIntroSave)
+						@editable_intro.render_function = Text.renderMarked
+						@editable_user_name = new Editable("span", @handleUserNameSave)
+						@uploadable_avatar = new Uploadable(@handleAvatarUpload)
+						@post_create = new PostCreate()
+					Page.projector.scheduleRender()
+					@loaded = true
+				else
+					Page.queryUserdb @auth_address, (row) =>
+						@user.setRow(row)
+						Page.projector.scheduleRender()
+						@loaded = true
+
 
 			if not Page.merged_sites[@hub]
 				# Not seeded user, get details from userdb
@@ -132,7 +141,7 @@ class ContentProfile extends Class
 					Page.projector.scheduleRender()
 					@loaded = true
 
-		if not @user?.row
+		if not @user?.row?.user_name
 			return h("div#Content.center.#{@auth_address}", [])
 
 		if not Page.merged_sites[@hub]
