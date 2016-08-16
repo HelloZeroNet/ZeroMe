@@ -1173,7 +1173,7 @@ function clone(obj) {
       border_top_width = cstyle.borderTopWidth;
       border_bottom_width = cstyle.borderBottomWidth;
       transition = cstyle.transition;
-      if (props.animate_scrollfix && elem.getBoundingClientRect().top < 0) {
+      if (props.animate_scrollfix && window.scrollY > 1000 && elem.getBoundingClientRect().top < 0) {
         top_after = document.body.scrollHeight;
         next_elem = elem.nextSibling;
         parent = elem.parentNode;
@@ -1250,7 +1250,7 @@ function clone(obj) {
 
     Animation.prototype.slideUp = function(elem, remove_func, props) {
       var next_elem, parent, top_after, top_before;
-      if (props.animate_scrollfix && elem.getBoundingClientRect().top < 0 && elem.nextSibling) {
+      if (props.animate_scrollfix && window.scrollY > 1000 && elem.getBoundingClientRect().top < 0 && elem.nextSibling) {
         top_after = document.body.scrollHeight;
         next_elem = elem.nextSibling;
         parent = elem.parentNode;
@@ -1290,8 +1290,8 @@ function clone(obj) {
       }), 1);
       return elem.addEventListener("transitionend", function(e) {
         if (e.propertyName === "opacity" || e.elapsedTime >= 0.6) {
-          remove_func();
-          return elem.removeEventListener("transitionend", arguments.callee, false);
+          elem.removeEventListener("transitionend", arguments.callee, false);
+          return remove_func();
         }
       });
     };
@@ -1399,6 +1399,7 @@ function clone(obj) {
   window.Animation = new Animation();
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Autosize.coffee ---- */
@@ -1771,10 +1772,11 @@ function clone(obj) {
 
     Menu.prototype.toggle = function() {
       if (this.visible) {
-        return this.hide();
+        this.hide();
       } else {
-        return this.show();
+        this.show();
       }
+      return Page.projector.scheduleRender();
     };
 
     Menu.prototype.addItem = function(title, cb, selected) {
@@ -1795,13 +1797,14 @@ function clone(obj) {
     };
 
     Menu.prototype.handleClick = function(e) {
-      var cb, keep_menu, title, _i, _len, _ref, _ref1;
+      var cb, item, keep_menu, selected, title, _i, _len, _ref;
       keep_menu = false;
       _ref = this.items;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        _ref1 = _ref[_i], title = _ref1[0], cb = _ref1[1];
+        item = _ref[_i];
+        title = item[0], cb = item[1], selected = item[2];
         if (title === e.target.textContent) {
-          keep_menu = cb();
+          keep_menu = cb(item);
         }
       }
       if (keep_menu !== true) {
@@ -1934,6 +1937,7 @@ function clone(obj) {
       });
       text = text.replace(/\n/g, '<br>');
       text = text.replace(/(@[A-Za-z0-9 ]+):/g, '<b class="reply-name">$1</b>:');
+      text = this.fixHtmlLinks(text);
       return text;
     };
 
@@ -1942,12 +1946,14 @@ function clone(obj) {
     };
 
     Text.prototype.fixHtmlLinks = function(text) {
+      text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110\/(Me.ZeroNetwork.bit|1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH)\/\?/gi, 'href="?');
       if (window.is_proxy) {
-        text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="http://zero');
+        text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/gi, 'href="http://zero');
+        text = text.replace(/http:\/\/zero\/([^\/]+\.bit)/, "http://$1");
       } else {
         text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="');
       }
-      text = text.replace('href="?', 'onclick="return Page.handleLinkClick(window.event)" href="?');
+      text = text.replace(/href="\?/g, 'onclick="return Page.handleLinkClick(window.event)" href="?');
       return text;
     };
 
@@ -3132,7 +3138,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentProfile.coffee ---- */
 
 
@@ -3200,6 +3205,7 @@ function clone(obj) {
     ContentProfile.prototype.setUser = function(_at_hub, _at_auth_address) {
       this.hub = _at_hub;
       this.auth_address = _at_auth_address;
+      this.loaded = false;
       this.log("setUser", this.hub, this.auth_address);
       if (!this.post_list || this.post_list.directories[0] !== "data/users/" + this.auth_address) {
         this.post_list = new PostList();
@@ -3279,7 +3285,7 @@ function clone(obj) {
     };
 
     ContentProfile.prototype.render = function() {
-      var _ref, _ref1, _ref2, _ref3;
+      var _ref, _ref1, _ref2, _ref3, _ref4;
       if (this.need_update) {
         this.log("Updating");
         this.need_update = false;
@@ -3295,17 +3301,26 @@ function clone(obj) {
         }
         this.activity_list.directories = ["data/users/" + this.auth_address];
         this.user.get(this.hub, this.auth_address, (function(_this) {
-          return function() {
+          return function(res) {
             var _ref3;
-            _this.owned = _this.user.auth_address === ((_ref3 = Page.user) != null ? _ref3.auth_address : void 0);
-            if (_this.owned && !_this.editable_intro) {
-              _this.editable_intro = new Editable("div", _this.handleIntroSave);
-              _this.editable_intro.render_function = Text.renderMarked;
-              _this.editable_user_name = new Editable("span", _this.handleUserNameSave);
-              _this.uploadable_avatar = new Uploadable(_this.handleAvatarUpload);
+            if (res) {
+              _this.owned = _this.user.auth_address === ((_ref3 = Page.user) != null ? _ref3.auth_address : void 0);
+              if (_this.owned && !_this.editable_intro) {
+                _this.editable_intro = new Editable("div", _this.handleIntroSave);
+                _this.editable_intro.render_function = Text.renderMarked;
+                _this.editable_user_name = new Editable("span", _this.handleUserNameSave);
+                _this.uploadable_avatar = new Uploadable(_this.handleAvatarUpload);
+                _this.post_create = new PostCreate();
+              }
+              Page.projector.scheduleRender();
+              return _this.loaded = true;
+            } else {
+              return Page.queryUserdb(_this.auth_address, function(row) {
+                _this.user.setRow(row);
+                Page.projector.scheduleRender();
+                return _this.loaded = true;
+              });
             }
-            Page.projector.scheduleRender();
-            return _this.loaded = true;
           };
         })(this));
         if (!Page.merged_sites[this.hub]) {
@@ -3318,7 +3333,7 @@ function clone(obj) {
           })(this));
         }
       }
-      if (!((_ref3 = this.user) != null ? _ref3.row : void 0)) {
+      if (!((_ref3 = this.user) != null ? (_ref4 = _ref3.row) != null ? _ref4.user_name : void 0 : void 0)) {
         return h("div#Content.center." + this.auth_address, []);
       }
       if (!Page.merged_sites[this.hub]) {
@@ -3359,7 +3374,12 @@ function clone(obj) {
           ]), this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
             afterCreate: Animation.show
           }, ["Following"]) : void 0, this.user_list.render(".gray")
-        ]), h("div.col-center", [this.post_list.render()])
+        ]), h("div.col-center", [
+          this.owned && !this.filter_post_id ? h("div.post-create-container", {
+            enterAnimation: Animation.slideDown,
+            exitAnimation: Animation.slideUp
+          }, this.post_create.render()) : void 0, this.post_list.render()
+        ])
       ]);
     };
 
@@ -3463,8 +3483,10 @@ function clone(obj) {
 
     function Head() {
       this.render = __bind(this.render, this);
-      this.renderSettings = __bind(this.renderSettings, this);
-      return Head.__super__.constructor.apply(this, arguments);
+      this.saveFollows = __bind(this.saveFollows, this);
+      this.handleMenuClick = __bind(this.handleMenuClick, this);
+      this.menu = new Menu();
+      this.follows = [];
     }
 
     Head.prototype.handleSelectUserClick = function() {
@@ -3485,8 +3507,54 @@ function clone(obj) {
       return false;
     };
 
-    Head.prototype.renderSettings = function() {
-      return "";
+    Head.prototype.handleMenuClick = function() {
+      var _ref;
+      if (!((_ref = Page.site_info) != null ? _ref.cert_user_id : void 0)) {
+        return this.handleSelectUserClick();
+      }
+      Page.cmd("feedListFollow", [], (function(_this) {
+        return function(_at_follows) {
+          _this.follows = _at_follows;
+          _this.menu.items = [];
+          _this.menu.items.push([
+            "Follow username mentions", (function(item) {
+              var selected;
+              selected = !_this.follows["Mentions"];
+              _this.follows["Mentions"] = selected;
+              item[2] = selected;
+              _this.saveFollows();
+              Page.projector.scheduleRender();
+              return true;
+            }), _this.follows["Mentions"]
+          ]);
+          _this.menu.items.push([
+            "Follow comments on your posts", (function(item) {
+              var selected;
+              selected = !_this.follows["Comments on your posts"];
+              _this.follows["Comments on your posts"] = selected;
+              item[2] = selected;
+              _this.saveFollows();
+              Page.projector.scheduleRender();
+              return true;
+            }), _this.follows["Comments on your posts"]
+          ]);
+          _this.menu.toggle();
+          return Page.projector.sche;
+        };
+      })(this));
+      return false;
+    };
+
+    Head.prototype.saveFollows = function() {
+      var out;
+      out = {};
+      if (this.follows["Mentions"]) {
+        out["Mentions"] = ["SELECT 'mention' AS type, comment.date_added AS date_added, 'a comment' AS title, '@' || user_name || ': ' || comment.body AS body, '?Post/' || json.site || '/' || REPLACE(post_uri, '_', '/') AS url FROM comment LEFT JOIN json USING (json_id) WHERE comment.body LIKE '%@" + Page.user.row.user_name + "%' UNION SELECT 'mention' AS type, post.date_added AS date_added, 'In ' || json.user_name || \"'s post\" AS title, post.body AS body, '?Post/' || json.site || '/' || REPLACE(json.directory, 'data/users/', '') || '/' || post_id AS url FROM post LEFT JOIN json USING (json_id) WHERE post.body LIKE '%@" + Page.user.row.user_name + "%'", [""]];
+      }
+      if (this.follows["Comments on your posts"]) {
+        out["Comments on your posts"] = ["SELECT 'comment' AS type, comment.date_added AS date_added, 'Your post' AS title, comment.body AS body, '?Post/' || site || '/' || REPLACE(post_uri, '_', '/') AS url FROM comment LEFT JOIN json USING (json_id) WHERE post_uri LIKE '" + Page.user.auth_address + "%'", [""]];
+      }
+      return Page.cmd("feedFollow", [out]);
     };
 
     Head.prototype.render = function() {
@@ -3504,7 +3572,10 @@ function clone(obj) {
           }, Page.user.row.user_name), h("a.address", {
             href: "#Select+user",
             onclick: this.handleSelectUserClick
-          }, Page.site_info.cert_user_id)), this.renderSettings()
+          }, Page.site_info.cert_user_id)), h("a.settings", {
+            href: "#Settings",
+            onclick: this.handleMenuClick
+          }, "\u22EE"), this.menu.render()
         ]) : !((_ref1 = Page.user) != null ? _ref1.hub : void 0) && ((_ref2 = Page.site_info) != null ? _ref2.cert_user_id : void 0) ? h("div.right.selected", [
           h("div.user", h("a.name.link", {
             href: "?Create+profile",
@@ -3512,7 +3583,10 @@ function clone(obj) {
           }, "Create profile"), h("a.address", {
             href: "#Select+user",
             onclick: this.handleSelectUserClick
-          }, Page.site_info.cert_user_id)), this.renderSettings()
+          }, Page.site_info.cert_user_id)), this.menu.render(), h("a.settings", {
+            href: "#Settings",
+            onclick: this.handleMenuClick
+          }, "\u22EE")
         ]) : !((_ref3 = Page.user) != null ? _ref3.hub : void 0) && Page.site_info ? h("div.right.unknown", [
           h("div.user", h("a.name.link", {
             href: "#Select+user",
@@ -3520,7 +3594,10 @@ function clone(obj) {
           }, "Visitor"), h("a.address", {
             href: "#Select+user",
             onclick: this.handleSelectUserClick
-          }, "Select your account")), this.renderSettings()
+          }, "Select your account")), this.menu.render(), h("a.settings", {
+            href: "#Settings",
+            onclick: this.handleMenuClick
+          }, "\u22EE")
         ]) : h("div.right.unknown")
       ]);
     };
@@ -4298,22 +4375,6 @@ function clone(obj) {
       return h("a.avatar", attrs);
     };
 
-    User.prototype.saveUserdb = function(data, cb) {
-      if (cb == null) {
-        cb = null;
-      }
-      return Page.cmd("fileWrite", [this.getPath(Page.userdb) + "/content.json", Text.fileEncode(data)], (function(_this) {
-        return function(res_write) {
-          return Page.cmd("sitePublish", {
-            "inner_path": _this.getPath(Page.userdb) + "/content.json"
-          }, function(res_sign) {
-            _this.log("Userdb save result", res_write, res_sign);
-            return typeof cb === "function" ? cb(res_sign) : void 0;
-          });
-        };
-      })(this));
-    };
-
     User.prototype.save = function(data, site, cb) {
       if (site == null) {
         site = this.hub;
@@ -4321,7 +4382,7 @@ function clone(obj) {
       if (cb == null) {
         cb = null;
       }
-      Page.cmd("fileWrite", [this.getPath(site) + "/data.json", Text.fileEncode(data)], (function(_this) {
+      return Page.cmd("fileWrite", [this.getPath(site) + "/data.json", Text.fileEncode(data)], (function(_this) {
         return function(res_write) {
           if (Page.server_info.rev > 1400) {
             Page.content.update();
@@ -4332,41 +4393,52 @@ function clone(obj) {
           return Page.cmd("sitePublish", {
             "inner_path": _this.getPath(site) + "/data.json"
           }, function(res_sign) {
-            return _this.log("Save result", res_write, res_sign);
+            _this.log("Save result", res_write, res_sign);
+            if (site === _this.hub && res_write === "ok" && res_sign === "ok") {
+              return _this.saveUserdb(data);
+            }
           });
         };
       })(this));
-      if (site === this.hub) {
-        return Page.cmd("fileGet", [this.getPath(Page.userdb) + "/content.json", false], (function(_this) {
-          return function(userdb_data) {
-            var changed, field, _i, _len, _ref;
-            userdb_data = JSON.parse(userdb_data);
-            changed = false;
-            if (!(userdb_data != null ? userdb_data.user : void 0)) {
-              userdb_data = {
-                user: [
-                  {
-                    date_added: Time.timestamp()
-                  }
-                ]
-              };
+    };
+
+    User.prototype.saveUserdb = function(data, cb) {
+      return Page.cmd("fileGet", [this.getPath(Page.userdb) + "/content.json", false], (function(_this) {
+        return function(userdb_data) {
+          var changed, field, _i, _len, _ref;
+          userdb_data = JSON.parse(userdb_data);
+          changed = false;
+          if (!(userdb_data != null ? userdb_data.user : void 0)) {
+            userdb_data = {
+              user: [
+                {
+                  date_added: Time.timestamp()
+                }
+              ]
+            };
+            changed = true;
+          }
+          _ref = ["avatar", "hub", "intro", "user_name"];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            field = _ref[_i];
+            if (userdb_data.user[0][field] !== data[field]) {
               changed = true;
+              _this.log("Changed in profile:", field);
             }
-            _ref = ["avatar", "hub", "intro", "user_name"];
-            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-              field = _ref[_i];
-              if (userdb_data.user[0][field] !== data[field]) {
-                changed = true;
-                _this.log("Changed in profile:", field);
-              }
-              userdb_data.user[0][field] = data[field];
-            }
-            if (changed) {
-              return _this.saveUserdb(userdb_data);
-            }
-          };
-        })(this));
-      }
+            userdb_data.user[0][field] = data[field];
+          }
+          if (changed) {
+            return Page.cmd("fileWrite", [_this.getPath(Page.userdb) + "/content.json", Text.fileEncode(userdb_data)], function(res_write) {
+              return Page.cmd("sitePublish", {
+                "inner_path": _this.getPath(Page.userdb) + "/content.json"
+              }, function(res_sign) {
+                _this.log("Userdb save result", res_write, res_sign);
+                return typeof cb === "function" ? cb(res_sign) : void 0;
+              });
+            });
+          }
+        };
+      })(this));
     };
 
     User.prototype.like = function(site, post_uri, cb) {
