@@ -26,6 +26,7 @@ class Text
 			return "<a href=\"#{match.replace(/&amp;/g, '&')}\">#{match}</a>"  # UnSanitize &amp; -> & in links
 		text = text.replace(/\n/g, '<br>')
 		text = text.replace(/(@[A-Za-z0-9 ]+):/g, '<b class="reply-name">$1</b>:')
+		text = @fixHtmlLinks(text)
 
 		return text
 
@@ -35,12 +36,14 @@ class Text
 	# Convert zeronet html links to relaitve
 	fixHtmlLinks: (text) ->
 		# Fix site links
+		text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110\/(Me.ZeroNetwork.bit|1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH)\/\?/gi, 'href="?')
 		if window.is_proxy
-			text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="http://zero')
+			text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/gi, 'href="http://zero')
+			text = text.replace(/http:\/\/zero\/([^\/]+\.bit)/, "http://$1")
 		else
 			text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="')
 		# Add no-refresh linking to local links
-		text = text.replace('href="?', 'onclick="return Page.handleLinkClick(window.event)" href="?')
+		text = text.replace(/href="\?/g, 'onclick="return Page.handleLinkClick(window.event)" href="?')
 		return text
 
 
