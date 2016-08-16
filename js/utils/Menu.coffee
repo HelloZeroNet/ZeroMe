@@ -17,6 +17,7 @@ class Menu
 			@hide()
 		else
 			@show()
+		Page.projector.scheduleRender()
 
 
 	addItem: (title, cb, selected=false) ->
@@ -34,9 +35,10 @@ class Menu
 
 	handleClick: (e) =>
 		keep_menu = false
-		for [title, cb] in @items
+		for item in @items
+			[title, cb, selected] = item
 			if title == e.target.textContent
-				keep_menu = cb()
+				keep_menu = cb(item)
 		if keep_menu != true
 			@hide()
 		return false
