@@ -13,7 +13,7 @@
 }
 .users .user.followed .button-follow-big .icon-follow { transform: rotate(45deg); }
 
-.user .name { font-weight: bold; color: #5d68ff; overflow: hidden; max-width: 200px; display: inline-block; white-space: nowrap; vertical-align: middle; text-overflow: ellipsis; }
+.user .name { font-weight: bold; color: #5d68ff; overflow: hidden; max-width: 200px; display: inline-block; white-space: nowrap; vertical-align: text-bottom; text-overflow: ellipsis; line-height: 20px; }
 .user .address, .user .cert_user_id { font-size: 13px; color: #AAA; }
 .user .avatar { position: absolute; margin-left: -67px }
 

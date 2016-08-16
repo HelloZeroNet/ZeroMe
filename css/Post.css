@@ -3,7 +3,7 @@
 	border: 1px solid #EEF0F1; border-bottom: 2px solid #ECEDEE; margin-bottom: 12px; transition: all 0.3s;
 }
 .post.selected { box-shadow: 0px 0px 40px rgba(0,0,0,0.1); }
-.post .user { padding-bottom: 15px; height: 21px; line-height: 19px; }
+.post .user { padding-bottom: 15px; height: 21px; line-height: 20px; }
 .post .user .address, .post .added, .post .sep { font-size: 14px; color: #AAA;}
 .post .body { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; line-height: 1.5em; color: #333; word-break: break-word; }
 .post .reply-name { font-size: 14px; font-family: Roboto, Helvetica, Arial; color: #000 }
@@ -20,6 +20,7 @@ pre code {
 	border: solid 1px #e1e4e5; padding: 10px; background-color: #FBFBFB; font-family: Consolas, Monaco, monospace; border-bottom: 2px solid #e1e4e5; line-height: 1em;
 }
 
+.post-create-container { margin-bottom: 12px }
 .post-create { transition: all 0.6s }
 .post-create .postfield {
 	font-family: Roboto; font-size: 16px; border: 1px solid white; padding: 15px 15px;
