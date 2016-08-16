@@ -28,3 +28,4 @@
 
 .user .uploadable .icon-upload { position: absolute; margin-left: -48px; z-index: 999; margin-top: 7px }
 .user.notseeding .button-follow { border-color: #E0E0E0; }
+.user.card.notseeding .button-follow { border-color: #EFEFEF; }
