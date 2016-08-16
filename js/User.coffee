@@ -105,12 +105,6 @@ class User extends Class
 			attrs.style = "background: linear-gradient("+Text.toColor(@auth_address)+","+Text.toColor(@auth_address.slice(-5))+")"
 		h("a.avatar", attrs)
 
-	saveUserdb: (data, cb=null) ->
-		Page.cmd "fileWrite", [@getPath(Page.userdb)+"/content.json", Text.fileEncode(data)], (res_write) =>
-			Page.cmd "sitePublish", {"inner_path": @getPath(Page.userdb)+"/content.json"}, (res_sign) =>
-				@log "Userdb save result", res_write, res_sign
-				cb?(res_sign)
-
 	save: (data, site=@hub, cb=null) ->
 		Page.cmd "fileWrite", [@getPath(site)+"/data.json", Text.fileEncode(data)], (res_write) =>
 			if Page.server_info.rev > 1400
@@ -119,26 +113,29 @@ class User extends Class
 			cb?(res_write)
 			Page.cmd "sitePublish", {"inner_path": @getPath(site)+"/data.json"}, (res_sign) =>
 				@log "Save result", res_write, res_sign
+				if site == @hub and res_write == "ok" and res_sign == "ok"
+					@saveUserdb(data)
 
-		# Update userdb
-		if site == @hub
-			Page.cmd "fileGet", [@getPath(Page.userdb)+"/content.json", false], (userdb_data) =>
-				userdb_data = JSON.parse(userdb_data)
-				changed = false
-				if not userdb_data?.user
-					userdb_data = {
-						user: [{date_added: Time.timestamp()}]
-					}
+	saveUserdb: (data, cb) ->
+		Page.cmd "fileGet", [@getPath(Page.userdb)+"/content.json", false], (userdb_data) =>
+			userdb_data = JSON.parse(userdb_data)
+			changed = false
+			if not userdb_data?.user
+				userdb_data = {
+					user: [{date_added: Time.timestamp()}]
+				}
+				changed = true
+			for field in ["avatar", "hub", "intro", "user_name"]
+				if userdb_data.user[0][field] != data[field]
 					changed = true
-				for field in ["avatar", "hub", "intro", "user_name"]
-					if userdb_data.user[0][field] != data[field]
-						changed = true
-						@log "Changed in profile:", field
-					userdb_data.user[0][field] = data[field]
+					@log "Changed in profile:", field
+				userdb_data.user[0][field] = data[field]
 
-				if changed
-					@saveUserdb(userdb_data)
-
+			if changed
+				Page.cmd "fileWrite", [@getPath(Page.userdb)+"/content.json", Text.fileEncode(userdb_data)], (res_write) =>
+					Page.cmd "sitePublish", {"inner_path": @getPath(Page.userdb)+"/content.json"}, (res_sign) =>
+						@log "Userdb save result", res_write, res_sign
+						cb?(res_sign)
 
 	like: (site, post_uri, cb=null) ->
 		@log "Like", site, post_uri
