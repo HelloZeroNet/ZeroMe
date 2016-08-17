@@ -40,15 +40,12 @@
 }
 .icon-share:empty { padding-right: 0px }
 
-.icon-heart.active { color: #5d68ff }
-.icon-heart.active:before, .icon-heart.active:after { background: #5d68ff; }
-.icon-heart { position: relative; height: 30px; padding-left: 30px; padding-right: 10px; }
-.icon-heart:empty { padding-right: 0px }
-.icon-heart:before, .icon-heart:after {
-	position: absolute; content: ""; left: 15px; top: 8px; width: 8px; height: 13px; transition: all 0.6s;
-	background: #AAA; /*#FA6C8D;*/ /*border-radius: 25px 25px 0 0;*/ transform: rotate(-45deg); transform-origin: 0 100%
+.icon-heart {
+	padding-left: 32px; padding-right: 2px; background-position: 7px 5px;
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAASBAMAAACp/uMjAAAAMFBMVEUAAACqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqobnPPZAAAAD3RSTlMADcS4pt/IwK9qXE9ELRXt9n51AAAAaElEQVQI12PABRhtGRguC4CZQl8f8MUrggX1/yeK/f8kABL8//+L////imBBEAAJM/+HAgMGHhjzAAPDfgjrN1AbF4S5AGTafBDrJ9gKFhDTAWJz////P6COYAaZBAX13+FuY1JAcywAx1BERa6oCoIAAAAASUVORK5CYII=')
 }
-.icon-heart:after { left: 7px; transform: rotate(45deg); transform-origin :100% 100% }
+.icon-heart.active { color: #5d68ff; filter: sepia(1) hue-rotate(192deg) brightness(0.55) saturate(5) }
+
 .icon-up { font-weight: normal !important; font-size: 15px; font-family: Tahoma; vertical-align: -4px; padding-right: 5px; display: inline; height: 1px; }
 .icon-upload {
 	width: 26px; height: 26px; background-repeat: no-repeat;
