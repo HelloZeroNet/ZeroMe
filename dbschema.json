@@ -97,5 +97,9 @@
 			"indexes": ["CREATE INDEX json_id ON user(json_id)", "CREATE INDEX date_added ON user(date_added)"],
 			"schema_changed": 3
 		}
+	},
+	"feeds": {
+		"Posts": "SELECT 'post' AS type, post.date_added AS date_added, 'In ' || json.user_name || \"'s post\" AS title, post.body AS body, '?Post/' || json.site || '/' || REPLACE(json.directory, 'data/users/', '') || '/' || post_id AS url FROM post LEFT JOIN json USING (json_id)",
+		"Comments": "SELECT 'comment' AS type, comment.date_added AS date_added, 'a post' AS title, '@' || user_name || ': ' || comment.body AS body, '?Post/' || json.site || '/' || REPLACE(post_uri, '_', '/') AS url FROM comment LEFT JOIN json USING (json_id)"
 	}
 }
