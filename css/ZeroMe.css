@@ -36,7 +36,7 @@ h5 { font-weight: normal; color: rgba(0, 0, 0, 0.5) }
 .col-left, .col-center, .col-right { width: 66%; display: inline-block; vertical-align: top; box-sizing: border-box }
 .col-left, .col-right { width: 33%; padding-left: 20px; margin-top: 90px; transition: all 0.3s }
 .col-left { padding-left: 0px; padding-right: 20px; margin-top: 0px; transition: all 0.3s }
-.col-left.faded { opacity: 0.3 }
+.col-left.faded { opacity: 0.3; filter: grayscale(1); }
 
 /* Card */
 .cards { margin-right: -20px }
