@@ -1173,7 +1173,7 @@ function clone(obj) {
       border_top_width = cstyle.borderTopWidth;
       border_bottom_width = cstyle.borderBottomWidth;
       transition = cstyle.transition;
-      if (props.animate_scrollfix && window.scrollY > 1000 && elem.getBoundingClientRect().top < 0) {
+      if (props.animate_scrollfix && window.scrollY > 300 && elem.getBoundingClientRect().top < 0) {
         top_after = document.body.scrollHeight;
         next_elem = elem.nextSibling;
         parent = elem.parentNode;
@@ -1188,7 +1188,7 @@ function clone(obj) {
         }
         return;
       }
-      if (props.animate_scrollfix && elem.getBoundingClientRect().top > 2000) {
+      if (props.animate_scrollfix && elem.getBoundingClientRect().top > 1600) {
         return;
       }
       elem.style.boxSizing = "border-box";
@@ -1250,7 +1250,7 @@ function clone(obj) {
 
     Animation.prototype.slideUp = function(elem, remove_func, props) {
       var next_elem, parent, top_after, top_before;
-      if (props.animate_scrollfix && window.scrollY > 1000 && elem.getBoundingClientRect().top < 0 && elem.nextSibling) {
+      if (props.animate_scrollfix && window.scrollY > 300 && elem.getBoundingClientRect().top < 0 && elem.nextSibling) {
         top_after = document.body.scrollHeight;
         next_elem = elem.nextSibling;
         parent = elem.parentNode;
@@ -1266,7 +1266,7 @@ function clone(obj) {
         remove_func();
         return;
       }
-      if (props.animate_scrollfix && elem.getBoundingClientRect().top > 2000) {
+      if (props.animate_scrollfix && elem.getBoundingClientRect().top > 1600) {
         remove_func();
         return;
       }
@@ -3484,6 +3484,7 @@ function clone(obj) {
       this.render = __bind(this.render, this);
       this.saveFollows = __bind(this.saveFollows, this);
       this.handleMenuClick = __bind(this.handleMenuClick, this);
+      this.handleMenuItemClick = __bind(this.handleMenuItemClick, this);
       this.menu = new Menu();
       this.follows = [];
     }
@@ -3506,6 +3507,16 @@ function clone(obj) {
       return false;
     };
 
+    Head.prototype.handleMenuItemClick = function(type, item) {
+      var selected;
+      selected = !this.follows[type];
+      this.follows[type] = selected;
+      item[2] = selected;
+      this.saveFollows();
+      Page.projector.scheduleRender();
+      return true;
+    };
+
     Head.prototype.handleMenuClick = function() {
       var _ref;
       if (!((_ref = Page.site_info) != null ? _ref.cert_user_id : void 0)) {
@@ -3517,28 +3528,21 @@ function clone(obj) {
           _this.menu.items = [];
           _this.menu.items.push([
             "Follow username mentions", (function(item) {
-              var selected;
-              selected = !_this.follows["Mentions"];
-              _this.follows["Mentions"] = selected;
-              item[2] = selected;
-              _this.saveFollows();
-              Page.projector.scheduleRender();
-              return true;
+              return _this.handleMenuItemClick("Mentions", item);
             }), _this.follows["Mentions"]
           ]);
           _this.menu.items.push([
             "Follow comments on your posts", (function(item) {
-              var selected;
-              selected = !_this.follows["Comments on your posts"];
-              _this.follows["Comments on your posts"] = selected;
-              item[2] = selected;
-              _this.saveFollows();
-              Page.projector.scheduleRender();
-              return true;
+              return _this.handleMenuItemClick("Comments on your posts", item);
             }), _this.follows["Comments on your posts"]
           ]);
+          _this.menu.items.push([
+            "Follow new followers", (function(item) {
+              return _this.handleMenuItemClick("New followers", item);
+            }), _this.follows["New followers"]
+          ]);
           _this.menu.toggle();
-          return Page.projector.sche;
+          return Page.projector.scheduleRender();
         };
       })(this));
       return false;
@@ -3552,6 +3556,9 @@ function clone(obj) {
       }
       if (this.follows["Comments on your posts"]) {
         out["Comments on your posts"] = ["SELECT 'comment' AS type, comment.date_added AS date_added, 'Your post' AS title, '@' || json.user_name || ': ' || comment.body AS body, '?Post/' || site || '/' || REPLACE(post_uri, '_', '/') AS url FROM comment LEFT JOIN json USING (json_id) WHERE post_uri LIKE '" + Page.user.auth_address + "%'", [""]];
+      }
+      if (this.follows["New followers"]) {
+        out["New followers"] = ["SELECT 'follow' AS type, follow.date_added AS date_added, json.user_name || ' started following you' AS title, '' AS body, '?Profile/' || json.hub || REPLACE(json.directory, 'data/users', '') AS url FROM follow LEFT JOIN json USING(json_id) WHERE auth_address = '" + Page.user.auth_address + "' GROUP BY json.directory", [""]];
       }
       return Page.cmd("feedFollow", [out]);
     };

@@ -5,12 +5,12 @@
  "domain": "Me.ZeroNetwork.bit",
  "files": {
   "css/all.css": {
-   "sha512": "3b9bc1e2a2cad4db66c9e5420e55297f344e4627f23e26035301208a452cdcb1",
-   "size": 119351
+   "sha512": "d2a4a6be6bbd0cdd4b3eafd2779c0f5d39b079d7d85ba20094292cc61576dd7a",
+   "size": 123535
   },
   "dbschema.json": {
-   "sha512": "2b34db6bcb188d3205cbcb818f51c37ff3fcbd9eda0928811f400b1b93b534b2",
-   "size": 2865
+   "sha512": "d5204b0f7cb23384ad7517d50eb9da3810af29afd360a5dfe8d0acc464edfc93",
+   "size": 3414
   },
   "img/loading-circle.gif": {
    "sha512": "339baf1bccb9b80ae29c2493e73b40cf0588c96fc095954b475dea0538aaa929",
@@ -37,13 +37,13 @@
    "size": 53602
   },
   "js/all.js": {
-   "sha512": "7d67befbc4bf9c106c4fe344be52c7ff2ef91974da7d8fbbc1e8116c03d9831b",
-   "size": 209628
+   "sha512": "596297fd3ab6c76b18f59d19b2929a64a1bda993e0d301184a31964c8d6faa21",
+   "size": 213564
   }
  },
  "ignore": "(merged-.*|(js|css)/(?!all.(js|css)))",
  "inner_path": "content.json",
- "modified": 1471260935.12,
+ "modified": 1471436507.959,
  "postmessage_nonce_security": true,
  "settings": {
   "default_hubs": {
@@ -58,12 +58,12 @@
   }
  },
  "sign": [
-  14506876848589142130693929677063715805421655004065921751238652058686518313264,
-  53001838543557003152937342834296310327589608418347029223534206732251577175004
+  94749691117914097767350377843612900168343376239559904458013122924119500552068,
+  82353702825115541912768322660768196162515263543557450806803390343175712614787
  ],
  "signers_sign": "G/UCyELE5shc5f/FSJSe2KvxGlZiS5fzvn7Ezhha0gN/QOFeznJtZWS61J20FfkGfHdp1HcpWv//anioez1iOW0=",
  "signs": {
-  "1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH": "G+d4yptY+tCgwx4NS+GFUf8/2uaOm5H53nAV7/tRjrtfWCfieGq0Vo1Nyq5f0QAK72dIFlOMa9CXFGnw/l48Naw="
+  "1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH": "G0ioIp5KggGIFMEcRs0Zx8HEt1X/EZYfx4JTb/jlI+VAS+M1Cc+wfa6KndCjpWai2cvJsMika1tcKH5v45omB6k="
  },
  "signs_required": 1,
  "title": "ZeroMe",
