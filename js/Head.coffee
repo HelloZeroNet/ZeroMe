@@ -12,6 +12,14 @@ class Head extends Class
 			Page.cmd "certSelect", {"accepted_domains": ["zeroid.bit"], "accept_any": true}
 		return false
 
+	handleMenuItemClick: (type, item) =>
+		selected = not @follows[type]
+		@follows[type] = selected
+		item[2] = selected
+		@saveFollows()
+		Page.projector.scheduleRender()
+		return true
+
 	handleMenuClick: =>
 		if not Page.site_info?.cert_user_id
 			return @handleSelectUserClick()
@@ -19,25 +27,19 @@ class Head extends Class
 			@menu.items = []
 
 			@menu.items.push ["Follow username mentions", ( (item) =>
-				selected = not @follows["Mentions"]
-				@follows["Mentions"] = selected
-				item[2] = selected
-				@saveFollows()
-				Page.projector.scheduleRender()
-				return true
+				return @handleMenuItemClick("Mentions", item)
 			), @follows["Mentions"]]
 
 			@menu.items.push ["Follow comments on your posts", ( (item) =>
-				selected = not @follows["Comments on your posts"]
-				@follows["Comments on your posts"] = selected
-				item[2] = selected
-				@saveFollows()
-				Page.projector.scheduleRender()
-				return true
+				return @handleMenuItemClick("Comments on your posts", item)
 			), @follows["Comments on your posts"]]
 
+			@menu.items.push ["Follow new followers", ( (item) =>
+				return @handleMenuItemClick("New followers", item)
+			), @follows["New followers"]]
+
 			@menu.toggle()
-			Page.projector.sche
+			Page.projector.scheduleRender()
 		return false
 
 	saveFollows: =>
@@ -82,6 +84,21 @@ class Head extends Class
 				WHERE
 				post_uri LIKE '#{Page.user.auth_address}%'
 			", [""]]
+
+		if @follows["New followers"]
+			out["New followers"] = ["
+				SELECT
+				 'follow' AS type,
+				 follow.date_added AS date_added,
+				 json.user_name || ' started following you' AS title,
+				 '' AS body,
+				 '?Profile/' || json.hub || REPLACE(json.directory, 'data/users', '') AS url
+ 				FROM follow
+ 				LEFT JOIN json USING(json_id)
+ 				WHERE
+ 				auth_address = '#{Page.user.auth_address}'
+ 				GROUP BY json.directory
+ 			", [""]]
 
 		Page.cmd "feedFollow", [out]
 
