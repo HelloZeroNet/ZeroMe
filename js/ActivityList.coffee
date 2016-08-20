@@ -6,6 +6,7 @@ class ActivityList extends Class
 		@limit = 10
 		@found = 0
 		@loading = true
+		@update_timer = null
 
 	queryActivities: (cb) ->
 		if @directories == "all"
@@ -135,9 +136,9 @@ class ActivityList extends Class
 
 	render: =>
 		if @need_update
+			@need_update = false
 			@queryActivities (res) =>
 				@activities = res
-				@need_update = false
 				Page.projector.scheduleRender()
 
 		if @activities == null # Not loaded yet
@@ -158,9 +159,11 @@ class ActivityList extends Class
 		])
 
 	update: (delay=600) =>
-		setTimeout ( =>
-			@need_update = true
-			Page.projector.scheduleRender()
-		), delay
+		clearInterval @update_timer
+		if not @need_update
+			@update_timer = setTimeout ( =>
+				@need_update = true
+				Page.projector.scheduleRender()
+			), delay
 
 window.ActivityList = ActivityList
