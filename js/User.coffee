@@ -245,7 +245,13 @@ class User extends Class
 				h("a.name.link", {href: link, onclick: Page.handleLinkClick}, @row.user_name),
 				if type == "card" then h("span.added", Time.since(@row.date_added))
 			])
-			h("div.intro", @row.intro)
+			if @row.followed_by
+				h("div.intro.followedby", [
+					"Followed by ",
+					h("a.name.link", {href: "?ProfileName/#{@row.followed_by}", onclick: Page.handleLinkClick}, @row.followed_by)
+				])
+			else
+				h("div.intro", @row.intro)
 		])
 
 

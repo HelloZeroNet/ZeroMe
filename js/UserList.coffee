@@ -1,5 +1,5 @@
 class UserList extends Class
-	constructor: (@type="recent") ->
+	constructor: (@type="new") ->
 		@item_list = new ItemList(User, "key")
 		@users = @item_list.items
 		@need_update = true
@@ -27,6 +27,28 @@ class UserList extends Class
 				ORDER BY date_added DESC
 				LIMIT #{@limit}
 			"""
+		else if @type == "suggested"
+			followed_user_addresses = (key.replace(/.*\//, "") for key, val of Page.user.followed_users)
+			followed_user_directories = ("data/users/"+key for key in followed_user_addresses)
+			if not followed_user_addresses.length
+				return
+			query = """
+				SELECT
+				 COUNT(DISTINCT(json.directory)) AS num,
+				 GROUP_CONCAT(DISTINCT(json.user_name)) AS followed_by,
+				 follow.*,
+				 json_suggested.avatar
+				FROM follow
+				 LEFT JOIN json USING (json_id)
+				 LEFT JOIN json AS json_suggested ON (json_suggested.directory = 'data/users/' || follow.auth_address AND json_suggested.avatar IS NOT NULL)
+				WHERE
+				 json.directory IN #{Text.sqlIn(followed_user_directories)} AND
+				 auth_address NOT IN #{Text.sqlIn(followed_user_addresses)} AND
+				 auth_address != '#{Page.user.auth_address}'
+				GROUP BY follow.auth_address
+				ORDER BY num DESC
+				LIMIT #{@limit}
+			"""
 		else
 			query = """
 				SELECT
@@ -45,15 +67,24 @@ class UserList extends Class
 			"""
 		Page.cmd "dbQuery", query, (rows) =>
 			rows_by_user = {}  # Deduplicating
+			followed_by_displayed = {}
 			for row in rows
 				if row.json_cert_user_id  # File in user directory
 					row.cert_user_id = row.json_cert_user_id
 					row.auth_address = row.json_directory.replace("data/userdb/", "")
+
 				if not row.auth_address  # Just created user, no content.json yet
 					continue
+
+				if row.followed_by
+
+					row.followed_by = (username for username in row.followed_by.split(",") when not followed_by_displayed[username])[0]
+					followed_by_displayed[row.followed_by] = true  # Only display every user once
+
 				row.key = row.hub+"/"+row.auth_address
 				if not rows_by_user[row.hub+row.auth_address]
 					rows_by_user[row.hub+row.auth_address] = row
+
 			user_rows = (val for key, val of rows_by_user)
 			@item_list.sync(user_rows)
 			Page.projector.scheduleRender()
@@ -65,7 +96,7 @@ class UserList extends Class
 		if not @users.length
 			return null
 
-		h("div.UserList.users"+type, {afterCreate: Animation.show}, @users.map (user) =>
+		h("div.UserList.users"+type+"."+@type, {afterCreate: Animation.show}, @users.map (user) =>
 			user.renderList(type)
 		)
 
