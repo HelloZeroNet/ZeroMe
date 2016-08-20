@@ -3,7 +3,8 @@ class ContentFeed extends Class
 		@post_create = new PostCreate()
 		@post_list = new PostList()
 		@activity_list = new ActivityList()
-		@user_list = new UserList()
+		@new_user_list = new UserList("new")
+		@suggested_user_list = new UserList("suggested")
 		@need_update = true
 		@type = "followed"
 		@update()
@@ -20,7 +21,8 @@ class ContentFeed extends Class
 			@log "Updating"
 			@need_update = false
 
-			@user_list.need_update = true
+			@new_user_list.need_update = true
+			@suggested_user_list.need_update = true
 
 			# Post list
 			if @type == "followed"
@@ -50,12 +52,18 @@ class ContentFeed extends Class
 			]),
 			h("div.col-right.noscrollfix", [
 				@activity_list.render(),
-				if @user_list.users.length > 0
-					h("h2.sep", [
+				if @new_user_list.users.length > 0
+					h("h2.sep.new", [
 						"New users",
 						h("a.link", {href: "?Users", onclick: Page.handleLinkClick}, "Browse all \u203A")
 					])
-				@user_list.render(".gray"),
+				@new_user_list.render(".gray"),
+
+				if @suggested_user_list.users.length > 0
+					h("h2.sep.suggested", [
+						"Suggested users"
+					])
+				@suggested_user_list.render(".gray"),
 			])
 		])
 
