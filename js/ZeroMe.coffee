@@ -71,6 +71,9 @@ class ZeroMe extends ZeroFrame
 			content = @content_create_profile
 		else if @params.urls[0] == "Users" and
 			content = @content_users
+		else if @params.urls[0] == "ProfileName"
+			@content_profile.findUser @params.urls[1], (user) =>
+				@setUrl user.getLink()
 		else if @params.urls[0] == "Profile"
 			content = @content_profile
 			changed = (@content_profile.auth_address != @params.urls[2])
@@ -82,7 +85,7 @@ class ZeroMe extends ZeroFrame
 		else
 			content = @content_feed
 		setTimeout ( => @content.update() ), 100
-		if @content != content or changed
+		if content and (@content != content or changed)
 			if @content
 				@projector.detach(@content.render)
 			@content = content

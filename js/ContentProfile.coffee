@@ -57,6 +57,12 @@ class ContentProfile extends Class
 			@need_update = true
 		@
 
+	findUser: (user_name, cb) =>
+		Page.cmd "dbQuery", ["SELECT json.cert_user_id, REPLACE(json.directory, 'data/userdb/', '') AS auth_address, user.* FROM user LEFT JOIN json USING (json_id) WHERE user.user_name = :user_name ORDER BY date_added DESC LIMIT 1", {user_name: user_name}], (res) =>
+			user = new User()
+			user.setRow(res[0])
+			cb(user)
+
 	filter: (post_id) =>
 		@log "Filter", post_id
 		@filter_post_id = post_id
