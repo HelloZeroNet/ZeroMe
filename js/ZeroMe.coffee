@@ -248,6 +248,8 @@ class ZeroMe extends ZeroFrame
 			@setSiteInfo(params)
 		else if cmd == "wrapperPopState" # Site updated
 			if params.state
+				if not params.state.url
+					params.state.url = params.href.replace /.*\?/, ""
 				@on_loaded.resolved = false
 				document.body.className = ""
 				window.scroll(window.pageXOffset, params.state.scrollTop or 0)
