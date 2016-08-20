@@ -1173,7 +1173,7 @@ function clone(obj) {
       border_top_width = cstyle.borderTopWidth;
       border_bottom_width = cstyle.borderBottomWidth;
       transition = cstyle.transition;
-      if (props.animate_scrollfix && window.scrollY > 300 && elem.getBoundingClientRect().top < 0) {
+      if (window.Animation.shouldScrollFix(elem, props)) {
         top_after = document.body.scrollHeight;
         next_elem = elem.nextSibling;
         parent = elem.parentNode;
@@ -1227,6 +1227,16 @@ function clone(obj) {
       });
     };
 
+    Animation.prototype.shouldScrollFix = function(elem, props) {
+      var pos;
+      pos = elem.getBoundingClientRect();
+      if (props.animate_scrollfix && window.scrollY > 300 && pos.top < 0 && !document.querySelector(".noscrollfix:hover")) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
     Animation.prototype.slideDownAnime = function(elem, props) {
       var cstyle;
       cstyle = window.getComputedStyle(elem);
@@ -1250,7 +1260,7 @@ function clone(obj) {
 
     Animation.prototype.slideUp = function(elem, remove_func, props) {
       var next_elem, parent, top_after, top_before;
-      if (props.animate_scrollfix && window.scrollY > 300 && elem.getBoundingClientRect().top < 0 && elem.nextSibling) {
+      if (window.Animation.shouldScrollFix(elem, props) && elem.nextSibling) {
         top_after = document.body.scrollHeight;
         next_elem = elem.nextSibling;
         parent = elem.parentNode;
@@ -1935,7 +1945,7 @@ function clone(obj) {
         return "<a href=\"" + (match.replace(/&amp;/g, '&')) + "\">" + match + "</a>";
       });
       text = text.replace(/\n/g, '<br>');
-      text = text.replace(/(@[A-Za-z0-9 ]+):/g, '<b class="reply-name">$1</b>:');
+      text = text.replace(/(@[A-Za-z0-9 ]{1,16}):/g, '<b class="reply-name">$1</b>:');
       text = this.fixHtmlLinks(text);
       return text;
     };
@@ -2490,6 +2500,7 @@ function clone(obj) {
       this.limit = 10;
       this.found = 0;
       this.loading = true;
+      this.update_timer = null;
     }
 
     ActivityList.prototype.queryActivities = function(cb) {
@@ -2655,10 +2666,10 @@ function clone(obj) {
 
     ActivityList.prototype.render = function() {
       if (this.need_update) {
+        this.need_update = false;
         this.queryActivities((function(_this) {
           return function(res) {
             _this.activities = res;
-            _this.need_update = false;
             return Page.projector.scheduleRender();
           };
         })(this));
@@ -2683,12 +2694,15 @@ function clone(obj) {
       if (delay == null) {
         delay = 600;
       }
-      return setTimeout(((function(_this) {
-        return function() {
-          _this.need_update = true;
-          return Page.projector.scheduleRender();
-        };
-      })(this)), delay);
+      clearInterval(this.update_timer);
+      if (!this.need_update) {
+        return this.update_timer = setTimeout(((function(_this) {
+          return function() {
+            _this.need_update = true;
+            return Page.projector.scheduleRender();
+          };
+        })(this)), delay);
+      }
     };
 
     return ActivityList;
@@ -3040,7 +3054,8 @@ function clone(obj) {
       this.post_create = new PostCreate();
       this.post_list = new PostList();
       this.activity_list = new ActivityList();
-      this.user_list = new UserList();
+      this.new_user_list = new UserList("new");
+      this.suggested_user_list = new UserList("suggested");
       this.need_update = true;
       this.type = "followed";
       this.update();
@@ -3060,7 +3075,8 @@ function clone(obj) {
       if (this.need_update) {
         this.log("Updating");
         this.need_update = false;
-        this.user_list.need_update = true;
+        this.new_user_list.need_update = true;
+        this.suggested_user_list.need_update = true;
         if (this.type === "followed") {
           this.post_list.directories = (function() {
             var _ref, _results;
@@ -3112,13 +3128,13 @@ function clone(obj) {
               active: this.type === "followed"
             }
           }, "Followed users")), this.post_list.render()
-        ]), h("div.col-right", [
-          this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", [
+        ]), h("div.col-right.noscrollfix", [
+          this.activity_list.render(), this.new_user_list.users.length > 0 ? h("h2.sep.new", [
             "New users", h("a.link", {
               href: "?Users",
               onclick: Page.handleLinkClick
             }, "Browse all \u203A")
-          ]) : void 0, this.user_list.render(".gray")
+          ]) : void 0, this.new_user_list.render(".gray"), this.suggested_user_list.users.length > 0 ? h("h2.sep.suggested", ["Suggested users"]) : void 0, this.suggested_user_list.render(".gray")
         ])
       ]);
     };
@@ -3156,6 +3172,7 @@ function clone(obj) {
       this.handleUserNameSave = __bind(this.handleUserNameSave, this);
       this.handleIntroSave = __bind(this.handleIntroSave, this);
       this.filter = __bind(this.filter, this);
+      this.findUser = __bind(this.findUser, this);
       this.setUser = __bind(this.setUser, this);
       this.renderNotSeeded = __bind(this.renderNotSeeded, this);
       this.post_list = null;
@@ -3217,6 +3234,21 @@ function clone(obj) {
         this.need_update = true;
       }
       return this;
+    };
+
+    ContentProfile.prototype.findUser = function(user_name, cb) {
+      return Page.cmd("dbQuery", [
+        "SELECT json.cert_user_id, REPLACE(json.directory, 'data/userdb/', '') AS auth_address, user.* FROM user LEFT JOIN json USING (json_id) WHERE user.user_name = :user_name ORDER BY date_added DESC LIMIT 1", {
+          user_name: user_name
+        }
+      ], (function(_this) {
+        return function(res) {
+          var user;
+          user = new User();
+          user.setRow(res[0]);
+          return cb(user);
+        };
+      })(this));
     };
 
     ContentProfile.prototype.filter = function(post_id) {
@@ -3615,7 +3647,6 @@ function clone(obj) {
   window.Head = Head;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Post.coffee ---- */
@@ -4316,7 +4347,7 @@ function clone(obj) {
     };
 
     User.prototype.getLink = function() {
-      return "?Profile/" + this.hub + "/" + this.auth_address + "/" + this.row.cert_user_id;
+      return "?Profile/" + this.hub + "/" + this.auth_address + "/" + (this.row.cert_user_id || '');
     };
 
     User.prototype.getAvatarLink = function() {
@@ -4660,7 +4691,12 @@ function clone(obj) {
             href: link,
             onclick: Page.handleLinkClick
           }, this.row.user_name), type === "card" ? h("span.added", Time.since(this.row.date_added)) : void 0
-        ]), h("div.intro", this.row.intro)
+        ]), this.row.followed_by ? h("div.intro.followedby", [
+          "Followed by ", h("a.name.link", {
+            href: "?ProfileName/" + this.row.followed_by,
+            onclick: Page.handleLinkClick
+          }, this.row.followed_by)
+        ]) : h("div.intro", this.row.intro)
       ]);
     };
 
@@ -4686,7 +4722,7 @@ function clone(obj) {
     __extends(UserList, _super);
 
     function UserList(_at_type) {
-      this.type = _at_type != null ? _at_type : "recent";
+      this.type = _at_type != null ? _at_type : "new";
       this.render = __bind(this.render, this);
       this.item_list = new ItemList(User, "key");
       this.users = this.item_list.items;
@@ -4696,16 +4732,41 @@ function clone(obj) {
     }
 
     UserList.prototype.update = function() {
-      var query;
+      var followed_user_addresses, followed_user_directories, key, query, val;
       if (this.followed_by) {
         query = "SELECT user.user_name, follow.*, user.*\nFROM follow\nLEFT JOIN user USING (auth_address, hub)\nWHERE\n follow.json_id = " + this.followed_by.row.json_id + "  AND user.json_id IS NOT NULL\n\nUNION\n\nSELECT user.user_name, follow.*, user.*\nFROM follow\nLEFT JOIN json ON (json.directory = 'data/userdb/' || follow.auth_address)\nLEFT JOIN user ON (user.json_id = json.json_id)\nWHERE\n follow.json_id = " + this.followed_by.row.json_id + "  AND user.json_id IS NOT NULL\n\nORDER BY date_added DESC\nLIMIT " + this.limit;
+      } else if (this.type === "suggested") {
+        followed_user_addresses = (function() {
+          var _ref, _results;
+          _ref = Page.user.followed_users;
+          _results = [];
+          for (key in _ref) {
+            val = _ref[key];
+            _results.push(key.replace(/.*\//, ""));
+          }
+          return _results;
+        })();
+        followed_user_directories = (function() {
+          var _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = followed_user_addresses.length; _i < _len; _i++) {
+            key = followed_user_addresses[_i];
+            _results.push("data/users/" + key);
+          }
+          return _results;
+        })();
+        if (!followed_user_addresses.length) {
+          return;
+        }
+        query = "SELECT\n COUNT(DISTINCT(json.directory)) AS num,\n GROUP_CONCAT(DISTINCT(json.user_name)) AS followed_by,\n follow.*,\n json_suggested.avatar\nFROM follow\n LEFT JOIN json USING (json_id)\n LEFT JOIN json AS json_suggested ON (json_suggested.directory = 'data/users/' || follow.auth_address AND json_suggested.avatar IS NOT NULL)\nWHERE\n json.directory IN " + (Text.sqlIn(followed_user_directories)) + " AND\n auth_address NOT IN " + (Text.sqlIn(followed_user_addresses)) + " AND\n auth_address != '" + Page.user.auth_address + "'\nGROUP BY follow.auth_address\nORDER BY num DESC\nLIMIT " + this.limit;
       } else {
         query = "SELECT\n user.*,\n json.site AS json_site,\n json.directory AS json_directory,\n json.file_name AS json_file_name,\n json.cert_user_id AS json_cert_user_id,\n json.hub AS json_hub,\n json.user_name AS json_user_name,\n json.avatar AS json_avatar\nFROM\n user LEFT JOIN json USING (json_id)\nORDER BY date_added DESC\nLIMIT " + this.limit;
       }
       return Page.cmd("dbQuery", query, (function(_this) {
         return function(rows) {
-          var key, row, rows_by_user, user_rows, val, _i, _len;
+          var followed_by_displayed, row, rows_by_user, user_rows, username, _i, _len;
           rows_by_user = {};
+          followed_by_displayed = {};
           for (_i = 0, _len = rows.length; _i < _len; _i++) {
             row = rows[_i];
             if (row.json_cert_user_id) {
@@ -4714,6 +4775,21 @@ function clone(obj) {
             }
             if (!row.auth_address) {
               continue;
+            }
+            if (row.followed_by) {
+              row.followed_by = ((function() {
+                var _j, _len1, _ref, _results;
+                _ref = row.followed_by.split(",");
+                _results = [];
+                for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+                  username = _ref[_j];
+                  if (!followed_by_displayed[username]) {
+                    _results.push(username);
+                  }
+                }
+                return _results;
+              })())[0];
+              followed_by_displayed[row.followed_by] = true;
             }
             row.key = row.hub + "/" + row.auth_address;
             if (!rows_by_user[row.hub + row.auth_address]) {
@@ -4750,7 +4826,7 @@ function clone(obj) {
       if (!this.users.length) {
         return null;
       }
-      return h("div.UserList.users" + type, {
+      return h("div.UserList.users" + type + "." + this.type, {
         afterCreate: Animation.show
       }, this.users.map((function(_this) {
         return function(user) {
@@ -4867,6 +4943,12 @@ function clone(obj) {
         content = this.content_create_profile;
       } else if (this.params.urls[0] === "Users" && (content = this.content_users)) {
 
+      } else if (this.params.urls[0] === "ProfileName") {
+        this.content_profile.findUser(this.params.urls[1], (function(_this) {
+          return function(user) {
+            return _this.setUrl(user.getLink());
+          };
+        })(this));
       } else if (this.params.urls[0] === "Profile") {
         content = this.content_profile;
         changed = this.content_profile.auth_address !== this.params.urls[2];
@@ -4883,7 +4965,7 @@ function clone(obj) {
           return _this.content.update();
         };
       })(this)), 100);
-      if (this.content !== content || changed) {
+      if (content && (this.content !== content || changed)) {
         if (this.content) {
           this.projector.detach(this.content.render);
         }
@@ -5100,6 +5182,9 @@ function clone(obj) {
         return this.setSiteInfo(params);
       } else if (cmd === "wrapperPopState") {
         if (params.state) {
+          if (!params.state.url) {
+            params.state.url = params.href.replace(/.*\?/, "");
+          }
           this.on_loaded.resolved = false;
           document.body.className = "";
           window.scroll(window.pageXOffset, params.state.scrollTop || 0);

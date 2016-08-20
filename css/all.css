@@ -67,6 +67,7 @@
     background-color: #fafafa; padding-left: 80px; margin-left: -80px; padding-right: 20px; margin-right: -20px; margin-bottom: -17px; padding-bottom: 10px;
     border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; padding-top: 19px; margin-top: 10px; border-top: 1px solid #E3E3E3; font-size: 85%;
 }
+.comment-list .body { padding-top: 0px }
 .comment-list .body p { padding: 0px }
 
 .comment-create textarea { width: 100%; margin-bottom: 11px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; }
@@ -155,9 +156,9 @@
 	border: 1px solid #EEF0F1; border-bottom: 2px solid #ECEDEE; margin-bottom: 12px; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ;
 }
 .post.selected { -webkit-box-shadow: 0px 0px 40px rgba(0,0,0,0.1); -moz-box-shadow: 0px 0px 40px rgba(0,0,0,0.1); -o-box-shadow: 0px 0px 40px rgba(0,0,0,0.1); -ms-box-shadow: 0px 0px 40px rgba(0,0,0,0.1); box-shadow: 0px 0px 40px rgba(0,0,0,0.1) ; }
-.post .user { padding-bottom: 15px; height: 21px; line-height: 20px; }
+.post .user { padding-bottom: 8px; height: 21px; line-height: 20px; }
 .post .user .address, .post .added, .post .sep { font-size: 14px; color: #AAA;}
-.post .body { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; line-height: 1.5em; color: #333; word-break: break-word; }
+.post .body { padding-top: 2px; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; line-height: 1.5em; color: #333; word-break: break-word; overflow: hidden }
 .post .reply-name { font-size: 14px; font-family: Roboto, Helvetica, Arial; color: #000 }
 .post .actions { height: 30px; margin-left: -5px; }
 .post .actions .icon { margin-right: 1px }
@@ -166,9 +167,9 @@
 .post .actions .like { width: 35px; margin-right: 0px; -webkit-transition: width 0.3s, margin-right 0.3s; -moz-transition: width 0.3s, margin-right 0.3s; -o-transition: width 0.3s, margin-right 0.3s; -ms-transition: width 0.3s, margin-right 0.3s; transition: width 0.3s, margin-right 0.3s ; white-space: nowrap; position: relative; }
 .post .actions .like.like-zero { width: 20px; margin-right: 5px; }
 
-code { background-color: #FBFBFB; padding: 3px 4px; border: solid 1px #e1e4e5; font-family: Consolas, Monaco, monospace; font-size: 13px }
-pre code {
-	border: none; padding: 0px; background-color: transparent; border: none; overflow-x: auto; display: inline-block; max-width: 100%;
+.post code { background-color: #FBFBFB; padding: 3px 4px; border: solid 1px #e1e4e5; font-family: Consolas, Monaco, monospace; font-size: 13px }
+.post pre code {
+	border: none; padding: 0px; background-color: transparent; border: none; overflow-x: auto; display: inline-block; max-width: 100%; padding-right: 20px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ;
 	border: solid 1px #e1e4e5; padding: 10px; background-color: #FBFBFB; font-family: Consolas, Monaco, monospace; border-bottom: 2px solid #e1e4e5; line-height: 1em;
 }
 
@@ -206,7 +207,7 @@ pre code {
 
 
 .users .user { padding-left: 70px; padding-bottom: 20px }
-.users .user .nameline { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 26px; }
+.users .user .nameline { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 26px }
 .users .user .intro { font-weight: 100; font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; min-height: 18px; word-wrap: break-word; }
 .users .user .added { font-size: 11px; color: #999; margin-left: 6px; }
 .users .user .intro-full { margin-left: -57px; padding-top: 18px; font-weight: 100; line-height: 1.5em; overflow: hidden; max-height: 400px; word-wrap: break-word; }
@@ -219,7 +220,7 @@ pre code {
 }
 .users .user.followed .button-follow-big .icon-follow { -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); -o-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg) ; }
 
-.user .name { font-weight: bold; color: #5d68ff; overflow: hidden; max-width: 200px; display: inline-block; white-space: nowrap; vertical-align: text-bottom; text-overflow: ellipsis; line-height: 20px; }
+.user .name { font-weight: bold; color: #5d68ff; overflow: hidden; max-width: 200px; display: inline-block; white-space: nowrap; vertical-align: text-bottom; text-overflow: ellipsis }
 .user .address, .user .cert_user_id { font-size: 13px; color: #AAA; }
 .user .avatar { position: absolute; margin-left: -67px }
 
