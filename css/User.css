@@ -1,5 +1,5 @@
 .users .user { padding-left: 70px; padding-bottom: 20px }
-.users .user .nameline { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 26px; }
+.users .user .nameline { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 26px }
 .users .user .intro { font-weight: 100; font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; min-height: 18px; word-wrap: break-word; }
 .users .user .added { font-size: 11px; color: #999; margin-left: 6px; }
 .users .user .intro-full { margin-left: -57px; padding-top: 18px; font-weight: 100; line-height: 1.5em; overflow: hidden; max-height: 400px; word-wrap: break-word; }
@@ -12,7 +12,7 @@
 }
 .users .user.followed .button-follow-big .icon-follow { transform: rotate(45deg); }
 
-.user .name { font-weight: bold; color: #5d68ff; overflow: hidden; max-width: 200px; display: inline-block; white-space: nowrap; vertical-align: text-bottom; text-overflow: ellipsis; line-height: 20px; }
+.user .name { font-weight: bold; color: #5d68ff; overflow: hidden; max-width: 200px; display: inline-block; white-space: nowrap; vertical-align: text-bottom; text-overflow: ellipsis }
 .user .address, .user .cert_user_id { font-size: 13px; color: #AAA; }
 .user .avatar { position: absolute; margin-left: -67px }
 
