@@ -48,7 +48,7 @@ class ContentFeed extends Class
 				),
 				@post_list.render()
 			]),
-			h("div.col-right", [
+			h("div.col-right.noscrollfix", [
 				@activity_list.render(),
 				if @user_list.users.length > 0
 					h("h2.sep", [
