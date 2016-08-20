@@ -58,7 +58,7 @@ class User extends Class
 			return "merged-ZeroMe/#{site}/data/users/#{@auth_address}"
 
 	getLink: ->
-		return "?Profile/#{@hub}/#{@auth_address}/#{@row.cert_user_id}"
+		return "?Profile/#{@hub}/#{@auth_address}/#{@row.cert_user_id or ''}"
 
 	getAvatarLink: ->
 		cache_invalidation = ""
