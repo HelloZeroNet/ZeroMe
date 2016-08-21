@@ -73,7 +73,7 @@ class ZeroMe extends ZeroFrame
 			content = @content_users
 		else if @params.urls[0] == "ProfileName"
 			@content_profile.findUser @params.urls[1], (user) =>
-				@setUrl user.getLink()
+				@setUrl user.getLink(), "replace"
 		else if @params.urls[0] == "Profile"
 			content = @content_profile
 			changed = (@content_profile.auth_address != @params.urls[2])
