@@ -173,6 +173,8 @@
 	border: solid 1px #e1e4e5; padding: 10px; background-color: #FBFBFB; font-family: Consolas, Monaco, monospace; border-bottom: 2px solid #e1e4e5; line-height: 1em;
 }
 
+.post blockquote { padding-left: 2em; margin-left: 3px; border-left: 3px solid #c7c7c8; padding-top: 0.8em; font-style: italic; }
+
 .post-create-container { margin-bottom: 12px }
 .post-create { -webkit-transition: all 0.6s ; -moz-transition: all 0.6s ; -o-transition: all 0.6s ; -ms-transition: all 0.6s ; transition: all 0.6s  }
 .post-create .postfield {

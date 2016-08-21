@@ -2746,7 +2746,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/AnonUser.coffee ---- */
 
 
@@ -4979,7 +4978,7 @@ function clone(obj) {
       } else if (this.params.urls[0] === "ProfileName") {
         this.content_profile.findUser(this.params.urls[1], (function(_this) {
           return function(user) {
-            return _this.setUrl(user.getLink());
+            return _this.setUrl(user.getLink(), "replace");
           };
         })(this));
       } else if (this.params.urls[0] === "Profile") {
@@ -5011,7 +5010,10 @@ function clone(obj) {
       }
     };
 
-    ZeroMe.prototype.setUrl = function(url) {
+    ZeroMe.prototype.setUrl = function(url, mode) {
+      if (mode == null) {
+        mode = "push";
+      }
       url = url.replace(/.*?\?/, "");
       this.log("setUrl", this.history_state["url"], "->", url);
       if (this.history_state["url"] === url) {
@@ -5019,7 +5021,11 @@ function clone(obj) {
         return false;
       }
       this.history_state["url"] = url;
-      this.cmd("wrapperPushState", [this.history_state, "", url]);
+      if (mode === "replace") {
+        this.cmd("wrapperReplaceState", [this.history_state, "", url]);
+      } else {
+        this.cmd("wrapperPushState", [this.history_state, "", url]);
+      }
       this.route(url);
       return false;
     };
