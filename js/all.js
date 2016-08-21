@@ -2510,7 +2510,11 @@ function clone(obj) {
       } else {
         where = "WHERE json.directory IN " + (Text.sqlIn(this.directories));
       }
-      query = "SELECT\n 'comment' AS type, json.*,\n json.site || \"/\" || post_uri AS subject, body, date_added,\n NULL AS subject_auth_address, NULL AS subject_hub, NULL AS subject_user_name\nFROM\n json\nLEFT JOIN comment USING (json_id)\n " + where + "\n\nUNION ALL\n\nSELECT\n 'post_like' AS type, json.*,\n json.site || \"/\" || post_uri AS subject, '' AS body, date_added,\n NULL AS subject_auth_address, NULL AS subject_hub, NULL AS subject_user_name\nFROM\n json\nLEFT JOIN post_like USING (json_id)\n " + where + "\n\nUNION ALL\n\nSELECT\n 'follow' AS type, json.*,\n follow.hub || \"/\" || follow.auth_address AS subject, '' AS body, date_added,\n follow.auth_address AS subject_auth_address, follow.hub AS subject_hub, follow.user_name AS subject_user_name\nFROM\n json\nLEFT JOIN follow USING (json_id)\n " + where + "\nORDER BY date_added DESC\nLIMIT " + (this.limit + 1);
+      query = "SELECT\n 'comment' AS type, json.*,\n json.site || \"/\" || post_uri AS subject, body, date_added,\n NULL AS subject_auth_address, NULL AS subject_hub, NULL AS subject_user_name\nFROM\n json\nLEFT JOIN comment USING (json_id)\n " + where + "\n\nUNION ALL\n\nSELECT\n 'post_like' AS type, json.*,\n json.site || \"/\" || post_uri AS subject, '' AS body, date_added,\n NULL AS subject_auth_address, NULL AS subject_hub, NULL AS subject_user_name\nFROM\n json\nLEFT JOIN post_like USING (json_id)\n " + where;
+      if (this.directories !== "all") {
+        query += "UNION ALL\n\nSELECT\n 'follow' AS type, json.*,\n follow.hub || \"/\" || follow.auth_address AS subject, '' AS body, date_added,\n follow.auth_address AS subject_auth_address, follow.hub AS subject_hub, follow.user_name AS subject_user_name\nFROM\n json\nLEFT JOIN follow USING (json_id)\n " + where;
+      }
+      query += "\nORDER BY date_added DESC\nLIMIT " + (this.limit + 1);
       this.logStart("Update");
       return Page.cmd("dbQuery", [
         query, {
@@ -2547,7 +2551,7 @@ function clone(obj) {
               directory: directories
             }
           ], function(subject_rows) {
-            var last_row, row_group, row_groups, subject_db, subject_row, _base, _base1, _base2, _j, _k, _l, _len1, _len2, _len3;
+            var last_row, row_group, row_groups, subject_db, subject_row, _base, _base1, _base2, _j, _k, _l, _len1, _len2, _len3, _ref;
             subject_db = {};
             for (_j = 0, _len1 = subject_rows.length; _j < _len1; _j++) {
               subject_row = subject_rows[_j];
@@ -2575,7 +2579,7 @@ function clone(obj) {
             row_groups = [];
             for (_l = 0, _len3 = rows.length; _l < _len3; _l++) {
               row = rows[_l];
-              if (!last_row || (row.auth_address === (last_row != null ? last_row.auth_address : void 0) && row.type === (last_row != null ? last_row.type : void 0))) {
+              if (!last_row || (row.auth_address === (last_row != null ? last_row.auth_address : void 0) && row.type === (last_row != null ? last_row.type : void 0) && ((_ref = row.type) === "post_like" || _ref === "follow"))) {
                 row_group.push(row);
               } else {
                 row_groups.push(row_group);
@@ -2601,66 +2605,94 @@ function clone(obj) {
     };
 
     ActivityList.prototype.renderActivity = function(activity_group) {
-      var activity, activity_user_link, back, body, now, subject_post_link, subject_user_link, _i, _len;
+      var activity, activity_more, activity_user_link, back, body, now, subject_post_link, subject_user_link, _i, _j, _len, _len1, _ref, _ref1;
       back = [];
       now = Time.timestamp();
-      for (_i = 0, _len = activity_group.length; _i < _len; _i++) {
-        activity = activity_group[_i];
-        if (!activity.subject.user_name) {
-          continue;
-        }
-        activity_user_link = "?Profile/" + activity.hub + "/" + activity.auth_address + "/" + activity.cert_user_id;
-        subject_user_link = "?Profile/" + activity.subject.hub + "/" + activity.subject.auth_address + "/" + (activity.subject.cert_user_id || '');
-        subject_post_link = "?Post/" + activity.subject.hub + "/" + activity.subject.auth_address + "/" + activity.post_id;
-        if (activity.type === "post_like") {
-          body = [
-            h("a.link", {
-              href: activity_user_link,
-              onclick: this.Page.handleLinkClick
-            }, activity.user_name), " liked ", h("a.link", {
-              href: subject_user_link,
-              onclick: this.Page.handleLinkClick
-            }, activity.subject.user_name), "'s ", h("a.link", {
-              href: subject_post_link,
-              onclick: this.Page.handleLinkClick
-            }, "post")
-          ];
-        } else if (activity.type === "comment") {
-          body = [
-            h("a.link", {
-              href: activity_user_link,
-              onclick: this.Page.handleLinkClick
-            }, activity.user_name), " commented on ", h("a.link", {
-              href: subject_user_link,
-              onclick: this.Page.handleLinkClick
-            }, activity.subject.user_name), "'s ", h("a.link", {
-              href: subject_post_link,
-              onclick: this.Page.handleLinkClick
-            }, "post"), ": " + activity.body
-          ];
-        } else if (activity.type === "follow") {
-          body = [
-            h("a.link", {
-              href: activity_user_link,
-              onclick: this.Page.handleLinkClick
-            }, activity.user_name), " started following ", h("a.link", {
-              href: subject_user_link,
-              onclick: this.Page.handleLinkClick
-            }, activity.subject.user_name)
-          ];
-        } else {
-          body = activity.body;
-        }
-        back.push(h("div.activity", {
-          key: activity.cert_user_id + "_" + activity.date_added,
-          title: Time.since(activity.date_added),
-          classes: {
-            latest: now - activity.date_added < 600
-          },
-          enterAnimation: Animation.slideDown,
-          exitAnimation: Animation.slideUp
-        }, [h("div.circle"), h("div.body", body)]));
+      activity = activity_group[0];
+      if (!activity.subject.user_name) {
+        return back;
       }
+      activity_user_link = "?Profile/" + activity.hub + "/" + activity.auth_address + "/" + activity.cert_user_id;
+      subject_user_link = "?Profile/" + activity.subject.hub + "/" + activity.subject.auth_address + "/" + (activity.subject.cert_user_id || '');
+      subject_post_link = "?Post/" + activity.subject.hub + "/" + activity.subject.auth_address + "/" + activity.post_id;
+      if (activity.type === "post_like") {
+        body = [
+          h("a.link", {
+            href: activity_user_link,
+            onclick: this.Page.handleLinkClick
+          }, activity.user_name), " liked ", h("a.link", {
+            href: subject_user_link,
+            onclick: this.Page.handleLinkClick
+          }, activity.subject.user_name), "'s ", h("a.link", {
+            href: subject_post_link,
+            onclick: this.Page.handleLinkClick
+          }, "post")
+        ];
+        if (activity_group.length > 1) {
+          _ref = activity_group.slice(1, 11);
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            activity_more = _ref[_i];
+            subject_user_link = "?Profile/" + activity_more.subject.hub + "/" + activity_more.subject.auth_address + "/" + (activity_more.subject.cert_user_id || '');
+            subject_post_link = "?Post/" + activity_more.subject.hub + "/" + activity_more.subject.auth_address + "/" + activity_more.post_id;
+            body.push(", ");
+            body.push(h("a.link", {
+              href: subject_user_link,
+              onclick: this.Page.handleLinkClick
+            }, activity_more.subject.user_name));
+            body.push("'s ");
+            body.push(h("a.link", {
+              href: subject_post_link,
+              onclick: this.Page.handleLinkClick
+            }, "post"));
+          }
+        }
+      } else if (activity.type === "comment") {
+        body = [
+          h("a.link", {
+            href: activity_user_link,
+            onclick: this.Page.handleLinkClick
+          }, activity.user_name), " commented on ", h("a.link", {
+            href: subject_user_link,
+            onclick: this.Page.handleLinkClick
+          }, activity.subject.user_name), "'s ", h("a.link", {
+            href: subject_post_link,
+            onclick: this.Page.handleLinkClick
+          }, "post"), ": " + activity.body
+        ];
+      } else if (activity.type === "follow") {
+        body = [
+          h("a.link", {
+            href: activity_user_link,
+            onclick: this.Page.handleLinkClick
+          }, activity.user_name), " started following ", h("a.link", {
+            href: subject_user_link,
+            onclick: this.Page.handleLinkClick
+          }, activity.subject.user_name)
+        ];
+        if (activity_group.length > 1) {
+          _ref1 = activity_group.slice(1, 11);
+          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+            activity_more = _ref1[_j];
+            subject_user_link = "?Profile/" + activity_more.subject.hub + "/" + activity_more.subject.auth_address + "/" + (activity_more.subject.cert_user_id || '');
+            body.push(", ");
+            body.push(h("a.link", {
+              href: subject_user_link,
+              onclick: this.Page.handleLinkClick
+            }, activity_more.subject.user_name));
+          }
+        }
+      } else {
+        body = activity.body;
+      }
+      back.push(h("div.activity", {
+        key: activity.cert_user_id + "_" + activity.date_added,
+        title: Time.since(activity.date_added),
+        classes: {
+          latest: now - activity.date_added < 600
+        },
+        enterAnimation: Animation.slideDown,
+        exitAnimation: Animation.slideUp
+      }, [h("div.circle"), h("div.body", body)]));
       return back;
     };
 
@@ -2712,6 +2744,7 @@ function clone(obj) {
   window.ActivityList = ActivityList;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/AnonUser.coffee ---- */

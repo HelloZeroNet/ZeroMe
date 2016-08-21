@@ -34,6 +34,7 @@ class ActivityList extends Class
 			 json
 			LEFT JOIN post_like USING (json_id)
 			 #{where}
+		"""
 
 			UNION ALL
 
@@ -81,7 +82,7 @@ class ActivityList extends Class
 				row_group = []
 				row_groups = []
 				for row in rows
-					if not last_row or (row.auth_address == last_row?.auth_address and row.type == last_row?.type)
+					if not last_row or (row.auth_address == last_row?.auth_address and row.type == last_row?.type and row.type in ["post_like", "follow"])
 						row_group.push row
 					else
 						row_groups.push row_group
@@ -102,36 +103,52 @@ class ActivityList extends Class
 	renderActivity: (activity_group) ->
 		back = []
 		now = Time.timestamp()
-		for activity in activity_group
-			if not activity.subject.user_name
-				continue
-			activity_user_link = "?Profile/#{activity.hub}/#{activity.auth_address}/#{activity.cert_user_id}"
-			subject_user_link = "?Profile/#{activity.subject.hub}/#{activity.subject.auth_address}/#{activity.subject.cert_user_id or ''}"
-			subject_post_link = "?Post/#{activity.subject.hub}/#{activity.subject.auth_address}/#{activity.post_id}"
-			if activity.type == "post_like"
-				body = [
-					h("a.link", {href: activity_user_link, onclick: @Page.handleLinkClick}, activity.user_name), " liked ",
-					h("a.link", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity.subject.user_name), "'s ",
-					h("a.link", {href: subject_post_link, onclick: @Page.handleLinkClick}, "post")
-				]
-			else if activity.type == "comment"
-				body = [
-					h("a.link", {href: activity_user_link, onclick: @Page.handleLinkClick}, activity.user_name), " commented on ",
-					h("a.link", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity.subject.user_name), "'s ",
-					h("a.link", {href: subject_post_link, onclick: @Page.handleLinkClick}, "post"), ": #{activity.body}"
-				]
-			else if activity.type == "follow"
-				body = [
-					h("a.link", {href: activity_user_link, onclick: @Page.handleLinkClick}, activity.user_name), " started following ",
-					h("a.link", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity.subject.user_name)
-				]
-			else
-				body = activity.body
-			# opacity = Math.max(0.5, 1 - (now - activity.date_added) / 10000)
-			back.push h("div.activity", {key: "#{activity.cert_user_id}_#{activity.date_added}", title: Time.since(activity.date_added), classes: {latest: now - activity.date_added < 600}, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, [
-				h("div.circle"),
-				h("div.body", body)
-			])
+		activity = activity_group[0]
+		if not activity.subject.user_name
+			return back
+		activity_user_link = "?Profile/#{activity.hub}/#{activity.auth_address}/#{activity.cert_user_id}"
+		subject_user_link = "?Profile/#{activity.subject.hub}/#{activity.subject.auth_address}/#{activity.subject.cert_user_id or ''}"
+		subject_post_link = "?Post/#{activity.subject.hub}/#{activity.subject.auth_address}/#{activity.post_id}"
+		if activity.type == "post_like"
+			body = [
+				h("a.link", {href: activity_user_link, onclick: @Page.handleLinkClick}, activity.user_name), " liked ",
+				h("a.link", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity.subject.user_name), "'s ",
+				h("a.link", {href: subject_post_link, onclick: @Page.handleLinkClick}, "post")
+			]
+			# Add more target
+			if activity_group.length > 1
+				for activity_more in activity_group[1..10]
+					subject_user_link = "?Profile/#{activity_more.subject.hub}/#{activity_more.subject.auth_address}/#{activity_more.subject.cert_user_id or ''}"
+					subject_post_link = "?Post/#{activity_more.subject.hub}/#{activity_more.subject.auth_address}/#{activity_more.post_id}"
+					body.push ", "
+					body.push h("a.link", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity_more.subject.user_name)
+					body.push "'s "
+					body.push h("a.link", {href: subject_post_link, onclick: @Page.handleLinkClick}, "post")
+		else if activity.type == "comment"
+			body = [
+				h("a.link", {href: activity_user_link, onclick: @Page.handleLinkClick}, activity.user_name), " commented on ",
+				h("a.link", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity.subject.user_name), "'s ",
+				h("a.link", {href: subject_post_link, onclick: @Page.handleLinkClick}, "post"), ": #{activity.body}"
+			]
+		else if activity.type == "follow"
+			body = [
+				h("a.link", {href: activity_user_link, onclick: @Page.handleLinkClick}, activity.user_name), " started following ",
+				h("a.link", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity.subject.user_name)
+			]
+			# Add more target
+			if activity_group.length > 1
+				for activity_more in activity_group[1..10]
+					subject_user_link = "?Profile/#{activity_more.subject.hub}/#{activity_more.subject.auth_address}/#{activity_more.subject.cert_user_id or ''}"
+					body.push ", "
+					body.push h("a.link", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity_more.subject.user_name)
+		else
+			body = activity.body
+
+		# opacity = Math.max(0.5, 1 - (now - activity.date_added) / 10000)
+		back.push h("div.activity", {key: "#{activity.cert_user_id}_#{activity.date_added}", title: Time.since(activity.date_added), classes: {latest: now - activity.date_added < 600}, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, [
+			h("div.circle"),
+			h("div.body", body)
+		])
 		return back
 
 	render: =>
