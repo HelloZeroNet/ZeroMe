@@ -36,16 +36,22 @@ class ActivityList extends Class
 			 #{where}
 		"""
 
-			UNION ALL
+		if @directories != "all"  # Dont show follows in all users activity feed
+			query += """
+				UNION ALL
 
-			SELECT
-			 'follow' AS type, json.*,
-			 follow.hub || "/" || follow.auth_address AS subject, '' AS body, date_added,
-			 follow.auth_address AS subject_auth_address, follow.hub AS subject_hub, follow.user_name AS subject_user_name
-			FROM
-			 json
-			LEFT JOIN follow USING (json_id)
-			 #{where}
+				SELECT
+				 'follow' AS type, json.*,
+				 follow.hub || "/" || follow.auth_address AS subject, '' AS body, date_added,
+				 follow.auth_address AS subject_auth_address, follow.hub AS subject_hub, follow.user_name AS subject_user_name
+				FROM
+				 json
+				LEFT JOIN follow USING (json_id)
+				 #{where}
+			"""
+
+		query += """
+
 			ORDER BY date_added DESC
 			LIMIT #{@limit+1}
 		"""
