@@ -93,14 +93,17 @@ class ZeroMe extends ZeroFrame
 				@projector.replace($("#Content"), @content.render)
 
 
-	setUrl: (url) ->
+	setUrl: (url, mode="push") ->
 		url = url.replace(/.*?\?/, "")
 		@log "setUrl", @history_state["url"], "->", url
 		if @history_state["url"] == url
 			@content.update()
 			return false
 		@history_state["url"] = url
-		@cmd "wrapperPushState", [@history_state, "", url]
+		if mode == "replace"
+			@cmd "wrapperReplaceState", [@history_state, "", url]
+		else
+			@cmd "wrapperPushState", [@history_state, "", url]
 		@route url
 		return false
 
