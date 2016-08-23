@@ -2685,7 +2685,7 @@ function clone(obj) {
         body = activity.body;
       }
       back.push(h("div.activity", {
-        key: activity.cert_user_id + "_" + activity.date_added,
+        key: activity.cert_user_id + "_" + activity.date_added + "_" + activity_group.length,
         title: Time.since(activity.date_added),
         classes: {
           latest: now - activity.date_added < 600
@@ -2987,6 +2987,7 @@ function clone(obj) {
               avatar = "merged-ZeroMe/" + hub.address + "/" + user.directory + "/avatar." + user.avatar;
               rendered += 1;
               return h("a.avatar", {
+                key: user.user_name,
                 title: user.user_name,
                 style: "background-image: url('" + avatar + "')"
               });
@@ -3644,7 +3645,8 @@ function clone(obj) {
             onclick: this.handleSelectUserClick
           }, Page.site_info.cert_user_id)), h("a.settings", {
             href: "#Settings",
-            onclick: this.handleMenuClick
+            onclick: Page.returnFalse,
+            onmousedown: this.handleMenuClick
           }, "\u22EE"), this.menu.render()
         ]) : !((_ref1 = Page.user) != null ? _ref1.hub : void 0) && ((_ref2 = Page.site_info) != null ? _ref2.cert_user_id : void 0) ? h("div.right.selected", [
           h("div.user", h("a.name.link", {
@@ -3655,7 +3657,8 @@ function clone(obj) {
             onclick: this.handleSelectUserClick
           }, Page.site_info.cert_user_id)), this.menu.render(), h("a.settings", {
             href: "#Settings",
-            onclick: this.handleMenuClick
+            onclick: Page.returnFalse,
+            onmousedown: this.handleMenuClick
           }, "\u22EE")
         ]) : !((_ref3 = Page.user) != null ? _ref3.hub : void 0) && Page.site_info ? h("div.right.unknown", [
           h("div.user", h("a.name.link", {
@@ -3666,7 +3669,8 @@ function clone(obj) {
             onclick: this.handleSelectUserClick
           }, "Select your account")), this.menu.render(), h("a.settings", {
             href: "#Settings",
-            onclick: this.handleMenuClick
+            onclick: Page.returnFalse,
+            onmousedown: this.handleMenuClick
           }, "\u22EE")
         ]) : h("div.right.unknown")
       ]);
@@ -3688,7 +3692,8 @@ function clone(obj) {
   var Post,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    __hasProp = {}.hasOwnProperty,
+    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   Post = (function(_super) {
     __extends(Post, _super);
@@ -3697,6 +3702,10 @@ function clone(obj) {
       this.item_list = _at_item_list;
       this.render = __bind(this.render, this);
       this.renderComments = __bind(this.renderComments, this);
+      this.follow = __bind(this.follow, this);
+      this.unfollow = __bind(this.unfollow, this);
+      this.handleSettingsClick = __bind(this.handleSettingsClick, this);
+      this.getPostUri = __bind(this.getPostUri, this);
       this.handleReplyClick = __bind(this.handleReplyClick, this);
       this.handleMoreCommentsClick = __bind(this.handleMoreCommentsClick, this);
       this.handleCommentDelete = __bind(this.handleCommentDelete, this);
@@ -3717,6 +3726,7 @@ function clone(obj) {
       });
       this.comment_limit = 3;
       this.setRow(row);
+      this.menu = null;
     }
 
     Post.prototype.setRow = function(row) {
@@ -3787,14 +3797,16 @@ function clone(obj) {
         Animation.flashOut(e.currentTarget.firstChild);
         Page.user.dislike(site, post_uri, (function(_this) {
           return function() {
-            return _this.submitting_like = false;
+            _this.submitting_like = false;
+            return _this.unfollow();
           };
         })(this));
       } else {
         Animation.flashIn(e.currentTarget.firstChild);
         Page.user.like(site, post_uri, (function(_this) {
           return function() {
-            return _this.submitting_like = false;
+            _this.submitting_like = false;
+            return _this.follow();
           };
         })(this));
       }
@@ -3828,8 +3840,9 @@ function clone(obj) {
           clearInterval(timer_loading);
           _this.field_comment.loading = false;
           if (res) {
-            return _this.field_comment.setValue("");
+            _this.field_comment.setValue("");
           }
+          return _this.follow();
         };
       })(this));
     };
@@ -3907,6 +3920,70 @@ function clone(obj) {
         this.editable_comments[comment_uri].render_function = Text.renderLinks;
       }
       return this.editable_comments[comment_uri];
+    };
+
+    Post.prototype.getPostUri = function() {
+      return this.user.auth_address + "_" + this.row.post_id;
+    };
+
+    Post.prototype.handleSettingsClick = function() {
+      Page.cmd("feedListFollow", [], (function(_this) {
+        return function(follows) {
+          var followed, _ref;
+          if (!_this.menu) {
+            _this.menu = new Menu();
+          }
+          followed = follows["Post follow"] && (_ref = _this.getPostUri(), __indexOf.call(follows["Post follow"][1], _ref) >= 0);
+          _this.menu.items = [];
+          _this.menu.items.push([
+            "Follow in newsfeed", (function() {
+              if (followed) {
+                return _this.unfollow();
+              } else {
+                return _this.follow();
+              }
+            }), followed
+          ]);
+          return _this.menu.toggle();
+        };
+      })(this));
+      return false;
+    };
+
+    Post.prototype.unfollow = function() {
+      return Page.cmd("feedListFollow", [], (function(_this) {
+        return function(follows) {
+          var followed_uris, index;
+          if (!follows["Post follow"]) {
+            return;
+          }
+          followed_uris = follows["Post follow"][1];
+          index = followed_uris.indexOf(_this.getPostUri());
+          if (index === -1) {
+            return;
+          }
+          followed_uris.splice(index, 1);
+          if (followed_uris.length === 0) {
+            delete follows["Post follow"];
+          }
+          _this.log("Unfollow", follows);
+          return Page.cmd("feedFollow", [follows]);
+        };
+      })(this));
+    };
+
+    Post.prototype.follow = function() {
+      return Page.cmd("feedListFollow", [], (function(_this) {
+        return function(follows) {
+          var followed_uris;
+          if (!follows["Post follow"]) {
+            follows["Post follow"] = ["SELECT\n \"comment\" AS type,\n comment.date_added AS date_added,\n \"a followed post\" AS title,\n '@' || user_name || ': ' || comment.body AS body,\n '?Post/' || json.site || '/' || REPLACE(post_uri, '_', '/') AS url\nFROM comment\nLEFT JOIN json USING (json_id)\nWHERE post_uri IN (:params)", []];
+          }
+          followed_uris = follows["Post follow"][1];
+          followed_uris.push(_this.getPostUri());
+          return Page.cmd("feedFollow", [follows]);
+        };
+      })(this));
     };
 
     Post.prototype.renderComments = function() {
@@ -3996,7 +4073,11 @@ function clone(obj) {
             href: this.getLink(),
             title: Time.date(this.row.date_added, "long"),
             onclick: Page.handleLinkClick
-          }, Time.since(this.row.date_added))
+          }, Time.since(this.row.date_added)), this.menu ? this.menu.render(".menu-right") : void 0, h("a.settings", {
+            href: "#Settings",
+            onclick: Page.returnFalse,
+            onmousedown: this.handleSettingsClick
+          }, "\u22EE")
         ]), this.owned ? this.editable_body.render(this.row.body) : h("div.body", {
           innerHTML: Text.renderMarked(this.row.body)
         }), h("div.actions", [
@@ -4576,7 +4657,7 @@ function clone(obj) {
       return this.getData(this.hub, (function(_this) {
         return function(data) {
           data.post.push({
-            "post_id": data.next_post_id,
+            "post_id": Time.timestamp() + data.next_post_id,
             "body": body,
             "date_added": Time.timestamp()
           });
@@ -4739,6 +4820,7 @@ function clone(obj) {
   window.User = User;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/UserList.coffee ---- */
