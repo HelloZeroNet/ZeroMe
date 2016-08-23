@@ -114,7 +114,7 @@ class Head extends Class
 						h("a.name.link", {href: Page.user.getLink(), onclick: Page.handleLinkClick}, Page.user.row.user_name),
 						h("a.address", {href: "#Select+user", onclick: @handleSelectUserClick}, Page.site_info.cert_user_id)
 					),
-					h("a.settings", {href: "#Settings", onclick: @handleMenuClick}, "\u22EE")
+					h("a.settings", {href: "#Settings", onclick: Page.returnFalse, onmousedown: @handleMenuClick}, "\u22EE")
 					@menu.render()
 				])
 			else if not Page.user?.hub and Page.site_info?.cert_user_id
@@ -125,7 +125,7 @@ class Head extends Class
 						h("a.address", {href: "#Select+user", onclick: @handleSelectUserClick}, Page.site_info.cert_user_id)
 					),
 					@menu.render()
-					h("a.settings", {href: "#Settings", onclick: @handleMenuClick}, "\u22EE")
+					h("a.settings", {href: "#Settings", onclick: Page.returnFalse, onmousedown: @handleMenuClick}, "\u22EE")
 				])
 			else if not Page.user?.hub and Page.site_info
 				# No cert selected
@@ -135,7 +135,7 @@ class Head extends Class
 						h("a.address", {href: "#Select+user", onclick: @handleSelectUserClick}, "Select your account")
 					),
 					@menu.render()
-					h("a.settings", {href: "#Settings", onclick: @handleMenuClick}, "\u22EE")
+					h("a.settings", {href: "#Settings", onclick: Page.returnFalse, onmousedown: @handleMenuClick}, "\u22EE")
 				])
 			else
 				h("div.right.unknown")
