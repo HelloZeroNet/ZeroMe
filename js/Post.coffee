@@ -45,10 +45,12 @@ class Post extends Class
 			Animation.flashOut(e.currentTarget.firstChild)
 			Page.user.dislike site, post_uri, =>
 				@submitting_like = false
+				@unfollow()
 		else
 			Animation.flashIn(e.currentTarget.firstChild)
 			Page.user.like site, post_uri, =>
 				@submitting_like = false
+				@follow()
 		return false
 
 	handleCommentClick: =>
@@ -69,6 +71,7 @@ class Post extends Class
 			@field_comment.loading = false
 			if res
 				@field_comment.setValue("")
+			@follow()
 
 	handleCommentSave: (comment_id, body, cb) =>
 		Page.user.getData @row.site, (data) =>
