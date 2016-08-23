@@ -8,6 +8,7 @@ class Post extends Class
 		@field_comment = new Autosize({placeholder: "Add your comment", onsubmit: @handleCommentSubmit})
 		@comment_limit = 3
 		@setRow(row)
+		@menu = null
 
 	setRow: (row) ->
 		@row = row
@@ -111,6 +112,52 @@ class Post extends Class
 
 		return @editable_comments[comment_uri]
 
+	getPostUri: =>
+		return "#{@user.auth_address}_#{@row.post_id}"
+
+	handleSettingsClick: =>
+		Page.cmd "feedListFollow", [], (follows) =>
+			if not @menu
+				@menu = new Menu()
+			followed = follows["Post follow"] and @getPostUri() in follows["Post follow"][1]
+			@menu.items = []
+			@menu.items.push ["Follow in newsfeed", ( => if followed then @unfollow() else @follow() ), followed]
+			@menu.toggle()
+		return false
+
+	unfollow: =>
+		Page.cmd "feedListFollow", [], (follows) =>
+			if not follows["Post follow"]
+				return
+			followed_uris = follows["Post follow"][1]
+
+			index = followed_uris.indexOf @getPostUri()
+			if index == -1
+				return
+
+			followed_uris.splice(index, 1)
+			if followed_uris.length == 0
+				delete follows["Post follow"]
+			@log "Unfollow", follows
+			Page.cmd "feedFollow", [follows]
+
+	follow: =>
+		Page.cmd "feedListFollow", [], (follows) =>
+			if not follows["Post follow"]
+				follows["Post follow"] = ["""
+					SELECT
+					 "comment" AS type,
+					 comment.date_added AS date_added,
+					 "a followed post" AS title,
+					 '@' || user_name || ': ' || comment.body AS body,
+					 '?Post/' || json.site || '/' || REPLACE(post_uri, '_', '/') AS url
+					FROM comment
+					LEFT JOIN json USING (json_id)
+					WHERE post_uri IN (:params)
+				""", []]
+			followed_uris = follows["Post follow"][1]
+			followed_uris.push @getPostUri()
+			Page.cmd "feedFollow", [follows]
 
 	renderComments: =>
 		if not @row.comments and not @commenting
@@ -158,6 +205,8 @@ class Post extends Class
 				h("span.address", {title: @user.auth_address}, @row.cert_user_id),
 				h("span.sep", " \u2015 "),
 				h("a.added.link", {href: @getLink(), title: Time.date(@row.date_added, "long"), onclick: Page.handleLinkClick}, Time.since(@row.date_added)),
+				if @menu then @menu.render(".menu-right"),
+				h("a.settings", {href: "#Settings", onclick: Page.returnFalse, onmousedown: @handleSettingsClick}, "\u22EE")
 			])
 			if @owned
 				@editable_body.render(@row.body)
