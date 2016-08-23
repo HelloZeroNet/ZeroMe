@@ -151,7 +151,7 @@ class ActivityList extends Class
 			body = activity.body
 
 		# opacity = Math.max(0.5, 1 - (now - activity.date_added) / 10000)
-		back.push h("div.activity", {key: "#{activity.cert_user_id}_#{activity.date_added}", title: Time.since(activity.date_added), classes: {latest: now - activity.date_added < 600}, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, [
+		back.push h("div.activity", {key: "#{activity.cert_user_id}_#{activity.date_added}_#{activity_group.length}", title: Time.since(activity.date_added), classes: {latest: now - activity.date_added < 600}, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, [
 			h("div.circle"),
 			h("div.body", body)
 		])
