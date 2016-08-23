@@ -170,7 +170,7 @@ class User extends Class
 	post: (body, cb=null) ->
 		@getData @hub, (data) =>
 			data.post.push {
-				"post_id": data.next_post_id,
+				"post_id": Time.timestamp() + data.next_post_id,
 				"body": body,
 				"date_added": Time.timestamp()
 			}
