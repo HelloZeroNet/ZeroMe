@@ -189,6 +189,8 @@ class Post extends Class
 					])
 					if owned
 						@getEditableComment(comment_uri).render(comment.body)
+					else if comment.body.length > 5000
+						h("div.body.maxheight", {innerHTML: Text.renderLinks(comment.body), afterCreate: Maxheight.apply})
 					else
 						h("div.body", {innerHTML: Text.renderLinks(comment.body) })
 				])
@@ -214,7 +216,7 @@ class Post extends Class
 			if @owned
 				@editable_body.render(@row.body)
 			else
-				h("div.body", {innerHTML: Text.renderMarked(@row.body)})
+				h("div.body", {classes: {maxheight: not @row.selected and @row.body.length > 5000}, innerHTML: Text.renderMarked(@row.body), afterCreate: Maxheight.apply, afterUpdate: Maxheight.apply})
 			h("div.actions", [
 				h("a.icon.icon-comment.link", {href: "#Comment", onclick: @handleCommentClick}, "Comment"),
 				h("a.like.link", {classes: {active: Page.user?.likes[post_uri], loading: @submitting_like, "like-zero": @row.likes == 0}, href: "#Like", onclick: @handleLikeClick},

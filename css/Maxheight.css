@@ -1,0 +1,6 @@
+.maxheight { max-height: 550px; overflow: hidden; transition: all 1s ease-in-out }
+.maxheight-limited:before {
+    display: block; width: 100%; content: "Read more"; position: relative; background: linear-gradient(rgba(0,0,0,0), white 70%);
+    margin-top: -125px; height: 125px; line-height: 56px; vertical-align: bottom; padding-top: 70px; box-sizing: border-box;
+    cursor: pointer; color: #5d68ff; text-align: center; top: 550px;
+}

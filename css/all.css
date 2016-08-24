@@ -74,6 +74,7 @@
 .comment { padding-top: 10px; padding-bottom: 10px }
 .comment-list .comment .user { padding-bottom: 0px; white-space: nowrap; line-height: 15px; }
 .comment .body { white-space: pre-wrap; padding-top: 4px }
+.comment .body.maxheight:before { background: linear-gradient(rgba(0,0,0,0), #fafafa 70%) }
 .comment .icon-reply { opacity: 0; -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
 .comment:hover .icon-reply { opacity: 0.5 }
 .comment .icon-reply:hover { opacity: 1; -webkit-transition: none ; -moz-transition: none ; -o-transition: none ; -ms-transition: none ; transition: none  }
@@ -126,6 +127,17 @@
 .hub .button-join { float: right; margin-left: 20px; }
 .hub .avatar { margin-left: 5px }
 .hubselect { padding-top: 30px }
+
+
+/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Maxheight.css ---- */
+
+
+.maxheight { max-height: 550px; overflow: hidden; -webkit-transition: all 1s ease-in-out ; -moz-transition: all 1s ease-in-out ; -o-transition: all 1s ease-in-out ; -ms-transition: all 1s ease-in-out ; transition: all 1s ease-in-out  }
+.maxheight-limited:before {
+    display: block; width: 100%; content: "Read more"; position: relative; background: -webkit-linear-gradient(rgba(0,0,0,0), white 70%);background: -moz-linear-gradient(rgba(0,0,0,0), white 70%);background: -o-linear-gradient(rgba(0,0,0,0), white 70%);background: -ms-linear-gradient(rgba(0,0,0,0), white 70%);background: linear-gradient(rgba(0,0,0,0), white 70%);
+    margin-top: -125px; height: 125px; line-height: 56px; vertical-align: bottom; padding-top: 70px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ;
+    cursor: pointer; color: #5d68ff; text-align: center; top: 550px;
+}
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Menu.css ---- */

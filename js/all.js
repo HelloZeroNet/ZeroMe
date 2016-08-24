@@ -1745,6 +1745,42 @@ function clone(obj) {
 }).call(this);
 
 
+/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Maxheight.coffee ---- */
+
+
+(function() {
+  var Maxheight;
+
+  Maxheight = (function() {
+    function Maxheight() {}
+
+    Maxheight.prototype.apply = function(elem) {
+      if (elem.classList.contains("maxheight") && elem.scrollHeight > 500) {
+        elem.classList.add("maxheight-limited");
+        return elem.onclick = function(e) {
+          if (e.target === elem) {
+            elem.style.maxHeight = elem.scrollHeight + "px";
+            elem.classList.remove("maxheight-limited");
+            return setTimeout((function() {
+              elem.classList.remove("maxheight");
+              return elem.style.maxHeight = null;
+            }), 1000);
+          }
+        };
+      } else {
+        return elem.classList.remove("maxheight-limited");
+      }
+    };
+
+    return Maxheight;
+
+  })();
+
+  window.Maxheight = new Maxheight();
+
+}).call(this);
+
+
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Menu.coffee ---- */
 
 
@@ -4033,7 +4069,10 @@ function clone(obj) {
                   onclick: _this.handleReplyClick,
                   user_name: comment.user_name
                 }, "Reply")
-              ]), owned ? _this.getEditableComment(comment_uri).render(comment.body) : h("div.body", {
+              ]), owned ? _this.getEditableComment(comment_uri).render(comment.body) : comment.body.length > 5000 ? h("div.body.maxheight", {
+                innerHTML: Text.renderLinks(comment.body),
+                afterCreate: Maxheight.apply
+              }) : h("div.body", {
                 innerHTML: Text.renderLinks(comment.body)
               })
             ]);
@@ -4079,7 +4118,12 @@ function clone(obj) {
             onmousedown: this.handleSettingsClick
           }, "\u22EE")
         ]), this.owned ? this.editable_body.render(this.row.body) : h("div.body", {
-          innerHTML: Text.renderMarked(this.row.body)
+          classes: {
+            maxheight: !this.row.selected && this.row.body.length > 5000
+          },
+          innerHTML: Text.renderMarked(this.row.body),
+          afterCreate: Maxheight.apply,
+          afterUpdate: Maxheight.apply
         }), h("div.actions", [
           h("a.icon.icon-comment.link", {
             href: "#Comment",
@@ -4108,6 +4152,7 @@ function clone(obj) {
   window.Post = Post;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostCreate.coffee ---- */
@@ -4820,7 +4865,6 @@ function clone(obj) {
   window.User = User;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/UserList.coffee ---- */
