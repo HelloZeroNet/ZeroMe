@@ -86,6 +86,7 @@ class Post extends Class
 			data.comment.splice(comment_index, 1)
 			Page.user.save data, @row.site, (res) =>
 				cb(res)
+				@unfollow()
 
 	handleMoreCommentsClick: =>
 		@comment_limit += 10
