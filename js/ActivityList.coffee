@@ -10,9 +10,9 @@ class ActivityList extends Class
 
 	queryActivities: (cb) ->
 		if @directories == "all"
-			where = "WHERE date_added > #{Time.timestamp()-60*60*6}"
+			where = "WHERE date_added > #{Time.timestamp()-60*60*6} AND date_added < #{Time.timestamp()+120} "
 		else
-			where = "WHERE json.directory IN #{Text.sqlIn(@directories)}"
+			where = "WHERE json.directory IN #{Text.sqlIn(@directories)} AND date_added < #{Time.timestamp()+120} "
 
 		query = """
 			SELECT
