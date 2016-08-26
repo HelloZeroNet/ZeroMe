@@ -16,7 +16,7 @@ class PostList extends Class
 			 comment
 			LEFT JOIN json USING (json_id)
 			WHERE
-			 ?
+			 ? AND date_added < #{Time.timestamp()+120}
 			ORDER BY date_added DESC
 		"
 		return Page.cmd "dbQuery", [query, {post_uri: post_uris}], cb
