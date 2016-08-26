@@ -2542,9 +2542,9 @@ function clone(obj) {
     ActivityList.prototype.queryActivities = function(cb) {
       var query, where;
       if (this.directories === "all") {
-        where = "WHERE date_added > " + (Time.timestamp() - 60 * 60 * 6);
+        where = "WHERE date_added > " + (Time.timestamp() - 60 * 60 * 6) + " AND date_added < " + (Time.timestamp() + 120) + " ";
       } else {
-        where = "WHERE json.directory IN " + (Text.sqlIn(this.directories));
+        where = "WHERE json.directory IN " + (Text.sqlIn(this.directories)) + " AND date_added < " + (Time.timestamp() + 120) + " ";
       }
       query = "SELECT\n 'comment' AS type, json.*,\n json.site || \"/\" || post_uri AS subject, body, date_added,\n NULL AS subject_auth_address, NULL AS subject_hub, NULL AS subject_user_name\nFROM\n json\nLEFT JOIN comment USING (json_id)\n " + where + "\n\nUNION ALL\n\nSELECT\n 'post_like' AS type, json.*,\n json.site || \"/\" || post_uri AS subject, '' AS body, date_added,\n NULL AS subject_auth_address, NULL AS subject_hub, NULL AS subject_user_name\nFROM\n json\nLEFT JOIN post_like USING (json_id)\n " + where;
       if (this.directories !== "all") {
@@ -3915,7 +3915,8 @@ function clone(obj) {
           }
           data.comment.splice(comment_index, 1);
           return Page.user.save(data, _this.row.site, function(res) {
-            return cb(res);
+            cb(res);
+            return _this.unfollow();
           });
         };
       })(this));
@@ -4154,7 +4155,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostCreate.coffee ---- */
 
 
@@ -4272,7 +4272,7 @@ function clone(obj) {
 
     PostList.prototype.queryComments = function(post_uris, cb) {
       var query;
-      query = "SELECT post_uri, comment.body, comment.date_added, comment.comment_id, json.cert_auth_type, json.cert_user_id, json.user_name, json.hub, json.directory, json.site FROM comment LEFT JOIN json USING (json_id) WHERE ? ORDER BY date_added DESC";
+      query = "SELECT post_uri, comment.body, comment.date_added, comment.comment_id, json.cert_auth_type, json.cert_user_id, json.user_name, json.hub, json.directory, json.site FROM comment LEFT JOIN json USING (json_id) WHERE ? AND date_added < " + (Time.timestamp() + 120) + " ORDER BY date_added DESC";
       return Page.cmd("dbQuery", [
         query, {
           post_uri: post_uris
@@ -4387,6 +4387,7 @@ function clone(obj) {
   window.PostList = PostList;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/User.coffee ---- */

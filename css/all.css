@@ -199,7 +199,7 @@
 .post-create { -webkit-transition: all 0.6s ; -moz-transition: all 0.6s ; -o-transition: all 0.6s ; -ms-transition: all 0.6s ; transition: all 0.6s  }
 .post-create .postfield {
 	font-family: Roboto; font-size: 16px; border: 1px solid white; padding: 15px 15px;
-	font-size: 16px; width: 100%; height: 52px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; background-color: white;
+	font-size: 16px; width: 100%; height: 52px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ;
 }
 .post-create .user { margin-bottom: 0px; height: auto; padding-bottom: 0px; }
 .post-create .postbuttons { height: 55px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; -webkit-transform: scale(1); -moz-transform: scale(1); -o-transform: scale(1); -ms-transform: scale(1); transform: scale(1) ; overflow: hidden; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; text-align: right }
@@ -216,6 +216,7 @@
 }
 .post-list-type .active { border-bottom: 2px solid #606aff; color: #606aff; }
 .post-list-type a:hover { border-bottom: 2px solid #606aff; color: #606aff; -webkit-transition: none; -moz-transition: none; -o-transition: none; -ms-transition: none; transition: none ; text-decoration: none }
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Uploadable.css ---- */
