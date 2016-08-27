@@ -22,8 +22,8 @@ class UserList extends Class
 				LEFT JOIN json ON (json.directory = 'data/userdb/' || follow.auth_address)
 				LEFT JOIN user ON (user.json_id = json.json_id)
 				WHERE
-				 follow.json_id = #{@followed_by.row.json_id}  AND user.json_id IS NOT NULL
-
+				 follow.json_id = #{@followed_by.row.json_id}  AND user.json_id IS NOT NULL AND
+				 follow.date_added < #{Time.timestamp()+120}
 				ORDER BY date_added DESC
 				LIMIT #{@limit}
 			"""
@@ -44,7 +44,8 @@ class UserList extends Class
 				WHERE
 				 json.directory IN #{Text.sqlIn(followed_user_directories)} AND
 				 auth_address NOT IN #{Text.sqlIn(followed_user_addresses)} AND
-				 auth_address != '#{Page.user.auth_address}'
+				 auth_address != '#{Page.user.auth_address}' AND
+				 date_added < #{Time.timestamp()+120}
 				GROUP BY follow.auth_address
 				ORDER BY num DESC
 				LIMIT #{@limit}
@@ -62,6 +63,8 @@ class UserList extends Class
 				 json.avatar AS json_avatar
 				FROM
 				 user LEFT JOIN json USING (json_id)
+				WHERE
+				 date_added < #{Time.timestamp()+120}
 				ORDER BY date_added DESC
 				LIMIT #{@limit}
 			"""
