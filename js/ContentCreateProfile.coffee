@@ -19,7 +19,7 @@ class ContentCreateProfile extends Class
 		hub = e.target.attributes.address.value
 		user = new User({hub: hub, auth_address: Page.site_info.auth_address})
 		@creation_status.push "Checking user on selected hub..."
-		Page.cmd "fileGet", {"inner_path": user.getPath()+"/data.json", "required": false}, (found) =>
+		Page.cmd "fileGet", {"inner_path": user.getPath()+"/content.json", "required": false}, (found) =>
 			if found
 				Page.cmd "wrapperNotification", ["error", "User #{Page.site_info.cert_user_id} already exists on this hub"]
 				@creation_status = []
