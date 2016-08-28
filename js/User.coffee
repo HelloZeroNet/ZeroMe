@@ -133,7 +133,7 @@ class User extends Class
 			for field in ["avatar", "hub", "intro", "user_name"]
 				if userdb_data.user[0][field] != data[field]
 					changed = true
-					@log "Changed in profile:", field
+					@log "Changed in profile:", field, userdb_data.user[0][field], "!=", data[field]
 				userdb_data.user[0][field] = data[field]
 
 			if changed
