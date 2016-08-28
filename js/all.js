@@ -1972,6 +1972,7 @@ function clone(obj) {
       options["renderer"] = marked_renderer;
       text = this.fixReply(text);
       text = marked(text, options);
+      text = text.replace(/(@[A-Za-z0-9 ]{1,16}):/g, '<b class="reply-name">$1</b>:');
       return this.fixHtmlLinks(text);
     };
 
@@ -3104,7 +3105,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentFeed.coffee ---- */
 
 
@@ -3955,7 +3955,7 @@ function clone(obj) {
           };
         })(this);
         this.editable_comments[comment_uri] = new Editable("div.body", handleCommentSave, handleCommentDelete);
-        this.editable_comments[comment_uri].render_function = Text.renderLinks;
+        this.editable_comments[comment_uri].render_function = Text.renderMarked;
       }
       return this.editable_comments[comment_uri];
     };
@@ -4072,10 +4072,10 @@ function clone(obj) {
                   user_name: comment.user_name
                 }, "Reply")
               ]), owned ? _this.getEditableComment(comment_uri).render(comment.body) : comment.body.length > 5000 ? h("div.body.maxheight", {
-                innerHTML: Text.renderLinks(comment.body),
+                innerHTML: Text.renderMarked(comment.body),
                 afterCreate: Maxheight.apply
               }) : h("div.body", {
-                innerHTML: Text.renderLinks(comment.body)
+                innerHTML: Text.renderMarked(comment.body)
               })
             ]);
           };
@@ -4600,6 +4600,13 @@ function clone(obj) {
     };
 
     User.prototype.saveUserdb = function(data, cb) {
+      var cert_provider;
+      cert_provider = Page.site_info.cert_user_id.replace(/.*@/, "");
+      if (cert_provider !== "zeroid.bit" && cert_provider !== "zeroverse.bit") {
+        this.log("Cert provider " + cert_provider + " not supported by userdb!");
+        cb(false);
+        return false;
+      }
       return Page.cmd("fileGet", [this.getPath(Page.userdb) + "/content.json", false], (function(_this) {
         return function(userdb_data) {
           var changed, field, _i, _len, _ref;
@@ -4620,7 +4627,7 @@ function clone(obj) {
             field = _ref[_i];
             if (userdb_data.user[0][field] !== data[field]) {
               changed = true;
-              _this.log("Changed in profile:", field);
+              _this.log("Changed in profile:", field, userdb_data.user[0][field], "!=", data[field]);
             }
             userdb_data.user[0][field] = data[field];
           }
@@ -4866,6 +4873,7 @@ function clone(obj) {
   window.User = User;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/UserList.coffee ---- */
