@@ -117,6 +117,11 @@ class User extends Class
 					@saveUserdb(data)
 
 	saveUserdb: (data, cb) ->
+		cert_provider = Page.site_info.cert_user_id.replace(/.*@/, "")
+		if cert_provider not in ["zeroid.bit", "zeroverse.bit"]
+			@log "Cert provider #{cert_provider} not supported by userdb!"
+			cb(false)
+			return false
 		Page.cmd "fileGet", [@getPath(Page.userdb)+"/content.json", false], (userdb_data) =>
 			userdb_data = JSON.parse(userdb_data)
 			changed = false
