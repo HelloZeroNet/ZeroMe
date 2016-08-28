@@ -18,6 +18,7 @@ class Text
 		options["renderer"] = marked_renderer
 		text = @fixReply(text)
 		text = marked(text, options)
+		text = text.replace(/(@[A-Za-z0-9 ]{1,16}):/g, '<b class="reply-name">$1</b>:')  # Highlight usernames
 		return @fixHtmlLinks text
 
 	renderLinks: (text) =>
