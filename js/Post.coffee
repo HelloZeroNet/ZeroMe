@@ -112,7 +112,7 @@ class Post extends Class
 				@handleCommentDelete(parseInt(comment_id), cb)
 
 			@editable_comments[comment_uri] = new Editable("div.body", handleCommentSave, handleCommentDelete)
-			@editable_comments[comment_uri].render_function = Text.renderLinks
+			@editable_comments[comment_uri].render_function = Text.renderMarked
 
 		return @editable_comments[comment_uri]
 
@@ -191,9 +191,9 @@ class Post extends Class
 					if owned
 						@getEditableComment(comment_uri).render(comment.body)
 					else if comment.body.length > 5000
-						h("div.body.maxheight", {innerHTML: Text.renderLinks(comment.body), afterCreate: Maxheight.apply})
+						h("div.body.maxheight", {innerHTML: Text.renderMarked(comment.body), afterCreate: Maxheight.apply})
 					else
-						h("div.body", {innerHTML: Text.renderLinks(comment.body) })
+						h("div.body", {innerHTML: Text.renderMarked(comment.body) })
 				])
 			if @row.comments?.length > comment_limit
 				h("a.more", {href: "#More", onclick: @handleMoreCommentsClick, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, "Show more comments...")

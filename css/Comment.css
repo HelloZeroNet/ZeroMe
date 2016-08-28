@@ -6,11 +6,13 @@
 .comment-list .body p { padding: 0px }
 
 .comment-create textarea { width: 100%; margin-bottom: 11px; box-sizing: border-box; }
-.comment { padding-top: 10px; padding-bottom: 10px }
+.comment { padding-top: 10px }
 .comment-list .comment .user { padding-bottom: 0px; white-space: nowrap; line-height: 15px; }
-.comment .body { white-space: pre-wrap; padding-top: 4px }
+.comment .body { padding-top: 4px; padding-bottom: 10px; }
 .comment .body.maxheight:before { background: linear-gradient(rgba(0,0,0,0), #fafafa 70%) }
 .comment .icon-reply { opacity: 0; transition: all 0.3s }
 .comment:hover .icon-reply { opacity: 0.5 }
 .comment .icon-reply:hover { opacity: 1; transition: none }
 .comment .user .name { line-height: 16px; }
+
+.comment h1, .comment h2, .comment h3, .comment h4, .comment h5, .comment h6 { font-size: inherit; font-weight: bold }
