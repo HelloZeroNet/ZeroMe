@@ -123,6 +123,10 @@ class ContentProfile extends Class
 					Page.cmd "wrapperReload"  # Reload the page
 
 	handleOptionalHelpClick: =>
+		if Page.server_info.rev < 1700
+			Page.cmd "wrapperNotification", ["info", "You need ZeroNet version 0.5.0 use this feature"]
+			return false
+
 		@user.hasHelp (optional_helping) =>
 			@optional_helping = optional_helping
 			if @optional_helping

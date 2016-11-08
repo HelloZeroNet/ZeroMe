@@ -49,6 +49,12 @@ class PostCreate extends Class
 			), 100
 		return false
 
+	handleUploadClick: =>
+		if Page.server_info.rev < 1700
+			Page.cmd "wrapperNotification", ["info", "You need ZeroNet version 0.5.0 to upload images"]
+		else
+			@upload.handleUploadClick()
+
 	render: =>
 		user = Page.user
 		if user == false
@@ -57,7 +63,7 @@ class PostCreate extends Class
 			# Registered user
 			h("div.post-create.post", {classes: {editing: @is_editing}},
 				h("div.user", user.renderAvatar()),
-				h("a.icon-image.link", {href: "#", onclick: @upload.handleUploadClick}),
+				h("a.icon-image.link", {href: "#", onclick: @handleUploadClick}),
 				@field_post.render(),
 				if @image.base64uri
 					h("div.image", {style: "background-image: url(#{@image.base64uri}); height: #{@image.getSize(530, 600)[1]}px", classes: {empty: false}}, [
