@@ -1,0 +1,6 @@
+#Overlay {
+	position: absolute; z-index: 9999; width: 100%; background-color: rgba(255, 255, 255, 0);
+	height: 100%; transition: background-color 0.6s; pointer-events: none; cursor: zoom-in;
+}
+#Overlay.visible { background-color: rgba(255, 255, 255, 0.9); pointer-events: all; }
+#Overlay .img { position: absolute; background-size: contain; transition: all 0.3s; background-repeat: no-repeat; }
