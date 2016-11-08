@@ -51,6 +51,10 @@ class User extends Class
 	isSeeding: ->
 		return Page.merged_sites[@hub]
 
+	hasHelp: (cb) =>
+		Page.cmd "OptionalHelpList", [@hub], (helps) =>
+			cb(helps["data/users/#{@auth_address}"])
+
 	getPath: (site=@hub) ->
 		if site == Page.userdb
 			return "merged-ZeroMe/#{site}/data/userdb/#{@auth_address}"
