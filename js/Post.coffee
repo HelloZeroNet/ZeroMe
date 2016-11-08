@@ -23,6 +23,7 @@ class Post extends Class
 		if @owned
 			@editable_body = new Editable("div.body", @handlePostSave, @handlePostDelete)
 			@editable_body.render_function = Text.renderMarked
+			@editable_body.empty_text = " "
 
 	getLink: ->
 		"?Post/#{@user.hub}/#{@user.auth_address}/#{@row.post_id}"
@@ -198,7 +199,7 @@ class Post extends Class
 					])
 					if owned
 						@getEditableComment(comment_uri).render(comment.body)
-					else if comment.body.length > 5000
+					else if comment.body?.length > 5000
 						h("div.body.maxheight", {innerHTML: Text.renderMarked(comment.body), afterCreate: Maxheight.apply})
 					else
 						h("div.body", {innerHTML: Text.renderMarked(comment.body) })
@@ -225,7 +226,7 @@ class Post extends Class
 			if @owned
 				@editable_body.render(@row.body)
 			else
-				h("div.body", {classes: {maxheight: not @row.selected and @row.body.length > 5000}, innerHTML: Text.renderMarked(@row.body), afterCreate: Maxheight.apply, afterUpdate: Maxheight.apply})
+				h("div.body", {classes: {maxheight: not @row.selected and @row.body?.length > 3000}, innerHTML: Text.renderMarked(@row.body), afterCreate: Maxheight.apply, afterUpdate: Maxheight.apply})
 			if @meta
 				@meta.render()
 			h("div.actions", [
