@@ -37,14 +37,25 @@
 .post-create { transition: all 0.6s }
 .post-create .postfield {
 	font-family: Roboto; font-size: 16px; border: 1px solid white; padding: 15px 15px;
-	font-size: 16px; width: 100%; height: 52px; box-sizing: border-box;
+	font-size: 16px; width: 100%; height: 52px; box-sizing: border-box; padding-right: 40px;
 }
 .post-create .user { margin-bottom: 0px; height: auto; padding-bottom: 0px; }
 .post-create .postbuttons { height: 55px; box-sizing: border-box; transform: scale(1); overflow: hidden; transition: all 0.3s; text-align: right }
-.post-create:not(.editing) .postbuttons { opacity: 0; height: 0px; height: 0px }
 .post-create.editing .postfield { border: 1px solid #c6caff }
 .post-create.editing { box-shadow: 0px 1px 13px 1px #eaeaea }
 .post-create .select-user-container { width: 100%; text-align: center; margin-bottom: -100px; height: 100px; z-index: 1; position: relative; margin-left: -35px; }
+.post-create .attach { font-size: 12px; text-transform: uppercase; border: 0px; padding: 8px 20px; font-weight: bold; }
+.post-create .icon-image { position: absolute; margin-left: 490px; margin-top: 17px; color: #CECECE; transition: all 0.3s }
+.post-create .icon-image:hover { color: #5d68ff; transition: none }
+.post-create .image {
+	width: 100%; height: 0px; background-repeat: no-repeat; transform: scale(1); background-position: top center;
+	background-size: cover; opacity: 1; transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1); overflow: hidden;
+}
+.post-create .image .close { float: right; color: white; font-weight: bold; text-shadow: 0px 0px 11px black; padding: 10px; }
+.post-create .image.empty { opacity: 0; transform: scale(1.5) }
+
+.post-create:not(.editing) .postbuttons { opacity: 0; height: 0px; }
+.post-create:not(.editing) .image { opacity: 0; height: 0px; }
 
 .post-list-empty { text-align: center; padding-top: 100px }
 .post-list-type { text-align: right; }
@@ -54,3 +65,30 @@
 }
 .post-list-type .active { border-bottom: 2px solid #606aff; color: #606aff; }
 .post-list-type a:hover { border-bottom: 2px solid #606aff; color: #606aff; transition: none; text-decoration: none }
+
+.post .img { background-size: cover; text-align: center; position: relative; margin-bottom: 10px; }
+.post .img .show {
+	top: 50%; display: inline-block; color: white; background-color: #606aff; overflow: hidden;
+	width: 140px; position: absolute; margin-left: -70px; box-sizing: border-box; margin-top: -20px; height: 40px; padding: 12px 20px;
+    text-transform: uppercase; font-size: 12px; border-radius: 25px; transition: all 0.3s;
+}
+.post .img .show .title { white-space: pre; line-height: 30px; height: 16px; transform: translateY(-36px); transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) }
+.post .img .details {
+	bottom: 0px; position: absolute; font-size: 14px; right: 10px; padding: 5px 10px; margin-bottom: 12px; text-decoration: none;
+	background-color: rgba(0, 0, 0, 0.4); border-radius: 30px; color: white; opacity: 0; transition: all 0.3s
+}
+.post .img .details .size { display: inline-block; margin-right: 9px; max-width: 80px; overflow: hidden; white-space: nowrap; vertical-align: -4px; transition: all 0.3s ease-out; }
+.post .img .fullsize { width: 100%; height: 100%; display: block; background-size: contain; opacity: 0; transition: all 0.6s; position: absolute; background-repeat: no-repeat; background-color: white; }
+.post .img.loading .show { background-color: #2ecc71; animation: bounce .3s infinite alternate ease-out; pointer-events: none;  }
+.post .img.loading .show .title { transform: translateY(-6px);  }
+.post .img.downloaded .fullsize { opacity: 1; cursor: zoom-in }
+.post .img.downloaded .show { opacity: 0; pointer-events: none; visibility: hidden; }
+.post .img.hasinfo .details { opacity: 1 }
+.post .img.downloaded .details { opacity: 0 }
+.post .img.downloaded .details .size { max-width: 0px; }
+.post .img.downloaded:hover .details { opacity: 1 }
+.post .img .menu { text-align: right; margin-top: -94px; z-index: 999; font-size: 15px; line-height: 20px; }
+.post .img .image-settings { color: white; padding: 2px 7px; text-decoration: none }
+.post .img .details:hover { background-color: rgba(0,0,0,0.7); transition: none }
+.post .img .details:active { background-color: rgba(0,0,0,0.5); transition: none }
+.post .img .oldversion { background-color: rgba(0, 0, 0, 0.5); padding: 10px 10px; top: 49%; position: relative; color: white; border-radius: 25px; }
