@@ -6,9 +6,12 @@ class PostCreate
 			onfocus: Page.projector.scheduleRender,
 			onblur: Page.projector.scheduleRender
 		})
+		@is_editing = false
 
-	isEditing: ->
-		return @field_post.attrs.value?.length or document.activeElement?.parentElement == @field_post.node?.parentElement
+	startEdit: =>
+		@is_editing = true
+		Page.projector.scheduleRender()
+
 
 	handlePostSubmit: =>
 		@field_post.loading = true
@@ -28,7 +31,7 @@ class PostCreate
 			h("div.post-create.post.empty")
 		else if user?.hub
 			# Registered user
-			h("div.post-create.post", {classes: {editing: @isEditing()}},
+			h("div.post-create.post", {classes: {editing: @is_editing}},
 				h("div.user", user.renderAvatar()),
 				@field_post.render(),
 				h("div.postbuttons",
