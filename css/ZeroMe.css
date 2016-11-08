@@ -20,7 +20,7 @@ a.link:active { background-color: rgba(0,0,0,0.05); outline: 4px solid rgba(0,0,
 
 h1 { font-size: 34px; line-height: 34px }
 h1, h2, h3 { font-weight: lighter }
-h2 a { font-size: 13px; margin-left: 10px; font-weight: normal; margin-top: 8px; }
+h2 a.link { font-size: 13px; margin-left: 10px; font-weight: normal; margin-top: 8px; }
 h2.sep { border-top: 1px solid #EEE; padding-top: 20px }
 h5 { font-weight: normal; color: rgba(0, 0, 0, 0.5) }
 
