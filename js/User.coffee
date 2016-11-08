@@ -176,7 +176,17 @@ class User extends Class
 			@save data, site, (res) =>
 				if cb then cb(res)
 
-	post: (body, cb=null) ->
+	# Add optional pattern to user's content.json
+	checkContentJson: (cb=null) ->
+		Page.cmd "fileGet", [@getPath(@hub)+"/content.json", false], (res) =>
+			content_json = JSON.parse(res)
+			if content_json.optional
+				return cb(true)
+
+			content_json.optional = "(?!avatar).*jpg"
+			Page.cmd "fileWrite", [@getPath(@hub)+"/content.json", Text.fileEncode(content_json)], (res_write) =>
+				cb(res_write)
+
 	fileWrite: (file_name, content_base64, cb=null) ->
 		if not content_base64
 			return cb?(null)
