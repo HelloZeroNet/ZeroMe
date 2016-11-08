@@ -45,6 +45,8 @@ class Menu
 
 	renderItem: (item) =>
 		[title, cb, selected] = item
+		if typeof(selected) == "function"
+			selected = selected()
 		if title == "---"
 			h("div.menu-item-separator")
 		else
