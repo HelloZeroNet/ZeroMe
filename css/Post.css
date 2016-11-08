@@ -30,6 +30,9 @@
 
 .post ul { margin: 0px; padding-bottom: 0.6em; }
 
+.post table { border-collapse: collapse; margin-bottom: 10px; }
+.post td, .post th { padding: 5px 10px; border: 1px solid #EEE; border-collapse: collapse; }
+
 .post-create-container { margin-bottom: 12px }
 .post-create { transition: all 0.6s }
 .post-create .postfield {
