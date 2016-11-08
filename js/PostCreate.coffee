@@ -3,8 +3,8 @@ class PostCreate
 		@field_post = new Autosize({
 			placeholder: "Write something...",
 			class: "postfield",
-			onfocus: Page.projector.scheduleRender,
-			onblur: Page.projector.scheduleRender
+			onfocus: @startEdit,
+			onblur: @startEdit
 		})
 		@is_editing = false
 
