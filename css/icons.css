@@ -52,6 +52,19 @@
 	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAmklEQVR42u3VwQ2AIAwFUEZgBEZxNDZwFEdwBDaigiHKwdBCvyYm/KQnKi8KgjEdISKbaitlzRspSKA7AY49IHisgeAwAaLHOpBxbADpxxSIHAMgMiwNroSL597KpVqqkqZ+xo3sPlEQP+yEJvRXiGuMMe4cknvY+Tkon1ktrIxZNYT69N9D7Gk7dkP7C5IstjbnZuEWG4Fk4wCMv9vjGFiLRgAAAABJRU5ErkJggg==')
 }
 
+.icon-image {
+	width: 22px; height: 18px; border-radius: 0px; overflow: hidden; margin: 4px 2px; display: inline-block; vertical-align: middle; position: relative;
+	font-style: normal; color: #ddd; text-align: left; text-indent: -9999px; direction: ltr; box-sizing: border-box; border: 1px solid;
+}
+.icon-image:before {
+    content: ''; pointer-events: none; position: absolute; width: 10px; height: 18px; left: -2px; top: 7px;
+    transform: rotate(45deg); box-shadow: inset 0 0 0 32px, 10px -6px 0 0;
+}
+.icon-image:after {
+    content: ''; pointer-events: none; position: absolute; width: 3px; height: 3px;
+    border-radius: 50%; box-shadow: inset 0 0 0 32px; top: 3px; right: 5px;
+}
+
 @keyframes bounce {
 	  0% { transform: translateY(0); }
 	100% { transform: translateY(-3px); }
