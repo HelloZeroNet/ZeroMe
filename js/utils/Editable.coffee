@@ -3,6 +3,7 @@ class Editable extends Class
 		@node = null
 		@editing = false
 		@render_function = null
+		@empty_text = "Click here to edit this field"
 
 	storeNode: (node) =>
 		@node = node
@@ -46,7 +47,7 @@ class Editable extends Class
 			return h("div.editable", {enterAnimation: Animation.slideDown},
 				h("a.icon.icon-edit", {key: @node, href: "#Edit", onclick: @handleEditClick}),
 				if not body
-					h(@type, h("span.empty", {onclick: @handleEditClick}, "Click here to edit this field"))
+					h(@type, h("span.empty", {onclick: @handleEditClick}, @empty_text))
 				else if @render_function
 					h(@type, {innerHTML: @render_function(body)})
 				else
