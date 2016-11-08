@@ -1,4 +1,4 @@
-class PostCreate
+class PostCreate extends Class
 	constructor: ->
 		@field_post = new Autosize({
 			placeholder: "Write something...",
@@ -6,19 +6,43 @@ class PostCreate
 			onfocus: @startEdit,
 			onblur: @startEdit
 		})
+		@upload = new Uploadable(@handleUpload)
+		@upload.resize_width = 900
+		@upload.resize_height = 700
 		@is_editing = false
+		@image = new ImagePreview()
 
 	startEdit: =>
 		@is_editing = true
 		Page.projector.scheduleRender()
 
+	handleUpload: (base64uri, width, height) =>
+		@startEdit()
+		@image.base64uri = base64uri
+		@image.width = width
+		@image.height = height
+		@upload.getPreviewData base64uri, 10, 10, (preview_data) =>
+			@image.preview_data = preview_data
+			Page.projector.scheduleRender()
+
+	handleImageClose: =>
+		@image.height = 0
+		@image.base64uri = ""
+		return false
 
 	handlePostSubmit: =>
 		@field_post.loading = true
-		Page.user.post @field_post.attrs.value, (res) =>
+		if @image.height
+			meta = {}
+			meta["img"] = @image.preview_data
+		else
+			meta = null
+
+		Page.user.post @field_post.attrs.value, meta, @image.base64uri?.replace(/.*base64,/, ""), (res) =>
 			@field_post.loading = false
 			if res
 				@field_post.setValue("")
+				@image = new ImagePreview()
 				document.activeElement.blur()  # Clear the focus
 			setTimeout ( ->
 				Page.content.update()
@@ -33,7 +57,14 @@ class PostCreate
 			# Registered user
 			h("div.post-create.post", {classes: {editing: @is_editing}},
 				h("div.user", user.renderAvatar()),
+				h("a.icon-image.link", {href: "#", onclick: @upload.handleUploadClick}),
 				@field_post.render(),
+				if @image.base64uri
+					h("div.image", {style: "background-image: url(#{@image.base64uri}); height: #{@image.getSize(530, 600)[1]}px", classes: {empty: false}}, [
+						h("a.close", {href: "#", onclick: @handleImageClose}, "×")
+					])
+				else
+					h("div.image", {style: "height: 0px", classes: {empty: true}})
 				h("div.postbuttons",
 					h("a.button.button-submit", {href: "#Submit", onclick: @handlePostSubmit}, "Submit new post"),
 				),
