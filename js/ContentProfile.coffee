@@ -58,7 +58,19 @@ class ContentProfile extends Class
 		@
 
 	findUser: (user_name, cb) =>
-		Page.cmd "dbQuery", ["SELECT json.cert_user_id, REPLACE(json.directory, 'data/userdb/', '') AS auth_address, user.* FROM user LEFT JOIN json USING (json_id) WHERE user.user_name = :user_name ORDER BY date_added DESC LIMIT 1", {user_name: user_name}], (res) =>
+		query = """
+			SELECT
+			 json.cert_user_id,
+			 REPLACE(REPLACE(json.directory, 'data/userdb/', ''), 'data/users/', '') AS auth_address,
+			 CASE WHEN user.hub IS NOT NULL THEN user.hub ELSE json.site END AS hub,
+			 user.*
+			FROM
+			 json
+			LEFT JOIN user USING (json_id)
+			WHERE user.user_name = :user_name OR json.user_name = :user_name
+			ORDER BY date_added DESC LIMIT 1
+		"""
+		Page.cmd "dbQuery", [query, {user_name: user_name}], (res) =>
 			user = new User()
 			user.setRow(res[0])
 			cb(user)
@@ -109,6 +121,19 @@ class ContentProfile extends Class
 				@user.save data, @user.hub, (res) =>
 					Page.cmd "wrapperReload"  # Reload the page
 
+	handleOptionalHelpClick: =>
+		@user.hasHelp (optional_helping) =>
+			@optional_helping = optional_helping
+			if @optional_helping
+				Page.cmd "OptionalHelpRemove", ["data/users/#{@user.auth_address}", @user.hub]
+				@optional_helping = false
+			else
+				Page.cmd "OptionalHelp", ["data/users/#{@user.auth_address}", "#{@user.row.user_name}'s new files", @user.hub]
+				@optional_helping = true
+			Page.content_profile.update()
+			Page.projector.scheduleRender()
+		return true
+
 	render: =>
 		if @need_update
 			@log "Updating"
@@ -147,6 +172,9 @@ class ContentProfile extends Class
 					Page.projector.scheduleRender()
 					@loaded = true
 
+			@user.hasHelp (res) =>
+				@optional_helping = res
+
 		if not @user?.row?.user_name
 			return h("div#Content.center.#{@auth_address}", [])
 
@@ -177,7 +205,11 @@ class ContentProfile extends Class
 								h("span.icon-follow", "+"),
 								if @user.isFollowed() then "Unfollow" else "Follow"
 							)
-						])
+						]),
+						h("div.help.checkbox", {classes: {checked: @optional_helping}, onclick: @handleOptionalHelpClick},
+							h("div.checkbox-skin"),
+							h("div.title", "Help distribute this user's images")
+						)
 					])
 				]),
 				@activity_list.render(),
