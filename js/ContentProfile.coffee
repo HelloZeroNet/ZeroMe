@@ -201,7 +201,7 @@ class ContentProfile extends Class
 						else
 							h("div.intro-full", {innerHTML: Text.renderMarked(@user.row.intro)})
 						h("div.follow-container", [
-							h("a.button.button-follow-big", {href: "#", onclick: @user.handleFollowClick, classes: {loading: @user.submitting_follow}},
+							h("a.button.button-follow-big", {href: "#", onclick: @user.handleFollowClick},
 								h("span.icon-follow", "+"),
 								if @user.isFollowed() then "Unfollow" else "Follow"
 							)
