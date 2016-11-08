@@ -38,6 +38,7 @@ class ZeroMe extends ZeroFrame
 		@content_users = new ContentUsers()
 		@content_profile = new ContentProfile()
 		@content_create_profile = new ContentCreateProfile()
+		@scrollwatcher = new Scrollwatcher()
 
 		if base.href.indexOf("?") == -1
 			@route("")
@@ -87,9 +88,9 @@ class ZeroMe extends ZeroFrame
 			@content_profile.setUser(@params.urls[1], @params.urls[2]).filter(@params.urls[3])
 		else
 			content = @content_feed
-		setTimeout ( => @content.update() ), 100
 		if content and (@content != content or changed)
 			if @content
+				setTimeout ( => @content.update() ), 100
 				@projector.detach(@content.render)
 			@content = content
 			@on_user_info.then =>
