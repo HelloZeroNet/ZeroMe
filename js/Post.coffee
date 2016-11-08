@@ -7,11 +7,14 @@ class Post extends Class
 		@editable_comments = {}
 		@field_comment = new Autosize({placeholder: "Add your comment", onsubmit: @handleCommentSubmit})
 		@comment_limit = 3
-		@setRow(row)
 		@menu = null
+		@meta = null
+		@setRow(row)
 
 	setRow: (row) ->
 		@row = row
+		if @row.meta
+			@meta = new PostMeta(@, JSON.parse(@row.meta))
 		if Page.user
 			@liked = Page.user.likes[@row.key]
 		@user = new User({hub: row.site, auth_address: row.directory.replace("data/users/", "")})
@@ -218,6 +221,8 @@ class Post extends Class
 				@editable_body.render(@row.body)
 			else
 				h("div.body", {classes: {maxheight: not @row.selected and @row.body.length > 5000}, innerHTML: Text.renderMarked(@row.body), afterCreate: Maxheight.apply, afterUpdate: Maxheight.apply})
+			if @meta
+				@meta.render()
 			h("div.actions", [
 				h("a.icon.icon-comment.link", {href: "#Comment", onclick: @handleCommentClick}, "Comment"),
 				h("a.like.link", {classes: {active: Page.user?.likes[post_uri], loading: @submitting_like, "like-zero": @row.likes == 0}, href: "#Like", onclick: @handleLikeClick},
