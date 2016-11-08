@@ -112,20 +112,21 @@ class Animation
 		elem.style.pointerEvents = "none"
 
 		setTimeout (->
+			cstyle = window.getComputedStyle(elem)
 			elem.style.height = "0px"
-			elem.style.marginTop = "0px"
+			elem.style.marginTop = (0-parseInt(cstyle.borderTopWidth)-parseInt(cstyle.borderBottomWidth))+"px"
 			elem.style.marginBottom = "0px"
 			elem.style.paddingTop = "0px"
 			elem.style.paddingBottom = "0px"
 			elem.style.transform = "scale(0.8)"
-			elem.style.borderTopWidth = "0px"
-			elem.style.borderBottomWidth = "0px"
 			elem.style.opacity = "0"
 		), 1
 		elem.addEventListener "transitionend", (e) ->
 			if e.propertyName == "opacity" or e.elapsedTime >= 0.6
 				elem.removeEventListener "transitionend", arguments.callee, false
-				remove_func()
+				setTimeout ( ->
+					remove_func()
+				), 2000
 
 
 	showRight: (elem, props) ->
