@@ -10,6 +10,7 @@ class ContentProfile extends Class
 		@need_update = true
 		@filter_post_id = null
 		@loaded = false
+		@help_distribute = false
 
 	renderNotSeeded: =>
 		return h("div#Content.center.#{@auth_address}", [
@@ -147,6 +148,8 @@ class ContentProfile extends Class
 			@activity_list.directories = ["data/users/#{@auth_address}"]
 
 			# Update profile details
+			@user.auth_address = @auth_address
+			@user.hub = @hub
 			@user.get @hub, @auth_address, (res) =>
 				if res
 					@owned = @user.auth_address == Page.user?.auth_address
@@ -155,6 +158,8 @@ class ContentProfile extends Class
 						@editable_intro.render_function = Text.renderMarked
 						@editable_user_name = new Editable("span", @handleUserNameSave)
 						@uploadable_avatar = new Uploadable(@handleAvatarUpload)
+						@uploadable_avatar.try_png = true
+						@uploadable_avatar.preverse_ratio = false
 						@post_create = new PostCreate()
 					Page.projector.scheduleRender()
 					@loaded = true
