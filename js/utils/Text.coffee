@@ -157,6 +157,18 @@ class Text
 	sqlIn: (values) ->
 		return "("+("'#{value}'" for value in values).join(',')+")"
 
+	formatSize: (size) ->
+		size_mb = size/1024/1024
+		if size_mb >= 1000
+			return (size_mb/1024).toFixed(1)+" GB"
+		else if size_mb >= 100
+			return size_mb.toFixed(0)+" MB"
+		else if size/1024 >= 1000
+			return size_mb.toFixed(2)+" MB"
+		else
+			return (size/1024).toFixed(2)+" KB"
+
+
 window.is_proxy = (document.location.host == "zero" or window.location.pathname == "/")
 window.marked_renderer = new MarkedRenderer()
 window.Text = new Text()
