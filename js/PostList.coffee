@@ -69,10 +69,32 @@ class PostList extends Class
 				@logEnd "Update"
 				Page.projector.scheduleRender()
 
+				if @posts.length > @limit
+					@addScrollwatcher()
+
 	handleMoreClick: =>
 		@limit += 10
 		@update()
 		return false
+
+	addScrollwatcher: =>
+		setTimeout ( =>
+			# Remove previous scrollwatchers for same item
+			for item, i in Page.scrollwatcher.items
+				if item[1] == @tag_more
+					Page.scrollwatcher.items.splice(i, 1)
+					break
+			Page.scrollwatcher.add @tag_more, (tag) =>
+				if tag.getBoundingClientRect().top == 0
+					return
+				@limit += 10
+				@need_update = true
+				Page.projector.scheduleRender()
+		), 2000
+
+
+	storeMoreTag: (elem) =>
+		@tag_more = elem
 
 	render: =>
 		if @need_update then @update()
@@ -96,7 +118,7 @@ class PostList extends Class
 					Debug.formatException(err)
 			),
 			if @posts.length > @limit
-				h("a.more.small", {href: "#More", onclick: @handleMoreClick, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, "Show more posts...")
+				h("a.more.small", {href: "#More", onclick: @handleMoreClick, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, afterCreate: @storeMoreTag}, "Show more posts...")
 		]
 
 window.PostList = PostList
