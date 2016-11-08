@@ -1,7 +1,7 @@
 class ContentUsers extends Class
 	constructor: ->
 		@user_list_recent = new UserList("recent")
-		@user_list_recent.limit = 1000
+		@user_list_recent.limit = 5000
 		@loaded = true
 		@need_update = false
 
