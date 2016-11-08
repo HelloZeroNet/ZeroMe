@@ -45,11 +45,12 @@
 			"cols": [
 				["post_id", "INTEGER"],
 				["body", "TEXT"],
+				["meta", "TEXT"],
 				["date_added", "INTEGER"],
 				["json_id", "INTEGER REFERENCES json (json_id)"]
 			],
 			"indexes": ["CREATE UNIQUE INDEX post_key ON post(json_id, post_id)", "CREATE INDEX post_id ON post(post_id)", "CREATE INDEX added ON post(date_added)"],
-			"schema_changed": 3
+			"schema_changed": 4
 		},
 		"post_like": {
 			"cols": [
