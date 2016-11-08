@@ -1288,20 +1288,22 @@ function clone(obj) {
       elem.style.opacity = "1";
       elem.style.pointerEvents = "none";
       setTimeout((function() {
+        var cstyle;
+        cstyle = window.getComputedStyle(elem);
         elem.style.height = "0px";
-        elem.style.marginTop = "0px";
+        elem.style.marginTop = (0 - parseInt(cstyle.borderTopWidth) - parseInt(cstyle.borderBottomWidth)) + "px";
         elem.style.marginBottom = "0px";
         elem.style.paddingTop = "0px";
         elem.style.paddingBottom = "0px";
         elem.style.transform = "scale(0.8)";
-        elem.style.borderTopWidth = "0px";
-        elem.style.borderBottomWidth = "0px";
         return elem.style.opacity = "0";
       }), 1);
       return elem.addEventListener("transitionend", function(e) {
         if (e.propertyName === "opacity" || e.elapsedTime >= 0.6) {
           elem.removeEventListener("transitionend", arguments.callee, false);
-          return remove_func();
+          return setTimeout((function() {
+            return remove_func();
+          }), 2000);
         }
       });
     };
@@ -1607,6 +1609,7 @@ function clone(obj) {
       this.node = null;
       this.editing = false;
       this.render_function = null;
+      this.empty_text = "Click here to edit this field";
     }
 
     Editable.prototype.storeNode = function(node) {
@@ -1677,7 +1680,7 @@ function clone(obj) {
           onclick: this.handleEditClick
         }), !body ? h(this.type, h("span.empty", {
           onclick: this.handleEditClick
-        }, "Click here to edit this field")) : this.render_function ? h(this.type, {
+        }, this.empty_text)) : this.render_function ? h(this.type, {
           innerHTML: this.render_function(body)
         }) : h(this.type, body));
       }
@@ -1688,6 +1691,109 @@ function clone(obj) {
   })(Class);
 
   window.Editable = Editable;
+
+}).call(this);
+
+
+/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/ImagePreview.coffee ---- */
+
+
+(function() {
+  var ImagePreview,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __hasProp = {}.hasOwnProperty;
+
+  ImagePreview = (function(_super) {
+    __extends(ImagePreview, _super);
+
+    function ImagePreview() {
+      this.setPreviewData = __bind(this.setPreviewData, this);
+      this.width = 0;
+      this.height = 0;
+      this.preview_data = "";
+      this.pixel_chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    }
+
+    ImagePreview.prototype.getSize = function(target_width, target_height) {
+      return this.calcSize(this.width, this.height, target_width, target_height);
+    };
+
+    ImagePreview.prototype.calcSize = function(source_width, source_height, target_width, target_height) {
+      var height, width;
+      width = target_width;
+      height = width * (source_height / source_width);
+      if (height > target_height) {
+        height = target_height;
+        width = height * (source_width / source_height);
+      }
+      return [Math.round(width), Math.round(height)];
+    };
+
+    ImagePreview.prototype.setPreviewData = function(_at_preview_data) {
+      var colors, pixels, _ref;
+      this.preview_data = _at_preview_data;
+      return _ref = this.preview_data.split(","), this.width = _ref[0], this.height = _ref[1], colors = _ref[2], pixels = _ref[3], _ref;
+    };
+
+    ImagePreview.prototype.getPreviewUri = function(target_width, target_height) {
+      var b, back, canvas, color, color_codes, colors, ctx, di, g, height, hex, i, image_data, pixel, pixels, r, width, _i, _j, _len, _len1, _ref, _ref1;
+      if (target_width == null) {
+        target_width = 10;
+      }
+      if (target_height == null) {
+        target_height = 10;
+      }
+      this.logStart("Render");
+      _ref = this.preview_data.split(","), this.width = _ref[0], this.height = _ref[1], colors = _ref[2], pixels = _ref[3];
+      _ref1 = this.getSize(target_width, target_height), width = _ref1[0], height = _ref1[1];
+      colors = colors.match(/.{3}/g);
+      pixels = pixels.split("");
+      canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      ctx = canvas.getContext('2d');
+      image_data = ctx.createImageData(width, height);
+      color_codes = {};
+      for (i = _i = 0, _len = colors.length; _i < _len; i = ++_i) {
+        color = colors[i];
+        color_codes[this.pixel_chars[i]] = color;
+      }
+      di = 0;
+      for (_j = 0, _len1 = pixels.length; _j < _len1; _j++) {
+        pixel = pixels[_j];
+        hex = color_codes[pixel];
+        r = parseInt(hex[0], 16) * 17;
+        g = parseInt(hex[1], 16) * 17;
+        b = parseInt(hex[2], 16) * 17;
+        image_data.data[di] = r;
+        image_data.data[di + 1] = g;
+        image_data.data[di + 2] = b;
+        image_data.data[di + 3] = 255;
+        di += 4;
+      }
+      ctx.putImageData(image_data, 0, 0);
+
+      /*
+      		canvas2 = document.createElement("canvas")
+      		canvas2.width = width*3
+      		canvas2.height = height*3
+      		ctx = canvas2.getContext('2d')
+      		ctx.filter = "blur(1px)"
+      		ctx.drawImage(canvas, 1, 0, canvas.width*3, canvas.height*3)
+      		ctx.drawImage(canvas, 0, 1, canvas.width*3, canvas.height*3)
+      		ctx.drawImage(canvas, 0, 0, canvas.width*3, canvas.height*3)
+       */
+      back = canvas.toDataURL("image/png");
+      this.logEnd("Render");
+      return back;
+    };
+
+    return ImagePreview;
+
+  })(Class);
+
+  window.ImagePreview = ImagePreview;
 
 }).call(this);
 
@@ -1861,6 +1967,9 @@ function clone(obj) {
     Menu.prototype.renderItem = function(item) {
       var cb, href, onclick, selected, title;
       title = item[0], cb = item[1], selected = item[2];
+      if (typeof selected === "function") {
+        selected = selected();
+      }
       if (title === "---") {
         return h("div.menu-item-separator");
       } else {
@@ -1906,11 +2015,173 @@ function clone(obj) {
     if (!window.visible_menu || !window.visible_menu.node) {
       return false;
     }
-    if (e.target.parentNode !== window.visible_menu.node.parentNode && e.target.parentNode !== window.visible_menu.node && e.target.parentNode.parentNode !== window.visible_menu.node.parentNode) {
+    if (e.target !== window.visible_menu.node.parentNode && e.target.parentNode !== window.visible_menu.node && e.target.parentNode !== window.visible_menu.node.parentNode && e.target.parentNode !== window.visible_menu.node && e.target.parentNode.parentNode !== window.visible_menu.node.parentNode) {
       window.visible_menu.hide();
       return Page.projector.scheduleRender();
     }
   });
+
+}).call(this);
+
+
+/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Overlay.coffee ---- */
+
+
+(function() {
+  var Overlay,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __hasProp = {}.hasOwnProperty;
+
+  Overlay = (function(_super) {
+    __extends(Overlay, _super);
+
+    function Overlay() {
+      this.render = __bind(this.render, this);
+      this.handleClick = __bind(this.handleClick, this);
+      this.zoomImageTag = __bind(this.zoomImageTag, this);
+      this.visible = false;
+      this.called = false;
+      this.height = 0;
+      this.image_top = 0;
+      this.image_left = 0;
+      this.image_width = 0;
+      this.image_height = 0;
+      this.background_image = "";
+      this.image_transform = "";
+      this.pos = null;
+      this.tag = null;
+    }
+
+    Overlay.prototype.zoomImageTag = function(tag, target_width, target_height) {
+      var pos;
+      this.log("Show");
+      this.background_image = tag.style.backgroundImage;
+      this.height = document.body.scrollHeight;
+      pos = tag.getBoundingClientRect();
+      this.original_pos = pos;
+      this.image_top = (pos.top + window.scrollY) + "px";
+      this.image_left = pos.left + "px";
+      this.image_margin_left = "0px";
+      this.image_width = pos.width;
+      this.image_height = pos.height;
+      this.called = true;
+      this.tag = tag;
+      this.visible = true;
+      return window.requestAnimationFrame(((function(_this) {
+        return function() {
+          var image_left;
+          _this.image_transform = "scale(" + (target_width / pos.width) + ")";
+          image_left = pos.left + pos.width / 2 - target_width / 2;
+          if (image_left < 0) {
+            _this.image_transform += " translateX(" + (0 - image_left) + "px)";
+          }
+          return Page.projector.scheduleRender();
+        };
+      })(this)));
+    };
+
+    Overlay.prototype.handleClick = function() {
+      this.log("Hide");
+      this.image_transform = "";
+      this.visible = false;
+      setTimeout(((function(_this) {
+        return function() {
+          if (!_this.visible) {
+            _this.called = false;
+            return Page.projector.scheduleRender();
+          }
+        };
+      })(this)), 500);
+      return false;
+    };
+
+    Overlay.prototype.render = function() {
+      if (!this.called) {
+        return h("div#Overlay", {
+          classes: {
+            visible: this.visible
+          },
+          onclick: this.handleClick
+        });
+      }
+      return h("div#Overlay", {
+        classes: {
+          visible: this.visible
+        },
+        onclick: this.handleClick,
+        style: "height: " + this.height + "px"
+      }, [
+        h("div.img", {
+          style: "transform: " + this.image_transform + "; margin-left: " + this.image_margin_left + "px;\ntop: " + this.image_top + "; left: " + this.image_left + ";\nwidth: " + this.image_width + "px; height: " + this.image_height + "px;\nbackground-image: " + this.background_image
+        })
+      ]);
+    };
+
+    return Overlay;
+
+  })(Class);
+
+  window.Overlay = Overlay;
+
+}).call(this);
+
+
+/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Scrollwatcher.coffee ---- */
+
+
+(function() {
+  var Scrollwatcher,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __hasProp = {}.hasOwnProperty;
+
+  Scrollwatcher = (function(_super) {
+    __extends(Scrollwatcher, _super);
+
+    function Scrollwatcher() {
+      this.checkScroll = __bind(this.checkScroll, this);
+      this.log("Scrollwatcher");
+      this.items = [];
+      window.onscroll = (function(_this) {
+        return function() {
+          return RateLimit(200, _this.checkScroll);
+        };
+      })(this);
+      this;
+    }
+
+    Scrollwatcher.prototype.checkScroll = function() {
+      var cb, i, item_top, tag, view_bottom, view_top, _i, _ref, _ref1, _results;
+      if (!this.items.length) {
+        return;
+      }
+      view_top = window.scrollY;
+      view_bottom = window.scrollY + window.innerHeight;
+      _ref = this.items;
+      _results = [];
+      for (i = _i = _ref.length - 1; _i >= 0; i = _i += -1) {
+        _ref1 = _ref[i], item_top = _ref1[0], tag = _ref1[1], cb = _ref1[2];
+        if (item_top + 900 > view_top && item_top - 400 < view_bottom) {
+          this.items.splice(i, 1);
+          _results.push(cb(tag));
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
+    };
+
+    Scrollwatcher.prototype.add = function(tag, cb) {
+      this.items.push([tag.getBoundingClientRect().top + window.scrollY, tag, cb]);
+      return RateLimit(200, this.checkScroll);
+    };
+
+    return Scrollwatcher;
+
+  })(Class);
+
+  window.Scrollwatcher = Scrollwatcher;
 
 }).call(this);
 
@@ -1965,6 +2236,9 @@ function clone(obj) {
     Text.prototype.renderMarked = function(text, options) {
       if (options == null) {
         options = {};
+      }
+      if (!text) {
+        return "";
       }
       options["gfm"] = true;
       options["breaks"] = true;
@@ -2163,6 +2437,20 @@ function clone(obj) {
       })()).join(',') + ")";
     };
 
+    Text.prototype.formatSize = function(size) {
+      var size_mb;
+      size_mb = size / 1024 / 1024;
+      if (size_mb >= 1000) {
+        return (size_mb / 1024).toFixed(1) + " GB";
+      } else if (size_mb >= 100) {
+        return size_mb.toFixed(0) + " MB";
+      } else if (size / 1024 >= 1000) {
+        return size_mb.toFixed(2) + " MB";
+      } else {
+        return (size / 1024).toFixed(2) + " KB";
+      }
+    };
+
     return Text;
 
   })();
@@ -2258,88 +2546,117 @@ function clone(obj) {
 
     function Uploadable(_at_handleSave) {
       this.handleSave = _at_handleSave;
+      this.getPixelData = __bind(this.getPixelData, this);
       this.render = __bind(this.render, this);
       this.handleUploadClick = __bind(this.handleUploadClick, this);
       this.resizeImage = __bind(this.resizeImage, this);
       this.storeNode = __bind(this.storeNode, this);
       this.node = null;
-      this.resize_w = 50;
-      this.resize_h = 50;
+      this.resize_width = 50;
+      this.resize_height = 50;
+      this.preverse_ratio = true;
+      this.try_png = false;
+      this.png_limit = 2200;
+      this.image_preview = new ImagePreview();
+      this.pixel_chars = this.image_preview.pixel_chars;
+      this;
     }
 
     Uploadable.prototype.storeNode = function(node) {
       return this.node = node;
     };
 
+    Uploadable.prototype.scaleHalf = function(image) {
+      var canvas, ctx;
+      canvas = document.createElement("canvas");
+      canvas.width = image.width / 2;
+      canvas.height = image.height / 2;
+      ctx = canvas.getContext("2d");
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      return canvas;
+    };
+
     Uploadable.prototype.resizeImage = function(file, width, height, cb) {
-      var image, resizer;
+      var image;
       image = new Image();
-      resizer = function(i) {
-        var cc, cc_ctx;
-        cc = document.createElement("canvas");
-        cc.width = i.width / 2;
-        cc.height = i.height / 2;
-        cc_ctx = cc.getContext("2d");
-        cc_ctx.drawImage(i, 0, 0, cc.width, cc.height);
-        return cc;
-      };
       image.onload = (function(_this) {
         return function() {
-          var canvas, canvas_quant, ctx, image_base64uri, optimizer, quant;
+          var canvas, canvas_quant, ctx, image_base64uri, optimizer, quant, _ref;
+          _this.log("Resize image loaded");
           canvas = document.createElement("canvas");
-          canvas.width = width;
-          canvas.height = height;
+          if (_this.preverse_ratio) {
+            _ref = _this.image_preview.calcSize(image.width, image.height, width, height), canvas.width = _ref[0], canvas.height = _ref[1];
+          } else {
+            canvas.width = width;
+            canvas.height = height;
+          }
           ctx = canvas.getContext("2d");
           ctx.fillStyle = "#FFF";
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           while (image.width > width * 2) {
-            image = resizer(image);
+            image = _this.scaleHalf(image);
           }
-          ctx.drawImage(image, 0, 0, width, height);
-          quant = new RgbQuant({
-            colors: 128,
-            method: 1
-          });
-          quant.sample(canvas);
-          quant.palette(true);
-          canvas_quant = drawPixels(quant.reduce(canvas), width);
-          optimizer = new CanvasTool.PngEncoder(canvas_quant, {
-            bitDepth: 8,
-            colourType: CanvasTool.PngEncoder.ColourType.TRUECOLOR
-          });
-          image_base64uri = "data:image/png;base64," + btoa(optimizer.convert());
-          if (image_base64uri.length > 2200) {
-            _this.log("PNG too large (" + image_base64uri.length + " bytes), convert to jpg instead");
+          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+          if (_this.try_png) {
+            quant = new RgbQuant({
+              colors: 128,
+              method: 1
+            });
+            quant.sample(canvas);
+            quant.palette(true);
+            canvas_quant = drawPixels(quant.reduce(canvas), width);
+            optimizer = new CanvasTool.PngEncoder(canvas_quant, {
+              bitDepth: 8,
+              colourType: CanvasTool.PngEncoder.ColourType.TRUECOLOR
+            });
+            image_base64uri = "data:image/png;base64," + btoa(optimizer.convert());
+            if (image_base64uri.length > _this.png_limit) {
+              _this.log("PNG too large (" + image_base64uri.length + " bytes), convert to jpg instead");
+              image_base64uri = canvas.toDataURL("image/jpeg", 0.8);
+            }
+          } else {
             image_base64uri = canvas.toDataURL("image/jpeg", 0.8);
           }
           _this.log("Size: " + image_base64uri.length + " bytes");
-          return cb(image_base64uri);
+          return cb(image_base64uri, canvas.width, canvas.height);
         };
       })(this);
       image.onerror = (function(_this) {
         return function(e) {
           _this.log("Image upload error", e);
+          Page.cmd("wrapperNotification", ["error", "Invalid image, only jpg format supported"]);
           return cb(null);
         };
       })(this);
-      return image.src = URL.createObjectURL(file);
+      if (file.name) {
+        return image.src = URL.createObjectURL(file);
+      } else {
+        return image.src = file;
+      }
     };
 
     Uploadable.prototype.handleUploadClick = function(e) {
       var input, script;
+      this.log("handleUploadClick", e);
       script = document.createElement("script");
       script.src = "js-external/pngencoder.js";
       document.head.appendChild(script);
       input = document.createElement('input');
+      document.body.appendChild(input);
       input.type = "file";
-      input.addEventListener('change', (function(_this) {
+      input.style.visibility = "hidden";
+      input.onchange = (function(_this) {
         return function(e) {
-          return script.onload = _this.resizeImage(input.files[0], _this.resize_w, _this.resize_h, function(image_base64uri) {
-            _this.handleSave(image_base64uri);
+          _this.log("Uploaded");
+          return _this.resizeImage(input.files[0], _this.resize_width, _this.resize_height, function(image_base64uri, width, height) {
+            _this.log("Resized", width, height);
+            if (image_base64uri) {
+              _this.handleSave(image_base64uri, width, height);
+            }
             return input.remove();
           });
         };
-      })(this));
+      })(this);
       input.click();
       return false;
     };
@@ -2349,6 +2666,68 @@ function clone(obj) {
         href: "#Upload",
         onclick: this.handleUploadClick
       }), body());
+    };
+
+    Uploadable.prototype.getPixelData = function(data) {
+      var b, color_db, colors, colors_next_id, g, hex, i, pixels, r, _i, _ref;
+      color_db = {};
+      colors = [];
+      colors_next_id = 0;
+      pixels = [];
+      for (i = _i = 0, _ref = data.length - 1; _i <= _ref; i = _i += 4) {
+        r = data[i];
+        g = data[i + 1];
+        b = data[i + 2];
+        r = Math.round(r / 17);
+        g = Math.round(g / 17);
+        b = Math.round(b / 17);
+        hex = Number(0x1000 + r * 0x100 + g * 0x10 + b).toString(16).substring(1);
+        if (i === 0) {
+          this.log(r, g, b, data[i + 3], hex);
+        }
+        if (!color_db[hex]) {
+          color_db[hex] = this.pixel_chars[colors_next_id];
+          colors.push(hex);
+          colors_next_id += 1;
+        }
+        pixels.push(color_db[hex]);
+      }
+      return [colors, pixels];
+    };
+
+    Uploadable.prototype.getPreviewData = function(image_base64uri, target_width, target_height, cb) {
+      var image;
+      image = new Image();
+      image.src = image_base64uri;
+      return image.onload = (function(_this) {
+        return function() {
+          var back, canvas, ctx, image_data, image_height, image_width, pixeldata, quant, _ref;
+          image_width = image.width;
+          image_height = image.height;
+          canvas = document.createElement("canvas");
+          _ref = _this.image_preview.calcSize(image.width, image.height, target_width, target_height), canvas.width = _ref[0], canvas.height = _ref[1];
+          ctx = canvas.getContext("2d");
+          ctx.fillStyle = "#FFF";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          while (image.width > target_width * 2) {
+            image = _this.scaleHalf(image);
+          }
+          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+          quant = new RgbQuant({
+            colors: 16,
+            method: 1
+          });
+          quant.sample(canvas);
+          quant.palette(true);
+          canvas = drawPixels(quant.reduce(canvas), canvas.width);
+          ctx = canvas.getContext("2d");
+          image_data = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          pixeldata = _this.getPixelData(image_data.data);
+          back = [image_width, image_height, pixeldata[0].join(""), pixeldata[1].join("")].join(",");
+          _this.log("Previewdata size:", back.length);
+          return cb(back);
+        };
+      })(this);
     };
 
     return Uploadable;
@@ -3133,6 +3512,8 @@ function clone(obj) {
 
     ContentFeed.prototype.handleListTypeClick = function(e) {
       this.type = e.currentTarget.attributes.type.value;
+      this.post_list.limit = 10;
+      this.activity_list.limit = 10;
       this.update();
       return false;
     };
@@ -3143,7 +3524,7 @@ function clone(obj) {
         Page.on_loaded.resolve();
       }
       if (this.need_update) {
-        this.log("Updating");
+        this.log("Updating", this.type);
         this.need_update = false;
         this.new_user_list.need_update = true;
         this.suggested_user_list.need_update = true;
@@ -3238,6 +3619,7 @@ function clone(obj) {
     function ContentProfile() {
       this.update = __bind(this.update, this);
       this.render = __bind(this.render, this);
+      this.handleOptionalHelpClick = __bind(this.handleOptionalHelpClick, this);
       this.handleAvatarUpload = __bind(this.handleAvatarUpload, this);
       this.handleUserNameSave = __bind(this.handleUserNameSave, this);
       this.handleIntroSave = __bind(this.handleIntroSave, this);
@@ -3255,6 +3637,7 @@ function clone(obj) {
       this.need_update = true;
       this.filter_post_id = null;
       this.loaded = false;
+      this.help_distribute = false;
     }
 
     ContentProfile.prototype.renderNotSeeded = function() {
@@ -3307,8 +3690,10 @@ function clone(obj) {
     };
 
     ContentProfile.prototype.findUser = function(user_name, cb) {
+      var query;
+      query = "SELECT\n json.cert_user_id,\n REPLACE(REPLACE(json.directory, 'data/userdb/', ''), 'data/users/', '') AS auth_address,\n CASE WHEN user.hub IS NOT NULL THEN user.hub ELSE json.site END AS hub,\n user.*\nFROM\n json\nLEFT JOIN user USING (json_id)\nWHERE user.user_name = :user_name OR json.user_name = :user_name\nORDER BY date_added DESC LIMIT 1";
       return Page.cmd("dbQuery", [
-        "SELECT json.cert_user_id, REPLACE(json.directory, 'data/userdb/', '') AS auth_address, user.* FROM user LEFT JOIN json USING (json_id) WHERE user.user_name = :user_name ORDER BY date_added DESC LIMIT 1", {
+        query, {
           user_name: user_name
         }
       ], (function(_this) {
@@ -3385,6 +3770,28 @@ function clone(obj) {
       })(this));
     };
 
+    ContentProfile.prototype.handleOptionalHelpClick = function() {
+      if (Page.server_info.rev < 1700) {
+        Page.cmd("wrapperNotification", ["info", "You need ZeroNet version 0.5.0 use this feature"]);
+        return false;
+      }
+      this.user.hasHelp((function(_this) {
+        return function(optional_helping) {
+          _this.optional_helping = optional_helping;
+          if (_this.optional_helping) {
+            Page.cmd("OptionalHelpRemove", ["data/users/" + _this.user.auth_address, _this.user.hub]);
+            _this.optional_helping = false;
+          } else {
+            Page.cmd("OptionalHelp", ["data/users/" + _this.user.auth_address, _this.user.row.user_name + "'s new files", _this.user.hub]);
+            _this.optional_helping = true;
+          }
+          Page.content_profile.update();
+          return Page.projector.scheduleRender();
+        };
+      })(this));
+      return true;
+    };
+
     ContentProfile.prototype.render = function() {
       var _ref, _ref1, _ref2, _ref3, _ref4;
       if (this.need_update) {
@@ -3401,6 +3808,8 @@ function clone(obj) {
           _ref2.need_update = true;
         }
         this.activity_list.directories = ["data/users/" + this.auth_address];
+        this.user.auth_address = this.auth_address;
+        this.user.hub = this.hub;
         this.user.get(this.hub, this.auth_address, (function(_this) {
           return function(res) {
             var _ref3;
@@ -3411,6 +3820,8 @@ function clone(obj) {
                 _this.editable_intro.render_function = Text.renderMarked;
                 _this.editable_user_name = new Editable("span", _this.handleUserNameSave);
                 _this.uploadable_avatar = new Uploadable(_this.handleAvatarUpload);
+                _this.uploadable_avatar.try_png = true;
+                _this.uploadable_avatar.preverse_ratio = false;
                 _this.post_create = new PostCreate();
               }
               Page.projector.scheduleRender();
@@ -3433,6 +3844,11 @@ function clone(obj) {
             };
           })(this));
         }
+        this.user.hasHelp((function(_this) {
+          return function(res) {
+            return _this.optional_helping = res;
+          };
+        })(this));
       }
       if (!((_ref3 = this.user) != null ? (_ref4 = _ref3.row) != null ? _ref4.user_name : void 0 : void 0)) {
         return h("div#Content.center." + this.auth_address, []);
@@ -3465,12 +3881,14 @@ function clone(obj) {
               }), h("div.follow-container", [
                 h("a.button.button-follow-big", {
                   href: "#",
-                  onclick: this.user.handleFollowClick,
-                  classes: {
-                    loading: this.user.submitting_follow
-                  }
+                  onclick: this.user.handleFollowClick
                 }, h("span.icon-follow", "+"), this.user.isFollowed() ? "Unfollow" : "Follow")
-              ])
+              ]), h("div.help.checkbox", {
+                classes: {
+                  checked: this.optional_helping
+                },
+                onclick: this.handleOptionalHelpClick
+              }, h("div.checkbox-skin"), h("div.title", "Help distribute this user's images"))
             ])
           ]), this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
             afterCreate: Animation.show
@@ -3501,6 +3919,7 @@ function clone(obj) {
 }).call(this);
 
 
+
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentUsers.coffee ---- */
 
 
@@ -3517,7 +3936,7 @@ function clone(obj) {
       this.update = __bind(this.update, this);
       this.render = __bind(this.render, this);
       this.user_list_recent = new UserList("recent");
-      this.user_list_recent.limit = 1000;
+      this.user_list_recent.limit = 5000;
       this.loaded = true;
       this.need_update = false;
     }
@@ -3762,13 +4181,17 @@ function clone(obj) {
         onsubmit: this.handleCommentSubmit
       });
       this.comment_limit = 3;
-      this.setRow(row);
       this.menu = null;
+      this.meta = null;
+      this.setRow(row);
     }
 
     Post.prototype.setRow = function(row) {
       var _ref;
       this.row = row;
+      if (this.row.meta) {
+        this.meta = new PostMeta(this, JSON.parse(this.row.meta));
+      }
       if (Page.user) {
         this.liked = Page.user.likes[this.row.key];
       }
@@ -3780,7 +4203,8 @@ function clone(obj) {
       this.owned = this.user.auth_address === ((_ref = Page.user) != null ? _ref.auth_address : void 0);
       if (this.owned) {
         this.editable_body = new Editable("div.body", this.handlePostSave, this.handlePostDelete);
-        return this.editable_body.render_function = Text.renderMarked;
+        this.editable_body.render_function = Text.renderMarked;
+        return this.editable_body.empty_text = " ";
       }
     };
 
@@ -3810,7 +4234,7 @@ function clone(obj) {
     Post.prototype.handlePostDelete = function(cb) {
       return Page.user.getData(Page.user.hub, (function(_this) {
         return function(data) {
-          var i, post, post_index, _i, _len, _ref;
+          var i, post, post_index, _i, _len, _ref, _ref1, _ref2;
           _ref = data.post;
           for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
             post = _ref[i];
@@ -3819,9 +4243,17 @@ function clone(obj) {
             }
           }
           data.post.splice(post_index, 1);
-          return Page.user.save(data, Page.user.hub, function(res) {
-            return cb(res);
-          });
+          if ((_ref1 = _this.meta) != null ? (_ref2 = _ref1.meta) != null ? _ref2.img : void 0 : void 0) {
+            return Page.cmd("optionalFileDelete", (_this.user.getPath()) + "/" + _this.row.post_id + ".jpg", function() {
+              return Page.user.save(data, Page.user.hub, function(res) {
+                return cb(res);
+              });
+            });
+          } else {
+            return Page.user.save(data, Page.user.hub, function(res) {
+              return cb(res);
+            });
+          }
         };
       })(this));
     };
@@ -4044,7 +4476,7 @@ function clone(obj) {
           enterAnimation: Animation.slideDown
         }, this.field_comment.render()) : void 0, (_ref = this.row.comments) != null ? _ref.slice(0, +(comment_limit - 1) + 1 || 9e9).map((function(_this) {
           return function(comment) {
-            var comment_uri, owned, user_address, user_link, _ref1;
+            var comment_uri, owned, user_address, user_link, _ref1, _ref2;
             user_address = comment.directory.replace("data/users/", "");
             comment_uri = user_address + "_" + comment.comment_id;
             owned = user_address === ((_ref1 = Page.user) != null ? _ref1.auth_address : void 0);
@@ -4071,7 +4503,7 @@ function clone(obj) {
                   onclick: _this.handleReplyClick,
                   user_name: comment.user_name
                 }, "Reply")
-              ]), owned ? _this.getEditableComment(comment_uri).render(comment.body) : comment.body.length > 5000 ? h("div.body.maxheight", {
+              ]), owned ? _this.getEditableComment(comment_uri).render(comment.body) : ((_ref2 = comment.body) != null ? _ref2.length : void 0) > 5000 ? h("div.body.maxheight", {
                 innerHTML: Text.renderMarked(comment.body),
                 afterCreate: Maxheight.apply
               }) : h("div.body", {
@@ -4089,7 +4521,7 @@ function clone(obj) {
     };
 
     Post.prototype.render = function() {
-      var post_uri, site, _ref, _ref1, _ref2;
+      var post_uri, site, _ref, _ref1, _ref2, _ref3;
       _ref = this.row.key.split("-"), site = _ref[0], post_uri = _ref[1];
       return h("div.post", {
         key: this.row.key,
@@ -4121,18 +4553,18 @@ function clone(obj) {
           }, "\u22EE")
         ]), this.owned ? this.editable_body.render(this.row.body) : h("div.body", {
           classes: {
-            maxheight: !this.row.selected && this.row.body.length > 5000
+            maxheight: !this.row.selected && ((_ref1 = this.row.body) != null ? _ref1.length : void 0) > 3000
           },
           innerHTML: Text.renderMarked(this.row.body),
           afterCreate: Maxheight.apply,
           afterUpdate: Maxheight.apply
-        }), h("div.actions", [
+        }), this.meta ? this.meta.render() : void 0, h("div.actions", [
           h("a.icon.icon-comment.link", {
             href: "#Comment",
             onclick: this.handleCommentClick
           }, "Comment"), h("a.like.link", {
             classes: {
-              active: (_ref1 = Page.user) != null ? _ref1.likes[post_uri] : void 0,
+              active: (_ref2 = Page.user) != null ? _ref2.likes[post_uri] : void 0,
               loading: this.submitting_like,
               "like-zero": this.row.likes === 0
             },
@@ -4140,7 +4572,7 @@ function clone(obj) {
             onclick: this.handleLikeClick
           }, h("div.icon.icon-heart", {
             classes: {
-              active: (_ref2 = Page.user) != null ? _ref2.likes[post_uri] : void 0
+              active: (_ref3 = Page.user) != null ? _ref3.likes[post_uri] : void 0
             }
           }), this.row.likes ? this.row.likes : void 0)
         ]), this.renderComments()
@@ -4161,32 +4593,72 @@ function clone(obj) {
 
 (function() {
   var PostCreate,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __hasProp = {}.hasOwnProperty;
 
-  PostCreate = (function() {
+  PostCreate = (function(_super) {
+    __extends(PostCreate, _super);
+
     function PostCreate() {
       this.render = __bind(this.render, this);
+      this.handleUploadClick = __bind(this.handleUploadClick, this);
       this.handlePostSubmit = __bind(this.handlePostSubmit, this);
+      this.handleImageClose = __bind(this.handleImageClose, this);
+      this.handleUpload = __bind(this.handleUpload, this);
+      this.startEdit = __bind(this.startEdit, this);
       this.field_post = new Autosize({
         placeholder: "Write something...",
         "class": "postfield",
-        onfocus: Page.projector.scheduleRender,
-        onblur: Page.projector.scheduleRender
+        onfocus: this.startEdit,
+        onblur: this.startEdit
       });
+      this.upload = new Uploadable(this.handleUpload);
+      this.upload.resize_width = 900;
+      this.upload.resize_height = 700;
+      this.is_editing = false;
+      this.image = new ImagePreview();
     }
 
-    PostCreate.prototype.isEditing = function() {
-      var _ref, _ref1, _ref2;
-      return ((_ref = this.field_post.attrs.value) != null ? _ref.length : void 0) || ((_ref1 = document.activeElement) != null ? _ref1.parentElement : void 0) === ((_ref2 = this.field_post.node) != null ? _ref2.parentElement : void 0);
+    PostCreate.prototype.startEdit = function() {
+      this.is_editing = true;
+      return Page.projector.scheduleRender();
+    };
+
+    PostCreate.prototype.handleUpload = function(base64uri, width, height) {
+      this.startEdit();
+      this.image.base64uri = base64uri;
+      this.image.width = width;
+      this.image.height = height;
+      return this.upload.getPreviewData(base64uri, 10, 10, (function(_this) {
+        return function(preview_data) {
+          _this.image.preview_data = preview_data;
+          return Page.projector.scheduleRender();
+        };
+      })(this));
+    };
+
+    PostCreate.prototype.handleImageClose = function() {
+      this.image.height = 0;
+      this.image.base64uri = "";
+      return false;
     };
 
     PostCreate.prototype.handlePostSubmit = function() {
+      var meta, _ref;
       this.field_post.loading = true;
-      Page.user.post(this.field_post.attrs.value, (function(_this) {
+      if (this.image.height) {
+        meta = {};
+        meta["img"] = this.image.preview_data;
+      } else {
+        meta = null;
+      }
+      Page.user.post(this.field_post.attrs.value, meta, (_ref = this.image.base64uri) != null ? _ref.replace(/.*base64,/, "") : void 0, (function(_this) {
         return function(res) {
           _this.field_post.loading = false;
           if (res) {
             _this.field_post.setValue("");
+            _this.image = new ImagePreview();
             document.activeElement.blur();
           }
           return setTimeout((function() {
@@ -4197,6 +4669,14 @@ function clone(obj) {
       return false;
     };
 
+    PostCreate.prototype.handleUploadClick = function() {
+      if (Page.server_info.rev < 1700) {
+        return Page.cmd("wrapperNotification", ["info", "You need ZeroNet version 0.5.0 to upload images"]);
+      } else {
+        return this.upload.handleUploadClick();
+      }
+    };
+
     PostCreate.prototype.render = function() {
       var user;
       user = Page.user;
@@ -4205,9 +4685,27 @@ function clone(obj) {
       } else if (user != null ? user.hub : void 0) {
         return h("div.post-create.post", {
           classes: {
-            editing: this.isEditing()
+            editing: this.is_editing
           }
-        }, h("div.user", user.renderAvatar()), this.field_post.render(), h("div.postbuttons", h("a.button.button-submit", {
+        }, h("div.user", user.renderAvatar()), h("a.icon-image.link", {
+          href: "#",
+          onclick: this.handleUploadClick
+        }), this.field_post.render(), this.image.base64uri ? h("div.image", {
+          style: "background-image: url(" + this.image.base64uri + "); height: " + (this.image.getSize(530, 600)[1]) + "px",
+          classes: {
+            empty: false
+          }
+        }, [
+          h("a.close", {
+            href: "#",
+            onclick: this.handleImageClose
+          }, "×")
+        ]) : h("div.image", {
+          style: "height: 0px",
+          classes: {
+            empty: true
+          }
+        }), h("div.postbuttons", h("a.button.button-submit", {
           href: "#Submit",
           onclick: this.handlePostSubmit
         }, "Submit new post")), h("div", {
@@ -4238,7 +4736,7 @@ function clone(obj) {
 
     return PostCreate;
 
-  })();
+  })(Class);
 
   window.PostCreate = PostCreate;
 
@@ -4259,6 +4757,8 @@ function clone(obj) {
 
     function PostList() {
       this.render = __bind(this.render, this);
+      this.storeMoreTag = __bind(this.storeMoreTag, this);
+      this.addScrollwatcher = __bind(this.addScrollwatcher, this);
       this.handleMoreClick = __bind(this.handleMoreClick, this);
       this.update = __bind(this.update, this);
       this.queryComments = __bind(this.queryComments, this);
@@ -4327,7 +4827,10 @@ function clone(obj) {
             _this.item_list.sync(rows);
             _this.loaded = true;
             _this.logEnd("Update");
-            return Page.projector.scheduleRender();
+            Page.projector.scheduleRender();
+            if (_this.posts.length > _this.limit) {
+              return _this.addScrollwatcher();
+            }
           });
         };
       })(this));
@@ -4337,6 +4840,34 @@ function clone(obj) {
       this.limit += 10;
       this.update();
       return false;
+    };
+
+    PostList.prototype.addScrollwatcher = function() {
+      return setTimeout(((function(_this) {
+        return function() {
+          var i, item, _i, _len, _ref;
+          _ref = Page.scrollwatcher.items;
+          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+            item = _ref[i];
+            if (item[1] === _this.tag_more) {
+              Page.scrollwatcher.items.splice(i, 1);
+              break;
+            }
+          }
+          return Page.scrollwatcher.add(_this.tag_more, function(tag) {
+            if (tag.getBoundingClientRect().top === 0) {
+              return;
+            }
+            _this.limit += 10;
+            _this.need_update = true;
+            return Page.projector.scheduleRender();
+          });
+        };
+      })(this)), 2000);
+    };
+
+    PostList.prototype.storeMoreTag = function(elem) {
+      return this.tag_more = elem;
     };
 
     PostList.prototype.render = function() {
@@ -4376,7 +4907,8 @@ function clone(obj) {
           href: "#More",
           onclick: this.handleMoreClick,
           enterAnimation: Animation.slideDown,
-          exitAnimation: Animation.slideUp
+          exitAnimation: Animation.slideUp,
+          afterCreate: this.storeMoreTag
         }, "Show more posts...") : void 0
       ];
     };
@@ -4386,6 +4918,180 @@ function clone(obj) {
   })(Class);
 
   window.PostList = PostList;
+
+}).call(this);
+
+
+/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostMeta.coffee ---- */
+
+
+(function() {
+  var PostMeta,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __hasProp = {}.hasOwnProperty;
+
+  PostMeta = (function(_super) {
+    __extends(PostMeta, _super);
+
+    function PostMeta(_at_post, _at_meta) {
+      this.post = _at_post;
+      this.meta = _at_meta;
+      this.render = __bind(this.render, this);
+      this.handleImageSettingsClick = __bind(this.handleImageSettingsClick, this);
+      this.handleImageDeleteClick = __bind(this.handleImageDeleteClick, this);
+      this.handleOptionalHelpClick = __bind(this.handleOptionalHelpClick, this);
+      this.handleImageClick = __bind(this.handleImageClick, this);
+      this.afterCreateImage = __bind(this.afterCreateImage, this);
+      this;
+    }
+
+    PostMeta.prototype.afterCreateImage = function(tag) {
+      return Page.scrollwatcher.add(tag, (function(_this) {
+        return function() {
+          var e;
+          try {
+            _this.image_preview.preview_uri = _this.image_preview.getPreviewUri();
+            Page.cmd("optionalFileInfo", _this.post.user.getPath() + "/" + _this.post.row.post_id + ".jpg", function(res) {
+              _this.image_preview.optional_info = res;
+              return Page.projector.scheduleRender();
+            });
+          } catch (_error) {
+            e = _error;
+            _this.log("Image preview error: " + e);
+          }
+          return Page.projector.scheduleRender();
+        };
+      })(this));
+    };
+
+    PostMeta.prototype.handleImageClick = function(e) {
+      var image, _ref;
+      if (this.image_preview.load_fullsize || ((_ref = this.image_preview.optional_info) != null ? _ref.is_downloaded : void 0)) {
+        Page.overlay.zoomImageTag(e.currentTarget, this.image_preview.width, this.image_preview.height);
+      } else {
+        this.image_preview.load_fullsize = true;
+        this.image_preview.loading = true;
+        image = new Image();
+        image.src = (this.post.user.getPath()) + "/" + this.post.row.post_id + ".jpg";
+        image.onload = (function(_this) {
+          return function() {
+            _this.image_preview.loading = false;
+            _this.image_preview.optional_info.is_downloaded = 1;
+            _this.image_preview.optional_info.peer += 1;
+            return Page.projector.scheduleRender();
+          };
+        })(this);
+        Page.projector.scheduleRender();
+      }
+      return false;
+    };
+
+    PostMeta.prototype.handleOptionalHelpClick = function() {
+      this.post.user.hasHelp((function(_this) {
+        return function(optional_helping) {
+          _this.optional_helping = optional_helping;
+          if (_this.optional_helping) {
+            Page.cmd("OptionalHelpRemove", ["data/users/" + _this.post.user.auth_address, _this.post.user.hub]);
+            _this.optional_helping = false;
+          } else {
+            Page.cmd("OptionalHelp", ["data/users/" + _this.post.user.auth_address, _this.post.row.user_name + "'s new images", _this.post.user.hub]);
+            _this.optional_helping = true;
+          }
+          Page.content_profile.update();
+          return Page.projector.scheduleRender();
+        };
+      })(this));
+      return true;
+    };
+
+    PostMeta.prototype.handleImageDeleteClick = function() {
+      var inner_path;
+      inner_path = (this.post.user.getPath()) + "/" + this.post.row.post_id + ".jpg";
+      return Page.cmd("optionalFileDelete", inner_path, (function(_this) {
+        return function() {
+          _this.image_preview.optional_info.is_downloaded = 0;
+          _this.image_preview.optional_info.peer -= 1;
+          return Page.projector.scheduleRender();
+        };
+      })(this));
+    };
+
+    PostMeta.prototype.handleImageSettingsClick = function(e) {
+      if (e.target.classList.contains("menu-item")) {
+        return;
+      }
+      this.post.user.hasHelp((function(_this) {
+        return function(helping) {
+          var _ref;
+          if (!_this.menu_image) {
+            _this.menu_image = new Menu();
+          }
+          _this.optional_helping = helping;
+          _this.menu_image.items = [];
+          _this.menu_image.items.push([
+            "Help distribute this user's new images", _this.handleOptionalHelpClick, (function() {
+              return _this.optional_helping;
+            })
+          ]);
+          _this.menu_image.items.push(["---"]);
+          if ((_ref = _this.image_preview.optional_info) != null ? _ref.is_downloaded : void 0) {
+            _this.menu_image.items.push(["Delete image", _this.handleImageDeleteClick]);
+          } else {
+            _this.menu_image.items.push(["Download image", _this.handleImageClick, false]);
+          }
+          return _this.menu_image.toggle();
+        };
+      })(this));
+      return false;
+    };
+
+    PostMeta.prototype.render = function() {
+      var height, style_fullsize, style_preview, width, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8;
+      if (this.meta.img) {
+        if (!this.image_preview) {
+          this.image_preview = new ImagePreview();
+          this.image_preview.setPreviewData(this.meta.img);
+        }
+        _ref = this.image_preview.getSize(530, 600), width = _ref[0], height = _ref[1];
+        if ((_ref1 = this.image_preview) != null ? _ref1.preview_uri : void 0) {
+          style_preview = "background-image: url(" + this.image_preview.preview_uri + ")";
+        } else {
+          style_preview = "";
+        }
+        if (this.image_preview.load_fullsize || ((_ref2 = this.image_preview.optional_info) != null ? _ref2.is_downloaded : void 0)) {
+          style_fullsize = "background-image: url(" + (this.post.user.getPath()) + "/" + this.post.row.post_id + ".jpg)";
+        } else {
+          style_fullsize = "";
+        }
+        return h("div.img.preview", {
+          afterCreate: this.afterCreateImage,
+          style: "width: " + width + "px; height: " + height + "px; " + style_preview,
+          classes: {
+            downloaded: (_ref3 = this.image_preview.optional_info) != null ? _ref3.is_downloaded : void 0,
+            hasinfo: ((_ref4 = this.image_preview.optional_info) != null ? _ref4.peer : void 0) !== null,
+            loading: this.image_preview.loading
+          }
+        }, h("a.fullsize", {
+          href: "#",
+          onclick: this.handleImageClick,
+          style: style_fullsize
+        }), Page.server_info.rev < 1700 ? h("small.oldversion", "You need ZeroNet 0.5.0 to view this image") : void 0, ((_ref5 = this.image_preview) != null ? _ref5.optional_info : void 0) ? h("a.show", {
+          href: "#",
+          onclick: this.handleImageClick
+        }, h("div.title", "Loading...\nShow image")) : void 0, ((_ref6 = this.image_preview) != null ? _ref6.optional_info : void 0) ? h("a.details", {
+          href: "#Settings",
+          onclick: Page.returnFalse,
+          onmousedown: this.handleImageSettingsClick
+        }, [h("div.size", Text.formatSize((_ref7 = this.image_preview.optional_info) != null ? _ref7.size : void 0)), h("div.peers.icon-profile"), (_ref8 = this.image_preview.optional_info) != null ? _ref8.peer : void 0, h("a.image-settings", "\u22EE"), this.menu_image ? this.menu_image.render(".menu-right") : void 0]) : void 0);
+      }
+    };
+
+    return PostMeta;
+
+  })(Class);
+
+  window.PostMeta = PostMeta;
 
 }).call(this);
 
@@ -4409,6 +5115,7 @@ function clone(obj) {
       this.download = __bind(this.download, this);
       this.handleFollowClick = __bind(this.handleFollowClick, this);
       this.renderAvatar = __bind(this.renderAvatar, this);
+      this.hasHelp = __bind(this.hasHelp, this);
       this.updateInfo = __bind(this.updateInfo, this);
       if (row) {
         this.setRow(row);
@@ -4492,6 +5199,14 @@ function clone(obj) {
 
     User.prototype.isSeeding = function() {
       return Page.merged_sites[this.hub];
+    };
+
+    User.prototype.hasHelp = function(cb) {
+      return Page.cmd("OptionalHelpList", [this.hub], (function(_this) {
+        return function(helps) {
+          return cb(helps["data/users/" + _this.auth_address]);
+        };
+      })(this));
     };
 
     User.prototype.getPath = function(site) {
@@ -4703,22 +5418,70 @@ function clone(obj) {
       })(this));
     };
 
-    User.prototype.post = function(body, cb) {
+    User.prototype.checkContentJson = function(cb) {
+      if (cb == null) {
+        cb = null;
+      }
+      return Page.cmd("fileGet", [this.getPath(this.hub) + "/content.json", false], (function(_this) {
+        return function(res) {
+          var content_json;
+          content_json = JSON.parse(res);
+          if (content_json.optional) {
+            return cb(true);
+          }
+          content_json.optional = "(?!avatar).*jpg";
+          return Page.cmd("fileWrite", [_this.getPath(_this.hub) + "/content.json", Text.fileEncode(content_json)], function(res_write) {
+            return cb(res_write);
+          });
+        };
+      })(this));
+    };
+
+    User.prototype.fileWrite = function(file_name, content_base64, cb) {
+      if (cb == null) {
+        cb = null;
+      }
+      if (!content_base64) {
+        return typeof cb === "function" ? cb(null) : void 0;
+      }
+      return this.checkContentJson((function(_this) {
+        return function() {
+          return Page.cmd("fileWrite", [_this.getPath(_this.hub) + "/" + file_name, content_base64], function(res_write) {
+            return typeof cb === "function" ? cb(res_write) : void 0;
+          });
+        };
+      })(this));
+    };
+
+    User.prototype.post = function(body, meta, image_base64, cb) {
+      if (meta == null) {
+        meta = null;
+      }
+      if (image_base64 == null) {
+        image_base64 = null;
+      }
       if (cb == null) {
         cb = null;
       }
       return this.getData(this.hub, (function(_this) {
         return function(data) {
-          data.post.push({
+          var post;
+          post = {
             "post_id": Time.timestamp() + data.next_post_id,
             "body": body,
             "date_added": Time.timestamp()
-          });
+          };
+          if (meta) {
+            post["meta"] = Text.jsonEncode(meta);
+          }
+          data.post.push(post);
           data.next_post_id += 1;
-          return _this.save(data, _this.hub, function(res) {
-            if (cb) {
-              return cb(res);
-            }
+          return _this.fileWrite(post.post_id + ".jpg", image_base64, function(res) {
+            return _this.save(data, _this.hub, function(res) {
+              if (cb) {
+                return cb(res);
+              }
+            });
           });
         };
       })(this));
@@ -4873,7 +5636,6 @@ function clone(obj) {
   window.User = User;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/UserList.coffee ---- */
@@ -5072,10 +5834,12 @@ function clone(obj) {
     ZeroMe.prototype.createProjector = function() {
       this.projector = maquette.createProjector();
       this.head = new Head();
+      this.overlay = new Overlay();
       this.content_feed = new ContentFeed();
       this.content_users = new ContentUsers();
       this.content_profile = new ContentProfile();
       this.content_create_profile = new ContentCreateProfile();
+      this.scrollwatcher = new Scrollwatcher();
       if (base.href.indexOf("?") === -1) {
         this.route("");
       } else {
@@ -5084,10 +5848,13 @@ function clone(obj) {
       this.on_loaded.then((function(_this) {
         return function() {
           _this.log("onloaded");
-          return document.body.className = "loaded";
+          return window.requestAnimationFrame(function() {
+            return document.body.className = "loaded";
+          });
         };
       })(this));
       this.projector.replace($("#Head"), this.head.render);
+      this.projector.replace($("#Overlay"), this.overlay.render);
       this.loadLocalStorage();
       return setInterval((function() {
         return Page.projector.scheduleRender();
@@ -5127,13 +5894,13 @@ function clone(obj) {
       } else {
         content = this.content_feed;
       }
-      setTimeout(((function(_this) {
-        return function() {
-          return _this.content.update();
-        };
-      })(this)), 100);
       if (content && (this.content !== content || changed)) {
         if (this.content) {
+          setTimeout(((function(_this) {
+            return function() {
+              return _this.content.update();
+            };
+          })(this)), 100);
           this.projector.detach(this.content.render);
         }
         this.content = content;
@@ -5289,7 +6056,7 @@ function clone(obj) {
         return false;
       }
       return Page.cmd("dbQuery", [
-        "SELECT * FROM json WHERE directory = :directory AND user_name IS NOT NULL AND file_name = 'data.json'", {
+        "SELECT * FROM json WHERE directory = :directory AND user_name IS NOT NULL AND file_name = 'data.json' AND intro IS NOT NULL", {
           directory: "data/users/" + this.site_info.auth_address
         }
       ], (function(_this) {
