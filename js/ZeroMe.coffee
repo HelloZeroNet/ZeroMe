@@ -46,7 +46,8 @@ class ZeroMe extends ZeroFrame
 		# Remove fake long body
 		@on_loaded.then =>
 			@log "onloaded"
-			document.body.className = "loaded"
+			window.requestAnimationFrame ->
+				document.body.className = "loaded"
 
 		@projector.replace($("#Head"), @head.render)
 		@loadLocalStorage()
