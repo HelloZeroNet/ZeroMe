@@ -177,15 +177,28 @@ class User extends Class
 				if cb then cb(res)
 
 	post: (body, cb=null) ->
+	fileWrite: (file_name, content_base64, cb=null) ->
+		if not content_base64
+			return cb?(null)
+
+		@checkContentJson =>
+			Page.cmd "fileWrite", [@getPath(@hub)+"/"+file_name, content_base64], (res_write) =>
+				cb?(res_write)
+
+	post: (body, meta=null, image_base64=null, cb=null) ->
 		@getData @hub, (data) =>
-			data.post.push {
+			post = {
 				"post_id": Time.timestamp() + data.next_post_id,
 				"body": body,
 				"date_added": Time.timestamp()
 			}
+			if meta
+				post["meta"] = Text.jsonEncode(meta)
+			data.post.push post
 			data.next_post_id += 1
-			@save data, @hub, (res) =>
-				if cb then cb(res)
+			@fileWrite post.post_id+".jpg", image_base64, (res) =>
+				@save data, @hub, (res) =>
+					if cb then cb(res)
 
 	followUser: (hub, auth_address, user_name, cb=null) ->
 		@log "Following", hub, auth_address
