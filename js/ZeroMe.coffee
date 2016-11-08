@@ -33,6 +33,7 @@ class ZeroMe extends ZeroFrame
 	createProjector: ->
 		@projector = maquette.createProjector()
 		@head = new Head()
+		@overlay = new Overlay()
 		@content_feed = new ContentFeed()
 		@content_users = new ContentUsers()
 		@content_profile = new ContentProfile()
@@ -50,6 +51,7 @@ class ZeroMe extends ZeroFrame
 				document.body.className = "loaded"
 
 		@projector.replace($("#Head"), @head.render)
+		@projector.replace($("#Overlay"), @overlay.render)
 		@loadLocalStorage()
 
 		# Update every minute to keep time since fields up-to date
