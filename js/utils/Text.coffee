@@ -12,6 +12,8 @@ class Text
 
 
 	renderMarked: (text, options={}) =>
+		if not text
+			return ""
 		options["gfm"] = true
 		options["breaks"] = true
 		options["sanitize"] = true
