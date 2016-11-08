@@ -11,6 +11,8 @@ class ContentFeed extends Class
 
 	handleListTypeClick: (e) =>
 		@type = e.currentTarget.attributes.type.value
+		@post_list.limit = 10
+		@activity_list.limit = 10
 		@update()
 		return false
 
@@ -18,7 +20,7 @@ class ContentFeed extends Class
 		if @post_list.loaded and not Page.on_loaded.resolved then Page.on_loaded.resolve()
 
 		if @need_update
-			@log "Updating"
+			@log "Updating", @type
 			@need_update = false
 
 			@new_user_list.need_update = true
