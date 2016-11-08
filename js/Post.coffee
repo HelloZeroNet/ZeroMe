@@ -38,8 +38,13 @@ class Post extends Class
 		Page.user.getData Page.user.hub, (data) =>
 			post_index = i for post, i in data.post when post.post_id == @row.post_id
 			data.post.splice(post_index, 1)
-			Page.user.save data, Page.user.hub, (res) =>
-				cb(res)
+			if @meta?.meta?.img
+				Page.cmd "optionalFileDelete", "#{@user.getPath()}/#{@row.post_id}.jpg", =>
+					Page.user.save data, Page.user.hub, (res) =>
+						cb(res)
+			else
+				Page.user.save data, Page.user.hub, (res) =>
+					cb(res)
 
 	handleLikeClick: (e) =>
 		@submitting_like = true
