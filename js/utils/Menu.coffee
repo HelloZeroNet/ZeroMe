@@ -68,6 +68,6 @@ window.Menu = Menu
 document.body.addEventListener "mouseup", (e) ->
 	if not window.visible_menu or not window.visible_menu.node
 		return false
-	if e.target.parentNode != window.visible_menu.node.parentNode and e.target.parentNode != window.visible_menu.node and e.target.parentNode.parentNode != window.visible_menu.node.parentNode
+	if e.target != window.visible_menu.node.parentNode and e.target.parentNode != window.visible_menu.node and e.target.parentNode != window.visible_menu.node.parentNode and e.target.parentNode != window.visible_menu.node and e.target.parentNode.parentNode != window.visible_menu.node.parentNode
 		window.visible_menu.hide()
 		Page.projector.scheduleRender()
