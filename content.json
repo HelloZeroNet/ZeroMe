@@ -5,12 +5,12 @@
  "domain": "Me.ZeroNetwork.bit",
  "files": {
   "css/all.css": {
-   "sha512": "b8d4306f854ba77bf8ba0d3fc8d4603a0982027304e77469ea6e1a01e2d65d0d",
-   "size": 126411
+   "sha512": "124a1e48359224178f83cac1cd22f162b1a4805c3cb0a15b514717b61f59da12",
+   "size": 136676
   },
   "dbschema.json": {
-   "sha512": "d5204b0f7cb23384ad7517d50eb9da3810af29afd360a5dfe8d0acc464edfc93",
-   "size": 3414
+   "sha512": "74530d277b800390b99c1125198a31ac52803e1510a7675e1f949e28ed94ea6a",
+   "size": 3436
   },
   "img/loading-circle.gif": {
    "sha512": "339baf1bccb9b80ae29c2493e73b40cf0588c96fc095954b475dea0538aaa929",
@@ -29,22 +29,23 @@
    "size": 595
   },
   "index.html": {
-   "sha512": "638654b07d4fbbc3dc858cfbfdff5892b7cecad06c885dd6066de6d34cb2b721",
-   "size": 612
+   "sha512": "835b9e4ede28e91bd29fc319acd5ae6e4a37827e7a8bbdbeec15ac4c6e845bb3",
+   "size": 638
   },
   "js-external/pngencoder.js": {
    "sha512": "ecaadaad552d2610336995b48360253cd6d847b6aa590fc3d96e7245a5d5fe11",
    "size": 53602
   },
   "js/all.js": {
-   "sha512": "dba09bcc7ca4cec7bd6282e69aa8dd81bada87c21686a63416ded72a581d3266",
-   "size": 225467
+   "sha512": "bf374a4823cbda47fcfcf120f697e2b8e60f099d1c69c318f2b0113edfcb13f5",
+   "size": 254765
   }
  },
  "ignore": "(merged-.*|(js|css)/(?!all.(js|css)))",
  "inner_path": "content.json",
- "modified": 1473102880.376,
+ "modified": 1478614479.634,
  "postmessage_nonce_security": true,
+ "favicon": "favicon.ico",
  "settings": {
   "default_hubs": {
    "1BLueGvui1GdbtsjcKqCf4F67uKfritG49": {
@@ -58,14 +59,14 @@
   }
  },
  "sign": [
-  42703048127640594342897169109220733976549048337075926366748647980183206189244,
-  109081343092568543710545633140336726690953350706650882380515117607481528014277
+  51883792677754271101248200303283943741433733469204593409653059803424835580263,
+  15971789156648819175398099689466444079260064330023040257248436831972634947735
  ],
  "signers_sign": "G/UCyELE5shc5f/FSJSe2KvxGlZiS5fzvn7Ezhha0gN/QOFeznJtZWS61J20FfkGfHdp1HcpWv//anioez1iOW0=",
  "signs": {
-  "1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH": "HJ0z62TqWu2nIo8e9nGP+eObwGTc/GVjfpmD1PsuLrBf2lD09YS8UcYQPaqjh4b9//y+n3SMheAZu8feIJKDqOU="
+  "1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH": "G+26+NZXYPTXiIVT2rCL4oHe3Veyv53XrUnzW3ErTokqMmzHK4kOxbvcdh68b18EWKtbXT+MLEsseJLYaUh6Oxg="
  },
  "signs_required": 1,
  "title": "ZeroMe",
- "zeronet_version": "0.4.1"
+ "zeronet_version": "0.5.0"
 }
