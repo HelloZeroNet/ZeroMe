@@ -2049,42 +2049,57 @@ function clone(obj) {
       this.image_height = 0;
       this.background_image = "";
       this.image_transform = "";
+      this.style = "";
       this.pos = null;
       this.tag = null;
     }
 
     Overlay.prototype.zoomImageTag = function(tag, target_width, target_height) {
-      var pos;
-      this.log("Show");
+      var pos, ratio;
+      this.log("Show", target_width, target_height);
       this.background_image = tag.style.backgroundImage;
       this.height = document.body.scrollHeight;
       pos = tag.getBoundingClientRect();
       this.original_pos = pos;
-      this.image_top = (pos.top + window.scrollY) + "px";
-      this.image_left = pos.left + "px";
-      this.image_margin_left = "0px";
-      this.image_width = pos.width;
-      this.image_height = pos.height;
+      this.image_top = parseInt(pos.top + window.scrollY) + "px";
+      this.image_left = parseInt(pos.left) + "px";
+      this.image_width = target_width;
+      this.image_height = target_height;
+      ratio = pos.width / target_width;
+      this.image_transform = "scale(" + ratio + ") ";
+      this.image_margin_left = parseInt((pos.width - target_width) / 2);
+      this.image_margin_top = parseInt((pos.height - target_height) / 2);
+      this.style = "";
       this.called = true;
       this.tag = tag;
       this.visible = true;
       return window.requestAnimationFrame(((function(_this) {
         return function() {
-          var image_left;
-          _this.image_transform = "scale(" + (target_width / pos.width) + ")";
-          image_left = pos.left + pos.width / 2 - target_width / 2;
-          if (image_left < 0) {
-            _this.image_transform += " translateX(" + (0 - image_left) + "px)";
-          }
+          ratio = 1;
+          _this.image_transform = "scale(" + ratio + ") ";
           return Page.projector.scheduleRender();
         };
       })(this)));
     };
 
     Overlay.prototype.handleClick = function() {
+      var ratio;
       this.log("Hide");
-      this.image_transform = "";
+      ratio = this.original_pos.width / this.image_width;
+      this.image_transform = "scale(" + ratio + ") ";
+      this.image_margin_left = Math.floor((this.original_pos.width - this.image_width) / 2);
+      this.image_margin_top = Math.floor((this.original_pos.height - this.image_height) / 2);
+      this.log(this.image_margin_top, this.image_margin_left, this.image_width, this.image_height);
       this.visible = false;
+      setTimeout(((function(_this) {
+        return function() {
+          _this.log("opacity", _this.visible);
+          if (!_this.visible) {
+            _this.style = "opacity: 0";
+            return Page.projector.scheduleRender();
+          }
+        };
+      })(this)), 400);
       setTimeout(((function(_this) {
         return function() {
           if (!_this.visible) {
@@ -2092,7 +2107,7 @@ function clone(obj) {
             return Page.projector.scheduleRender();
           }
         };
-      })(this)), 500);
+      })(this)), 900);
       return false;
     };
 
@@ -2113,7 +2128,7 @@ function clone(obj) {
         style: "height: " + this.height + "px"
       }, [
         h("div.img", {
-          style: "transform: " + this.image_transform + "; margin-left: " + this.image_margin_left + "px;\ntop: " + this.image_top + "; left: " + this.image_left + ";\nwidth: " + this.image_width + "px; height: " + this.image_height + "px;\nbackground-image: " + this.background_image
+          style: "transform: " + this.image_transform + "; margin-left: " + this.image_margin_left + "px; margin-top: " + this.image_margin_top + "px;\ntop: " + this.image_top + "; left: " + this.image_left + ";\nwidth: " + this.image_width + "px; height: " + this.image_height + "px;\nbackground-image: " + this.background_image + ";\n" + this.style
         })
       ]);
     };
@@ -2125,6 +2140,7 @@ function clone(obj) {
   window.Overlay = Overlay;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Scrollwatcher.coffee ---- */
@@ -3917,7 +3933,6 @@ function clone(obj) {
   window.ContentProfile = ContentProfile;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentUsers.coffee ---- */
