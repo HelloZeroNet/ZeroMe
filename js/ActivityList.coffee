@@ -119,7 +119,7 @@ class ActivityList extends Class
 			body = [
 				h("a.link", {href: activity_user_link, onclick: @Page.handleLinkClick}, activity.user_name), " liked ",
 				h("a.link", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity.subject.user_name), "'s ",
-				h("a.link", {href: subject_post_link, onclick: @Page.handleLinkClick}, "post")
+				h("a.link", {href: subject_post_link, onclick: @Page.handleLinkClick}, _("post", "like post"))
 			]
 			# Add more target
 			if activity_group.length > 1
@@ -129,12 +129,12 @@ class ActivityList extends Class
 					body.push ", "
 					body.push h("a.link", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity_more.subject.user_name)
 					body.push "'s "
-					body.push h("a.link", {href: subject_post_link, onclick: @Page.handleLinkClick}, "post")
+					body.push h("a.link", {href: subject_post_link, onclick: @Page.handleLinkClick}, _("post", "like post"))
 		else if activity.type == "comment"
 			body = [
 				h("a.link", {href: activity_user_link, onclick: @Page.handleLinkClick}, activity.user_name), " commented on ",
 				h("a.link", {href: subject_user_link, onclick: @Page.handleLinkClick}, activity.subject.user_name), "'s ",
-				h("a.link", {href: subject_post_link, onclick: @Page.handleLinkClick}, "post"), ": #{activity.body}"
+				h("a.link", {href: subject_post_link, onclick: @Page.handleLinkClick}, _("post", "comment post")), ": #{activity.body}"
 			]
 		else if activity.type == "follow"
 			body = [
