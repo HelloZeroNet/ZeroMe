@@ -1,0 +1,81 @@
+{
+	"Visitor": "Látogató",
+	"Select your account": "Felhasználónév kiválasztása",
+	"You need a profile for this feature": "Ennek a funckiónak az eléréséhez egy profilra van szükséged",
+
+	"Follow username mentions": "Megemlítések követése",
+	"Follow comments on your posts": "Bejegyzéseid hozzászólásainak követése",
+	"Follow new followers": "Új követők a hírfolyamba",
+
+	"Follow": "Követés",
+	"Unfollow": "Ne kövesd",
+	"Help distribute this user's images": "Segítség a képei terjesztésében",
+	"Following": "Követések",
+	"Activity feed": "Aktivitás",
+	"Show more...": "Még több...",
+
+	" started following ": " új követés: ",
+	" commented on ": " hozzászólt ",
+	" liked ": " kedveli ",
+	"'s ": " ",
+	"_(post, like post)": "bejegyzését",
+	"_(post, comment post)": "bejegyzéséhez",
+
+	"Cancel": "Mégse",
+	"Save": "Mentés",
+	"Delete": "Törlés",
+
+	"User's profile site not loaded to your client yet.": "A felhasználó profiloldala még nincs letöltve.",
+	"Download user's site": "Felhasználó profiljának letöltése",
+
+	"Browse all \\u203A": "Összes \\u203A",
+	"New users": "Új felhasználók",
+	"Suggested users": "Ajánlott felhasználók",
+
+	"Create new profile": "Új profil létrehozása",
+	"Creating new profile...": "Profil létrehozása...",
+	"Checking user on selected hub...": "Felhasználó ellenörzése...",
+	"User \" + Page.site_info.cert_user_id + \" already exists on this hub": "A \" + Page.site_info.cert_user_id + \" felhasználó már létezik ezen a HUB-on",
+	"Select ID...": "Felhasználónév kijelölése",
+	"Seeded HUBs": "Csatlakozott HUB-ok",
+	"Available HUBs": "Elérhető HUB-ok",
+	"(With this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)":
+	"(Ezzel választod ki, hogy hol legyen a profilod tárolva. Tartalomban nincs különbség és bármelyik hubrol eléred az összes felhasználót a hálózaton)",
+
+	"Random ZeroNet user": "Átlagos ZeroNet felhasználó",
+	"Hello ZeroMe!": "Szia ZeroMe!",
+
+	"Loading...\\nShow image": "Betöltés...\\nKép mutatása",
+	"Help distribute this user's new images": "Segítség a felhasználó képei terjesztésében",
+	"Delete image": "Kép törlése",
+	"Show image": "Kép megjelenítése",
+	"'s new images": " új képei",
+
+	"Comment": "Hozzászólás",
+	"Add your comment": "Hozzászólásod",
+	"Reply": "Válasz",
+
+	"Everyone": "Mindenki",
+	"Followed users": "Követett felhasználók",
+	"Show more posts...": "Több bejegyzés mutatása...",
+	"Show more comments...": "Több hozzászólás mutatása...",
+	"No posts yet": "Nincs még bejegyzés",
+	"Let's follow some users!": "Kövess valakit!",
+
+	"Select user to post new content": "Tartalom elküldéséhez válaszd ki a felhasználónevet",
+	"Write something...": "Írj valamit...",
+	"Submit new post": "Új bejegyzés elküldése",
+	"Invalid image, only jpg format supported": "Hibás kép, csak jpg formátum támogatott",
+
+	"Follow in newsfeed": "Követés a hírfolyamban",
+
+	"New users in ZeroMe": "Új felhasználók a ZeroMe-n",
+	"Total: ": "Összesen: ",
+	" registered users": " regisztrált felhasználó",
+
+	" minutes ago": " perce",
+	" hours ago": " órája",
+	" days ago": " napja",
+	"on ": "",
+	"Just now": "Épp most"
+}
