@@ -2142,7 +2142,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Scrollwatcher.coffee ---- */
 
 
@@ -2544,6 +2543,17 @@ function clone(obj) {
   })();
 
   window.Time = new Time;
+
+}).call(this);
+
+
+/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Translate.coffee ---- */
+
+
+(function() {
+  window._ = function(s) {
+    return s;
+  };
 
 }).call(this);
 
@@ -3058,7 +3068,7 @@ function clone(obj) {
           }, activity.subject.user_name), "'s ", h("a.link", {
             href: subject_post_link,
             onclick: this.Page.handleLinkClick
-          }, "post")
+          }, _("post", "like post"))
         ];
         if (activity_group.length > 1) {
           _ref = activity_group.slice(1, 11);
@@ -3075,7 +3085,7 @@ function clone(obj) {
             body.push(h("a.link", {
               href: subject_post_link,
               onclick: this.Page.handleLinkClick
-            }, "post"));
+            }, _("post", "like post")));
           }
         }
       } else if (activity.type === "comment") {
@@ -3089,7 +3099,7 @@ function clone(obj) {
           }, activity.subject.user_name), "'s ", h("a.link", {
             href: subject_post_link,
             onclick: this.Page.handleLinkClick
-          }, "post"), ": " + activity.body
+          }, _("post", "comment post")), ": " + activity.body
         ];
       } else if (activity.type === "follow") {
         body = [
@@ -3176,6 +3186,7 @@ function clone(obj) {
   window.ActivityList = ActivityList;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/AnonUser.coffee ---- */
@@ -5053,7 +5064,7 @@ function clone(obj) {
           if ((_ref = _this.image_preview.optional_info) != null ? _ref.is_downloaded : void 0) {
             _this.menu_image.items.push(["Delete image", _this.handleImageDeleteClick]);
           } else {
-            _this.menu_image.items.push(["Download image", _this.handleImageClick, false]);
+            _this.menu_image.items.push(["Show image", _this.handleImageClick, false]);
           }
           return _this.menu_image.toggle();
         };

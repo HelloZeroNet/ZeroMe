@@ -3,6 +3,7 @@
  "background-color": "#F2F4F6",
  "description": "Social site",
  "domain": "Me.ZeroNetwork.bit",
+ "favicon": "favicon.ico",
  "files": {
   "css/all.css": {
    "sha512": "124a1e48359224178f83cac1cd22f162b1a4805c3cb0a15b514717b61f59da12",
@@ -11,6 +12,10 @@
   "dbschema.json": {
    "sha512": "74530d277b800390b99c1125198a31ac52803e1510a7675e1f949e28ed94ea6a",
    "size": 3436
+  },
+  "favicon.ico": {
+   "sha512": "94fb8e604e75fdb1aabc04839ff18b384190f216361c60d57dc32b7a8f1f58b3",
+   "size": 1150
   },
   "img/loading-circle.gif": {
    "sha512": "339baf1bccb9b80ae29c2493e73b40cf0588c96fc095954b475dea0538aaa929",
@@ -37,15 +42,14 @@
    "size": 53602
   },
   "js/all.js": {
-   "sha512": "bf374a4823cbda47fcfcf120f697e2b8e60f099d1c69c318f2b0113edfcb13f5",
-   "size": 254765
+   "sha512": "9e46220123394ebde6a41709004fc4b9b64771917875450d1ee4fbc63d927127",
+   "size": 255588
   }
  },
  "ignore": "(merged-.*|(js|css)/(?!all.(js|css)))",
  "inner_path": "content.json",
- "modified": 1478614479.634,
+ "modified": 1478816189.657,
  "postmessage_nonce_security": true,
- "favicon": "favicon.ico",
  "settings": {
   "default_hubs": {
    "1BLueGvui1GdbtsjcKqCf4F67uKfritG49": {
@@ -59,14 +63,17 @@
   }
  },
  "sign": [
-  51883792677754271101248200303283943741433733469204593409653059803424835580263,
-  15971789156648819175398099689466444079260064330023040257248436831972634947735
+  108736583434569204137259912959970339686999834789592981868388167918516751023373,
+  84432795960417722895352157774213753252711787918774228602321971055297766111831
  ],
  "signers_sign": "G/UCyELE5shc5f/FSJSe2KvxGlZiS5fzvn7Ezhha0gN/QOFeznJtZWS61J20FfkGfHdp1HcpWv//anioez1iOW0=",
  "signs": {
-  "1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH": "G+26+NZXYPTXiIVT2rCL4oHe3Veyv53XrUnzW3ErTokqMmzHK4kOxbvcdh68b18EWKtbXT+MLEsseJLYaUh6Oxg="
+  "1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH": "HE5xBgMcdJ867LkZG0WtdE4wMjfCllQWFf1uLj97fFaUaATnBrw73k1brJZzoEB6HykOLRvROmofFZRNywzELC8="
  },
  "signs_required": 1,
  "title": "ZeroMe",
+ "translate": [
+  "js/all.js"
+ ],
  "zeronet_version": "0.5.0"
 }
