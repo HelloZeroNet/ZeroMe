@@ -63,7 +63,7 @@ class PostMeta extends Class
 			if @image_preview.optional_info?.is_downloaded
 				@menu_image.items.push ["Delete image", @handleImageDeleteClick]
 			else
-				@menu_image.items.push ["Download image", @handleImageClick, false]
+				@menu_image.items.push ["Show image", @handleImageClick, false]
 			@menu_image.toggle()
 		return false
 
