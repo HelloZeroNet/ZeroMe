@@ -33,17 +33,17 @@
 	"Suggested users": "推荐用户",
 
 	"Create new profile": "创建新的用户资料",
-	"Creating new profile...": "创建新的用户资料中...",
-	"Checking user on selected hub...": "检查选择 Hub 中的用户中...",
-	"User \" + Page.site_info.cert_user_id + \" already exists on this hub": "用户已经存在与 \" + Page.site_info.cert_user_id + \" 这个 Hub 中",
+	"Creating new profile...": "正在创建新的用户资料...",
+	"Checking user on selected hub...": "正在检查已选择的 Hub 中的用户...",
+	"User \" + Page.site_info.cert_user_id + \" already exists on this hub": "用户已经存在于 \" + Page.site_info.cert_user_id + \" 这个 Hub",
 	"Select ID...": "选择 ID ...",
 	"Seeded HUBs": "已做种的 Hub",
 	"Available HUBs": "可用的 Hub",
 	"(With this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)":
 	"（选择你要在哪里创建你的个人资料。发布内容没有差别，你可以获得任何 Hub 的任何用户）",
 
-	"Random ZeroNet user": "这个人很懒，还没写介绍。",
-	"Hello ZeroMe!": "ZeroMe 你好！",
+	"Random ZeroNet user": "Random ZeroNet user",
+	"Hello ZeroMe!": "Hello ZeroMe!",
 
 	"Loading...\\nShow image": "加载中...\\n显示图片",
 	"Help distribute this user's new images": "帮助分发这个用户的新图片",
@@ -65,7 +65,7 @@
 	"Select user to post new content": "选择发布新内容的用户",
 	"Write something...": "写点儿什么吧...",
 	"Submit new post": "提交新的帖子",
-	"Invalid image, only jpg format supported": "不合法图片，只有 jpg 格式受支持",
+	"Invalid image, only jpg format supported": "无效的图片，只有 jpg 格式受支持",
 
 	"Follow in newsfeed": "在新闻源中关注",
 
