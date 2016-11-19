@@ -11,7 +11,7 @@
 	"Unfollow": "取消关注",
 	"Help distribute this user's images": "帮助分发这个用户的图片",
 	"Following": "已关注",
-	"Activity feed": "数据来源活动",
+	"Activity feed": "活动摘要",
 	"Show more...": "显示更多...",
 
 	" started following ": " 开始关注 ",
@@ -48,12 +48,12 @@
 	"Loading...\\nShow image": "加载中...\\n显示图片",
 	"Help distribute this user's new images": "帮助分发这个用户的新图片",
 	"Delete image": "删除图片",
-	"Show image": "K显示图片",
+	"Show image": "显示图片",
 	"'s new images": "的新图片",
 
 	"Comment": "评论",
 	"Add your comment": "添加你的评论",
-	"Reply": "重试",
+	"Reply": "回复",
 
 	"Everyone": "所有人",
 	"Followed users": "关注的用户",
@@ -65,7 +65,7 @@
 	"Select user to post new content": "选择发布新内容的用户",
 	"Write something...": "写点儿什么吧...",
 	"Submit new post": "提交新的帖子",
-	"Invalid image, only jpg format supported": "非法图片，只有 jpg 格式受支持",
+	"Invalid image, only jpg format supported": "不合法图片，只有 jpg 格式受支持",
 
 	"Follow in newsfeed": "在新闻源中关注",
 
