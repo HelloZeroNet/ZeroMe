@@ -1,0 +1,36 @@
+{
+	"Visitor": "訪客",
+	"Select your account": "選擇你的帳戶",
+
+	"Follow username mentions": "關注用戶名提醒",
+	"Follow comments on your posts": "關注你的帖子評論",
+	"Follow new followers": "關注新關注者",
+
+	"Follow": "關注",
+	"Unfollow": "取消關注",
+	"Help distribute this user's images": "幫助分發這個用戶的圖片",
+
+	"'s ": " ",
+	"_(post, like post)": "的帖子",
+	"_(post, comment post)": "的帖子",
+
+	"Cancel": "取消",
+
+
+
+	"Available HUBs": "可用的 Hub",
+	"(With this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)":
+
+
+	"'s new images": "的新图片",
+
+
+	"Everyone": "所有人",
+
+	"Submit new post": "提交新的帖子",
+
+
+
+	" days ago": " 天前",
+	"on ": "",
+}
