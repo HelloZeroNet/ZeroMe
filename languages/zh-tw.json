@@ -1,0 +1,81 @@
+{
+	"Visitor": "訪客",
+	"Select your account": "選擇你的帳戶",
+	"You need a profile for this feature": "你需要建立一個新的用戶檔案來實現這個特性",
+
+	"Follow username mentions": "關注用戶名提醒",
+	"Follow comments on your posts": "關注你的帖子評論",
+	"Follow new followers": "關注新關注者",
+
+	"Follow": "關注",
+	"Unfollow": "取消關注",
+	"Help distribute this user's images": "幫助分發這個用戶的圖片",
+	"Following": "已關注",
+	"Activity feed": "活動資訊流",
+	"Show more...": "顯示更多...",
+
+	" started following ": " 開始關注 ",
+	" commented on ": " 評論了 ",
+	" liked ": " 贊了 ",
+	"'s ": " ",
+	"_(post, like post)": "的帖子",
+	"_(post, comment post)": "的帖子",
+
+	"Cancel": "取消",
+	"Save": "存儲",
+	"Delete": "刪除",
+
+	"User's profile site not loaded to your client yet.": "用戶資料站點還沒有載入到你的客戶端。",
+	"Download user's site": "下載用戶的站點",
+
+	"Browse all \\u203A": "瀏覽全部 \\u203A",
+	"New users": "新用戶",
+	"Suggested users": "推薦用戶",
+
+	"Create new profile": "建立新的用戶檔案",
+	"Creating new profile...": "正在建立新的用戶檔案...",
+	"Checking user on selected hub...": "正在檢查已選擇的 Hub 中的用戶...",
+	"User \" + Page.site_info.cert_user_id + \" already exists on this hub": "用戶已經存在於 \" + Page.site_info.cert_user_id + \" 這個 Hub",
+	"Select ID...": "選擇 ID ...",
+	"Seeded HUBs": "已做種的 Hub",
+	"Available HUBs": "可用的 Hub",
+	"(With this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)":
+	"（選擇你要在哪裡建立你的用戶檔案。發布內容沒有差別，你可以獲得任何 Hub 的任何用戶）",
+
+	"Random ZeroNet user": "新 ZeroNet 用戶",
+	"Hello ZeroMe!": "你好 ZeroMe ！",
+
+	"Loading...\\nShow image": "載入中...\\n顯示圖片",
+	"Help distribute this user's new images": "幫助分發這個用戶的新圖片",
+	"Delete image": "刪除圖片",
+	"Show image": "顯示圖片",
+	"'s new images": "的新图片",
+
+	"Comment": "評論",
+	"Add your comment": "加入你的評論",
+	"Reply": "回復",
+
+	"Everyone": "所有人",
+	"Followed users": "關注的用戶",
+	"Show more posts...": "顯示更多帖子...",
+	"Show more comments...": "顯示更多評論...",
+	"No posts yet": "還沒有帖子",
+	"Let's follow some users!": "讓我們關注一些用戶吧！",
+
+	"Select user to post new content": "選擇發布新內容的用戶",
+	"Write something...": "寫點兒什麼吧...",
+	"Submit new post": "提交新的帖子",
+	"Invalid image, only jpg format supported": "無效的圖片，只有 jpg 格式受支持",
+
+	"Follow in newsfeed": "在新聞源中關注",
+
+	"New users in ZeroMe": "在 ZeroMe 的新用戶",
+	"Total: ": "總計：",
+	" registered users": " 註冊用戶",
+
+	" minutes ago": " 分鐘前",
+	" hours ago": " 小時前",
+	" days ago": " 天前",
+	"on ": "",
+	"Just now": "剛才"
+}
