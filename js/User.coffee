@@ -270,7 +270,13 @@ class User extends Class
 		followed = @isFollowed()
 		seeding = @isSeeding()
 		if followed then title = "Unfollow" else title = "Follow"
-		h("div.user"+classname, {key: @hub+"/"+@auth_address, classes: {followed: followed, notseeding: !seeding}, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, [
+		if type != "card"
+			enterAnimation = Animation.slideDown
+			exitAnimation = Animation.slideUp
+		else
+			enterAnimation = null
+			exitAnimation = null
+		h("div.user"+classname, {key: @hub+"/"+@auth_address, classes: {followed: followed, notseeding: !seeding}, enterAnimation: enterAnimation, exitAnimation: exitAnimation}, [
 			h("a.button.button-follow", {href: link, onclick: @handleFollowClick, title: title, classes: {loading: @submitting_follow}}, "+"),
 			h("a", {href: link, onclick: Page.handleLinkClick}, @renderAvatar()),
 			h("div.nameline", [
