@@ -93,6 +93,7 @@ class UserList extends Class
 				 user LEFT JOIN json USING (json_id)
 				WHERE
 				 date_added < #{Time.timestamp()+120}
+				 #{search_where}
 				ORDER BY date_added DESC
 				LIMIT #{@limit}
 			"""

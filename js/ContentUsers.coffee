@@ -1,10 +1,40 @@
 class ContentUsers extends Class
 	constructor: ->
+		@user_list_suggested = new UserList("suggested")
+		@user_list_suggested.limit = 9
+
+		@user_list_active = new UserList("active")
+		@user_list_active.limit = 9
+
 		@user_list_recent = new UserList("recent")
-		@user_list_recent.limit = 5000
+		@user_list_recent.limit = 90
+
 		@loaded = true
 		@need_update = false
 		@search = ""
+		@num_users_total = null
+
+	handleSuggestedMoreClick: =>
+		@user_list_suggested.limit += 90
+		@user_list_suggested.need_update = true
+		@user_list_suggested.loading = true
+		Page.projector.scheduleRender()
+		return false
+
+	handleActiveMoreClick: =>
+		@user_list_active.limit += 90
+		@user_list_active.need_update = true
+		@user_list_active.loading = true
+		Page.projector.scheduleRender()
+		return false
+
+	handleRecentMoreClick: =>
+		@user_list_recent.limit += 300
+		@user_list_recent.need_update = true
+		@user_list_recent.loading = true
+		Page.projector.scheduleRender()
+		return false
+
 	handleSearchInput: (e=null) =>
 		@search = e.target.value
 		if @search == ""
@@ -22,12 +52,19 @@ class ContentUsers extends Class
 
 	render: =>
 		if @loaded and not Page.on_loaded.resolved then Page.on_loaded.resolve()
+		if @need_update or not @num_users_total
+			Page.cmd "dbQuery", "SELECT COUNT(*) AS num FROM user", (res) =>
+				@num_users_total = res[0]["num"]
+				Page.projector.scheduleRender()
 		if @need_update
 			@log "Updating"
 			@need_update = false
 
 			# Update components
 			@user_list_recent?.need_update = true
+			@user_list_active?.need_update = true
+			if Page.user.auth_address
+				@user_list_suggested?.need_update = true
 
 		h("div#Content.center", [
 			h("input.text.big.search", {placeholder: "Search in users...", value: @search, oninput: @handleSearchInput})
