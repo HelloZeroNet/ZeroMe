@@ -4,6 +4,21 @@ class ContentUsers extends Class
 		@user_list_recent.limit = 5000
 		@loaded = true
 		@need_update = false
+		@search = ""
+	handleSearchInput: (e=null) =>
+		@search = e.target.value
+		if @search == ""
+			rate_limit = 0
+		if @search.length < 3
+			rate_limit = 400
+		else
+			rate_limit = 200
+		RateLimit rate_limit, =>
+			@log "Search", @search
+			@user_list_recent.search = @search
+			@user_list_recent.need_update = true
+			@user_list_recent.limit = 15
+			Page.projector.scheduleRender()
 
 	render: =>
 		if @loaded and not Page.on_loaded.resolved then Page.on_loaded.resolve()
@@ -15,27 +30,45 @@ class ContentUsers extends Class
 			@user_list_recent?.need_update = true
 
 		h("div#Content.center", [
-			#h("input.text.big.search", {placeholder: "Search in users..."}),
-			h("h2", "New users in ZeroMe")
-			h("div.users.cards", [
+			h("input.text.big.search", {placeholder: "Search in users...", value: @search, oninput: @handleSearchInput})
+
+			if not @search
+				[
+					if @user_list_suggested.users.length > 0
+						h("h2.suggested", "Suggested users")
+					h("div.users.cards.suggested", [
+						@user_list_suggested.render("card")
+					])
+					if @user_list_suggested.users.length == @user_list_suggested.limit
+						h("a.more.suggested", {href: "#", onclick: @handleSuggestedMoreClick}, "Show more...")
+					else if @user_list_suggested.users.length > 0 and @user_list_suggested.loading
+						h("a.more.suggested", {href: "#", onclick: @handleSuggestedMoreClick}, "Loading...")
+
+					if @user_list_active.users.length > 0
+						h("h2.active", "Most active")
+					h("div.users.cards.active", [
+						@user_list_active.render("card")
+					])
+					if @user_list_active.users.length == @user_list_active.limit
+						h("a.more.active", {href: "#", onclick: @handleActiveMoreClick}, "Show more...")
+					else if @user_list_active.users.length > 0 and @user_list_active.loading
+						h("a.more.active", {href: "#", onclick: @handleActiveMoreClick}, "Loading...")
+
+					if @user_list_recent.users.length > 0
+						h("h2.recent", "New users in ZeroMe")
+				]
+
+			h("div.users.cards.recent", [
 				@user_list_recent.render("card")
 			])
+			if @user_list_recent.users.length == @user_list_recent.limit
+				h("a.more.recent", {href: "#", onclick: @handleRecentMoreClick}, "Show more...")
+			else if @user_list_recent.users.length > 0 and @user_list_recent.loading
+				h("a.more.recent", {href: "#", onclick: @handleRecentMoreClick}, "Loading...")
+
 			if @user_list_recent.users.length
-				h("h5", {style: "text-align: center"}, "Total: #{@user_list_recent.users.length} registered users")
+				h("h5", {style: "text-align: center"}, "Total: #{@num_users_total} registered users")
 		])
-		###
-			h("a.more", {href: "#"}, "Show more..."),
-			h("h2", "Followed users"),
-			h("div.users.cards", [
-				h("div.user.card", [
-					h("a.button.button-follow", {href: "#"}, "+"),
-					h("a.avatar", {href: "#", style: "background-image: url('img/1.png')"}),
-					h("a.name.link", {href: "#"}, "Nofish"),
-					h("div.intro", "ZeroNet developer")
-				])
-			]),
-		])
-		###
 
 	update: =>
 		@need_update = true
