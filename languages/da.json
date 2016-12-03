@@ -1,0 +1,81 @@
+{
+	"Visitor": "Gæst",
+	"Select your account": "Vælg din konto",
+	"You need a profile for this feature": "Du skal oprette en profil først",
+
+	"Follow username mentions": "Følg opslag hvor du nævnes",
+	"Follow comments on your posts": "Følg kommentarer på dine opslag",
+	"Follow new followers": "Følg nye brugere der følger dig",
+
+	"Follow": "Følg",
+	"Unfollow": "Følg ikke",
+	"Help distribute this user's images": "Hjælp med at dele denne brugers billeder",
+	"Following": "Følger",
+	"Activity feed": "Aktiviteter",
+	"Show more...": "Vis mere...",
+
+	" started following ": " begyndte at følge: ",
+	" commented on ": " kommenterede ",
+	" liked ": " synes om ",
+	"'s ": "' ",
+	"_(post, like post)": "opslag",
+	"_(post, comment post)": "kommentar",
+
+	"Cancel": "Fortryd",
+	"Save": "Gem",
+	"Delete": "Slet",
+
+	"User's profile site not loaded to your client yet.": "Brugerens profil side er endnu ikke fuldt downloadet endnu.",
+	"Download user's site": "Download brugerens side",
+
+	"Browse all \\u203A": "Vis alle",
+	"New users": "Nye brugere",
+	"Suggested users": "Foreslag",
+
+	"Create new profile": "Opret ny profil",
+	"Creating new profile...": "Opretter ny profil...",
+	"Checking user on selected hub...": "Tjekker bruger på valgt profil side...",
+	"User \" + Page.site_info.cert_user_id + \" already exists on this hub": "Bruger \" + Page.site_info.cert_user_id + \" findes allerede på denne profil side",
+	"Select ID...": "Vælg bruger ID ...",
+	"Seeded HUBs": "Delte profil sider",
+	"Available HUBs": "Mulige profil sider",
+	"(With this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)":
+	"(Du vælger hvor din profil skal gemmes. Der er ingen forskel på indhold og du kan stadigvæk nå alle andre brugere)",
+
+	"Random ZeroNet user": "Anonym ZeroNet bruger",
+	"Hello ZeroMe!": "Hello ZeroMe!",
+
+	"Loading...\\nShow image": "Indlæser...\\nVis billede",
+	"Help distribute this user's new images": "Hjælp med at dele denne brugers nye billeder",
+	"Delete image": "Slet billede",
+	"Show image": "Vis billede",
+	"'s new images": "' nye billeder",
+
+	"Comment": "Kommentar",
+	"Add your comment": "Tilføj din kommentar",
+	"Reply": "Svar",
+
+	"Everyone": "Alle",
+	"Followed users": "Følger brugere",
+	"Show more posts...": "Vis flere opslag...",
+	"Show more comments...": "Vis flere kommentarer...",
+	"No posts yet": "Ikke flere opslag",
+	"Let's follow some users!": "Lad os følge nogle brugere!",
+
+	"Select user to post new content": "Vælg bruger for at kunne opdaterer ZeroMe",
+	"Write something...": "Skriv noget...",
+	"Submit new post": "Gem nyt opslag",
+	"Invalid image, only jpg format supported": "Desværre, kun jpg billeder er mulige her",
+
+	"Follow in newsfeed": "Vælg i nyhedsstrøm",
+
+	"New users in ZeroMe": "Nye brugere i ZeroMe",
+	"Total: ": "I alt: ",
+	" registered users": " brugere",
+
+	" minutes ago": " minut(ter) siden",
+	" hours ago": " time(r) siden",
+	" days ago": " dag(e) siden",
+	"on ": "",
+	"Just now": "Netop nu"
+}

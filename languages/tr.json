@@ -1,0 +1,81 @@
+{
+	"Visitor": "Ziyaretçi",
+	"Select your account": "Hesabınızı seçin",
+	"You need a profile for this feature": "Bu özelliği kullanabilmek için bir hesap seçmelisiniz",
+
+	"Follow username mentions": "Kullanıcı adından bahsedenleri takip et",
+	"Follow comments on your posts": "Gönderilerine yapılan yorumları takip et",
+	"Follow new followers": "Yeni takipçileri takip et",
+
+	"Follow": "Takip et",
+	"Unfollow": "Takibi bırak",
+	"Help distribute this user's images": "Bu kullanıcının resimlerinin dağıtılmasına yardımcı ol",
+	"Following": "Takip edilenler",
+	"Activity feed": "Etkinlikler",
+	"Show more...": "Daha fazla göster...",
+
+	" started following ": " takibe başladı: ",
+	" commented on ": " yorumladı: ",
+	" liked ": " beğendi: ",
+	"'s ": " kullanıcısının ",
+	"_(post, like post)": "gönderisini",
+	"_(post, comment post)": "gönderisini",
+
+	"Cancel": "İptal",
+	"Save": "Kaydet",
+	"Delete": "Sil",
+
+	"User's profile site not loaded to your client yet.": "Kullanıcının profili henüz indirilmedi.",
+	"Download user's site": "Kullanıcının sitesini indir",
+
+	"Browse all \\u203A": "Tümünü gör \\u203A",
+	"New users": "Yeni kullanıcılar",
+	"Suggested users": "Önerilen kullanıcılar",
+
+	"Create new profile": "Yeni profil oluştur",
+	"Creating new profile...": "Yeni profil oluşturuluyor...",
+	"Checking user on selected hub...": "Kullanıcı seçili merkezde kontrol ediliyor...",
+	"User \" + Page.site_info.cert_user_id + \" already exists on this hub": "\" + Page.site_info.cert_user_id + \" kullanıcısı bu merkezde mevcut",
+	"Select ID...": "Kimlik seçin...",
+	"Seeded HUBs": "Paylaşılan merkezler",
+	"Available HUBs": "Erişilebilir merkezler",
+	"(With this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)":
+	"(Burada profilinizin nerede tutulacağını seçiyorsunuz. İçerik bakımından farkları yok, herhangi bir merkezdeki herhangi bir kullanıcıya erişebileceksiniz)",
+
+	"Random ZeroNet user": "Olağan bir ZeroNet kullanıcısı",
+	"Hello ZeroMe!": "Merhaba ZeroMe!",
+
+	"Loading...\\nShow image": "Yükleniyor...\\nResimi göster",
+	"Help distribute this user's new images": "Bu kullanıcının yeni resimlerinin dağıtılmasına yardım et",
+	"Delete image": "Resimi sil",
+	"Show image": "Resimi göster",
+	"'s new images": " kullanıcısına ait yeni resimler",
+
+	"Comment": "Yorumla",
+	"Add your comment": "Yorumunu ekle",
+	"Reply": "Cevapla",
+
+	"Everyone": "Herkes",
+	"Followed users": "Takip edilen kullanıcılar",
+	"Show more posts...": "Daha fazla gönderi göster...",
+	"Show more comments...": "Tüm yorumları göster...",
+	"No posts yet": "Henüz hiç gönderi yok",
+	"Let's follow some users!": "Bir kaç kişiyi takip edelim!",
+
+	"Select user to post new content": "Yeni içerik göndermek için kullanıcı seç",
+	"Write something...": "Birşeyler yaz...",
+	"Submit new post": "Gönder",
+	"Invalid image, only jpg format supported": "Geçersiz resim, sadece jpeg resimler destekleniyor",
+
+	"Follow in newsfeed": "Güncel beslemede takip et",
+
+	"New users in ZeroMe": "Yeni kullanıcılar",
+	"Total: ": "Toplam: ",
+	" registered users": " kayıtlı kullanıcı",
+
+	" minutes ago": " dakika",
+	" hours ago": " saat",
+	" days ago": " gün",
+	"on ": " ",
+	"Just now": "Şu anda"
+}

@@ -3188,7 +3188,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/AnonUser.coffee ---- */
 
 
@@ -3961,16 +3960,83 @@ function clone(obj) {
     function ContentUsers() {
       this.update = __bind(this.update, this);
       this.render = __bind(this.render, this);
+      this.handleSearchInput = __bind(this.handleSearchInput, this);
+      this.handleRecentMoreClick = __bind(this.handleRecentMoreClick, this);
+      this.handleActiveMoreClick = __bind(this.handleActiveMoreClick, this);
+      this.handleSuggestedMoreClick = __bind(this.handleSuggestedMoreClick, this);
+      this.user_list_suggested = new UserList("suggested");
+      this.user_list_suggested.limit = 9;
+      this.user_list_active = new UserList("active");
+      this.user_list_active.limit = 9;
       this.user_list_recent = new UserList("recent");
-      this.user_list_recent.limit = 5000;
+      this.user_list_recent.limit = 90;
       this.loaded = true;
       this.need_update = false;
+      this.search = "";
+      this.num_users_total = null;
     }
 
+    ContentUsers.prototype.handleSuggestedMoreClick = function() {
+      this.user_list_suggested.limit += 90;
+      this.user_list_suggested.need_update = true;
+      this.user_list_suggested.loading = true;
+      Page.projector.scheduleRender();
+      return false;
+    };
+
+    ContentUsers.prototype.handleActiveMoreClick = function() {
+      this.user_list_active.limit += 90;
+      this.user_list_active.need_update = true;
+      this.user_list_active.loading = true;
+      Page.projector.scheduleRender();
+      return false;
+    };
+
+    ContentUsers.prototype.handleRecentMoreClick = function() {
+      this.user_list_recent.limit += 300;
+      this.user_list_recent.need_update = true;
+      this.user_list_recent.loading = true;
+      Page.projector.scheduleRender();
+      return false;
+    };
+
+    ContentUsers.prototype.handleSearchInput = function(e) {
+      var rate_limit;
+      if (e == null) {
+        e = null;
+      }
+      this.search = e.target.value;
+      if (this.search === "") {
+        rate_limit = 0;
+      }
+      if (this.search.length < 3) {
+        rate_limit = 400;
+      } else {
+        rate_limit = 200;
+      }
+      return RateLimit(rate_limit, (function(_this) {
+        return function() {
+          _this.log("Search", _this.search);
+          _this.user_list_recent.search = _this.search;
+          _this.user_list_recent.need_update = true;
+          _this.user_list_recent.limit = 15;
+          return Page.projector.scheduleRender();
+        };
+      })(this));
+    };
+
     ContentUsers.prototype.render = function() {
-      var _ref;
+      var _ref, _ref1, _ref2;
       if (this.loaded && !Page.on_loaded.resolved) {
         Page.on_loaded.resolve();
+      }
+      if (this.need_update || !this.num_users_total) {
+        Page.cmd("dbQuery", "SELECT COUNT(*) AS num FROM user", (function(_this) {
+          return function(res) {
+            _this.num_users_total = res[0]["num"];
+            return Page.projector.scheduleRender();
+          };
+        })(this));
       }
       if (this.need_update) {
         this.log("Updating");
@@ -3978,26 +4044,44 @@ function clone(obj) {
         if ((_ref = this.user_list_recent) != null) {
           _ref.need_update = true;
         }
+        if ((_ref1 = this.user_list_active) != null) {
+          _ref1.need_update = true;
+        }
+        if (Page.user.auth_address) {
+          if ((_ref2 = this.user_list_suggested) != null) {
+            _ref2.need_update = true;
+          }
+        }
       }
       return h("div#Content.center", [
-        h("h2", "New users in ZeroMe"), h("div.users.cards", [this.user_list_recent.render("card")]), this.user_list_recent.users.length ? h("h5", {
+        h("input.text.big.search", {
+          placeholder: "Search in users...",
+          value: this.search,
+          oninput: this.handleSearchInput
+        }), !this.search ? [
+          this.user_list_suggested.users.length > 0 ? h("h2.suggested", "Suggested users") : void 0, h("div.users.cards.suggested", [this.user_list_suggested.render("card")]), this.user_list_suggested.users.length === this.user_list_suggested.limit ? h("a.more.suggested", {
+            href: "#",
+            onclick: this.handleSuggestedMoreClick
+          }, "Show more...") : this.user_list_suggested.users.length > 0 && this.user_list_suggested.loading ? h("a.more.suggested", {
+            href: "#",
+            onclick: this.handleSuggestedMoreClick
+          }, "Loading...") : void 0, this.user_list_active.users.length > 0 ? h("h2.active", "Most active") : void 0, h("div.users.cards.active", [this.user_list_active.render("card")]), this.user_list_active.users.length === this.user_list_active.limit ? h("a.more.active", {
+            href: "#",
+            onclick: this.handleActiveMoreClick
+          }, "Show more...") : this.user_list_active.users.length > 0 && this.user_list_active.loading ? h("a.more.active", {
+            href: "#",
+            onclick: this.handleActiveMoreClick
+          }, "Loading...") : void 0, this.user_list_recent.users.length > 0 ? h("h2.recent", "New users in ZeroMe") : void 0
+        ] : void 0, h("div.users.cards.recent", [this.user_list_recent.render("card")]), this.user_list_recent.users.length === this.user_list_recent.limit ? h("a.more.recent", {
+          href: "#",
+          onclick: this.handleRecentMoreClick
+        }, "Show more...") : this.user_list_recent.users.length > 0 && this.user_list_recent.loading ? h("a.more.recent", {
+          href: "#",
+          onclick: this.handleRecentMoreClick
+        }, "Loading...") : void 0, this.user_list_recent.users.length ? h("h5", {
           style: "text-align: center"
-        }, "Total: " + this.user_list_recent.users.length + " registered users") : void 0
+        }, "Total: " + this.num_users_total + " registered users") : void 0
       ]);
-
-      /*
-      			h("a.more", {href: "#"}, "Show more..."),
-      			h("h2", "Followed users"),
-      			h("div.users.cards", [
-      				h("div.user.card", [
-      					h("a.button.button-follow", {href: "#"}, "+"),
-      					h("a.avatar", {href: "#", style: "background-image: url('img/1.png')"}),
-      					h("a.name.link", {href: "#"}, "Nofish"),
-      					h("div.intro", "ZeroNet developer")
-      				])
-      			]),
-      		])
-       */
     };
 
     ContentUsers.prototype.update = function() {
@@ -5606,7 +5690,7 @@ function clone(obj) {
     };
 
     User.prototype.renderList = function(type) {
-      var classname, followed, link, seeding, title;
+      var classname, enterAnimation, exitAnimation, followed, link, seeding, title;
       if (type == null) {
         type = "normal";
       }
@@ -5622,14 +5706,21 @@ function clone(obj) {
       } else {
         title = "Follow";
       }
+      if (type !== "card") {
+        enterAnimation = Animation.slideDown;
+        exitAnimation = Animation.slideUp;
+      } else {
+        enterAnimation = null;
+        exitAnimation = null;
+      }
       return h("div.user" + classname, {
         key: this.hub + "/" + this.auth_address,
         classes: {
           followed: followed,
           notseeding: !seeding
         },
-        enterAnimation: Animation.slideDown,
-        exitAnimation: Animation.slideUp
+        enterAnimation: enterAnimation,
+        exitAnimation: exitAnimation
       }, [
         h("a.button.button-follow", {
           href: link,
@@ -5684,10 +5775,19 @@ function clone(obj) {
       this.need_update = true;
       this.limit = 5;
       this.followed_by = null;
+      this.search = null;
     }
 
     UserList.prototype.update = function() {
-      var followed_user_addresses, followed_user_directories, key, query, val;
+      var followed_user_addresses, followed_user_directories, key, params, query, search_where, val;
+      this.loading = true;
+      params = {};
+      if (this.search) {
+        search_where = "AND json.user_name LIKE :search_like OR user.user_name LIKE :search_like";
+        params["search_like"] = "%" + this.search + "%";
+      } else {
+        search_where = "";
+      }
       if (this.followed_by) {
         query = "SELECT user.user_name, follow.*, user.*\nFROM follow\nLEFT JOIN user USING (auth_address, hub)\nWHERE\n follow.json_id = " + this.followed_by.row.json_id + "  AND user.json_id IS NOT NULL\n\nUNION\n\nSELECT user.user_name, follow.*, user.*\nFROM follow\nLEFT JOIN json ON (json.directory = 'data/userdb/' || follow.auth_address)\nLEFT JOIN user ON (user.json_id = json.json_id)\nWHERE\n follow.json_id = " + this.followed_by.row.json_id + "  AND user.json_id IS NOT NULL AND\n follow.date_added < " + (Time.timestamp() + 120) + "\nORDER BY date_added DESC\nLIMIT " + this.limit;
       } else if (this.type === "suggested") {
@@ -5714,10 +5814,12 @@ function clone(obj) {
           return;
         }
         query = "SELECT\n COUNT(DISTINCT(json.directory)) AS num,\n GROUP_CONCAT(DISTINCT(json.user_name)) AS followed_by,\n follow.*,\n json_suggested.avatar\nFROM follow\n LEFT JOIN json USING (json_id)\n LEFT JOIN json AS json_suggested ON (json_suggested.directory = 'data/users/' || follow.auth_address AND json_suggested.avatar IS NOT NULL)\nWHERE\n json.directory IN " + (Text.sqlIn(followed_user_directories)) + " AND\n auth_address NOT IN " + (Text.sqlIn(followed_user_addresses)) + " AND\n auth_address != '" + Page.user.auth_address + "' AND\n date_added < " + (Time.timestamp() + 120) + "\nGROUP BY follow.auth_address\nORDER BY num DESC\nLIMIT " + this.limit;
+      } else if (this.type === "active") {
+        query = "SELECT\n json.*,\n json.site AS json_site,\n json.directory AS json_directory,\n json.file_name AS json_file_name,\n json.cert_user_id AS json_cert_user_id,\n json.hub AS json_hub,\n json.user_name AS json_user_name,\n json.avatar AS json_avatar,\n COUNT(*) AS posts\nFROM\n post LEFT JOIN json USING (json_id)\nWHERE\n post.date_added > " + (Time.timestamp() - 60 * 60 * 24 * 7) + "\nGROUP BY json_id\nORDER BY posts DESC\nLIMIT " + this.limit;
       } else {
-        query = "SELECT\n user.*,\n json.site AS json_site,\n json.directory AS json_directory,\n json.file_name AS json_file_name,\n json.cert_user_id AS json_cert_user_id,\n json.hub AS json_hub,\n json.user_name AS json_user_name,\n json.avatar AS json_avatar\nFROM\n user LEFT JOIN json USING (json_id)\nWHERE\n date_added < " + (Time.timestamp() + 120) + "\nORDER BY date_added DESC\nLIMIT " + this.limit;
+        query = "SELECT\n user.*,\n json.site AS json_site,\n json.directory AS json_directory,\n json.file_name AS json_file_name,\n json.cert_user_id AS json_cert_user_id,\n json.hub AS json_hub,\n json.user_name AS json_user_name,\n json.avatar AS json_avatar\nFROM\n user LEFT JOIN json USING (json_id)\nWHERE\n date_added < " + (Time.timestamp() + 120) + "\n " + search_where + "\nORDER BY date_added DESC\nLIMIT " + this.limit;
       }
-      return Page.cmd("dbQuery", query, (function(_this) {
+      return Page.cmd("dbQuery", [query, params], (function(_this) {
         return function(rows) {
           var followed_by_displayed, row, rows_by_user, user_rows, username, _i, _len;
           rows_by_user = {};
@@ -5726,7 +5828,7 @@ function clone(obj) {
             row = rows[_i];
             if (row.json_cert_user_id) {
               row.cert_user_id = row.json_cert_user_id;
-              row.auth_address = row.json_directory.replace("data/userdb/", "");
+              row.auth_address = row.json_directory.replace("data/userdb/", "").replace("data/users/", "");
             }
             if (!row.auth_address) {
               continue;
@@ -5761,6 +5863,7 @@ function clone(obj) {
             return _results;
           })();
           _this.item_list.sync(user_rows);
+          _this.loading = false;
           return Page.projector.scheduleRender();
         };
       })(this));
@@ -5797,6 +5900,7 @@ function clone(obj) {
   window.UserList = UserList;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ZeroMe.coffee ---- */
