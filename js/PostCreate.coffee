@@ -65,6 +65,7 @@ class PostCreate extends Class
 				h("div.user", user.renderAvatar()),
 				h("a.icon-image.link", {href: "#", onclick: @handleUploadClick}),
 				@field_post.render(),
+				h('div.post-preview', @field_post.attrs2),
 				if @image.base64uri
 					h("div.image", {style: "background-image: url(#{@image.base64uri}); height: #{@image.getSize(530, 600)[1]}px", classes: {empty: false}}, [
 						h("a.close", {href: "#", onclick: @handleImageClose}, "×")

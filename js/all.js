@@ -1428,13 +1428,17 @@ function clone(obj) {
     function Autosize(_at_attrs) {
       var _base;
       this.attrs = _at_attrs != null ? _at_attrs : {};
+      this.attrs2 = {};
       this.render = __bind(this.render, this);
       this.handleKeydown = __bind(this.handleKeydown, this);
       this.handleInput = __bind(this.handleInput, this);
       this.autoHeight = __bind(this.autoHeight, this);
       this.setValue = __bind(this.setValue, this);
       this.storeNode = __bind(this.storeNode, this);
+      this.handleKeyup = __bind(this.handleKeyup, this);
+      this.storePreviewNode = __bind(this.storePreviewNode, this);
       this.node = null;
+      this.previewNode = null;
       if ((_base = this.attrs).classes == null) {
         _base.classes = {};
       }
@@ -1444,6 +1448,9 @@ function clone(obj) {
       this.attrs.afterCreate = this.storeNode;
       this.attrs.rows = 1;
       this.attrs.disabled = false;
+      this.attrs.onkeyup = this.handleKeyup;
+
+      this.attrs2.afterCreate = this.storePreviewNode;
     }
 
     Autosize.property('loading', {
@@ -1470,6 +1477,10 @@ function clone(obj) {
       })(this));
     };
 
+    Autosize.prototype.storePreviewNode = function (node) {
+        this.previewNode = node;
+    };
+
     Autosize.prototype.setValue = function(value) {
       if (value == null) {
         value = null;
@@ -1491,6 +1502,7 @@ function clone(obj) {
       h = this.node.offsetHeight;
       scrollh = this.node.scrollHeight;
       this.node.style.height = height_before;
+
       if (scrollh > h) {
         return anime({
           targets: this.node,
@@ -1523,6 +1535,11 @@ function clone(obj) {
         })(this)), 100);
         return false;
       }
+    };
+
+    Autosize.prototype.handleKeyup = function (e) {
+      if (this.previewNode != null)
+        this.previewNode.innerHTML = Text.renderMarked(this.node.value);
     };
 
     Autosize.prototype.render = function(body) {
@@ -4584,7 +4601,7 @@ function clone(obj) {
       }, [
         this.commenting ? h("div.comment-create", {
           enterAnimation: Animation.slideDown
-        }, this.field_comment.render()) : void 0, (_ref = this.row.comments) != null ? _ref.slice(0, +(comment_limit - 1) + 1 || 9e9).map((function(_this) {
+        }, this.field_comment.render(), h('div.post-preview', this.field_comment.attrs2)) : void 0, (_ref = this.row.comments) != null ? _ref.slice(0, +(comment_limit - 1) + 1 || 9e9).map((function(_this) {
           return function(comment) {
             var comment_uri, owned, user_address, user_link, _ref1, _ref2;
             user_address = comment.directory.replace("data/users/", "");
@@ -4800,7 +4817,7 @@ function clone(obj) {
         }, h("div.user", user.renderAvatar()), h("a.icon-image.link", {
           href: "#",
           onclick: this.handleUploadClick
-        }), this.field_post.render(), this.image.base64uri ? h("div.image", {
+        }), this.field_post.render(), h('div.post-preview', this.field_post.attrs2), this.image.base64uri ? h("div.image", {
           style: "background-image: url(" + this.image.base64uri + "); height: " + (this.image.getSize(530, 600)[1]) + "px",
           classes: {
             empty: false

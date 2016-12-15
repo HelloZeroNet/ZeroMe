@@ -181,7 +181,7 @@ class Post extends Class
 			comment_limit = @comment_limit
 		h("div.comment-list", {enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, animate_scrollfix: true, animate_noscale: true}, [
 			if @commenting then h("div.comment-create", {enterAnimation: Animation.slideDown},
-				@field_comment.render()
+				@field_comment.render(), h('div.post-preview', @field_comment.attrs2)
 			),
 			@row.comments?[0..comment_limit-1].map (comment) =>
 				user_address = comment.directory.replace("data/users/", "")

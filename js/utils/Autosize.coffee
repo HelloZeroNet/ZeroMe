@@ -1,6 +1,7 @@
 class Autosize extends Class
 	constructor: (@attrs={}) ->
 		@node = null
+		@previewNode = null
 
 		@attrs.classes ?= {}
 		@attrs.classes.loading = false
@@ -9,6 +10,10 @@ class Autosize extends Class
 		@attrs.afterCreate = @storeNode
 		@attrs.rows = 1
 		@attrs.disabled = false
+		@attrs.onkeyup = @handleKeyup
+
+		@attrs2 = {}
+		@attrs2.afterCreate = @storePreviewNode
 
 	@property 'loading',
 		get: -> @attrs.classes.loading
@@ -24,6 +29,9 @@ class Autosize extends Class
 			node.focus()
 		setTimeout =>
 			@autoHeight()
+
+	storeNode: (node) =>
+		@previewNode = node
 
 	setValue: (value=null) =>
 		@attrs.value = value
@@ -55,6 +63,10 @@ class Autosize extends Class
 				@autoHeight()
 			), 100
 			return false
+
+	handleKeyup: (e=null) =>
+		if @previewNode
+			@previewNode.innerHTML = Text.renderMarked(@node.value)
 
 	render: (body=null) =>
 		if body and @attrs.value == undefined

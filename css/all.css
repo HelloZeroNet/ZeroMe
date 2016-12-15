@@ -237,6 +237,8 @@
 .post-create:not(.editing) .postbuttons { opacity: 0; height: 0px; }
 .post-create:not(.editing) .image { opacity: 0; height: 0px; }
 
+.post-preview {margin: 10px; border: 1px solid #c6caff; padding: 15px; background: #cce; color: #888;}
+
 .post-list-empty { text-align: center; padding-top: 100px }
 .post-list-type { text-align: right; }
 .post-list-type a {
