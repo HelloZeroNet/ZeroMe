@@ -1428,15 +1428,16 @@ function clone(obj) {
     function Autosize(_at_attrs) {
       var _base;
       this.attrs = _at_attrs != null ? _at_attrs : {};
-      this.attrs2 = {};
       this.render = __bind(this.render, this);
+      this.handleBlur = __bind(this.handleBlur, this);
+      this.handleFocus = __bind(this.handleFocus, this);
+      this.handleKeyup = __bind(this.handleKeyup, this);
       this.handleKeydown = __bind(this.handleKeydown, this);
       this.handleInput = __bind(this.handleInput, this);
       this.autoHeight = __bind(this.autoHeight, this);
       this.setValue = __bind(this.setValue, this);
-      this.storeNode = __bind(this.storeNode, this);
-      this.handleKeyup = __bind(this.handleKeyup, this);
       this.storePreviewNode = __bind(this.storePreviewNode, this);
+      this.storeNode = __bind(this.storeNode, this);
       this.node = null;
       this.previewNode = null;
       if ((_base = this.attrs).classes == null) {
@@ -1449,7 +1450,15 @@ function clone(obj) {
       this.attrs.rows = 1;
       this.attrs.disabled = false;
       this.attrs.onkeyup = this.handleKeyup;
-
+      if (this.attrs.onfocus) {
+        this.attrs.onfocus2 = this.attrs.onfocus;
+      }
+      if (this.attrs.onblur) {
+        this.attrs.onblur2 = this.attrs.onblur;
+      }
+      this.attrs.onfocus = this.handleFocus;
+      this.attrs.onblur = this.handleBlur;
+      this.attrs2 = {};
       this.attrs2.afterCreate = this.storePreviewNode;
     }
 
@@ -1477,8 +1486,12 @@ function clone(obj) {
       })(this));
     };
 
-    Autosize.prototype.storePreviewNode = function (node) {
-        this.previewNode = node;
+    Autosize.prototype.storePreviewNode = function(node) {
+      this.previewNode = node;
+      if (this.attrs.focused) {
+        this.handleFocus();
+        return node.innerHTML = Text.renderMarked(this.node.value);
+      }
     };
 
     Autosize.prototype.setValue = function(value) {
@@ -1502,7 +1515,6 @@ function clone(obj) {
       h = this.node.offsetHeight;
       scrollh = this.node.scrollHeight;
       this.node.style.height = height_before;
-
       if (scrollh > h) {
         return anime({
           targets: this.node,
@@ -1537,9 +1549,39 @@ function clone(obj) {
       }
     };
 
-    Autosize.prototype.handleKeyup = function (e) {
-      if (this.previewNode != null)
-        this.previewNode.innerHTML = Text.renderMarked(this.node.value);
+    Autosize.prototype.handleKeyup = function(e) {
+      if (e == null) {
+        e = null;
+      }
+      if (this.previewNode) {
+        return this.previewNode.innerHTML = Text.renderMarked(this.node.value);
+      }
+    };
+
+    Autosize.prototype.handleFocus = function(e) {
+      if (e == null) {
+        e = null;
+      }
+      if (this.attrs.onfocus2) {
+        this.attrs.onfocus2(e);
+      }
+      if (this.previewNode) {
+        this.previewNode.style.display = "block";
+        return false;
+      }
+    };
+
+    Autosize.prototype.handleBlur = function(e) {
+      if (e == null) {
+        e = null;
+      }
+      if (this.attrs.onblur2) {
+        this.attrs.onblur2(e);
+      }
+      if (this.previewNode && this.node.value === "") {
+        this.previewNode.style.display = "none";
+        return false;
+      }
     };
 
     Autosize.prototype.render = function(body) {
@@ -1676,7 +1718,7 @@ function clone(obj) {
       if (this.editing) {
         return h("div.editable.editing", {
           exitAnimation: Animation.slideUp
-        }, this.field_edit.render(body), h("div.editablebuttons", h("a.link", {
+        }, this.field_edit.render(body), h("div.post-preview", this.field_edit.attrs2), h("div.editablebuttons", h("a.link", {
           href: "#Cancel",
           onclick: this.handleCancelClick,
           tabindex: "-1"
