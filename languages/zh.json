@@ -11,7 +11,7 @@
 	"Unfollow": "取消关注",
 	"Help distribute this user's images": "帮助分发这个用户的图片",
 	"Following": "已关注",
-	"Activity feed": "活动摘要",
+	"Activity feed": "活动信息流",
 	"Show more...": "显示更多...",
 
 	" started following ": " 开始关注 ",
@@ -69,6 +69,8 @@
 
 	"Follow in newsfeed": "在新闻源中关注",
 
+	"Search in users...": "在用户中搜索",
+	"Most active": "最活跃的用户",
 	"New users in ZeroMe": "在 ZeroMe 的新用户",
 	"Total: ": "总共：",
 	" registered users": " 注册用户",
