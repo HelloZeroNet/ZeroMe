@@ -4898,7 +4898,7 @@ function clone(obj) {
       if (this.directories === "all") {
         where = "WHERE post_id IS NOT NULL AND post.date_added < " + (Time.timestamp() + 120) + " ";
       } else {
-        where = "WHERE directory IN " + (Text.sqlIn(this.directories)) + " AND post_id IS NOT NULL ";
+        where = "WHERE directory IN " + (Text.sqlIn(this.directories)) + " AND post_id IS NOT NULL AND post.date_added < " + (Time.timestamp() + 120) + " ";
       }
       if (this.filter_post_id) {
         where += "AND post_id = :post_id ";
@@ -5030,6 +5030,7 @@ function clone(obj) {
   window.PostList = PostList;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostMeta.coffee ---- */
@@ -5900,7 +5901,6 @@ function clone(obj) {
   window.UserList = UserList;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ZeroMe.coffee ---- */
