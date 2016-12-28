@@ -20,7 +20,7 @@ class Text
 		options["renderer"] = marked_renderer
 		text = @fixReply(text)
 		text = marked(text, options)
-		text = text.replace(/(@[A-Za-z0-9 ]{1,16}):/g, '<b class="reply-name">$1</b>:')  # Highlight usernames
+		text = text.replace(/(@[^\x00-\x1f^\x21-\x2f^\x3a-\x40^\x5b-\x60^\x7b-\x7f]{1,16}):/g, '<b class="reply-name">$1</b>:')  # Highlight usernames
 		return @fixHtmlLinks text
 
 	renderLinks: (text) =>
@@ -28,7 +28,7 @@ class Text
 		text = text.replace /(https?:\/\/[^\s)]+)/g, (match) ->
 			return "<a href=\"#{match.replace(/&amp;/g, '&')}\">#{match}</a>"  # UnSanitize &amp; -> & in links
 		text = text.replace(/\n/g, '<br>')
-		text = text.replace(/(@[A-Za-z0-9 ]{1,16}):/g, '<b class="reply-name">$1</b>:')
+		text = text.replace(/(@[^\x00-\x1f^\x21-\x2f^\x3a-\x40^\x5b-\x60^\x7b-\x7f]{1,16}):/g, '<b class="reply-name">$1</b>:')
 		text = @fixHtmlLinks(text)
 
 		return text
