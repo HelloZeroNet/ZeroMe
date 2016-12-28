@@ -1,0 +1,81 @@
+{
+	"Visitor": "Visiteur",
+	"Select your account": "Sélectionnez votre compte",
+	"You need a profile for this feature": "Vous devez avoir un profil pour accéder à cette fonctionnalité",
+
+	"Follow username mentions": "Suivre les mentions d'utilisateur",
+	"Follow comments on your posts": "Suivre les commentaires sur vos publications",
+	"Follow new followers": "Suivre les personnes qui vous suivent",
+
+	"Follow": "Suivre",
+	"Unfollow": "Ne plus suivre",
+	"Help distribute this user's images": "Distribuer les images de cet utilisateur",
+	"Following": "Vous suivez",
+	"Activity feed": "Fil d'activité",
+	"Show more...": "Afficher plus...",
+
+	" started following ": " a commencé à suivre ",
+	" commented on ": " a commenté ce que ",
+	" liked ": " aime ce que ",
+	"'s ": " a ",
+	"_(post, like post)": "publié",
+	"_(post, comment post)": "publié",
+
+	"Cancel": "Annuler",
+	"Save": "Enregistrer",
+	"Delete": "Supprimer",
+
+	"User's profile site not loaded to your client yet.": "Le profil de l'utilisateur n'a pas encore été téléchargé.",
+	"Download user's site": "Télécharger le site de l'utilisateur",
+
+	"Browse all \\u203A": "Voir tous \\u203A",
+	"New users": "Nouveaux utilisateurs",
+	"Suggested users": "Utilisateurs suggérés",
+
+	"Create new profile": "Créer un nouveau profil",
+	"Creating new profile...": "Création du nouveau profil...",
+	"Checking user on selected hub...": "Vérification de l'utilisateur sur le hub correspondant...",
+	"User \" + Page.site_info.cert_user_id + \" already exists on this hub": "L'utilisateur ' \" + Page.site_info.cert_user_id + \" existe déjà sur ce hub",
+	"Select ID...": "Sélectionnez l'utilisateur...",
+	"Seeded HUBs": "Hubs partagés",
+	"Available HUBs": "Hubs disponibles",
+	"(With this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)":
+	"(Vous choisissez ici sur quel hub votre profil est enregistré.  Il n'y a aucune différence de contenu et vous aurez accès à tous les utilisateurs de ZeroMe)",
+
+	"Random ZeroNet user": "Utilisateur ZeroNet aléatoire",
+	"Hello ZeroMe!": "Bonjour ZeroMe!",
+
+	"Loading...\\nShow image": "Chargement...\\nAfficher l'image",
+	"Help distribute this user's new images": "Distribuer les nouvelles images de l'utilisateur",
+	"Delete image": "Supprimer l'image",
+	"Show image": "Afficher l'image",
+	"'s new images": " nouvelles images",
+
+	"Comment": "Commenter",
+	"Add your comment": "Ajouter un commentaire",
+	"Reply": "Répondre",
+
+	"Everyone": "Tous",
+	"Followed users": "Utilisateurs suivis",
+	"Show more posts...": "Afficher plus de publications...",
+	"Show more comments...": "Afficher plus de commentaires...",
+	"No posts yet": "Aucune publication",
+	"Let's follow some users!": "Suivez de nouveaux utilisateurs!",
+
+	"Select user to post new content": "Selectionnez un identifiant pour publier",
+	"Write something...": "Écrivez quelque chose...",
+	"Submit new post": "Publier",
+	"Invalid image, only jpg format supported": "Image invalide, seul le format jpg est supporté",
+
+	"Follow in newsfeed": "Suivre dans le fil d'actualité",
+
+	"New users in ZeroMe": "Nouveaux utilisateurs",
+	"Total: ": "Total: ",
+	" registered users": " utilisateurs enregistrés",
+
+	" minutes ago": " minutes",
+	" hours ago": " heures",
+	" days ago": " jours",
+	"on ": "le ",
+	"Just now": "À l'instant"
+}

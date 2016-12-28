@@ -70,7 +70,7 @@
 .comment-list .body { padding-top: 0px }
 .comment-list .body p { padding: 0px }
 
-.comment-create textarea { width: 100%; margin-bottom: 11px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; }
+.comment-create textarea { width: 100%; margin-bottom: 11px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; resize: vertical; }
 .comment { padding-top: 10px }
 .comment-list .comment .user { padding-bottom: 0px; white-space: nowrap; line-height: 15px; }
 .comment .body { padding-top: 4px; padding-bottom: 10px; }
@@ -217,11 +217,11 @@
 .post-create { -webkit-transition: all 0.6s ; -moz-transition: all 0.6s ; -o-transition: all 0.6s ; -ms-transition: all 0.6s ; transition: all 0.6s  }
 .post-create .postfield {
 	font-family: Roboto; font-size: 16px; border: 1px solid white; padding: 15px 15px;
-	font-size: 16px; width: 100%; height: 52px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; padding-right: 40px;
+	font-size: 16px; width: 100%; height: 52px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; padding-right: 40px; resize: none;
 }
 .post-create .user { margin-bottom: 0px; height: auto; padding-bottom: 0px; }
 .post-create .postbuttons { height: 55px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; -webkit-transform: scale(1); -moz-transform: scale(1); -o-transform: scale(1); -ms-transform: scale(1); transform: scale(1) ; overflow: hidden; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; text-align: right }
-.post-create.editing .postfield { border: 1px solid #c6caff }
+.post-create.editing .postfield { border: 1px solid #c6caff; resize: vertical; }
 .post-create.editing { -webkit-box-shadow: 0px 1px 13px 1px #eaeaea ; -moz-box-shadow: 0px 1px 13px 1px #eaeaea ; -o-box-shadow: 0px 1px 13px 1px #eaeaea ; -ms-box-shadow: 0px 1px 13px 1px #eaeaea ; box-shadow: 0px 1px 13px 1px #eaeaea  }
 .post-create .select-user-container { width: 100%; text-align: center; margin-bottom: -100px; height: 100px; z-index: 1; position: relative; }
 .post-create .attach { font-size: 12px; text-transform: uppercase; border: 0px; padding: 8px 20px; font-weight: bold; }
@@ -341,7 +341,7 @@ p, h1, h2, h3, h4 { margin: 0px; padding-bottom: 0.6em; }
 input.text, textarea { border: 1px solid #EEE; padding: 15px 15px; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; line-height: 1.4em; }
 input.text:disabled, textarea:disabled { background-color: #FAFAFA; color: #9A9A9A }
 input.big { font-size: 20px; font-weight: 100; font-family: Roboto, Helvetica, Arial }
-input.search { -webkit-border-radius: 50px; -moz-border-radius: 50px; -o-border-radius: 50px; -ms-border-radius: 50px; border-radius: 50px ; padding-left: 30px; }
+input.search { -webkit-border-radius: 50px; -moz-border-radius: 50px; -o-border-radius: 50px; -ms-border-radius: 50px; border-radius: 50px ; padding-left: 30px; margin-bottom: 30px }
 input.text:focus, textarea:focus { outline: none; border: 1px solid #c6caff }
 textarea.autosize { overflow: hidden; -webkit-transition: border 0.3s, background-color 0.3s, color 0.3s ; -moz-transition: border 0.3s, background-color 0.3s, color 0.3s ; -o-transition: border 0.3s, background-color 0.3s, color 0.3s ; -ms-transition: border 0.3s, background-color 0.3s, color 0.3s ; transition: border 0.3s, background-color 0.3s, color 0.3s  }
 

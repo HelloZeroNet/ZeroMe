@@ -9,7 +9,7 @@ p, h1, h2, h3, h4 { margin: 0px; padding-bottom: 0.6em; }
 input.text, textarea { border: 1px solid #EEE; padding: 15px 15px; transition: all 0.3s; width: 100%; box-sizing: border-box; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; line-height: 1.4em; }
 input.text:disabled, textarea:disabled { background-color: #FAFAFA; color: #9A9A9A }
 input.big { font-size: 20px; font-weight: 100; font-family: Roboto, Helvetica, Arial }
-input.search { border-radius: 50px; padding-left: 30px; }
+input.search { border-radius: 50px; padding-left: 30px; margin-bottom: 30px }
 input.text:focus, textarea:focus { outline: none; border: 1px solid #c6caff }
 textarea.autosize { overflow: hidden; transition: border 0.3s, background-color 0.3s, color 0.3s }
 
