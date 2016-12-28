@@ -28,7 +28,7 @@ class PostList extends Class
 		if @directories == "all"
 			where = "WHERE post_id IS NOT NULL AND post.date_added < #{Time.timestamp()+120} "
 		else
-			where = "WHERE directory IN #{Text.sqlIn(@directories)} AND post_id IS NOT NULL "
+			where = "WHERE directory IN #{Text.sqlIn(@directories)} AND post_id IS NOT NULL AND post.date_added < #{Time.timestamp()+120} "
 
 		if @filter_post_id
 			where += "AND post_id = :post_id "
