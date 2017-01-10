@@ -4572,7 +4572,7 @@ function clone(obj) {
         return [];
       }
       if (this.row.selected) {
-        comment_limit = 50;
+        comment_limit = this.comment_limit + 50;
       } else {
         comment_limit = this.comment_limit;
       }
@@ -4696,6 +4696,7 @@ function clone(obj) {
   window.Post = Post;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostCreate.coffee ---- */
@@ -5030,7 +5031,6 @@ function clone(obj) {
   window.PostList = PostList;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostMeta.coffee ---- */

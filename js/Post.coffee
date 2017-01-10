@@ -176,7 +176,7 @@ class Post extends Class
 		if not @row.comments and not @commenting
 			return []
 		if @row.selected
-			comment_limit = 50
+			comment_limit = @comment_limit + 50
 		else
 			comment_limit = @comment_limit
 		h("div.comment-list", {enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, animate_scrollfix: true, animate_noscale: true}, [
