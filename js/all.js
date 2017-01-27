@@ -4354,7 +4354,7 @@ function clone(obj) {
           }
           data.post.splice(post_index, 1);
           if ((_ref1 = _this.meta) != null ? (_ref2 = _ref1.meta) != null ? _ref2.img : void 0 : void 0) {
-            return Page.cmd("optionalFileDelete", (_this.user.getPath()) + "/" + _this.row.post_id + ".jpg", function() {
+            return Page.cmd("fileDelete", (_this.user.getPath()) + "/" + _this.row.post_id + ".jpg", function() {
               return Page.user.save(data, Page.user.hub, function(res) {
                 return cb(res);
               });

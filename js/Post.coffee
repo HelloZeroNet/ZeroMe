@@ -40,7 +40,7 @@ class Post extends Class
 			post_index = i for post, i in data.post when post.post_id == @row.post_id
 			data.post.splice(post_index, 1)
 			if @meta?.meta?.img
-				Page.cmd "optionalFileDelete", "#{@user.getPath()}/#{@row.post_id}.jpg", =>
+				Page.cmd "fileDelete", "#{@user.getPath()}/#{@row.post_id}.jpg", =>
 					Page.user.save data, Page.user.hub, (res) =>
 						cb(res)
 			else
