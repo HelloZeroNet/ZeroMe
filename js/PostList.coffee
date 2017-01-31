@@ -34,6 +34,9 @@ class PostList extends Class
 			where += "AND post_id = :post_id "
 			param.post_id = @filter_post_id
 
+		if Page.local_storage.settings.hide_hello_zerome
+			where += "AND post_id > 1 "
+
 		query = "
 			SELECT
 			 (SELECT COUNT(*) FROM post_like WHERE 'data/users/' || post_uri =  directory || '_' || post_id) AS likes,

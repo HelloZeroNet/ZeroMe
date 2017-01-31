@@ -12,7 +12,7 @@ class Head extends Class
 			Page.cmd "certSelect", {"accepted_domains": ["zeroid.bit"], "accept_any": true}
 		return false
 
-	handleMenuItemClick: (type, item) =>
+	handleFollowMenuItemClick: (type, item) =>
 		selected = not @follows[type]
 		@follows[type] = selected
 		item[2] = selected
@@ -27,16 +27,25 @@ class Head extends Class
 			@menu.items = []
 
 			@menu.items.push ["Follow username mentions", ( (item) =>
-				return @handleMenuItemClick("Mentions", item)
+				return @handleFollowMenuItemClick("Mentions", item)
 			), @follows["Mentions"]]
 
 			@menu.items.push ["Follow comments on your posts", ( (item) =>
-				return @handleMenuItemClick("Comments on your posts", item)
+				return @handleFollowMenuItemClick("Comments on your posts", item)
 			), @follows["Comments on your posts"]]
 
 			@menu.items.push ["Follow new followers", ( (item) =>
-				return @handleMenuItemClick("New followers", item)
+				return @handleFollowMenuItemClick("New followers", item)
 			), @follows["New followers"]]
+
+			@menu.items.push ['Hide "Hello ZeroMe!" messages', ( (item) =>
+				Page.local_storage.settings.hide_hello_zerome = not Page.local_storage.settings.hide_hello_zerome
+				item[2] = Page.local_storage.settings.hide_hello_zerome
+				Page.projector.scheduleRender()
+				Page.saveLocalStorage()
+				Page.content.need_update = true
+				return false
+			), Page.local_storage.settings.hide_hello_zerome]
 
 			@menu.toggle()
 			Page.projector.scheduleRender()

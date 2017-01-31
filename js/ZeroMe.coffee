@@ -150,6 +150,7 @@ class ZeroMe extends ZeroFrame
 				@logEnd "Loaded localstorage"
 				@local_storage ?= {}
 				@local_storage.followed_users ?= {}
+				@local_storage.settings ?= {}
 				@on_local_storage.resolve(@local_storage)
 
 

@@ -4115,7 +4115,7 @@ function clone(obj) {
       this.render = __bind(this.render, this);
       this.saveFollows = __bind(this.saveFollows, this);
       this.handleMenuClick = __bind(this.handleMenuClick, this);
-      this.handleMenuItemClick = __bind(this.handleMenuItemClick, this);
+      this.handleFollowMenuItemClick = __bind(this.handleFollowMenuItemClick, this);
       this.menu = new Menu();
       this.follows = [];
     }
@@ -4138,7 +4138,7 @@ function clone(obj) {
       return false;
     };
 
-    Head.prototype.handleMenuItemClick = function(type, item) {
+    Head.prototype.handleFollowMenuItemClick = function(type, item) {
       var selected;
       selected = !this.follows[type];
       this.follows[type] = selected;
@@ -4159,18 +4159,28 @@ function clone(obj) {
           _this.menu.items = [];
           _this.menu.items.push([
             "Follow username mentions", (function(item) {
-              return _this.handleMenuItemClick("Mentions", item);
+              return _this.handleFollowMenuItemClick("Mentions", item);
             }), _this.follows["Mentions"]
           ]);
           _this.menu.items.push([
             "Follow comments on your posts", (function(item) {
-              return _this.handleMenuItemClick("Comments on your posts", item);
+              return _this.handleFollowMenuItemClick("Comments on your posts", item);
             }), _this.follows["Comments on your posts"]
           ]);
           _this.menu.items.push([
             "Follow new followers", (function(item) {
-              return _this.handleMenuItemClick("New followers", item);
+              return _this.handleFollowMenuItemClick("New followers", item);
             }), _this.follows["New followers"]
+          ]);
+          _this.menu.items.push([
+            'Hide "Hello ZeroMe!" messages', (function(item) {
+              Page.local_storage.settings.hide_hello_zerome = !Page.local_storage.settings.hide_hello_zerome;
+              item[2] = Page.local_storage.settings.hide_hello_zerome;
+              Page.projector.scheduleRender();
+              Page.saveLocalStorage();
+              Page.content.need_update = true;
+              return false;
+            }), Page.local_storage.settings.hide_hello_zerome
           ]);
           _this.menu.toggle();
           return Page.projector.scheduleRender();
@@ -4249,6 +4259,7 @@ function clone(obj) {
   window.Head = Head;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Post.coffee ---- */
@@ -4698,7 +4709,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostCreate.coffee ---- */
 
 
@@ -4904,6 +4914,9 @@ function clone(obj) {
       if (this.filter_post_id) {
         where += "AND post_id = :post_id ";
         param.post_id = this.filter_post_id;
+      }
+      if (Page.local_storage.settings.hide_hello_zerome) {
+        where += "AND post_id > 1 ";
       }
       query = "SELECT (SELECT COUNT(*) FROM post_like WHERE 'data/users/' || post_uri =  directory || '_' || post_id) AS likes, * FROM post LEFT JOIN json ON (post.json_id = json.json_id) " + where + " ORDER BY date_added DESC LIMIT " + (this.limit + 1);
       this.logStart("Update");
@@ -6098,7 +6111,7 @@ function clone(obj) {
         return function() {
           _this.logStart("Loaded localstorage");
           return _this.cmd("wrapperGetLocalStorage", [], function(_at_local_storage) {
-            var _base;
+            var _base, _base1;
             _this.local_storage = _at_local_storage;
             _this.logEnd("Loaded localstorage");
             if (_this.local_storage == null) {
@@ -6106,6 +6119,9 @@ function clone(obj) {
             }
             if ((_base = _this.local_storage).followed_users == null) {
               _base.followed_users = {};
+            }
+            if ((_base1 = _this.local_storage).settings == null) {
+              _base1.settings = {};
             }
             return _this.on_local_storage.resolve(_this.local_storage);
           });
