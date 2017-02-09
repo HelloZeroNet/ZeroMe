@@ -3,7 +3,7 @@
  "background-color": "#F2F4F6",
  "description": "Social site",
  "domain": "Me.ZeroNetwork.bit",
- "favicon": "favicon.ico",
+ "favicon": "zerome.ico",
  "files": {
   "css/all.css": {
    "sha512": "6e9718ae9dd3c8dc643dfe1c5d3ce00d85a5225c6386beeef1191b2fa607ed58",
