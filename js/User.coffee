@@ -263,6 +263,12 @@ class User extends Class
 		@download()
 		return false
 
+	handleMuteClick: (e) =>
+		if Page.server_info.rev < 1880
+			return Page.cmd "wrapperNotification", ["info", "You need ZeroNet 0.5.2 to use this feature."]
+		Page.cmd "muteAdd", [@auth_address, @row.cert_user_id, "Muted from [page](http://127.0.0.1:43110/#{Page.address}/?#{Page.history_state.url})"]
+		return false
+
 	renderList: (type="normal") =>
 		classname = ""
 		if type == "card" then classname = ".card"

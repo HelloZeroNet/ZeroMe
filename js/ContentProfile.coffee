@@ -169,6 +169,7 @@ class ContentProfile extends Class
 					@loaded = true
 				else
 					Page.queryUserdb @auth_address, (row) =>
+						@log "UserDb row", row
 						@user.setRow(row)
 						Page.projector.scheduleRender()
 						@loaded = true
@@ -185,7 +186,10 @@ class ContentProfile extends Class
 				@optional_helping = res
 
 		if not @user?.row?.user_name
-			return h("div#Content.center.#{@auth_address}", [])
+			if @loaded
+				return h("div#Content.center.#{@auth_address}", [h("div.user-notfound", "User not found or muted")])
+			else
+				return h("div#Content.center.#{@auth_address}", [])
 
 		if not Page.merged_sites[@hub]
 			return @renderNotSeeded()
@@ -221,6 +225,10 @@ class ContentProfile extends Class
 						)
 					])
 				]),
+				h("a.user-mute", {href: "#Mute", onclick: @user.handleMuteClick},
+					h("div.icon.icon-mute"),
+					"Mute #{@user.row.cert_user_id}"
+				),
 				@activity_list.render(),
 				if @user_list.users.length > 0
 					h("h2.sep", {afterCreate: Animation.show}, [

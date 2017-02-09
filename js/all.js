@@ -3854,6 +3854,7 @@ function clone(obj) {
               return _this.loaded = true;
             } else {
               return Page.queryUserdb(_this.auth_address, function(row) {
+                _this.log("UserDb row", row);
                 _this.user.setRow(row);
                 Page.projector.scheduleRender();
                 return _this.loaded = true;
@@ -3877,7 +3878,11 @@ function clone(obj) {
         })(this));
       }
       if (!((_ref3 = this.user) != null ? (_ref4 = _ref3.row) != null ? _ref4.user_name : void 0 : void 0)) {
-        return h("div#Content.center." + this.auth_address, []);
+        if (this.loaded) {
+          return h("div#Content.center." + this.auth_address, [h("div.user-notfound", "User not found or muted")]);
+        } else {
+          return h("div#Content.center." + this.auth_address, []);
+        }
       }
       if (!Page.merged_sites[this.hub]) {
         return this.renderNotSeeded();
@@ -3916,7 +3921,10 @@ function clone(obj) {
                 onclick: this.handleOptionalHelpClick
               }, h("div.checkbox-skin"), h("div.title", "Help distribute this user's images"))
             ])
-          ]), this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
+          ]), h("a.user-mute", {
+            href: "#Mute",
+            onclick: this.user.handleMuteClick
+          }, h("div.icon.icon-mute"), "Mute " + this.user.row.cert_user_id), this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
             afterCreate: Animation.show
           }, ["Following"]) : void 0, this.user_list.render(".gray")
         ]), h("div.col-center", [
@@ -4259,7 +4267,6 @@ function clone(obj) {
   window.Head = Head;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Post.coffee ---- */
@@ -5235,6 +5242,7 @@ function clone(obj) {
     function User(row, _at_item_list) {
       this.item_list = _at_item_list;
       this.renderList = __bind(this.renderList, this);
+      this.handleMuteClick = __bind(this.handleMuteClick, this);
       this.handleDownloadClick = __bind(this.handleDownloadClick, this);
       this.download = __bind(this.download, this);
       this.handleFollowClick = __bind(this.handleFollowClick, this);
@@ -5703,6 +5711,14 @@ function clone(obj) {
       return false;
     };
 
+    User.prototype.handleMuteClick = function(e) {
+      if (Page.server_info.rev < 1880) {
+        return Page.cmd("wrapperNotification", ["info", "You need ZeroNet 0.5.2 to use this feature."]);
+      }
+      Page.cmd("muteAdd", [this.auth_address, this.row.cert_user_id, "Muted from [page](http://127.0.0.1:43110/" + Page.address + "/?" + Page.history_state.url + ")"]);
+      return false;
+    };
+
     User.prototype.renderList = function(type) {
       var classname, enterAnimation, exitAnimation, followed, link, seeding, title;
       if (type == null) {
@@ -5767,6 +5783,7 @@ function clone(obj) {
   window.User = User;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/UserList.coffee ---- */
@@ -5975,6 +5992,7 @@ function clone(obj) {
     };
 
     ZeroMe.prototype.createProjector = function() {
+      var url;
       this.projector = maquette.createProjector();
       this.head = new Head();
       this.overlay = new Overlay();
@@ -5986,7 +6004,9 @@ function clone(obj) {
       if (base.href.indexOf("?") === -1) {
         this.route("");
       } else {
-        this.route(base.href.replace(/.*?\?/, ""));
+        url = base.href.replace(/.*?\?/, "");
+        this.route(url);
+        this.history_state["url"] = url;
       }
       this.on_loaded.then((function(_this) {
         return function() {
