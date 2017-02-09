@@ -43,7 +43,9 @@ class ZeroMe extends ZeroFrame
 		if base.href.indexOf("?") == -1
 			@route("")
 		else
-			@route(base.href.replace(/.*?\?/, ""))
+			url = base.href.replace(/.*?\?/, "")
+			@route(url)
+			@history_state["url"] = url
 
 		# Remove fake long body
 		@on_loaded.then =>
