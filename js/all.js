@@ -4542,6 +4542,7 @@ function clone(obj) {
               }
             }), followed
           ]);
+          _this.menu.items.push(["Mute user", _this.user.handleMuteClick]);
           return _this.menu.toggle();
         };
       })(this));
@@ -5713,7 +5714,8 @@ function clone(obj) {
 
     User.prototype.handleMuteClick = function(e) {
       if (Page.server_info.rev < 1880) {
-        return Page.cmd("wrapperNotification", ["info", "You need ZeroNet 0.5.2 to use this feature."]);
+        Page.cmd("wrapperNotification", ["info", "You need ZeroNet 0.5.2 to use this feature."]);
+        return false;
       }
       Page.cmd("muteAdd", [this.auth_address, this.row.cert_user_id, "Muted from [page](http://127.0.0.1:43110/" + Page.address + "/?" + Page.history_state.url + ")"]);
       return false;
@@ -5783,7 +5785,6 @@ function clone(obj) {
   window.User = User;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/UserList.coffee ---- */
@@ -6315,6 +6316,11 @@ function clone(obj) {
             return function(found) {
               if (Page.site_info.cert_user_id && !found) {
                 _this.setUrl("?Create+profile");
+              }
+              if (Page.site_info.cert_user_id) {
+                Page.head.follows["Mentions"] = true;
+                Page.head.follows["Comments on your posts"] = true;
+                Page.head.saveFollows();
               }
               return _this.content.update();
             };
