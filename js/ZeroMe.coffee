@@ -279,6 +279,11 @@ class ZeroMe extends ZeroFrame
 				@checkUser (found) =>
 					if Page.site_info.cert_user_id and not found
 						@setUrl "?Create+profile"
+					# Auto follow mentions and comments on user change
+					if Page.site_info.cert_user_id
+						Page.head.follows["Mentions"] = true
+						Page.head.follows["Comments on your posts"] = true
+						Page.head.saveFollows()
 					@content.update()
 
 		if site_info.event?[0] == "file_done"
