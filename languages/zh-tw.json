@@ -6,9 +6,11 @@
 	"Follow username mentions": "關注用戶名提醒",
 	"Follow comments on your posts": "關注你的帖子評論",
 	"Follow new followers": "關注新關注者",
+	"Hide \"Hello ZeroMe!\" messages": "隱藏 \"你好 ZeroMe!\" 訊息",
 
 	"Follow": "關注",
 	"Unfollow": "取消關注",
+	"Followed by ": "被關注於 ",
 	"Help distribute this user's images": "幫助分發這個用戶的圖片",
 	"Following": "已關注",
 	"Activity feed": "活動資訊流",
@@ -58,6 +60,7 @@
 	"Everyone": "所有人",
 	"Followed users": "關注的用戶",
 	"Show more posts...": "顯示更多帖子...",
+	"Mute user": "屏蔽用戶",
 	"Show more comments...": "顯示更多評論...",
 	"No posts yet": "還沒有帖子",
 	"Let's follow some users!": "讓我們關注一些用戶吧！",
@@ -69,7 +72,7 @@
 
 	"Follow in newsfeed": "在新聞源中關注",
 
-	"Search in users...": "在用戶中搜尋",
+	"Search in users...": "在用戶中搜尋...",
 	"Most active": "最活躍用戶",
 	"New users in ZeroMe": "在 ZeroMe 的新用戶",
 	"Total: ": "總計：",
