@@ -13,6 +13,7 @@
 	"Following": "Seguendo",
 	"Activity feed": "Feed di attività",
 	"Show more...": "Mostra ancora...",
+	"Mute ": "Silenzia questo utente",
 
 	" started following ": " iniziato a seguire: ",
 	" commented on ": " commentato su ",
@@ -21,7 +22,7 @@
 	"_(post, like post)": "_(messaggio, approva messaggio)",
 	"_(post, comment post)": "_(messaggio, messaggio commento)",
 
-	"Cancel": "Cancella",
+	"Cancel": "Annulla",
 	"Save": "Salva",
 	"Delete": "Cancella",
 

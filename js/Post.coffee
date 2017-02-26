@@ -40,7 +40,7 @@ class Post extends Class
 			post_index = i for post, i in data.post when post.post_id == @row.post_id
 			data.post.splice(post_index, 1)
 			if @meta?.meta?.img
-				Page.cmd "optionalFileDelete", "#{@user.getPath()}/#{@row.post_id}.jpg", =>
+				Page.cmd "fileDelete", "#{@user.getPath()}/#{@row.post_id}.jpg", =>
 					Page.user.save data, Page.user.hub, (res) =>
 						cb(res)
 			else
@@ -135,6 +135,7 @@ class Post extends Class
 			followed = follows["Post follow"] and @getPostUri() in follows["Post follow"][1]
 			@menu.items = []
 			@menu.items.push ["Follow in newsfeed", ( => if followed then @unfollow() else @follow() ), followed]
+			@menu.items.push ["Mute user", @user.handleMuteClick]
 			@menu.toggle()
 		return false
 
@@ -176,7 +177,7 @@ class Post extends Class
 		if not @row.comments and not @commenting
 			return []
 		if @row.selected
-			comment_limit = 50
+			comment_limit = @comment_limit + 50
 		else
 			comment_limit = @comment_limit
 		h("div.comment-list", {enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, animate_scrollfix: true, animate_noscale: true}, [

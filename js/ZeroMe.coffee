@@ -43,7 +43,9 @@ class ZeroMe extends ZeroFrame
 		if base.href.indexOf("?") == -1
 			@route("")
 		else
-			@route(base.href.replace(/.*?\?/, ""))
+			url = base.href.replace(/.*?\?/, "")
+			@route(url)
+			@history_state["url"] = url
 
 		# Remove fake long body
 		@on_loaded.then =>
@@ -150,6 +152,7 @@ class ZeroMe extends ZeroFrame
 				@logEnd "Loaded localstorage"
 				@local_storage ?= {}
 				@local_storage.followed_users ?= {}
+				@local_storage.settings ?= {}
 				@on_local_storage.resolve(@local_storage)
 
 
@@ -276,6 +279,11 @@ class ZeroMe extends ZeroFrame
 				@checkUser (found) =>
 					if Page.site_info.cert_user_id and not found
 						@setUrl "?Create+profile"
+					# Auto follow mentions and comments on user change
+					if Page.site_info.cert_user_id
+						Page.head.follows["Mentions"] = true
+						Page.head.follows["Comments on your posts"] = true
+						Page.head.saveFollows()
 					@content.update()
 
 		if site_info.event?[0] == "file_done"

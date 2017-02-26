@@ -3854,6 +3854,7 @@ function clone(obj) {
               return _this.loaded = true;
             } else {
               return Page.queryUserdb(_this.auth_address, function(row) {
+                _this.log("UserDb row", row);
                 _this.user.setRow(row);
                 Page.projector.scheduleRender();
                 return _this.loaded = true;
@@ -3877,7 +3878,11 @@ function clone(obj) {
         })(this));
       }
       if (!((_ref3 = this.user) != null ? (_ref4 = _ref3.row) != null ? _ref4.user_name : void 0 : void 0)) {
-        return h("div#Content.center." + this.auth_address, []);
+        if (this.loaded) {
+          return h("div#Content.center." + this.auth_address, [h("div.user-notfound", "User not found or muted")]);
+        } else {
+          return h("div#Content.center." + this.auth_address, []);
+        }
       }
       if (!Page.merged_sites[this.hub]) {
         return this.renderNotSeeded();
@@ -3916,7 +3921,10 @@ function clone(obj) {
                 onclick: this.handleOptionalHelpClick
               }, h("div.checkbox-skin"), h("div.title", "Help distribute this user's images"))
             ])
-          ]), this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
+          ]), h("a.user-mute", {
+            href: "#Mute",
+            onclick: this.user.handleMuteClick
+          }, h("div.icon.icon-mute"), "Mute " + this.user.row.cert_user_id), this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
             afterCreate: Animation.show
           }, ["Following"]) : void 0, this.user_list.render(".gray")
         ]), h("div.col-center", [
@@ -4115,7 +4123,7 @@ function clone(obj) {
       this.render = __bind(this.render, this);
       this.saveFollows = __bind(this.saveFollows, this);
       this.handleMenuClick = __bind(this.handleMenuClick, this);
-      this.handleMenuItemClick = __bind(this.handleMenuItemClick, this);
+      this.handleFollowMenuItemClick = __bind(this.handleFollowMenuItemClick, this);
       this.menu = new Menu();
       this.follows = [];
     }
@@ -4138,7 +4146,7 @@ function clone(obj) {
       return false;
     };
 
-    Head.prototype.handleMenuItemClick = function(type, item) {
+    Head.prototype.handleFollowMenuItemClick = function(type, item) {
       var selected;
       selected = !this.follows[type];
       this.follows[type] = selected;
@@ -4159,18 +4167,28 @@ function clone(obj) {
           _this.menu.items = [];
           _this.menu.items.push([
             "Follow username mentions", (function(item) {
-              return _this.handleMenuItemClick("Mentions", item);
+              return _this.handleFollowMenuItemClick("Mentions", item);
             }), _this.follows["Mentions"]
           ]);
           _this.menu.items.push([
             "Follow comments on your posts", (function(item) {
-              return _this.handleMenuItemClick("Comments on your posts", item);
+              return _this.handleFollowMenuItemClick("Comments on your posts", item);
             }), _this.follows["Comments on your posts"]
           ]);
           _this.menu.items.push([
             "Follow new followers", (function(item) {
-              return _this.handleMenuItemClick("New followers", item);
+              return _this.handleFollowMenuItemClick("New followers", item);
             }), _this.follows["New followers"]
+          ]);
+          _this.menu.items.push([
+            'Hide "Hello ZeroMe!" messages', (function(item) {
+              Page.local_storage.settings.hide_hello_zerome = !Page.local_storage.settings.hide_hello_zerome;
+              item[2] = Page.local_storage.settings.hide_hello_zerome;
+              Page.projector.scheduleRender();
+              Page.saveLocalStorage();
+              Page.content.need_update = true;
+              return false;
+            }), Page.local_storage.settings.hide_hello_zerome
           ]);
           _this.menu.toggle();
           return Page.projector.scheduleRender();
@@ -4354,7 +4372,7 @@ function clone(obj) {
           }
           data.post.splice(post_index, 1);
           if ((_ref1 = _this.meta) != null ? (_ref2 = _ref1.meta) != null ? _ref2.img : void 0 : void 0) {
-            return Page.cmd("optionalFileDelete", (_this.user.getPath()) + "/" + _this.row.post_id + ".jpg", function() {
+            return Page.cmd("fileDelete", (_this.user.getPath()) + "/" + _this.row.post_id + ".jpg", function() {
               return Page.user.save(data, Page.user.hub, function(res) {
                 return cb(res);
               });
@@ -4524,6 +4542,7 @@ function clone(obj) {
               }
             }), followed
           ]);
+          _this.menu.items.push(["Mute user", _this.user.handleMuteClick]);
           return _this.menu.toggle();
         };
       })(this));
@@ -4572,7 +4591,7 @@ function clone(obj) {
         return [];
       }
       if (this.row.selected) {
-        comment_limit = 50;
+        comment_limit = this.comment_limit + 50;
       } else {
         comment_limit = this.comment_limit;
       }
@@ -4904,6 +4923,9 @@ function clone(obj) {
         where += "AND post_id = :post_id ";
         param.post_id = this.filter_post_id;
       }
+      if (Page.local_storage.settings.hide_hello_zerome) {
+        where += "AND post_id > 1 ";
+      }
       query = "SELECT (SELECT COUNT(*) FROM post_like WHERE 'data/users/' || post_uri =  directory || '_' || post_id) AS likes, * FROM post LEFT JOIN json ON (post.json_id = json.json_id) " + where + " ORDER BY date_added DESC LIMIT " + (this.limit + 1);
       this.logStart("Update");
       return Page.cmd("dbQuery", [query, param], (function(_this) {
@@ -5030,7 +5052,6 @@ function clone(obj) {
   window.PostList = PostList;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostMeta.coffee ---- */
@@ -5222,6 +5243,7 @@ function clone(obj) {
     function User(row, _at_item_list) {
       this.item_list = _at_item_list;
       this.renderList = __bind(this.renderList, this);
+      this.handleMuteClick = __bind(this.handleMuteClick, this);
       this.handleDownloadClick = __bind(this.handleDownloadClick, this);
       this.download = __bind(this.download, this);
       this.handleFollowClick = __bind(this.handleFollowClick, this);
@@ -5690,6 +5712,15 @@ function clone(obj) {
       return false;
     };
 
+    User.prototype.handleMuteClick = function(e) {
+      if (Page.server_info.rev < 1880) {
+        Page.cmd("wrapperNotification", ["info", "You need ZeroNet 0.5.2 to use this feature."]);
+        return false;
+      }
+      Page.cmd("muteAdd", [this.auth_address, this.row.cert_user_id, "Muted from [page](http://127.0.0.1:43110/" + Page.address + "/?" + Page.history_state.url + ")"]);
+      return false;
+    };
+
     User.prototype.renderList = function(type) {
       var classname, enterAnimation, exitAnimation, followed, link, seeding, title;
       if (type == null) {
@@ -5962,6 +5993,7 @@ function clone(obj) {
     };
 
     ZeroMe.prototype.createProjector = function() {
+      var url;
       this.projector = maquette.createProjector();
       this.head = new Head();
       this.overlay = new Overlay();
@@ -5973,7 +6005,9 @@ function clone(obj) {
       if (base.href.indexOf("?") === -1) {
         this.route("");
       } else {
-        this.route(base.href.replace(/.*?\?/, ""));
+        url = base.href.replace(/.*?\?/, "");
+        this.route(url);
+        this.history_state["url"] = url;
       }
       this.on_loaded.then((function(_this) {
         return function() {
@@ -6098,7 +6132,7 @@ function clone(obj) {
         return function() {
           _this.logStart("Loaded localstorage");
           return _this.cmd("wrapperGetLocalStorage", [], function(_at_local_storage) {
-            var _base;
+            var _base, _base1;
             _this.local_storage = _at_local_storage;
             _this.logEnd("Loaded localstorage");
             if (_this.local_storage == null) {
@@ -6106,6 +6140,9 @@ function clone(obj) {
             }
             if ((_base = _this.local_storage).followed_users == null) {
               _base.followed_users = {};
+            }
+            if ((_base1 = _this.local_storage).settings == null) {
+              _base1.settings = {};
             }
             return _this.on_local_storage.resolve(_this.local_storage);
           });
@@ -6279,6 +6316,11 @@ function clone(obj) {
             return function(found) {
               if (Page.site_info.cert_user_id && !found) {
                 _this.setUrl("?Create+profile");
+              }
+              if (Page.site_info.cert_user_id) {
+                Page.head.follows["Mentions"] = true;
+                Page.head.follows["Comments on your posts"] = true;
+                Page.head.saveFollows();
               }
               return _this.content.update();
             };

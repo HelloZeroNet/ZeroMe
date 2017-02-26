@@ -65,6 +65,11 @@
     border-radius: 50%; box-shadow: inset 0 0 0 32px; top: 3px; right: 5px;
 }
 
+.icon-mute {
+	width: 17px; height: 14px; background-repeat: no-repeat; padding-right: 5px; vertical-align: -2px; opacity: 0.2;
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAOCAMAAAD+MweGAAAARVBMVEUAAAABAAIAAAACAAIAAAIAAAABAAECAAICAAIAAAAAAAABAAIBAAIBAAIBAAIBAAMBAAMBAAEAAAIAAAAAAAAAAAABAAJgeLYdAAAAFnRSTlMA7jGWeQe9pY02IvTk2tLMxbhsORoUV1Pd4wAAAFBJREFUCNd1z+kKgDAMA+B0cx7zvvL+j6pDQcJcoH8+2kJQSmhqhXMhBeJIld34SAW4e1aSr5jvrAX4iTN6/MmUXYW49fo5bQ9JJMesoi3yXMOvBYnUTBisAAAAAElFTkSuQmCC')
+}
+
 @keyframes bounce {
 	  0% { transform: translateY(0); }
 	100% { transform: translateY(-3px); }

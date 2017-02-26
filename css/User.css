@@ -39,3 +39,6 @@
 .checkbox .title { display: inline; line-height: 30px; vertical-align: 4px; margin-left: 11px; }
 .checkbox.checked .checkbox-skin:before { margin-left: 19px; }
 .checkbox.checked .checkbox-skin { background-color: #2ECC71; }
+
+.user-mute { text-align: center; display: block; margin-top: -22px; color: #999; font-size: 14px; margin-bottom: 30px; }
+.user-notfound { text-align: center; font-size: 22px; margin-top: 100px; font-weight: lighter; }
