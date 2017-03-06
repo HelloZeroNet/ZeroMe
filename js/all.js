@@ -2948,7 +2948,7 @@ function clone(obj) {
     ActivityList.prototype.queryActivities = function(cb) {
       var query, where;
       if (this.directories === "all") {
-        where = "WHERE date_added > " + (Time.timestamp() - 60 * 60 * 6) + " AND date_added < " + (Time.timestamp() + 120) + " ";
+        where = "WHERE date_added > " + (Time.timestamp() - 60 * 60 * 24 * 7) + " AND date_added < " + (Time.timestamp() + 120) + " ";
       } else {
         where = "WHERE json.directory IN " + (Text.sqlIn(this.directories)) + " AND date_added < " + (Time.timestamp() + 120) + " ";
       }
@@ -3186,6 +3186,7 @@ function clone(obj) {
   window.ActivityList = ActivityList;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/AnonUser.coffee ---- */
