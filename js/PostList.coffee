@@ -5,7 +5,7 @@ class PostList extends Class
 		@need_update = true
 		@directories = []
 		@loaded = false
-		@filter_post_id = null
+		@filter_post_ids = null
 		@limit = 10
 
 	queryComments: (post_uris, cb) =>
@@ -21,6 +21,10 @@ class PostList extends Class
 		"
 		return Page.cmd "dbQuery", [query, {post_uri: post_uris}], cb
 
+	queryLikes: (post_uris, cb) =>
+		query = "SELECT post_uri, COUNT(*) AS likes FROM post_like WHERE ? GROUP BY post_uri"
+		return Page.cmd "dbQuery", [query, {post_uri: post_uris}], cb
+
 	update: =>
 		@need_update = false
 
@@ -30,16 +34,14 @@ class PostList extends Class
 		else
 			where = "WHERE directory IN #{Text.sqlIn(@directories)} AND post_id IS NOT NULL AND post.date_added < #{Time.timestamp()+120} "
 
-		if @filter_post_id
-			where += "AND post_id = :post_id "
-			param.post_id = @filter_post_id
+		if @filter_post_ids
+			where += "AND post_id IN #{Text.sqlIn(@filter_post_ids)} "
 
 		if Page.local_storage.settings.hide_hello_zerome
 			where += "AND post_id > 1 "
 
 		query = "
 			SELECT
-			 (SELECT COUNT(*) FROM post_like WHERE 'data/users/' || post_uri =  directory || '_' || post_id) AS likes,
 			 *
 			FROM
 			 post
@@ -58,6 +60,7 @@ class PostList extends Class
 				post_uris.push(row["post_uri"])
 
 			# Get comments for latest posts
+
 			@queryComments post_uris, (comment_rows) =>
 				comment_db = {}  # {Post id: posts}
 				for comment_row in comment_rows
@@ -65,7 +68,7 @@ class PostList extends Class
 					comment_db[comment_row.site+"/"+comment_row.post_uri].push(comment_row)
 				for row in rows
 					row["comments"] = comment_db[row.site+"/"+row.post_uri]
-					if row.post_id == parseInt(@filter_post_id)
+					if @filter_post_ids?.length == 1 and row.post_id == parseInt(@filter_post_ids[0])
 						row.selected = true
 				@item_list.sync(rows)
 				@loaded = true
@@ -74,6 +77,17 @@ class PostList extends Class
 
 				if @posts.length > @limit
 					@addScrollwatcher()
+
+			@queryLikes post_uris, (like_rows) =>
+				like_db = {}
+				for like_row in like_rows
+					like_db[like_row["post_uri"]] = like_row["likes"]
+
+				for row in rows
+					row["likes"] = like_db[row["post_uri"]]
+				@item_list.sync(rows)
+				Page.projector.scheduleRender()
+
 
 	handleMoreClick: =>
 		@limit += 10
