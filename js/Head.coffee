@@ -115,7 +115,7 @@ class Head extends Class
 
 	render: =>
 		h("div.head.center", [
-			h("a.logo", {href: "?Home", onclick: Page.handleLinkClick}, h("img", {src: "img/logo.png"})),
+			h("a.logo", {href: "?Home", onclick: Page.handleLinkClick}, h("img", {src: "img/logo.svg"})),
 			if Page.user?.hub
 				# Registered user
 				h("div.right.authenticated", [
