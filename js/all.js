@@ -3193,7 +3193,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/AnonUser.coffee ---- */
 
 
@@ -4255,7 +4254,9 @@ function clone(obj) {
           href: "?Home",
           onclick: Page.handleLinkClick
         }, h("img", {
-          src: "img/logo.png"
+          src: "img/logo.svg",
+          height: 40,
+          onerror: "this.src='img/logo.png'; this.onerror=null;"
         })), ((_ref = Page.user) != null ? _ref.hub : void 0) ? h("div.right.authenticated", [
           h("div.user", h("a.name.link", {
             href: Page.user.getLink(),
@@ -4303,6 +4304,7 @@ function clone(obj) {
   window.Head = Head;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Post.coffee ---- */
@@ -6113,7 +6115,7 @@ function clone(obj) {
         this.content_profile.setUser(this.params.urls[1], this.params.urls[2]).filter(null);
       } else if (this.params.urls[0] === "Post") {
         content = this.content_profile;
-        changed = this.content_profile.auth_address !== this.params.urls[2];
+        changed = this.content_profile.auth_address !== this.params.urls[2] || this.content_profile.filter_post_id !== this.params.urls[3];
         this.content_profile.setUser(this.params.urls[1], this.params.urls[2]).filter(this.params.urls[3]);
       } else {
         content = this.content_feed;
