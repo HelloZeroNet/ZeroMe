@@ -136,6 +136,7 @@ class Post extends Class
 			@menu.items = []
 			@menu.items.push ["Follow in newsfeed", ( => if followed then @unfollow() else @follow() ), followed]
 			@menu.items.push ["Mute user", @user.handleMuteClick]
+			@menu.items.push ["Permalink", @getLink()]
 			@menu.toggle()
 		return false
 
