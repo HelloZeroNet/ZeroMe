@@ -4306,7 +4306,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Post.coffee ---- */
 
 
@@ -4349,6 +4348,7 @@ function clone(obj) {
       this.comment_limit = 3;
       this.menu = null;
       this.meta = null;
+      this.css_style = "";
       this.setRow(row);
     }
 
@@ -4563,6 +4563,7 @@ function clone(obj) {
     };
 
     Post.prototype.handleSettingsClick = function() {
+      this.css_style = "z-index: " + this.row.date_added + "; position: relative";
       Page.cmd("feedListFollow", [], (function(_this) {
         return function(follows) {
           var followed, _ref;
@@ -4581,6 +4582,7 @@ function clone(obj) {
             }), followed
           ]);
           _this.menu.items.push(["Mute user", _this.user.handleMuteClick]);
+          _this.menu.items.push(["Permalink", _this.getLink()]);
           return _this.menu.toggle();
         };
       })(this));
@@ -4697,7 +4699,8 @@ function clone(obj) {
         animate_scrollfix: true,
         classes: {
           selected: this.row.selected
-        }
+        },
+        style: this.css_style
       }, [
         h("div.user", [
           this.user.renderAvatar({
@@ -4753,6 +4756,7 @@ function clone(obj) {
   window.Post = Post;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostCreate.coffee ---- */
