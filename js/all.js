@@ -4879,7 +4879,7 @@ function clone(obj) {
         }), h("div.postbuttons", h("a.button.button-submit", {
           href: "#Submit",
           onclick: this.handlePostSubmit
-        }, "Submit new post")), h("div", {
+        }, "post!")), h("div", {
           style: "clear: both"
         }));
       } else if (Page.site_info.cert_user_id) {
