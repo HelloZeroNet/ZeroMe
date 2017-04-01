@@ -1,11 +1,11 @@
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Class.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/Class.coffee ---- */
 
 
 (function() {
   var Class,
-    __slice = [].slice;
+    slice = [].slice;
 
   Class = (function() {
     function Class() {}
@@ -14,7 +14,7 @@
 
     Class.prototype.log = function() {
       var args;
-      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
       if (!this.trace) {
         return;
       }
@@ -28,23 +28,23 @@
 
     Class.prototype.logStart = function() {
       var args, name;
-      name = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
       if (!this.trace) {
         return;
       }
       this.logtimers || (this.logtimers = {});
       this.logtimers[name] = +(new Date);
       if (args.length > 0) {
-        this.log.apply(this, ["" + name].concat(__slice.call(args), ["(started)"]));
+        this.log.apply(this, ["" + name].concat(slice.call(args), ["(started)"]));
       }
       return this;
     };
 
     Class.prototype.logEnd = function() {
       var args, ms, name;
-      name = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
       ms = +(new Date) - this.logtimers[name];
-      this.log.apply(this, ["" + name].concat(__slice.call(args), ["(Done in " + ms + "ms)"]));
+      this.log.apply(this, ["" + name].concat(slice.call(args), ["(Done in " + ms + "ms)"]));
       return this;
     };
 
@@ -57,7 +57,7 @@
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Dollar.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/Dollar.coffee ---- */
 
 
 (function() {
@@ -70,39 +70,39 @@
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Promise.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/Promise.coffee ---- */
 
 
 (function() {
   var Promise,
-    __slice = [].slice;
+    slice = [].slice;
 
   Promise = (function() {
     Promise.join = function() {
-      var args, num_uncompleted, promise, task, task_id, tasks, _fn, _i, _len;
-      tasks = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      var args, fn, i, len, num_uncompleted, promise, task, task_id, tasks;
+      tasks = 1 <= arguments.length ? slice.call(arguments, 0) : [];
       num_uncompleted = tasks.length;
       args = new Array(num_uncompleted);
       promise = new Promise();
-      _fn = function(task_id) {
+      fn = function(task_id) {
         return task.then(function() {
-          var callback, _j, _len1, _ref, _results;
+          var callback, j, len1, ref, results;
           args[task_id] = Array.prototype.slice.call(arguments);
           num_uncompleted--;
           if (num_uncompleted === 0) {
-            _ref = promise.callbacks;
-            _results = [];
-            for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-              callback = _ref[_j];
-              _results.push(callback.apply(promise, args));
+            ref = promise.callbacks;
+            results = [];
+            for (j = 0, len1 = ref.length; j < len1; j++) {
+              callback = ref[j];
+              results.push(callback.apply(promise, args));
             }
-            return _results;
+            return results;
           }
         });
       };
-      for (task_id = _i = 0, _len = tasks.length; _i < _len; task_id = ++_i) {
+      for (task_id = i = 0, len = tasks.length; i < len; task_id = ++i) {
         task = tasks[task_id];
-        _fn(task_id);
+        fn(task_id);
       }
       return promise;
     };
@@ -115,7 +115,7 @@
     }
 
     Promise.prototype.resolve = function() {
-      var back, callback, _i, _len, _ref;
+      var back, callback, i, len, ref;
       if (this.resolved) {
         return false;
       }
@@ -125,9 +125,9 @@
         this.data = [true];
       }
       this.result = this.data[0];
-      _ref = this.callbacks;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        callback = _ref[_i];
+      ref = this.callbacks;
+      for (i = 0, len = ref.length; i < len; i++) {
+        callback = ref[i];
         back = callback.apply(callback, this.data);
       }
       if (this.end_promise && back && back.then) {
@@ -200,7 +200,7 @@
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Property.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/Property.coffee ---- */
 
 
 (function() {
@@ -211,7 +211,7 @@
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Prototypes.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/Prototypes.coffee ---- */
 
 
 (function() {
@@ -238,12 +238,12 @@
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/RateLimitCb.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/RateLimitCb.coffee ---- */
 
 
 (function() {
   var call_after_interval, calling, last_time,
-    __slice = [].slice;
+    slice = [].slice;
 
   last_time = {};
 
@@ -279,7 +279,7 @@
       return calling[fn] = args;
     } else {
       last_time[fn] = Date.now();
-      return fn.apply(this, [cb].concat(__slice.call(args)));
+      return fn.apply(this, [cb].concat(slice.call(args)));
     }
   };
 
@@ -318,7 +318,7 @@
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/anime.min.js ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/anime.min.js ---- */
 
 
 /*
@@ -350,7 +350,7 @@ c.raf=requestAnimationFrame(c.tick)};b.restart=function(){b.reversed&&y(b);b.pau
 function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.random=function(a,b){return Math.floor(Math.random()*(b-a+1))+a};return l});
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/clone.js ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/clone.js ---- */
 
 
 function clone(obj) {
@@ -363,7 +363,7 @@ function clone(obj) {
 }
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/maquette.js ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/maquette.js ---- */
 
 
 (function (root, factory) {
@@ -1142,7 +1142,7 @@ function clone(obj) {
 
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/marked.min.js ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/marked.min.js ---- */
 
 
 /**
@@ -1153,7 +1153,7 @@ function clone(obj) {
 (function(){var block={newline:/^\n+/,code:/^( {4}[^\n]+\n*)+/,fences:noop,hr:/^( *[-*_]){3,} *(?:\n+|$)/,heading:/^ *(#{1,6}) *([^\n]+?) *#* *(?:\n+|$)/,nptable:noop,lheading:/^([^\n]+)\n *(=|-){2,} *(?:\n+|$)/,blockquote:/^( *>[^\n]+(\n(?!def)[^\n]+)*\n*)+/,list:/^( *)(bull) [\s\S]+?(?:hr|def|\n{2,}(?! )(?!\1bull )\n*|\s*$)/,html:/^ *(?:comment|closed|closing) *(?:\n{2,}|\s*$)/,def:/^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +["(]([^\n]+)[")])? *(?:\n+|$)/,table:noop,paragraph:/^((?:[^\n]+\n?(?!hr|heading|lheading|blockquote|tag|def))+)\n*/,text:/^[^\n]+/};block.bullet=/(?:[*+-]|\d+\.)/;block.item=/^( *)(bull) [^\n]*(?:\n(?!\1bull )[^\n]*)*/;block.item=replace(block.item,"gm")(/bull/g,block.bullet)();block.list=replace(block.list)(/bull/g,block.bullet)("hr","\\n+(?=\\1?(?:[-*_] *){3,}(?:\\n+|$))")("def","\\n+(?="+block.def.source+")")();block.blockquote=replace(block.blockquote)("def",block.def)();block._tag="(?!(?:"+"a|em|strong|small|s|cite|q|dfn|abbr|data|time|code"+"|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo"+"|span|br|wbr|ins|del|img)\\b)\\w+(?!:/|[^\\w\\s@]*@)\\b";block.html=replace(block.html)("comment",/<!--[\s\S]*?-->/)("closed",/<(tag)[\s\S]+?<\/\1>/)("closing",/<tag(?:"[^"]*"|'[^']*'|[^'">])*?>/)(/tag/g,block._tag)();block.paragraph=replace(block.paragraph)("hr",block.hr)("heading",block.heading)("lheading",block.lheading)("blockquote",block.blockquote)("tag","<"+block._tag)("def",block.def)();block.normal=merge({},block);block.gfm=merge({},block.normal,{fences:/^ *(`{3,}|~{3,}) *(\S+)? *\n([\s\S]+?)\s*\1 *(?:\n+|$)/,paragraph:/^/});block.gfm.paragraph=replace(block.paragraph)("(?!","(?!"+block.gfm.fences.source.replace("\\1","\\2")+"|"+block.list.source.replace("\\1","\\3")+"|")();block.tables=merge({},block.gfm,{nptable:/^ *(\S.*\|.*)\n *([-:]+ *\|[-| :]*)\n((?:.*\|.*(?:\n|$))*)\n*/,table:/^ *\|(.+)\n *\|( *[-:]+[-| :]*)\n((?: *\|.*(?:\n|$))*)\n*/});function Lexer(options){this.tokens=[];this.tokens.links={};this.options=options||marked.defaults;this.rules=block.normal;if(this.options.gfm){if(this.options.tables){this.rules=block.tables}else{this.rules=block.gfm}}}Lexer.rules=block;Lexer.lex=function(src,options){var lexer=new Lexer(options);return lexer.lex(src)};Lexer.prototype.lex=function(src){src=src.replace(/\r\n|\r/g,"\n").replace(/\t/g,"    ").replace(/\u00a0/g," ").replace(/\u2424/g,"\n");return this.token(src,true)};Lexer.prototype.token=function(src,top,bq){var src=src.replace(/^ +$/gm,""),next,loose,cap,bull,b,item,space,i,l;while(src){if(cap=this.rules.newline.exec(src)){src=src.substring(cap[0].length);if(cap[0].length>1){this.tokens.push({type:"space"})}}if(cap=this.rules.code.exec(src)){src=src.substring(cap[0].length);cap=cap[0].replace(/^ {4}/gm,"");this.tokens.push({type:"code",text:!this.options.pedantic?cap.replace(/\n+$/,""):cap});continue}if(cap=this.rules.fences.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"code",lang:cap[2],text:cap[3]});continue}if(cap=this.rules.heading.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"heading",depth:cap[1].length,text:cap[2]});continue}if(top&&(cap=this.rules.nptable.exec(src))){src=src.substring(cap[0].length);item={type:"table",header:cap[1].replace(/^ *| *\| *$/g,"").split(/ *\| */),align:cap[2].replace(/^ *|\| *$/g,"").split(/ *\| */),cells:cap[3].replace(/\n$/,"").split("\n")};for(i=0;i<item.align.length;i++){if(/^ *-+: *$/.test(item.align[i])){item.align[i]="right"}else if(/^ *:-+: *$/.test(item.align[i])){item.align[i]="center"}else if(/^ *:-+ *$/.test(item.align[i])){item.align[i]="left"}else{item.align[i]=null}}for(i=0;i<item.cells.length;i++){item.cells[i]=item.cells[i].split(/ *\| */)}this.tokens.push(item);continue}if(cap=this.rules.lheading.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"heading",depth:cap[2]==="="?1:2,text:cap[1]});continue}if(cap=this.rules.hr.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"hr"});continue}if(cap=this.rules.blockquote.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"blockquote_start"});cap=cap[0].replace(/^ *> ?/gm,"");this.token(cap,top,true);this.tokens.push({type:"blockquote_end"});continue}if(cap=this.rules.list.exec(src)){src=src.substring(cap[0].length);bull=cap[2];this.tokens.push({type:"list_start",ordered:bull.length>1});cap=cap[0].match(this.rules.item);next=false;l=cap.length;i=0;for(;i<l;i++){item=cap[i];space=item.length;item=item.replace(/^ *([*+-]|\d+\.) +/,"");if(~item.indexOf("\n ")){space-=item.length;item=!this.options.pedantic?item.replace(new RegExp("^ {1,"+space+"}","gm"),""):item.replace(/^ {1,4}/gm,"")}if(this.options.smartLists&&i!==l-1){b=block.bullet.exec(cap[i+1])[0];if(bull!==b&&!(bull.length>1&&b.length>1)){src=cap.slice(i+1).join("\n")+src;i=l-1}}loose=next||/\n\n(?!\s*$)/.test(item);if(i!==l-1){next=item.charAt(item.length-1)==="\n";if(!loose)loose=next}this.tokens.push({type:loose?"loose_item_start":"list_item_start"});this.token(item,false,bq);this.tokens.push({type:"list_item_end"})}this.tokens.push({type:"list_end"});continue}if(cap=this.rules.html.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:this.options.sanitize?"paragraph":"html",pre:cap[1]==="pre"||cap[1]==="script"||cap[1]==="style",text:cap[0]});continue}if(!bq&&top&&(cap=this.rules.def.exec(src))){src=src.substring(cap[0].length);this.tokens.links[cap[1].toLowerCase()]={href:cap[2],title:cap[3]};continue}if(top&&(cap=this.rules.table.exec(src))){src=src.substring(cap[0].length);item={type:"table",header:cap[1].replace(/^ *| *\| *$/g,"").split(/ *\| */),align:cap[2].replace(/^ *|\| *$/g,"").split(/ *\| */),cells:cap[3].replace(/(?: *\| *)?\n$/,"").split("\n")};for(i=0;i<item.align.length;i++){if(/^ *-+: *$/.test(item.align[i])){item.align[i]="right"}else if(/^ *:-+: *$/.test(item.align[i])){item.align[i]="center"}else if(/^ *:-+ *$/.test(item.align[i])){item.align[i]="left"}else{item.align[i]=null}}for(i=0;i<item.cells.length;i++){item.cells[i]=item.cells[i].replace(/^ *\| *| *\| *$/g,"").split(/ *\| */)}this.tokens.push(item);continue}if(top&&(cap=this.rules.paragraph.exec(src))){src=src.substring(cap[0].length);this.tokens.push({type:"paragraph",text:cap[1].charAt(cap[1].length-1)==="\n"?cap[1].slice(0,-1):cap[1]});continue}if(cap=this.rules.text.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"text",text:cap[0]});continue}if(src){throw new Error("Infinite loop on byte: "+src.charCodeAt(0))}}return this.tokens};var inline={escape:/^\\([\\`*{}\[\]()#+\-.!_>])/,autolink:/^<([^ >]+(@|:\/)[^ >]+)>/,url:noop,tag:/^<!--[\s\S]*?-->|^<\/?\w+(?:"[^"]*"|'[^']*'|[^'">])*?>/,link:/^!?\[(inside)\]\(href\)/,reflink:/^!?\[(inside)\]\s*\[([^\]]*)\]/,nolink:/^!?\[((?:\[[^\]]*\]|[^\[\]])*)\]/,strong:/^__([\s\S]+?)__(?!_)|^\*\*([\s\S]+?)\*\*(?!\*)/,em:/^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,code:/^(`+)\s*([\s\S]*?[^`])\s*\1(?!`)/,br:/^ {2,}\n(?!\s*$)/,del:noop,text:/^[\s\S]+?(?=[\\<!\[_*`]| {2,}\n|$)/};inline._inside=/(?:\[[^\]]*\]|[^\[\]]|\](?=[^\[]*\]))*/;inline._href=/\s*<?([\s\S]*?)>?(?:\s+['"]([\s\S]*?)['"])?\s*/;inline.link=replace(inline.link)("inside",inline._inside)("href",inline._href)();inline.reflink=replace(inline.reflink)("inside",inline._inside)();inline.normal=merge({},inline);inline.pedantic=merge({},inline.normal,{strong:/^__(?=\S)([\s\S]*?\S)__(?!_)|^\*\*(?=\S)([\s\S]*?\S)\*\*(?!\*)/,em:/^_(?=\S)([\s\S]*?\S)_(?!_)|^\*(?=\S)([\s\S]*?\S)\*(?!\*)/});inline.gfm=merge({},inline.normal,{escape:replace(inline.escape)("])","~|])")(),url:/^(https?:\/\/[^\s<]+[^<.,:;"')\]\s])/,del:/^~~(?=\S)([\s\S]*?\S)~~/,text:replace(inline.text)("]|","~]|")("|","|https?://|")()});inline.breaks=merge({},inline.gfm,{br:replace(inline.br)("{2,}","*")(),text:replace(inline.gfm.text)("{2,}","*")()});function InlineLexer(links,options){this.options=options||marked.defaults;this.links=links;this.rules=inline.normal;this.renderer=this.options.renderer||new Renderer;this.renderer.options=this.options;if(!this.links){throw new Error("Tokens array requires a `links` property.")}if(this.options.gfm){if(this.options.breaks){this.rules=inline.breaks}else{this.rules=inline.gfm}}else if(this.options.pedantic){this.rules=inline.pedantic}}InlineLexer.rules=inline;InlineLexer.output=function(src,links,options){var inline=new InlineLexer(links,options);return inline.output(src)};InlineLexer.prototype.output=function(src){var out="",link,text,href,cap;while(src){if(cap=this.rules.escape.exec(src)){src=src.substring(cap[0].length);out+=cap[1];continue}if(cap=this.rules.autolink.exec(src)){src=src.substring(cap[0].length);if(cap[2]==="@"){text=cap[1].charAt(6)===":"?this.mangle(cap[1].substring(7)):this.mangle(cap[1]);href=this.mangle("mailto:")+text}else{text=escape(cap[1]);href=text}out+=this.renderer.link(href,null,text);continue}if(!this.inLink&&(cap=this.rules.url.exec(src))){src=src.substring(cap[0].length);text=escape(cap[1]);href=text;out+=this.renderer.link(href,null,text);continue}if(cap=this.rules.tag.exec(src)){if(!this.inLink&&/^<a /i.test(cap[0])){this.inLink=true}else if(this.inLink&&/^<\/a>/i.test(cap[0])){this.inLink=false}src=src.substring(cap[0].length);out+=this.options.sanitize?escape(cap[0]):cap[0];continue}if(cap=this.rules.link.exec(src)){src=src.substring(cap[0].length);this.inLink=true;out+=this.outputLink(cap,{href:cap[2],title:cap[3]});this.inLink=false;continue}if((cap=this.rules.reflink.exec(src))||(cap=this.rules.nolink.exec(src))){src=src.substring(cap[0].length);link=(cap[2]||cap[1]).replace(/\s+/g," ");link=this.links[link.toLowerCase()];if(!link||!link.href){out+=cap[0].charAt(0);src=cap[0].substring(1)+src;continue}this.inLink=true;out+=this.outputLink(cap,link);this.inLink=false;continue}if(cap=this.rules.strong.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.strong(this.output(cap[2]||cap[1]));continue}if(cap=this.rules.em.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.em(this.output(cap[2]||cap[1]));continue}if(cap=this.rules.code.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.codespan(escape(cap[2],true));continue}if(cap=this.rules.br.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.br();continue}if(cap=this.rules.del.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.del(this.output(cap[1]));continue}if(cap=this.rules.text.exec(src)){src=src.substring(cap[0].length);out+=escape(this.smartypants(cap[0]));continue}if(src){throw new Error("Infinite loop on byte: "+src.charCodeAt(0))}}return out};InlineLexer.prototype.outputLink=function(cap,link){var href=escape(link.href),title=link.title?escape(link.title):null;return cap[0].charAt(0)!=="!"?this.renderer.link(href,title,this.output(cap[1])):this.renderer.image(href,title,escape(cap[1]))};InlineLexer.prototype.smartypants=function(text){if(!this.options.smartypants)return text;return text.replace(/--/g,"—").replace(/(^|[-\u2014/(\[{"\s])'/g,"$1‘").replace(/'/g,"’").replace(/(^|[-\u2014/(\[{\u2018\s])"/g,"$1“").replace(/"/g,"”").replace(/\.{3}/g,"…")};InlineLexer.prototype.mangle=function(text){var out="",l=text.length,i=0,ch;for(;i<l;i++){ch=text.charCodeAt(i);if(Math.random()>.5){ch="x"+ch.toString(16)}out+="&#"+ch+";"}return out};function Renderer(options){this.options=options||{}}Renderer.prototype.code=function(code,lang,escaped){if(this.options.highlight){var out=this.options.highlight(code,lang);if(out!=null&&out!==code){escaped=true;code=out}}if(!lang){return"<pre><code>"+(escaped?code:escape(code,true))+"\n</code></pre>"}return'<pre><code class="'+this.options.langPrefix+escape(lang,true)+'">'+(escaped?code:escape(code,true))+"\n</code></pre>\n"};Renderer.prototype.blockquote=function(quote){return"<blockquote>\n"+quote+"</blockquote>\n"};Renderer.prototype.html=function(html){return html};Renderer.prototype.heading=function(text,level,raw){return"<h"+level+' id="'+this.options.headerPrefix+raw.toLowerCase().replace(/[^\w]+/g,"-")+'">'+text+"</h"+level+">\n"};Renderer.prototype.hr=function(){return this.options.xhtml?"<hr/>\n":"<hr>\n"};Renderer.prototype.list=function(body,ordered){var type=ordered?"ol":"ul";return"<"+type+">\n"+body+"</"+type+">\n"};Renderer.prototype.listitem=function(text){return"<li>"+text+"</li>\n"};Renderer.prototype.paragraph=function(text){return"<p>"+text+"</p>\n"};Renderer.prototype.table=function(header,body){return"<table>\n"+"<thead>\n"+header+"</thead>\n"+"<tbody>\n"+body+"</tbody>\n"+"</table>\n"};Renderer.prototype.tablerow=function(content){return"<tr>\n"+content+"</tr>\n"};Renderer.prototype.tablecell=function(content,flags){var type=flags.header?"th":"td";var tag=flags.align?"<"+type+' style="text-align:'+flags.align+'">':"<"+type+">";return tag+content+"</"+type+">\n"};Renderer.prototype.strong=function(text){return"<strong>"+text+"</strong>"};Renderer.prototype.em=function(text){return"<em>"+text+"</em>"};Renderer.prototype.codespan=function(text){return"<code>"+text+"</code>"};Renderer.prototype.br=function(){return this.options.xhtml?"<br/>":"<br>"};Renderer.prototype.del=function(text){return"<del>"+text+"</del>"};Renderer.prototype.link=function(href,title,text){if(this.options.sanitize){try{var prot=decodeURIComponent(unescape(href)).replace(/[^\w:]/g,"").toLowerCase()}catch(e){return""}if(prot.indexOf("javascript:")===0){return""}}var out='<a href="'+href+'"';if(title){out+=' title="'+title+'"'}out+=">"+text+"</a>";return out};Renderer.prototype.image=function(href,title,text){var out='<img src="'+href+'" alt="'+text+'"';if(title){out+=' title="'+title+'"'}out+=this.options.xhtml?"/>":">";return out};function Parser(options){this.tokens=[];this.token=null;this.options=options||marked.defaults;this.options.renderer=this.options.renderer||new Renderer;this.renderer=this.options.renderer;this.renderer.options=this.options}Parser.parse=function(src,options,renderer){var parser=new Parser(options,renderer);return parser.parse(src)};Parser.prototype.parse=function(src){this.inline=new InlineLexer(src.links,this.options,this.renderer);this.tokens=src.reverse();var out="";while(this.next()){out+=this.tok()}return out};Parser.prototype.next=function(){return this.token=this.tokens.pop()};Parser.prototype.peek=function(){return this.tokens[this.tokens.length-1]||0};Parser.prototype.parseText=function(){var body=this.token.text;while(this.peek().type==="text"){body+="\n"+this.next().text}return this.inline.output(body)};Parser.prototype.tok=function(){switch(this.token.type){case"space":{return""}case"hr":{return this.renderer.hr()}case"heading":{return this.renderer.heading(this.inline.output(this.token.text),this.token.depth,this.token.text)}case"code":{return this.renderer.code(this.token.text,this.token.lang,this.token.escaped)}case"table":{var header="",body="",i,row,cell,flags,j;cell="";for(i=0;i<this.token.header.length;i++){flags={header:true,align:this.token.align[i]};cell+=this.renderer.tablecell(this.inline.output(this.token.header[i]),{header:true,align:this.token.align[i]})}header+=this.renderer.tablerow(cell);for(i=0;i<this.token.cells.length;i++){row=this.token.cells[i];cell="";for(j=0;j<row.length;j++){cell+=this.renderer.tablecell(this.inline.output(row[j]),{header:false,align:this.token.align[j]})}body+=this.renderer.tablerow(cell)}return this.renderer.table(header,body)}case"blockquote_start":{var body="";while(this.next().type!=="blockquote_end"){body+=this.tok()}return this.renderer.blockquote(body)}case"list_start":{var body="",ordered=this.token.ordered;while(this.next().type!=="list_end"){body+=this.tok()}return this.renderer.list(body,ordered)}case"list_item_start":{var body="";while(this.next().type!=="list_item_end"){body+=this.token.type==="text"?this.parseText():this.tok()}return this.renderer.listitem(body)}case"loose_item_start":{var body="";while(this.next().type!=="list_item_end"){body+=this.tok()}return this.renderer.listitem(body)}case"html":{var html=!this.token.pre&&!this.options.pedantic?this.inline.output(this.token.text):this.token.text;return this.renderer.html(html)}case"paragraph":{return this.renderer.paragraph(this.inline.output(this.token.text))}case"text":{return this.renderer.paragraph(this.parseText())}}};function escape(html,encode){return html.replace(!encode?/&(?!#?\w+;)/g:/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}function unescape(html){return html.replace(/&([#\w]+);/g,function(_,n){n=n.toLowerCase();if(n==="colon")return":";if(n.charAt(0)==="#"){return n.charAt(1)==="x"?String.fromCharCode(parseInt(n.substring(2),16)):String.fromCharCode(+n.substring(1))}return""})}function replace(regex,opt){regex=regex.source;opt=opt||"";return function self(name,val){if(!name)return new RegExp(regex,opt);val=val.source||val;val=val.replace(/(^|[^\[])\^/g,"$1");regex=regex.replace(name,val);return self}}function noop(){}noop.exec=noop;function merge(obj){var i=1,target,key;for(;i<arguments.length;i++){target=arguments[i];for(key in target){if(Object.prototype.hasOwnProperty.call(target,key)){obj[key]=target[key]}}}return obj}function marked(src,opt,callback){if(callback||typeof opt==="function"){if(!callback){callback=opt;opt=null}opt=merge({},marked.defaults,opt||{});var highlight=opt.highlight,tokens,pending,i=0;try{tokens=Lexer.lex(src,opt)}catch(e){return callback(e)}pending=tokens.length;var done=function(err){if(err){opt.highlight=highlight;return callback(err)}var out;try{out=Parser.parse(tokens,opt)}catch(e){err=e}opt.highlight=highlight;return err?callback(err):callback(null,out)};if(!highlight||highlight.length<3){return done()}delete opt.highlight;if(!pending)return done();for(;i<tokens.length;i++){(function(token){if(token.type!=="code"){return--pending||done()}return highlight(token.text,token.lang,function(err,code){if(err)return done(err);if(code==null||code===token.text){return--pending||done()}token.text=code;token.escaped=true;--pending||done()})})(tokens[i])}return}try{if(opt)opt=merge({},marked.defaults,opt);return Parser.parse(Lexer.lex(src,opt),opt)}catch(e){e.message+="\nPlease report this to https://github.com/chjj/marked.";if((opt||marked.defaults).silent){return"<p>An error occured:</p><pre>"+escape(e.message+"",true)+"</pre>"}throw e}}marked.options=marked.setOptions=function(opt){merge(marked.defaults,opt);return marked};marked.defaults={gfm:true,tables:true,breaks:false,pedantic:false,sanitize:false,smartLists:false,silent:false,highlight:null,langPrefix:"lang-",smartypants:false,headerPrefix:"",renderer:new Renderer,xhtml:false};marked.Parser=Parser;marked.parser=Parser.parse;marked.Renderer=Renderer;marked.Lexer=Lexer;marked.lexer=Lexer.lex;marked.InlineLexer=InlineLexer;marked.inlineLexer=InlineLexer.output;marked.parse=marked;if(typeof module!=="undefined"&&typeof exports==="object"){module.exports=marked}else if(typeof define==="function"&&define.amd){define(function(){return marked})}else{this.marked=marked}}).call(function(){return this||(typeof window!=="undefined"?window:global)}());
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Animation.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Animation.coffee ---- */
 
 
 (function() {
@@ -1324,8 +1324,8 @@ function clone(obj) {
     };
 
     Animation.prototype.show = function(elem, props) {
-      var delay, _ref;
-      delay = ((_ref = arguments[arguments.length - 2]) != null ? _ref.delay : void 0) * 1000 || 1;
+      var delay, ref;
+      delay = ((ref = arguments[arguments.length - 2]) != null ? ref.delay : void 0) * 1000 || 1;
       elem.className += " animate";
       elem.style.opacity = 0;
       setTimeout((function() {
@@ -1339,8 +1339,8 @@ function clone(obj) {
     };
 
     Animation.prototype.hide = function(elem, remove_func, props) {
-      var delay, _ref;
-      delay = ((_ref = arguments[arguments.length - 2]) != null ? _ref.delay : void 0) * 1000 || 1;
+      var delay, ref;
+      delay = ((ref = arguments[arguments.length - 2]) != null ? ref.delay : void 0) * 1000 || 1;
       elem.className += " animate";
       setTimeout((function() {
         return elem.style.opacity = 0;
@@ -1413,30 +1413,30 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Autosize.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Autosize.coffee ---- */
 
 
 (function() {
   var Autosize,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  Autosize = (function(_super) {
-    __extends(Autosize, _super);
+  Autosize = (function(superClass) {
+    extend(Autosize, superClass);
 
-    function Autosize(_at_attrs) {
-      var _base;
-      this.attrs = _at_attrs != null ? _at_attrs : {};
-      this.render = __bind(this.render, this);
-      this.handleKeydown = __bind(this.handleKeydown, this);
-      this.handleInput = __bind(this.handleInput, this);
-      this.autoHeight = __bind(this.autoHeight, this);
-      this.setValue = __bind(this.setValue, this);
-      this.storeNode = __bind(this.storeNode, this);
+    function Autosize(attrs1) {
+      var base;
+      this.attrs = attrs1 != null ? attrs1 : {};
+      this.render = bind(this.render, this);
+      this.handleKeydown = bind(this.handleKeydown, this);
+      this.handleInput = bind(this.handleInput, this);
+      this.autoHeight = bind(this.autoHeight, this);
+      this.setValue = bind(this.setValue, this);
+      this.storeNode = bind(this.storeNode, this);
       this.node = null;
-      if ((_base = this.attrs).classes == null) {
-        _base.classes = {};
+      if ((base = this.attrs).classes == null) {
+        base.classes = {};
       }
       this.attrs.classes.loading = false;
       this.attrs.oninput = this.handleInput;
@@ -1551,7 +1551,7 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Debug.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Debug.coffee ---- */
 
 
 (function() {
@@ -1584,28 +1584,28 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Editable.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Editable.coffee ---- */
 
 
 (function() {
   var Editable,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  Editable = (function(_super) {
-    __extends(Editable, _super);
+  Editable = (function(superClass) {
+    extend(Editable, superClass);
 
-    function Editable(_at_type, _at_handleSave, _at_handleDelete) {
-      this.type = _at_type;
-      this.handleSave = _at_handleSave;
-      this.handleDelete = _at_handleDelete;
-      this.render = __bind(this.render, this);
-      this.handleSaveClick = __bind(this.handleSaveClick, this);
-      this.handleDeleteClick = __bind(this.handleDeleteClick, this);
-      this.handleCancelClick = __bind(this.handleCancelClick, this);
-      this.handleEditClick = __bind(this.handleEditClick, this);
-      this.storeNode = __bind(this.storeNode, this);
+    function Editable(type, handleSave, handleDelete) {
+      this.type = type;
+      this.handleSave = handleSave;
+      this.handleDelete = handleDelete;
+      this.render = bind(this.render, this);
+      this.handleSaveClick = bind(this.handleSaveClick, this);
+      this.handleDeleteClick = bind(this.handleDeleteClick, this);
+      this.handleCancelClick = bind(this.handleCancelClick, this);
+      this.handleEditClick = bind(this.handleEditClick, this);
+      this.storeNode = bind(this.storeNode, this);
       this.node = null;
       this.editing = false;
       this.render_function = null;
@@ -1695,20 +1695,20 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/ImagePreview.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/ImagePreview.coffee ---- */
 
 
 (function() {
   var ImagePreview,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ImagePreview = (function(_super) {
-    __extends(ImagePreview, _super);
+  ImagePreview = (function(superClass) {
+    extend(ImagePreview, superClass);
 
     function ImagePreview() {
-      this.setPreviewData = __bind(this.setPreviewData, this);
+      this.setPreviewData = bind(this.setPreviewData, this);
       this.width = 0;
       this.height = 0;
       this.preview_data = "";
@@ -1730,14 +1730,14 @@ function clone(obj) {
       return [Math.round(width), Math.round(height)];
     };
 
-    ImagePreview.prototype.setPreviewData = function(_at_preview_data) {
-      var colors, pixels, _ref;
-      this.preview_data = _at_preview_data;
-      return _ref = this.preview_data.split(","), this.width = _ref[0], this.height = _ref[1], colors = _ref[2], pixels = _ref[3], _ref;
+    ImagePreview.prototype.setPreviewData = function(preview_data) {
+      var colors, pixels, ref;
+      this.preview_data = preview_data;
+      return ref = this.preview_data.split(","), this.width = ref[0], this.height = ref[1], colors = ref[2], pixels = ref[3], ref;
     };
 
     ImagePreview.prototype.getPreviewUri = function(target_width, target_height) {
-      var b, back, canvas, color, color_codes, colors, ctx, di, g, height, hex, i, image_data, pixel, pixels, r, width, _i, _j, _len, _len1, _ref, _ref1;
+      var b, back, canvas, color, color_codes, colors, ctx, di, g, height, hex, i, image_data, j, k, len, len1, pixel, pixels, r, ref, ref1, width;
       if (target_width == null) {
         target_width = 10;
       }
@@ -1745,8 +1745,8 @@ function clone(obj) {
         target_height = 10;
       }
       this.logStart("Render");
-      _ref = this.preview_data.split(","), this.width = _ref[0], this.height = _ref[1], colors = _ref[2], pixels = _ref[3];
-      _ref1 = this.getSize(target_width, target_height), width = _ref1[0], height = _ref1[1];
+      ref = this.preview_data.split(","), this.width = ref[0], this.height = ref[1], colors = ref[2], pixels = ref[3];
+      ref1 = this.getSize(target_width, target_height), width = ref1[0], height = ref1[1];
       colors = colors.match(/.{3}/g);
       pixels = pixels.split("");
       canvas = document.createElement("canvas");
@@ -1755,13 +1755,13 @@ function clone(obj) {
       ctx = canvas.getContext('2d');
       image_data = ctx.createImageData(width, height);
       color_codes = {};
-      for (i = _i = 0, _len = colors.length; _i < _len; i = ++_i) {
+      for (i = j = 0, len = colors.length; j < len; i = ++j) {
         color = colors[i];
         color_codes[this.pixel_chars[i]] = color;
       }
       di = 0;
-      for (_j = 0, _len1 = pixels.length; _j < _len1; _j++) {
-        pixel = pixels[_j];
+      for (k = 0, len1 = pixels.length; k < len1; k++) {
+        pixel = pixels[k];
         hex = color_codes[pixel];
         r = parseInt(hex[0], 16) * 17;
         g = parseInt(hex[1], 16) * 17;
@@ -1798,37 +1798,37 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/ItemList.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/ItemList.coffee ---- */
 
 
 (function() {
   var ItemList;
 
   ItemList = (function() {
-    function ItemList(_at_item_class, _at_key) {
-      this.item_class = _at_item_class;
-      this.key = _at_key;
+    function ItemList(item_class1, key1) {
+      this.item_class = item_class1;
+      this.key = key1;
       this.items = [];
       this.items_bykey = {};
     }
 
     ItemList.prototype.sync = function(rows, item_class, key) {
-      var current_obj, item, row, _i, _len, _results;
+      var current_obj, i, item, len, results, row;
       this.items.splice(0, this.items.length);
-      _results = [];
-      for (_i = 0, _len = rows.length; _i < _len; _i++) {
-        row = rows[_i];
+      results = [];
+      for (i = 0, len = rows.length; i < len; i++) {
+        row = rows[i];
         current_obj = this.items_bykey[row[this.key]];
         if (current_obj) {
           current_obj.row = row;
-          _results.push(this.items.push(current_obj));
+          results.push(this.items.push(current_obj));
         } else {
           item = new this.item_class(row, this);
           this.items_bykey[row[this.key]] = item;
-          _results.push(this.items.push(item));
+          results.push(this.items.push(item));
         }
       }
-      return _results;
+      return results;
     };
 
     ItemList.prototype.deleteItem = function(item) {
@@ -1851,7 +1851,7 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Maxheight.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Maxheight.coffee ---- */
 
 
 (function() {
@@ -1887,31 +1887,31 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Menu.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Menu.coffee ---- */
 
 
 (function() {
   var Menu,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   Menu = (function() {
     function Menu() {
-      this.render = __bind(this.render, this);
-      this.renderItem = __bind(this.renderItem, this);
-      this.handleClick = __bind(this.handleClick, this);
-      this.storeNode = __bind(this.storeNode, this);
-      this.toggle = __bind(this.toggle, this);
-      this.hide = __bind(this.hide, this);
-      this.show = __bind(this.show, this);
+      this.render = bind(this.render, this);
+      this.renderItem = bind(this.renderItem, this);
+      this.handleClick = bind(this.handleClick, this);
+      this.storeNode = bind(this.storeNode, this);
+      this.toggle = bind(this.toggle, this);
+      this.hide = bind(this.hide, this);
+      this.show = bind(this.show, this);
       this.visible = false;
       this.items = [];
       this.node = null;
     }
 
     Menu.prototype.show = function() {
-      var _ref;
-      if ((_ref = window.visible_menu) != null) {
-        _ref.hide();
+      var ref;
+      if ((ref = window.visible_menu) != null) {
+        ref.hide();
       }
       this.visible = true;
       return window.visible_menu = this;
@@ -1948,11 +1948,11 @@ function clone(obj) {
     };
 
     Menu.prototype.handleClick = function(e) {
-      var cb, item, keep_menu, selected, title, _i, _len, _ref;
+      var cb, i, item, keep_menu, len, ref, selected, title;
       keep_menu = false;
-      _ref = this.items;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        item = _ref[_i];
+      ref = this.items;
+      for (i = 0, len = ref.length; i < len; i++) {
+        item = ref[i];
         title = item[0], cb = item[1], selected = item[2];
         if (title === e.target.textContent) {
           keep_menu = cb(item);
@@ -2024,22 +2024,22 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Overlay.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Overlay.coffee ---- */
 
 
 (function() {
   var Overlay,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  Overlay = (function(_super) {
-    __extends(Overlay, _super);
+  Overlay = (function(superClass) {
+    extend(Overlay, superClass);
 
     function Overlay() {
-      this.render = __bind(this.render, this);
-      this.handleClick = __bind(this.handleClick, this);
-      this.zoomImageTag = __bind(this.zoomImageTag, this);
+      this.render = bind(this.render, this);
+      this.handleClick = bind(this.handleClick, this);
+      this.zoomImageTag = bind(this.zoomImageTag, this);
       this.visible = false;
       this.called = false;
       this.height = 0;
@@ -2142,20 +2142,20 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Scrollwatcher.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Scrollwatcher.coffee ---- */
 
 
 (function() {
   var Scrollwatcher,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  Scrollwatcher = (function(_super) {
-    __extends(Scrollwatcher, _super);
+  Scrollwatcher = (function(superClass) {
+    extend(Scrollwatcher, superClass);
 
     function Scrollwatcher() {
-      this.checkScroll = __bind(this.checkScroll, this);
+      this.checkScroll = bind(this.checkScroll, this);
       this.log("Scrollwatcher");
       this.items = [];
       window.onscroll = (function(_this) {
@@ -2167,24 +2167,24 @@ function clone(obj) {
     }
 
     Scrollwatcher.prototype.checkScroll = function() {
-      var cb, i, item_top, tag, view_bottom, view_top, _i, _ref, _ref1, _results;
+      var cb, i, item_top, j, ref, ref1, results, tag, view_bottom, view_top;
       if (!this.items.length) {
         return;
       }
       view_top = window.scrollY;
       view_bottom = window.scrollY + window.innerHeight;
-      _ref = this.items;
-      _results = [];
-      for (i = _i = _ref.length - 1; _i >= 0; i = _i += -1) {
-        _ref1 = _ref[i], item_top = _ref1[0], tag = _ref1[1], cb = _ref1[2];
+      ref = this.items;
+      results = [];
+      for (i = j = ref.length - 1; j >= 0; i = j += -1) {
+        ref1 = ref[i], item_top = ref1[0], tag = ref1[1], cb = ref1[2];
         if (item_top + 900 > view_top && item_top - 400 < view_bottom) {
           this.items.splice(i, 1);
-          _results.push(cb(tag));
+          results.push(cb(tag));
         } else {
-          _results.push(void 0);
+          results.push(void 0);
         }
       }
-      return _results;
+      return results;
     };
 
     Scrollwatcher.prototype.add = function(tag, cb) {
@@ -2201,18 +2201,18 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Text.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Text.coffee ---- */
 
 
 (function() {
   var MarkedRenderer, Text,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty,
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  MarkedRenderer = (function(_super) {
-    __extends(MarkedRenderer, _super);
+  MarkedRenderer = (function(superClass) {
+    extend(MarkedRenderer, superClass);
 
     function MarkedRenderer() {
       return MarkedRenderer.__super__.constructor.apply(this, arguments);
@@ -2228,12 +2228,12 @@ function clone(obj) {
 
   Text = (function() {
     function Text() {
-      this.renderLinks = __bind(this.renderLinks, this);
-      this.renderMarked = __bind(this.renderMarked, this);
+      this.renderLinks = bind(this.renderLinks, this);
+      this.renderMarked = bind(this.renderMarked, this);
     }
 
     Text.prototype.toColor = function(text, saturation, lightness) {
-      var hash, i, _i, _ref;
+      var hash, i, j, ref;
       if (saturation == null) {
         saturation = 30;
       }
@@ -2241,7 +2241,7 @@ function clone(obj) {
         lightness = 50;
       }
       hash = 0;
-      for (i = _i = 0, _ref = text.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+      for (i = j = 0, ref = text.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
         hash += text.charCodeAt(i) * i;
         hash = hash % 1777;
       }
@@ -2308,7 +2308,7 @@ function clone(obj) {
 
     Text.prototype.getSiteUrl = function(address) {
       if (window.is_proxy) {
-        if (__indexOf.call(address, ".") >= 0) {
+        if (indexOf.call(address, ".") >= 0) {
           return "http://" + address + "/";
         } else {
           return "http://zero/" + address + "/";
@@ -2351,15 +2351,15 @@ function clone(obj) {
     };
 
     Text.prototype.distance = function(s1, s2) {
-      var char, extra_parts, key, match, next_find, next_find_i, val, _i, _len;
+      var char, extra_parts, j, key, len, match, next_find, next_find_i, val;
       s1 = s1.toLocaleLowerCase();
       s2 = s2.toLocaleLowerCase();
       next_find_i = 0;
       next_find = s2[0];
       match = true;
       extra_parts = {};
-      for (_i = 0, _len = s1.length; _i < _len; _i++) {
-        char = s1[_i];
+      for (j = 0, len = s1.length; j < len; j++) {
+        char = s1[j];
         if (char !== next_find) {
           if (extra_parts[next_find_i]) {
             extra_parts[next_find_i] += char;
@@ -2375,13 +2375,13 @@ function clone(obj) {
         extra_parts[next_find_i] = "";
       }
       extra_parts = (function() {
-        var _results;
-        _results = [];
+        var results;
+        results = [];
         for (key in extra_parts) {
           val = extra_parts[key];
-          _results.push(val);
+          results.push(val);
         }
-        return _results;
+        return results;
       })();
       if (next_find_i >= s2.length) {
         return extra_parts.length + extra_parts.join("").length;
@@ -2391,12 +2391,12 @@ function clone(obj) {
     };
 
     Text.prototype.queryParse = function(query) {
-      var key, params, part, parts, val, _i, _len, _ref;
+      var j, key, len, params, part, parts, ref, val;
       params = {};
       parts = query.split('&');
-      for (_i = 0, _len = parts.length; _i < _len; _i++) {
-        part = parts[_i];
-        _ref = part.split("="), key = _ref[0], val = _ref[1];
+      for (j = 0, len = parts.length; j < len; j++) {
+        part = parts[j];
+        ref = part.split("="), key = ref[0], val = ref[1];
         if (val) {
           params[decodeURIComponent(key)] = decodeURIComponent(val);
         } else {
@@ -2424,10 +2424,10 @@ function clone(obj) {
     };
 
     Text.prototype.highlight = function(text, search) {
-      var back, i, part, parts, _i, _len;
+      var back, i, j, len, part, parts;
       parts = text.split(RegExp(search, "i"));
       back = [];
-      for (i = _i = 0, _len = parts.length; _i < _len; i = ++_i) {
+      for (i = j = 0, len = parts.length; j < len; i = ++j) {
         part = parts[i];
         back.push(part);
         if (i < parts.length - 1) {
@@ -2442,13 +2442,13 @@ function clone(obj) {
     Text.prototype.sqlIn = function(values) {
       var value;
       return "(" + ((function() {
-        var _i, _len, _results;
-        _results = [];
-        for (_i = 0, _len = values.length; _i < _len; _i++) {
-          value = values[_i];
-          _results.push("'" + value + "'");
+        var j, len, results;
+        results = [];
+        for (j = 0, len = values.length; j < len; j++) {
+          value = values[j];
+          results.push("'" + value + "'");
         }
-        return _results;
+        return results;
       })()).join(',') + ")";
     };
 
@@ -2479,7 +2479,7 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Time.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Time.coffee ---- */
 
 
 (function() {
@@ -2547,7 +2547,7 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Translate.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Translate.coffee ---- */
 
 
 (function() {
@@ -2558,25 +2558,25 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Uploadable.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Uploadable.coffee ---- */
 
 
 (function() {
   var Uploadable,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  Uploadable = (function(_super) {
-    __extends(Uploadable, _super);
+  Uploadable = (function(superClass) {
+    extend(Uploadable, superClass);
 
-    function Uploadable(_at_handleSave) {
-      this.handleSave = _at_handleSave;
-      this.getPixelData = __bind(this.getPixelData, this);
-      this.render = __bind(this.render, this);
-      this.handleUploadClick = __bind(this.handleUploadClick, this);
-      this.resizeImage = __bind(this.resizeImage, this);
-      this.storeNode = __bind(this.storeNode, this);
+    function Uploadable(handleSave) {
+      this.handleSave = handleSave;
+      this.getPixelData = bind(this.getPixelData, this);
+      this.render = bind(this.render, this);
+      this.handleUploadClick = bind(this.handleUploadClick, this);
+      this.resizeImage = bind(this.resizeImage, this);
+      this.storeNode = bind(this.storeNode, this);
       this.node = null;
       this.resize_width = 50;
       this.resize_height = 50;
@@ -2607,11 +2607,11 @@ function clone(obj) {
       image = new Image();
       image.onload = (function(_this) {
         return function() {
-          var canvas, canvas_quant, ctx, image_base64uri, optimizer, quant, _ref;
+          var canvas, canvas_quant, ctx, image_base64uri, optimizer, quant, ref;
           _this.log("Resize image loaded");
           canvas = document.createElement("canvas");
           if (_this.preverse_ratio) {
-            _ref = _this.image_preview.calcSize(image.width, image.height, width, height), canvas.width = _ref[0], canvas.height = _ref[1];
+            ref = _this.image_preview.calcSize(image.width, image.height, width, height), canvas.width = ref[0], canvas.height = ref[1];
           } else {
             canvas.width = width;
             canvas.height = height;
@@ -2695,12 +2695,12 @@ function clone(obj) {
     };
 
     Uploadable.prototype.getPixelData = function(data) {
-      var b, color_db, colors, colors_next_id, g, hex, i, pixels, r, _i, _ref;
+      var b, color_db, colors, colors_next_id, g, hex, i, j, pixels, r, ref;
       color_db = {};
       colors = [];
       colors_next_id = 0;
       pixels = [];
-      for (i = _i = 0, _ref = data.length - 1; _i <= _ref; i = _i += 4) {
+      for (i = j = 0, ref = data.length - 1; j <= ref; i = j += 4) {
         r = data[i];
         g = data[i + 1];
         b = data[i + 2];
@@ -2727,11 +2727,11 @@ function clone(obj) {
       image.src = image_base64uri;
       return image.onload = (function(_this) {
         return function() {
-          var back, canvas, ctx, image_data, image_height, image_width, pixeldata, quant, _ref;
+          var back, canvas, ctx, image_data, image_height, image_width, pixeldata, quant, ref;
           image_width = image.width;
           image_height = image.height;
           canvas = document.createElement("canvas");
-          _ref = _this.image_preview.calcSize(image.width, image.height, target_width, target_height), canvas.width = _ref[0], canvas.height = _ref[1];
+          ref = _this.image_preview.calcSize(image.width, image.height, target_width, target_height), canvas.width = ref[0], canvas.height = ref[1];
           ctx = canvas.getContext("2d");
           ctx.fillStyle = "#FFF";
           ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -2765,23 +2765,23 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/ZeroFrame.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/ZeroFrame.coffee ---- */
 
 
 (function() {
   var ZeroFrame,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ZeroFrame = (function(_super) {
-    __extends(ZeroFrame, _super);
+  ZeroFrame = (function(superClass) {
+    extend(ZeroFrame, superClass);
 
     function ZeroFrame(url) {
-      this.onCloseWebsocket = __bind(this.onCloseWebsocket, this);
-      this.onOpenWebsocket = __bind(this.onOpenWebsocket, this);
-      this.onRequest = __bind(this.onRequest, this);
-      this.onMessage = __bind(this.onMessage, this);
+      this.onCloseWebsocket = bind(this.onCloseWebsocket, this);
+      this.onOpenWebsocket = bind(this.onOpenWebsocket, this);
+      this.onRequest = bind(this.onRequest, this);
+      this.onMessage = bind(this.onMessage, this);
       this.url = url;
       this.waiting_cb = {};
       this.history_state = {};
@@ -2919,23 +2919,23 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ActivityList.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ActivityList.coffee ---- */
 
 
 (function() {
   var ActivityList,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty,
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  ActivityList = (function(_super) {
-    __extends(ActivityList, _super);
+  ActivityList = (function(superClass) {
+    extend(ActivityList, superClass);
 
     function ActivityList() {
-      this.update = __bind(this.update, this);
-      this.render = __bind(this.render, this);
-      this.handleMoreClick = __bind(this.handleMoreClick, this);
+      this.update = bind(this.update, this);
+      this.render = bind(this.render, this);
+      this.handleMoreClick = bind(this.handleMoreClick, this);
       this.activities = null;
       this.directories = [];
       this.need_update = true;
@@ -2964,27 +2964,27 @@ function clone(obj) {
         }
       ], (function(_this) {
         return function(rows) {
-          var directories, directory, row, subject_address, _i, _len;
+          var directories, directory, i, len, row, subject_address;
           directories = [];
           rows = (function() {
-            var _i, _len, _results;
-            _results = [];
-            for (_i = 0, _len = rows.length; _i < _len; _i++) {
-              row = rows[_i];
+            var i, len, results;
+            results = [];
+            for (i = 0, len = rows.length; i < len; i++) {
+              row = rows[i];
               if (row.subject) {
-                _results.push(row);
+                results.push(row);
               }
             }
-            return _results;
+            return results;
           })();
-          for (_i = 0, _len = rows.length; _i < _len; _i++) {
-            row = rows[_i];
+          for (i = 0, len = rows.length; i < len; i++) {
+            row = rows[i];
             row.auth_address = row.directory.replace("data/users/", "");
             subject_address = row.subject.replace(/_.*/, "").replace(/.*\//, "");
             row.post_id = row.subject.replace(/.*_/, "").replace(/.*\//, "");
             row.subject_address = subject_address;
             directory = "data/users/" + subject_address;
-            if (__indexOf.call(directories, directory) < 0) {
+            if (indexOf.call(directories, directory) < 0) {
               directories.push(directory);
             }
           }
@@ -2993,35 +2993,35 @@ function clone(obj) {
               directory: directories
             }
           ], function(subject_rows) {
-            var last_row, row_group, row_groups, subject_db, subject_row, _base, _base1, _base2, _j, _k, _l, _len1, _len2, _len3, _ref;
+            var base, base1, base2, j, k, l, last_row, len1, len2, len3, ref, row_group, row_groups, subject_db, subject_row;
             subject_db = {};
-            for (_j = 0, _len1 = subject_rows.length; _j < _len1; _j++) {
-              subject_row = subject_rows[_j];
+            for (j = 0, len1 = subject_rows.length; j < len1; j++) {
+              subject_row = subject_rows[j];
               subject_row.auth_address = subject_row.directory.replace("data/users/", "");
               subject_db[subject_row.auth_address] = subject_row;
             }
-            for (_k = 0, _len2 = rows.length; _k < _len2; _k++) {
-              row = rows[_k];
+            for (k = 0, len2 = rows.length; k < len2; k++) {
+              row = rows[k];
               row.subject = subject_db[row.subject_address];
               if (row.subject == null) {
                 row.subject = {};
               }
-              if ((_base = row.subject).auth_address == null) {
-                _base.auth_address = row.subject_auth_address;
+              if ((base = row.subject).auth_address == null) {
+                base.auth_address = row.subject_auth_address;
               }
-              if ((_base1 = row.subject).hub == null) {
-                _base1.hub = row.subject_hub;
+              if ((base1 = row.subject).hub == null) {
+                base1.hub = row.subject_hub;
               }
-              if ((_base2 = row.subject).user_name == null) {
-                _base2.user_name = row.subject_user_name;
+              if ((base2 = row.subject).user_name == null) {
+                base2.user_name = row.subject_user_name;
               }
             }
             last_row = null;
             row_group = [];
             row_groups = [];
-            for (_l = 0, _len3 = rows.length; _l < _len3; _l++) {
-              row = rows[_l];
-              if (!last_row || (row.auth_address === (last_row != null ? last_row.auth_address : void 0) && row.type === (last_row != null ? last_row.type : void 0) && ((_ref = row.type) === "post_like" || _ref === "follow"))) {
+            for (l = 0, len3 = rows.length; l < len3; l++) {
+              row = rows[l];
+              if (!last_row || (row.auth_address === (last_row != null ? last_row.auth_address : void 0) && row.type === (last_row != null ? last_row.type : void 0) && ((ref = row.type) === "post_like" || ref === "follow"))) {
                 row_group.push(row);
               } else {
                 row_groups.push(row_group);
@@ -3047,7 +3047,7 @@ function clone(obj) {
     };
 
     ActivityList.prototype.renderActivity = function(activity_group) {
-      var activity, activity_more, activity_user_link, back, body, now, subject_post_link, subject_user_link, title, _i, _j, _len, _len1, _ref, _ref1;
+      var activity, activity_more, activity_user_link, back, body, i, j, len, len1, now, ref, ref1, subject_post_link, subject_user_link, title;
       back = [];
       now = Time.timestamp();
       activity = activity_group[0];
@@ -3071,9 +3071,9 @@ function clone(obj) {
           }, _("post", "like post"))
         ];
         if (activity_group.length > 1) {
-          _ref = activity_group.slice(1, 11);
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            activity_more = _ref[_i];
+          ref = activity_group.slice(1, 11);
+          for (i = 0, len = ref.length; i < len; i++) {
+            activity_more = ref[i];
             subject_user_link = "?Profile/" + activity_more.subject.hub + "/" + activity_more.subject.auth_address + "/" + (activity_more.subject.cert_user_id || '');
             subject_post_link = "?Post/" + activity_more.subject.hub + "/" + activity_more.subject.auth_address + "/" + activity_more.post_id;
             body.push(", ");
@@ -3112,9 +3112,9 @@ function clone(obj) {
           }, activity.subject.user_name)
         ];
         if (activity_group.length > 1) {
-          _ref1 = activity_group.slice(1, 11);
-          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-            activity_more = _ref1[_j];
+          ref1 = activity_group.slice(1, 11);
+          for (j = 0, len1 = ref1.length; j < len1; j++) {
+            activity_more = ref1[j];
             subject_user_link = "?Profile/" + activity_more.subject.hub + "/" + activity_more.subject.auth_address + "/" + (activity_more.subject.cert_user_id || '');
             body.push(", ");
             body.push(h("a.link", {
@@ -3193,21 +3193,21 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/AnonUser.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/AnonUser.coffee ---- */
 
 
 (function() {
   var AnonUser,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  AnonUser = (function(_super) {
-    __extends(AnonUser, _super);
+  AnonUser = (function(superClass) {
+    extend(AnonUser, superClass);
 
     function AnonUser() {
-      this.save = __bind(this.save, this);
-      this.updateInfo = __bind(this.updateInfo, this);
+      this.save = bind(this.save, this);
+      this.updateInfo = bind(this.updateInfo, this);
       this.auth_address = null;
       this.hub = null;
       this.followed_users = {};
@@ -3285,27 +3285,27 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentCreateProfile.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentCreateProfile.coffee ---- */
 
 
 (function() {
   var ContentCreateProfile,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ContentCreateProfile = (function(_super) {
-    __extends(ContentCreateProfile, _super);
+  ContentCreateProfile = (function(superClass) {
+    extend(ContentCreateProfile, superClass);
 
     function ContentCreateProfile() {
-      this.update = __bind(this.update, this);
-      this.render = __bind(this.render, this);
-      this.renderDefaultHubs = __bind(this.renderDefaultHubs, this);
-      this.renderSeededHubs = __bind(this.renderSeededHubs, this);
-      this.renderHub = __bind(this.renderHub, this);
-      this.updateHubs = __bind(this.updateHubs, this);
-      this.handleJoinClick = __bind(this.handleJoinClick, this);
-      this.handleDownloadClick = __bind(this.handleDownloadClick, this);
+      this.update = bind(this.update, this);
+      this.render = bind(this.render, this);
+      this.renderDefaultHubs = bind(this.renderDefaultHubs, this);
+      this.renderSeededHubs = bind(this.renderSeededHubs, this);
+      this.renderHub = bind(this.renderHub, this);
+      this.updateHubs = bind(this.updateHubs, this);
+      this.handleJoinClick = bind(this.handleJoinClick, this);
+      this.handleDownloadClick = bind(this.handleDownloadClick, this);
       this.loaded = true;
       this.hubs = [];
       this.default_hubs = [];
@@ -3364,14 +3364,14 @@ function clone(obj) {
     ContentCreateProfile.prototype.updateHubs = function() {
       return Page.cmd("mergerSiteList", true, (function(_this) {
         return function(sites) {
-          var address, content, _ref, _results;
+          var address, content, ref, results;
           Page.cmd("dbQuery", "SELECT * FROM json", function(users) {
-            var address, hubs, site, site_users, user, _i, _len, _name;
+            var address, hubs, i, len, name, site, site_users, user;
             site_users = {};
-            for (_i = 0, _len = users.length; _i < _len; _i++) {
-              user = users[_i];
-              if (site_users[_name = user.hub] == null) {
-                site_users[_name] = [];
+            for (i = 0, len = users.length; i < len; i++) {
+              user = users[i];
+              if (site_users[name = user.hub] == null) {
+                site_users[name] = [];
               }
               site_users[user.hub].push(user);
             }
@@ -3388,22 +3388,22 @@ function clone(obj) {
             return Page.projector.scheduleRender();
           });
           _this.default_hubs = [];
-          _ref = Page.site_info.content.settings.default_hubs;
-          _results = [];
-          for (address in _ref) {
-            content = _ref[address];
+          ref = Page.site_info.content.settings.default_hubs;
+          results = [];
+          for (address in ref) {
+            content = ref[address];
             if (!sites[address] && !_this.downloading[address]) {
-              _results.push(_this.default_hubs.push({
+              results.push(_this.default_hubs.push({
                 users: [],
                 address: address,
                 content: content,
                 type: "available"
               }));
             } else {
-              _results.push(void 0);
+              results.push(void 0);
             }
           }
-          return _results;
+          return results;
         };
       })(this));
     };
@@ -3427,8 +3427,8 @@ function clone(obj) {
         }, "Join!"), h("div.avatars", [
           hub.users.map((function(_this) {
             return function(user) {
-              var avatar, _ref;
-              if (((_ref = user.avatar) !== "jpg" && _ref !== "png") || rendered >= 4) {
+              var avatar, ref;
+              if (((ref = user.avatar) !== "jpg" && ref !== "png") || rendered >= 4) {
                 return "";
               }
               avatar = "merged-ZeroMe/" + hub.address + "/" + user.directory + "/avatar." + user.avatar;
@@ -3461,7 +3461,7 @@ function clone(obj) {
     };
 
     ContentCreateProfile.prototype.render = function() {
-      var _ref;
+      var ref;
       if (this.loaded && !Page.on_loaded.resolved) {
         Page.on_loaded.resolve();
       }
@@ -3473,7 +3473,7 @@ function clone(obj) {
         h("h1", "Create new profile"), h("a.button.button-submit.button-certselect.certselect", {
           href: "#Select+user",
           onclick: this.handleSelectUserClick
-        }, [h("div.icon.icon-profile"), ((_ref = Page.site_info) != null ? _ref.cert_user_id : void 0) ? "As: " + Page.site_info.cert_user_id : "Select ID..."]), this.creation_status.length > 0 ? h("div.creation-status", {
+        }, [h("div.icon.icon-profile"), ((ref = Page.site_info) != null ? ref.cert_user_id : void 0) ? "As: " + Page.site_info.cert_user_id : "Select ID..."]), this.creation_status.length > 0 ? h("div.creation-status", {
           enterAnimation: Animation.slideDown,
           exitAnimation: Animation.slideUp
         }, [
@@ -3515,22 +3515,22 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentFeed.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentFeed.coffee ---- */
 
 
 (function() {
   var ContentFeed,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ContentFeed = (function(_super) {
-    __extends(ContentFeed, _super);
+  ContentFeed = (function(superClass) {
+    extend(ContentFeed, superClass);
 
     function ContentFeed() {
-      this.update = __bind(this.update, this);
-      this.render = __bind(this.render, this);
-      this.handleListTypeClick = __bind(this.handleListTypeClick, this);
+      this.update = bind(this.update, this);
+      this.render = bind(this.render, this);
+      this.handleListTypeClick = bind(this.handleListTypeClick, this);
       this.post_create = new PostCreate();
       this.post_list = new PostList();
       this.activity_list = new ActivityList();
@@ -3550,7 +3550,7 @@ function clone(obj) {
     };
 
     ContentFeed.prototype.render = function() {
-      var followed, key, like, _;
+      var _, followed, key, like;
       if (this.post_list.loaded && !Page.on_loaded.resolved) {
         Page.on_loaded.resolve();
       }
@@ -3561,14 +3561,14 @@ function clone(obj) {
         this.suggested_user_list.need_update = true;
         if (this.type === "followed") {
           this.post_list.directories = (function() {
-            var _ref, _results;
-            _ref = Page.user.followed_users;
-            _results = [];
-            for (key in _ref) {
-              followed = _ref[key];
-              _results.push("data/users/" + (key.split('/')[1]));
+            var ref, results;
+            ref = Page.user.followed_users;
+            results = [];
+            for (key in ref) {
+              followed = ref[key];
+              results.push("data/users/" + (key.split('/')[1]));
             }
-            return _results;
+            return results;
           })();
           if (Page.user.hub) {
             this.post_list.directories.push("data/users/" + Page.user.auth_address);
@@ -3576,24 +3576,24 @@ function clone(obj) {
           this.post_list.filter_post_ids = null;
         } else if (this.type === "liked") {
           this.post_list.directories = (function() {
-            var _ref, _results;
-            _ref = Page.user.likes;
-            _results = [];
-            for (like in _ref) {
-              _ = _ref[like];
-              _results.push("data/users/" + (like.split('_')[0]));
+            var ref, results;
+            ref = Page.user.likes;
+            results = [];
+            for (like in ref) {
+              _ = ref[like];
+              results.push("data/users/" + (like.split('_')[0]));
             }
-            return _results;
+            return results;
           })();
           this.post_list.filter_post_ids = (function() {
-            var _ref, _results;
-            _ref = Page.user.likes;
-            _results = [];
-            for (like in _ref) {
-              _ = _ref[like];
-              _results.push(like.split('_')[1]);
+            var ref, results;
+            ref = Page.user.likes;
+            results = [];
+            for (like in ref) {
+              _ = ref[like];
+              results.push(like.split('_')[1]);
             }
-            return _results;
+            return results;
           })();
         } else {
           this.post_list.directories = "all";
@@ -3602,14 +3602,14 @@ function clone(obj) {
         this.post_list.need_update = true;
         if (this.type === "followed") {
           this.activity_list.directories = (function() {
-            var _ref, _results;
-            _ref = Page.user.followed_users;
-            _results = [];
-            for (key in _ref) {
-              followed = _ref[key];
-              _results.push("data/users/" + (key.split('/')[1]));
+            var ref, results;
+            ref = Page.user.followed_users;
+            results = [];
+            for (key in ref) {
+              followed = ref[key];
+              results.push("data/users/" + (key.split('/')[1]));
             }
-            return _results;
+            return results;
           })();
         } else {
           this.activity_list.directories = "all";
@@ -3665,29 +3665,29 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentProfile.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentProfile.coffee ---- */
 
 
 (function() {
   var ContentProfile,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ContentProfile = (function(_super) {
-    __extends(ContentProfile, _super);
+  ContentProfile = (function(superClass) {
+    extend(ContentProfile, superClass);
 
     function ContentProfile() {
-      this.update = __bind(this.update, this);
-      this.render = __bind(this.render, this);
-      this.handleOptionalHelpClick = __bind(this.handleOptionalHelpClick, this);
-      this.handleAvatarUpload = __bind(this.handleAvatarUpload, this);
-      this.handleUserNameSave = __bind(this.handleUserNameSave, this);
-      this.handleIntroSave = __bind(this.handleIntroSave, this);
-      this.filter = __bind(this.filter, this);
-      this.findUser = __bind(this.findUser, this);
-      this.setUser = __bind(this.setUser, this);
-      this.renderNotSeeded = __bind(this.renderNotSeeded, this);
+      this.update = bind(this.update, this);
+      this.render = bind(this.render, this);
+      this.handleOptionalHelpClick = bind(this.handleOptionalHelpClick, this);
+      this.handleAvatarUpload = bind(this.handleAvatarUpload, this);
+      this.handleUserNameSave = bind(this.handleUserNameSave, this);
+      this.handleIntroSave = bind(this.handleIntroSave, this);
+      this.filter = bind(this.filter, this);
+      this.findUser = bind(this.findUser, this);
+      this.setUser = bind(this.setUser, this);
+      this.renderNotSeeded = bind(this.renderNotSeeded, this);
       this.post_list = null;
       this.activity_list = null;
       this.user_list = null;
@@ -3732,9 +3732,9 @@ function clone(obj) {
       ]);
     };
 
-    ContentProfile.prototype.setUser = function(_at_hub, _at_auth_address) {
-      this.hub = _at_hub;
-      this.auth_address = _at_auth_address;
+    ContentProfile.prototype.setUser = function(hub, auth_address) {
+      this.hub = hub;
+      this.auth_address = auth_address;
       this.loaded = false;
       this.log("setUser", this.hub, this.auth_address);
       if (!this.post_list || this.post_list.directories[0] !== "data/users/" + this.auth_address) {
@@ -3854,28 +3854,28 @@ function clone(obj) {
     };
 
     ContentProfile.prototype.render = function() {
-      var _ref, _ref1, _ref2, _ref3, _ref4;
+      var ref, ref1, ref2, ref3, ref4;
       if (this.need_update) {
         this.log("Updating");
         this.need_update = false;
         this.post_list.filter_post_ids = this.filter_post_id ? [this.filter_post_id] : null;
-        if ((_ref = this.post_list) != null) {
-          _ref.need_update = true;
+        if ((ref = this.post_list) != null) {
+          ref.need_update = true;
         }
-        if ((_ref1 = this.user_list) != null) {
-          _ref1.need_update = true;
+        if ((ref1 = this.user_list) != null) {
+          ref1.need_update = true;
         }
-        if ((_ref2 = this.activity_list) != null) {
-          _ref2.need_update = true;
+        if ((ref2 = this.activity_list) != null) {
+          ref2.need_update = true;
         }
         this.activity_list.directories = ["data/users/" + this.auth_address];
         this.user.auth_address = this.auth_address;
         this.user.hub = this.hub;
         this.user.get(this.hub, this.auth_address, (function(_this) {
           return function(res) {
-            var _ref3;
+            var ref3;
             if (res) {
-              _this.owned = _this.user.auth_address === ((_ref3 = Page.user) != null ? _ref3.auth_address : void 0);
+              _this.owned = _this.user.auth_address === ((ref3 = Page.user) != null ? ref3.auth_address : void 0);
               if (_this.owned && !_this.editable_intro) {
                 _this.editable_intro = new Editable("div", _this.handleIntroSave);
                 _this.editable_intro.render_function = Text.renderMarked;
@@ -3912,7 +3912,7 @@ function clone(obj) {
           };
         })(this));
       }
-      if (!((_ref3 = this.user) != null ? (_ref4 = _ref3.row) != null ? _ref4.user_name : void 0 : void 0)) {
+      if (!((ref3 = this.user) != null ? (ref4 = ref3.row) != null ? ref4.user_name : void 0 : void 0)) {
         if (this.loaded) {
           return h("div#Content.center." + this.auth_address, [h("div.user-notfound", "User not found or muted")]);
         } else {
@@ -3988,25 +3988,25 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentUsers.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentUsers.coffee ---- */
 
 
 (function() {
   var ContentUsers,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ContentUsers = (function(_super) {
-    __extends(ContentUsers, _super);
+  ContentUsers = (function(superClass) {
+    extend(ContentUsers, superClass);
 
     function ContentUsers() {
-      this.update = __bind(this.update, this);
-      this.render = __bind(this.render, this);
-      this.handleSearchInput = __bind(this.handleSearchInput, this);
-      this.handleRecentMoreClick = __bind(this.handleRecentMoreClick, this);
-      this.handleActiveMoreClick = __bind(this.handleActiveMoreClick, this);
-      this.handleSuggestedMoreClick = __bind(this.handleSuggestedMoreClick, this);
+      this.update = bind(this.update, this);
+      this.render = bind(this.render, this);
+      this.handleSearchInput = bind(this.handleSearchInput, this);
+      this.handleRecentMoreClick = bind(this.handleRecentMoreClick, this);
+      this.handleActiveMoreClick = bind(this.handleActiveMoreClick, this);
+      this.handleSuggestedMoreClick = bind(this.handleSuggestedMoreClick, this);
       this.user_list_suggested = new UserList("suggested");
       this.user_list_suggested.limit = 9;
       this.user_list_active = new UserList("active");
@@ -4069,7 +4069,7 @@ function clone(obj) {
     };
 
     ContentUsers.prototype.render = function() {
-      var _ref, _ref1, _ref2;
+      var ref, ref1, ref2;
       if (this.loaded && !Page.on_loaded.resolved) {
         Page.on_loaded.resolve();
       }
@@ -4084,15 +4084,15 @@ function clone(obj) {
       if (this.need_update) {
         this.log("Updating");
         this.need_update = false;
-        if ((_ref = this.user_list_recent) != null) {
-          _ref.need_update = true;
+        if ((ref = this.user_list_recent) != null) {
+          ref.need_update = true;
         }
-        if ((_ref1 = this.user_list_active) != null) {
-          _ref1.need_update = true;
+        if ((ref1 = this.user_list_active) != null) {
+          ref1.need_update = true;
         }
         if (Page.user.auth_address) {
-          if ((_ref2 = this.user_list_suggested) != null) {
-            _ref2.need_update = true;
+          if ((ref2 = this.user_list_suggested) != null) {
+            ref2.need_update = true;
           }
         }
       }
@@ -4141,30 +4141,30 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Head.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/Head.coffee ---- */
 
 
 (function() {
   var Head,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty,
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  Head = (function(_super) {
-    __extends(Head, _super);
+  Head = (function(superClass) {
+    extend(Head, superClass);
 
     function Head() {
-      this.render = __bind(this.render, this);
-      this.saveFollows = __bind(this.saveFollows, this);
-      this.handleMenuClick = __bind(this.handleMenuClick, this);
-      this.handleFollowMenuItemClick = __bind(this.handleFollowMenuItemClick, this);
+      this.render = bind(this.render, this);
+      this.saveFollows = bind(this.saveFollows, this);
+      this.handleMenuClick = bind(this.handleMenuClick, this);
+      this.handleFollowMenuItemClick = bind(this.handleFollowMenuItemClick, this);
       this.menu = new Menu();
       this.follows = [];
     }
 
     Head.prototype.handleSelectUserClick = function() {
-      if (__indexOf.call(Page.site_info.settings.permissions, "Merger:ZeroMe") < 0) {
+      if (indexOf.call(Page.site_info.settings.permissions, "Merger:ZeroMe") < 0) {
         Page.cmd("wrapperPermissionAdd", "Merger:ZeroMe", (function(_this) {
           return function() {
             return Page.updateSiteInfo(function() {
@@ -4192,13 +4192,13 @@ function clone(obj) {
     };
 
     Head.prototype.handleMenuClick = function() {
-      var _ref;
-      if (!((_ref = Page.site_info) != null ? _ref.cert_user_id : void 0)) {
+      var ref;
+      if (!((ref = Page.site_info) != null ? ref.cert_user_id : void 0)) {
         return this.handleSelectUserClick();
       }
       Page.cmd("feedListFollow", [], (function(_this) {
-        return function(_at_follows) {
-          _this.follows = _at_follows;
+        return function(follows) {
+          _this.follows = follows;
           _this.menu.items = [];
           _this.menu.items.push([
             "Follow username mentions", (function(item) {
@@ -4248,7 +4248,7 @@ function clone(obj) {
     };
 
     Head.prototype.render = function() {
-      var _ref, _ref1, _ref2, _ref3;
+      var ref, ref1, ref2, ref3;
       return h("div.head.center", [
         h("a.logo", {
           href: "?Home",
@@ -4257,7 +4257,7 @@ function clone(obj) {
           src: "img/logo.svg",
           height: 40,
           onerror: "this.src='img/logo.png'; this.onerror=null;"
-        })), ((_ref = Page.user) != null ? _ref.hub : void 0) ? h("div.right.authenticated", [
+        })), ((ref = Page.user) != null ? ref.hub : void 0) ? h("div.right.authenticated", [
           h("div.user", h("a.name.link", {
             href: Page.user.getLink(),
             onclick: Page.handleLinkClick
@@ -4269,7 +4269,7 @@ function clone(obj) {
             onclick: Page.returnFalse,
             onmousedown: this.handleMenuClick
           }, "\u22EE"), this.menu.render()
-        ]) : !((_ref1 = Page.user) != null ? _ref1.hub : void 0) && ((_ref2 = Page.site_info) != null ? _ref2.cert_user_id : void 0) ? h("div.right.selected", [
+        ]) : !((ref1 = Page.user) != null ? ref1.hub : void 0) && ((ref2 = Page.site_info) != null ? ref2.cert_user_id : void 0) ? h("div.right.selected", [
           h("div.user", h("a.name.link", {
             href: "?Create+profile",
             onclick: Page.handleLinkClick
@@ -4281,7 +4281,7 @@ function clone(obj) {
             onclick: Page.returnFalse,
             onmousedown: this.handleMenuClick
           }, "\u22EE")
-        ]) : !((_ref3 = Page.user) != null ? _ref3.hub : void 0) && Page.site_info ? h("div.right.unknown", [
+        ]) : !((ref3 = Page.user) != null ? ref3.hub : void 0) && Page.site_info ? h("div.right.unknown", [
           h("div.user", h("a.name.link", {
             href: "#Select+user",
             onclick: this.handleSelectUserClick
@@ -4306,36 +4306,36 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Post.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/Post.coffee ---- */
 
 
 (function() {
   var Post,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty,
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  Post = (function(_super) {
-    __extends(Post, _super);
+  Post = (function(superClass) {
+    extend(Post, superClass);
 
-    function Post(row, _at_item_list) {
-      this.item_list = _at_item_list;
-      this.render = __bind(this.render, this);
-      this.renderComments = __bind(this.renderComments, this);
-      this.follow = __bind(this.follow, this);
-      this.unfollow = __bind(this.unfollow, this);
-      this.handleSettingsClick = __bind(this.handleSettingsClick, this);
-      this.getPostUri = __bind(this.getPostUri, this);
-      this.handleReplyClick = __bind(this.handleReplyClick, this);
-      this.handleMoreCommentsClick = __bind(this.handleMoreCommentsClick, this);
-      this.handleCommentDelete = __bind(this.handleCommentDelete, this);
-      this.handleCommentSave = __bind(this.handleCommentSave, this);
-      this.handleCommentSubmit = __bind(this.handleCommentSubmit, this);
-      this.handleCommentClick = __bind(this.handleCommentClick, this);
-      this.handleLikeClick = __bind(this.handleLikeClick, this);
-      this.handlePostDelete = __bind(this.handlePostDelete, this);
-      this.handlePostSave = __bind(this.handlePostSave, this);
+    function Post(row, item_list) {
+      this.item_list = item_list;
+      this.render = bind(this.render, this);
+      this.renderComments = bind(this.renderComments, this);
+      this.follow = bind(this.follow, this);
+      this.unfollow = bind(this.unfollow, this);
+      this.handleSettingsClick = bind(this.handleSettingsClick, this);
+      this.getPostUri = bind(this.getPostUri, this);
+      this.handleReplyClick = bind(this.handleReplyClick, this);
+      this.handleMoreCommentsClick = bind(this.handleMoreCommentsClick, this);
+      this.handleCommentDelete = bind(this.handleCommentDelete, this);
+      this.handleCommentSave = bind(this.handleCommentSave, this);
+      this.handleCommentSubmit = bind(this.handleCommentSubmit, this);
+      this.handleCommentClick = bind(this.handleCommentClick, this);
+      this.handleLikeClick = bind(this.handleLikeClick, this);
+      this.handlePostDelete = bind(this.handlePostDelete, this);
+      this.handlePostSave = bind(this.handlePostSave, this);
       this.liked = false;
       this.commenting = false;
       this.submitting_like = false;
@@ -4353,7 +4353,7 @@ function clone(obj) {
     }
 
     Post.prototype.setRow = function(row) {
-      var _ref;
+      var ref;
       this.row = row;
       if (this.row.meta) {
         this.meta = new PostMeta(this, JSON.parse(this.row.meta));
@@ -4366,7 +4366,7 @@ function clone(obj) {
         auth_address: row.directory.replace("data/users/", "")
       });
       this.user.row = row;
-      this.owned = this.user.auth_address === ((_ref = Page.user) != null ? _ref.auth_address : void 0);
+      this.owned = this.user.auth_address === ((ref = Page.user) != null ? ref.auth_address : void 0);
       if (this.owned) {
         this.editable_body = new Editable("div.body", this.handlePostSave, this.handlePostDelete);
         this.editable_body.render_function = Text.renderMarked;
@@ -4381,10 +4381,10 @@ function clone(obj) {
     Post.prototype.handlePostSave = function(body, cb) {
       return Page.user.getData(Page.user.hub, (function(_this) {
         return function(data) {
-          var i, post, post_index, _i, _len, _ref;
-          _ref = data.post;
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            post = _ref[i];
+          var i, j, len, post, post_index, ref;
+          ref = data.post;
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            post = ref[i];
             if (post.post_id === _this.row.post_id) {
               post_index = i;
             }
@@ -4400,16 +4400,16 @@ function clone(obj) {
     Post.prototype.handlePostDelete = function(cb) {
       return Page.user.getData(Page.user.hub, (function(_this) {
         return function(data) {
-          var i, post, post_index, _i, _len, _ref, _ref1, _ref2;
-          _ref = data.post;
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            post = _ref[i];
+          var i, j, len, post, post_index, ref, ref1, ref2;
+          ref = data.post;
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            post = ref[i];
             if (post.post_id === _this.row.post_id) {
               post_index = i;
             }
           }
           data.post.splice(post_index, 1);
-          if ((_ref1 = _this.meta) != null ? (_ref2 = _ref1.meta) != null ? _ref2.img : void 0 : void 0) {
+          if ((ref1 = _this.meta) != null ? (ref2 = ref1.meta) != null ? ref2.img : void 0 : void 0) {
             return Page.cmd("fileDelete", (_this.user.getPath()) + "/" + _this.row.post_id + ".jpg", function() {
               return Page.user.save(data, Page.user.hub, function(res) {
                 return cb(res);
@@ -4425,9 +4425,9 @@ function clone(obj) {
     };
 
     Post.prototype.handleLikeClick = function(e) {
-      var post_uri, site, _ref;
+      var post_uri, ref, site;
       this.submitting_like = true;
-      _ref = this.row.key.split("-"), site = _ref[0], post_uri = _ref[1];
+      ref = this.row.key.split("-"), site = ref[0], post_uri = ref[1];
       if (Page.user.likes[post_uri]) {
         Animation.flashOut(e.currentTarget.firstChild);
         Page.user.dislike(site, post_uri, (function(_this) {
@@ -4463,13 +4463,13 @@ function clone(obj) {
     };
 
     Post.prototype.handleCommentSubmit = function() {
-      var post_uri, site, timer_loading, _ref;
+      var post_uri, ref, site, timer_loading;
       timer_loading = setTimeout(((function(_this) {
         return function() {
           return _this.field_comment.loading = true;
         };
       })(this)), 100);
-      _ref = this.row.key.split("-"), site = _ref[0], post_uri = _ref[1];
+      ref = this.row.key.split("-"), site = ref[0], post_uri = ref[1];
       return Page.user.comment(site, post_uri, this.field_comment.attrs.value, (function(_this) {
         return function(res) {
           clearInterval(timer_loading);
@@ -4485,10 +4485,10 @@ function clone(obj) {
     Post.prototype.handleCommentSave = function(comment_id, body, cb) {
       return Page.user.getData(this.row.site, (function(_this) {
         return function(data) {
-          var comment, comment_index, i, _i, _len, _ref;
-          _ref = data.comment;
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            comment = _ref[i];
+          var comment, comment_index, i, j, len, ref;
+          ref = data.comment;
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            comment = ref[i];
             if (comment.comment_id === comment_id) {
               comment_index = i;
             }
@@ -4504,10 +4504,10 @@ function clone(obj) {
     Post.prototype.handleCommentDelete = function(comment_id, cb) {
       return Page.user.getData(this.row.site, (function(_this) {
         return function(data) {
-          var comment, comment_index, i, _i, _len, _ref;
-          _ref = data.comment;
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            comment = _ref[i];
+          var comment, comment_index, i, j, len, ref;
+          ref = data.comment;
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            comment = ref[i];
             if (comment.comment_id === comment_id) {
               comment_index = i;
             }
@@ -4539,9 +4539,9 @@ function clone(obj) {
     };
 
     Post.prototype.getEditableComment = function(comment_uri) {
-      var comment_id, handleCommentDelete, handleCommentSave, user_address, _ref;
+      var comment_id, handleCommentDelete, handleCommentSave, ref, user_address;
       if (!this.editable_comments[comment_uri]) {
-        _ref = comment_uri.split("_"), user_address = _ref[0], comment_id = _ref[1];
+        ref = comment_uri.split("_"), user_address = ref[0], comment_id = ref[1];
         handleCommentSave = (function(_this) {
           return function(body, cb) {
             return _this.handleCommentSave(parseInt(comment_id), body, cb);
@@ -4566,14 +4566,14 @@ function clone(obj) {
       this.css_style = "z-index: " + this.row.date_added + "; position: relative";
       Page.cmd("feedListFollow", [], (function(_this) {
         return function(follows) {
-          var followed, _ref;
+          var followed, ref;
           if (!_this.menu) {
             _this.menu = new Menu();
           }
-          followed = follows["Post follow"] && (_ref = _this.getPostUri(), __indexOf.call(follows["Post follow"][1], _ref) >= 0);
+          followed = follows["Post follow"] && (ref = _this.getPostUri(), indexOf.call(follows["Post follow"][1], ref) >= 0);
           _this.menu.items = [];
           _this.menu.items.push([
-            "Follow in newsfeed", (function() {
+            (followed ? "Unfollow" : "Follow") + " post in newsfeed", (function() {
               if (followed) {
                 return _this.unfollow();
               } else {
@@ -4581,7 +4581,9 @@ function clone(obj) {
               }
             }), followed
           ]);
-          _this.menu.items.push(["Mute user", _this.user.handleMuteClick]);
+          if (!_this.owned) {
+            _this.menu.items.push(["Mute user", _this.user.handleMuteClick]);
+          }
           _this.menu.items.push(["Permalink", _this.getLink()]);
           return _this.menu.toggle();
         };
@@ -4626,7 +4628,7 @@ function clone(obj) {
     };
 
     Post.prototype.renderComments = function() {
-      var comment_limit, _ref, _ref1;
+      var comment_limit, ref, ref1;
       if (!this.row.comments && !this.commenting) {
         return [];
       }
@@ -4643,12 +4645,12 @@ function clone(obj) {
       }, [
         this.commenting ? h("div.comment-create", {
           enterAnimation: Animation.slideDown
-        }, this.field_comment.render()) : void 0, (_ref = this.row.comments) != null ? _ref.slice(0, +(comment_limit - 1) + 1 || 9e9).map((function(_this) {
+        }, this.field_comment.render()) : void 0, (ref = this.row.comments) != null ? ref.slice(0, +(comment_limit - 1) + 1 || 9e9).map((function(_this) {
           return function(comment) {
-            var comment_uri, owned, user_address, user_link, _ref1, _ref2;
+            var comment_uri, owned, ref1, ref2, user_address, user_link;
             user_address = comment.directory.replace("data/users/", "");
             comment_uri = user_address + "_" + comment.comment_id;
-            owned = user_address === ((_ref1 = Page.user) != null ? _ref1.auth_address : void 0);
+            owned = user_address === ((ref1 = Page.user) != null ? ref1.auth_address : void 0);
             user_link = "?Profile/" + comment.hub + "/" + user_address + "/" + comment.cert_user_id;
             return h("div.comment", {
               id: comment_uri,
@@ -4672,7 +4674,7 @@ function clone(obj) {
                   onclick: _this.handleReplyClick,
                   user_name: comment.user_name
                 }, "Reply")
-              ]), owned ? _this.getEditableComment(comment_uri).render(comment.body) : ((_ref2 = comment.body) != null ? _ref2.length : void 0) > 5000 ? h("div.body.maxheight", {
+              ]), owned ? _this.getEditableComment(comment_uri).render(comment.body) : ((ref2 = comment.body) != null ? ref2.length : void 0) > 5000 ? h("div.body.maxheight", {
                 innerHTML: Text.renderMarked(comment.body),
                 afterCreate: Maxheight.apply
               }) : h("div.body", {
@@ -4680,7 +4682,7 @@ function clone(obj) {
               })
             ]);
           };
-        })(this)) : void 0, ((_ref1 = this.row.comments) != null ? _ref1.length : void 0) > comment_limit ? h("a.more", {
+        })(this)) : void 0, ((ref1 = this.row.comments) != null ? ref1.length : void 0) > comment_limit ? h("a.more", {
           href: "#More",
           onclick: this.handleMoreCommentsClick,
           enterAnimation: Animation.slideDown,
@@ -4690,8 +4692,8 @@ function clone(obj) {
     };
 
     Post.prototype.render = function() {
-      var post_uri, site, _ref, _ref1, _ref2, _ref3;
-      _ref = this.row.key.split("-"), site = _ref[0], post_uri = _ref[1];
+      var post_uri, ref, ref1, ref2, ref3, site;
+      ref = this.row.key.split("-"), site = ref[0], post_uri = ref[1];
       return h("div.post", {
         key: this.row.key,
         enterAnimation: Animation.slideDown,
@@ -4723,7 +4725,7 @@ function clone(obj) {
           }, "\u22EE")
         ]), this.owned ? this.editable_body.render(this.row.body) : h("div.body", {
           classes: {
-            maxheight: !this.row.selected && ((_ref1 = this.row.body) != null ? _ref1.length : void 0) > 3000
+            maxheight: !this.row.selected && ((ref1 = this.row.body) != null ? ref1.length : void 0) > 3000
           },
           innerHTML: Text.renderMarked(this.row.body),
           afterCreate: Maxheight.apply,
@@ -4734,7 +4736,7 @@ function clone(obj) {
             onclick: this.handleCommentClick
           }, "Comment"), h("a.like.link", {
             classes: {
-              active: (_ref2 = Page.user) != null ? _ref2.likes[post_uri] : void 0,
+              active: (ref2 = Page.user) != null ? ref2.likes[post_uri] : void 0,
               loading: this.submitting_like,
               "like-zero": this.row.likes === 0
             },
@@ -4742,7 +4744,7 @@ function clone(obj) {
             onclick: this.handleLikeClick
           }, h("div.icon.icon-heart", {
             classes: {
-              active: (_ref3 = Page.user) != null ? _ref3.likes[post_uri] : void 0
+              active: (ref3 = Page.user) != null ? ref3.likes[post_uri] : void 0
             }
           }), this.row.likes ? this.row.likes : void 0)
         ]), this.renderComments()
@@ -4759,25 +4761,25 @@ function clone(obj) {
 
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostCreate.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostCreate.coffee ---- */
 
 
 (function() {
   var PostCreate,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  PostCreate = (function(_super) {
-    __extends(PostCreate, _super);
+  PostCreate = (function(superClass) {
+    extend(PostCreate, superClass);
 
     function PostCreate() {
-      this.render = __bind(this.render, this);
-      this.handleUploadClick = __bind(this.handleUploadClick, this);
-      this.handlePostSubmit = __bind(this.handlePostSubmit, this);
-      this.handleImageClose = __bind(this.handleImageClose, this);
-      this.handleUpload = __bind(this.handleUpload, this);
-      this.startEdit = __bind(this.startEdit, this);
+      this.render = bind(this.render, this);
+      this.handleUploadClick = bind(this.handleUploadClick, this);
+      this.handlePostSubmit = bind(this.handlePostSubmit, this);
+      this.handleImageClose = bind(this.handleImageClose, this);
+      this.handleUpload = bind(this.handleUpload, this);
+      this.startEdit = bind(this.startEdit, this);
       this.field_post = new Autosize({
         placeholder: "Write something...",
         "class": "postfield",
@@ -4816,7 +4818,7 @@ function clone(obj) {
     };
 
     PostCreate.prototype.handlePostSubmit = function() {
-      var meta, _ref;
+      var meta, ref;
       this.field_post.loading = true;
       if (this.image.height) {
         meta = {};
@@ -4824,7 +4826,7 @@ function clone(obj) {
       } else {
         meta = null;
       }
-      Page.user.post(this.field_post.attrs.value, meta, (_ref = this.image.base64uri) != null ? _ref.replace(/.*base64,/, "") : void 0, (function(_this) {
+      Page.user.post(this.field_post.attrs.value, meta, (ref = this.image.base64uri) != null ? ref.replace(/.*base64,/, "") : void 0, (function(_this) {
         return function(res) {
           _this.field_post.loading = false;
           if (res) {
@@ -4914,26 +4916,26 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostList.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostList.coffee ---- */
 
 
 (function() {
   var PostList,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  PostList = (function(_super) {
-    __extends(PostList, _super);
+  PostList = (function(superClass) {
+    extend(PostList, superClass);
 
     function PostList() {
-      this.render = __bind(this.render, this);
-      this.storeMoreTag = __bind(this.storeMoreTag, this);
-      this.addScrollwatcher = __bind(this.addScrollwatcher, this);
-      this.handleMoreClick = __bind(this.handleMoreClick, this);
-      this.update = __bind(this.update, this);
-      this.queryLikes = __bind(this.queryLikes, this);
-      this.queryComments = __bind(this.queryComments, this);
+      this.render = bind(this.render, this);
+      this.storeMoreTag = bind(this.storeMoreTag, this);
+      this.addScrollwatcher = bind(this.addScrollwatcher, this);
+      this.handleMoreClick = bind(this.handleMoreClick, this);
+      this.update = bind(this.update, this);
+      this.queryLikes = bind(this.queryLikes, this);
+      this.queryComments = bind(this.queryComments, this);
       this.item_list = new ItemList(Post, "key");
       this.posts = this.item_list.items;
       this.need_update = true;
@@ -4982,29 +4984,29 @@ function clone(obj) {
       this.logStart("Update");
       return Page.cmd("dbQuery", [query, param], (function(_this) {
         return function(rows) {
-          var items, post_uris, row, _i, _len;
+          var items, j, len, post_uris, row;
           items = [];
           post_uris = [];
-          for (_i = 0, _len = rows.length; _i < _len; _i++) {
-            row = rows[_i];
+          for (j = 0, len = rows.length; j < len; j++) {
+            row = rows[j];
             row["key"] = row["site"] + "-" + row["directory"].replace("data/users/", "") + "_" + row["post_id"];
             row["post_uri"] = row["directory"].replace("data/users/", "") + "_" + row["post_id"];
             post_uris.push(row["post_uri"]);
           }
           _this.queryComments(post_uris, function(comment_rows) {
-            var comment_db, comment_row, _j, _k, _len1, _len2, _name, _ref;
+            var comment_db, comment_row, k, l, len1, len2, name, ref;
             comment_db = {};
-            for (_j = 0, _len1 = comment_rows.length; _j < _len1; _j++) {
-              comment_row = comment_rows[_j];
-              if (comment_db[_name = comment_row.site + "/" + comment_row.post_uri] == null) {
-                comment_db[_name] = [];
+            for (k = 0, len1 = comment_rows.length; k < len1; k++) {
+              comment_row = comment_rows[k];
+              if (comment_db[name = comment_row.site + "/" + comment_row.post_uri] == null) {
+                comment_db[name] = [];
               }
               comment_db[comment_row.site + "/" + comment_row.post_uri].push(comment_row);
             }
-            for (_k = 0, _len2 = rows.length; _k < _len2; _k++) {
-              row = rows[_k];
+            for (l = 0, len2 = rows.length; l < len2; l++) {
+              row = rows[l];
               row["comments"] = comment_db[row.site + "/" + row.post_uri];
-              if (((_ref = _this.filter_post_ids) != null ? _ref.length : void 0) === 1 && row.post_id === parseInt(_this.filter_post_ids[0])) {
+              if (((ref = _this.filter_post_ids) != null ? ref.length : void 0) === 1 && row.post_id === parseInt(_this.filter_post_ids[0])) {
                 row.selected = true;
               }
             }
@@ -5017,14 +5019,14 @@ function clone(obj) {
             }
           });
           return _this.queryLikes(post_uris, function(like_rows) {
-            var like_db, like_row, _j, _k, _len1, _len2;
+            var k, l, len1, len2, like_db, like_row;
             like_db = {};
-            for (_j = 0, _len1 = like_rows.length; _j < _len1; _j++) {
-              like_row = like_rows[_j];
+            for (k = 0, len1 = like_rows.length; k < len1; k++) {
+              like_row = like_rows[k];
               like_db[like_row["post_uri"]] = like_row["likes"];
             }
-            for (_k = 0, _len2 = rows.length; _k < _len2; _k++) {
-              row = rows[_k];
+            for (l = 0, len2 = rows.length; l < len2; l++) {
+              row = rows[l];
               row["likes"] = like_db[row["post_uri"]];
             }
             _this.item_list.sync(rows);
@@ -5043,10 +5045,10 @@ function clone(obj) {
     PostList.prototype.addScrollwatcher = function() {
       return setTimeout(((function(_this) {
         return function() {
-          var i, item, _i, _len, _ref;
-          _ref = Page.scrollwatcher.items;
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            item = _ref[i];
+          var i, item, j, len, ref;
+          ref = Page.scrollwatcher.items;
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            item = ref[i];
             if (item[1] === _this.tag_more) {
               Page.scrollwatcher.items.splice(i, 1);
               break;
@@ -5095,8 +5097,8 @@ function clone(obj) {
             var err;
             try {
               return post.render();
-            } catch (_error) {
-              err = _error;
+            } catch (error) {
+              err = error;
               h("div.error", ["Post render error:", err.message]);
               return Debug.formatException(err);
             }
@@ -5120,27 +5122,27 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostMeta.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostMeta.coffee ---- */
 
 
 (function() {
   var PostMeta,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  PostMeta = (function(_super) {
-    __extends(PostMeta, _super);
+  PostMeta = (function(superClass) {
+    extend(PostMeta, superClass);
 
-    function PostMeta(_at_post, _at_meta) {
-      this.post = _at_post;
-      this.meta = _at_meta;
-      this.render = __bind(this.render, this);
-      this.handleImageSettingsClick = __bind(this.handleImageSettingsClick, this);
-      this.handleImageDeleteClick = __bind(this.handleImageDeleteClick, this);
-      this.handleOptionalHelpClick = __bind(this.handleOptionalHelpClick, this);
-      this.handleImageClick = __bind(this.handleImageClick, this);
-      this.afterCreateImage = __bind(this.afterCreateImage, this);
+    function PostMeta(post, meta) {
+      this.post = post;
+      this.meta = meta;
+      this.render = bind(this.render, this);
+      this.handleImageSettingsClick = bind(this.handleImageSettingsClick, this);
+      this.handleImageDeleteClick = bind(this.handleImageDeleteClick, this);
+      this.handleOptionalHelpClick = bind(this.handleOptionalHelpClick, this);
+      this.handleImageClick = bind(this.handleImageClick, this);
+      this.afterCreateImage = bind(this.afterCreateImage, this);
       this;
     }
 
@@ -5154,8 +5156,8 @@ function clone(obj) {
               _this.image_preview.optional_info = res;
               return Page.projector.scheduleRender();
             });
-          } catch (_error) {
-            e = _error;
+          } catch (error) {
+            e = error;
             _this.log("Image preview error: " + e);
           }
           return Page.projector.scheduleRender();
@@ -5164,8 +5166,8 @@ function clone(obj) {
     };
 
     PostMeta.prototype.handleImageClick = function(e) {
-      var image, _ref;
-      if (this.image_preview.load_fullsize || ((_ref = this.image_preview.optional_info) != null ? _ref.is_downloaded : void 0)) {
+      var image, ref;
+      if (this.image_preview.load_fullsize || ((ref = this.image_preview.optional_info) != null ? ref.is_downloaded : void 0)) {
         Page.overlay.zoomImageTag(e.currentTarget, this.image_preview.width, this.image_preview.height);
       } else {
         this.image_preview.load_fullsize = true;
@@ -5221,7 +5223,7 @@ function clone(obj) {
       }
       this.post.user.hasHelp((function(_this) {
         return function(helping) {
-          var _ref;
+          var ref;
           if (!_this.menu_image) {
             _this.menu_image = new Menu();
           }
@@ -5233,7 +5235,7 @@ function clone(obj) {
             })
           ]);
           _this.menu_image.items.push(["---"]);
-          if ((_ref = _this.image_preview.optional_info) != null ? _ref.is_downloaded : void 0) {
+          if ((ref = _this.image_preview.optional_info) != null ? ref.is_downloaded : void 0) {
             _this.menu_image.items.push(["Delete image", _this.handleImageDeleteClick]);
           } else {
             _this.menu_image.items.push(["Show image", _this.handleImageClick, false]);
@@ -5245,19 +5247,19 @@ function clone(obj) {
     };
 
     PostMeta.prototype.render = function() {
-      var height, style_fullsize, style_preview, width, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8;
+      var height, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, style_fullsize, style_preview, width;
       if (this.meta.img) {
         if (!this.image_preview) {
           this.image_preview = new ImagePreview();
           this.image_preview.setPreviewData(this.meta.img);
         }
-        _ref = this.image_preview.getSize(530, 600), width = _ref[0], height = _ref[1];
-        if ((_ref1 = this.image_preview) != null ? _ref1.preview_uri : void 0) {
+        ref = this.image_preview.getSize(530, 600), width = ref[0], height = ref[1];
+        if ((ref1 = this.image_preview) != null ? ref1.preview_uri : void 0) {
           style_preview = "background-image: url(" + this.image_preview.preview_uri + ")";
         } else {
           style_preview = "";
         }
-        if (this.image_preview.load_fullsize || ((_ref2 = this.image_preview.optional_info) != null ? _ref2.is_downloaded : void 0)) {
+        if (this.image_preview.load_fullsize || ((ref2 = this.image_preview.optional_info) != null ? ref2.is_downloaded : void 0)) {
           style_fullsize = "background-image: url(" + (this.post.user.getPath()) + "/" + this.post.row.post_id + ".jpg)";
         } else {
           style_fullsize = "";
@@ -5266,22 +5268,22 @@ function clone(obj) {
           afterCreate: this.afterCreateImage,
           style: "width: " + width + "px; height: " + height + "px; " + style_preview,
           classes: {
-            downloaded: (_ref3 = this.image_preview.optional_info) != null ? _ref3.is_downloaded : void 0,
-            hasinfo: ((_ref4 = this.image_preview.optional_info) != null ? _ref4.peer : void 0) !== null,
+            downloaded: (ref3 = this.image_preview.optional_info) != null ? ref3.is_downloaded : void 0,
+            hasinfo: ((ref4 = this.image_preview.optional_info) != null ? ref4.peer : void 0) !== null,
             loading: this.image_preview.loading
           }
         }, h("a.fullsize", {
           href: "#",
           onclick: this.handleImageClick,
           style: style_fullsize
-        }), Page.server_info.rev < 1700 ? h("small.oldversion", "You need ZeroNet 0.5.0 to view this image") : void 0, ((_ref5 = this.image_preview) != null ? _ref5.optional_info : void 0) ? h("a.show", {
+        }), Page.server_info.rev < 1700 ? h("small.oldversion", "You need ZeroNet 0.5.0 to view this image") : void 0, ((ref5 = this.image_preview) != null ? ref5.optional_info : void 0) ? h("a.show", {
           href: "#",
           onclick: this.handleImageClick
-        }, h("div.title", "Loading...\nShow image")) : void 0, ((_ref6 = this.image_preview) != null ? _ref6.optional_info : void 0) ? h("a.details", {
+        }, h("div.title", "Loading...\nShow image")) : void 0, ((ref6 = this.image_preview) != null ? ref6.optional_info : void 0) ? h("a.details", {
           href: "#Settings",
           onclick: Page.returnFalse,
           onmousedown: this.handleImageSettingsClick
-        }, [h("div.size", Text.formatSize((_ref7 = this.image_preview.optional_info) != null ? _ref7.size : void 0)), h("div.peers.icon-profile"), (_ref8 = this.image_preview.optional_info) != null ? _ref8.peer : void 0, h("a.image-settings", "\u22EE"), this.menu_image ? this.menu_image.render(".menu-right") : void 0]) : void 0);
+        }, [h("div.size", Text.formatSize((ref7 = this.image_preview.optional_info) != null ? ref7.size : void 0)), h("div.peers.icon-profile"), (ref8 = this.image_preview.optional_info) != null ? ref8.peer : void 0, h("a.image-settings", "\u22EE"), this.menu_image ? this.menu_image.render(".menu-right") : void 0]) : void 0);
       }
     };
 
@@ -5294,28 +5296,28 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/User.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/User.coffee ---- */
 
 
 (function() {
   var User,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  User = (function(_super) {
-    __extends(User, _super);
+  User = (function(superClass) {
+    extend(User, superClass);
 
-    function User(row, _at_item_list) {
-      this.item_list = _at_item_list;
-      this.renderList = __bind(this.renderList, this);
-      this.handleMuteClick = __bind(this.handleMuteClick, this);
-      this.handleDownloadClick = __bind(this.handleDownloadClick, this);
-      this.download = __bind(this.download, this);
-      this.handleFollowClick = __bind(this.handleFollowClick, this);
-      this.renderAvatar = __bind(this.renderAvatar, this);
-      this.hasHelp = __bind(this.hasHelp, this);
-      this.updateInfo = __bind(this.updateInfo, this);
+    function User(row, item_list) {
+      this.item_list = item_list;
+      this.renderList = bind(this.renderList, this);
+      this.handleMuteClick = bind(this.handleMuteClick, this);
+      this.handleDownloadClick = bind(this.handleDownloadClick, this);
+      this.download = bind(this.download, this);
+      this.handleFollowClick = bind(this.handleFollowClick, this);
+      this.renderAvatar = bind(this.renderAvatar, this);
+      this.hasHelp = bind(this.hasHelp, this);
+      this.updateInfo = bind(this.updateInfo, this);
       if (row) {
         this.setRow(row);
       }
@@ -5364,10 +5366,10 @@ function clone(obj) {
       p_followed_users = new Promise();
       Page.cmd("dbQuery", ["SELECT * FROM follow WHERE json_id = " + this.row.json_id], (function(_this) {
         return function(res) {
-          var row, _i, _len;
+          var j, len, row;
           _this.followed_users = {};
-          for (_i = 0, _len = res.length; _i < _len; _i++) {
-            row = res[_i];
+          for (j = 0, len = res.length; j < len; j++) {
+            row = res[j];
             _this.followed_users[row.hub + "/" + row.auth_address] = row;
           }
           return p_followed_users.resolve();
@@ -5375,10 +5377,10 @@ function clone(obj) {
       })(this));
       Page.cmd("dbQuery", ["SELECT post_like.* FROM json LEFT JOIN post_like USING (json_id) WHERE directory = 'data/users/" + this.auth_address + "' AND post_uri IS NOT NULL"], (function(_this) {
         return function(res) {
-          var row, _i, _len;
+          var j, len, row;
           _this.likes = {};
-          for (_i = 0, _len = res.length; _i < _len; _i++) {
-            row = res[_i];
+          for (j = 0, len = res.length; j < len; j++) {
+            row = res[j];
             _this.likes[row.post_uri] = true;
           }
           return p_likes.resolve();
@@ -5424,22 +5426,22 @@ function clone(obj) {
     };
 
     User.prototype.getAvatarLink = function() {
-      var cache_invalidation, _ref;
+      var cache_invalidation, ref;
       cache_invalidation = "";
-      if (this.auth_address === ((_ref = Page.user) != null ? _ref.auth_address : void 0)) {
+      if (this.auth_address === ((ref = Page.user) != null ? ref.auth_address : void 0)) {
         cache_invalidation = "?" + Page.cache_time;
       }
       return "merged-ZeroMe/" + this.hub + "/data/users/" + this.auth_address + "/avatar." + this.row.avatar + cache_invalidation;
     };
 
     User.prototype.getDefaultData = function() {
-      var _ref;
+      var ref;
       return {
         "next_post_id": 2,
         "next_comment_id": 1,
         "next_follow_id": 1,
         "avatar": "generate",
-        "user_name": (_ref = this.row) != null ? _ref.user_name : void 0,
+        "user_name": (ref = this.row) != null ? ref.user_name : void 0,
         "hub": this.hub,
         "intro": "Random ZeroNet user",
         "post": [
@@ -5458,12 +5460,12 @@ function clone(obj) {
     User.prototype.getData = function(site, cb) {
       return Page.cmd("fileGet", [this.getPath(site) + "/data.json", false], (function(_this) {
         return function(data) {
-          var _ref;
+          var ref;
           data = JSON.parse(data);
           if (data == null) {
             data = {
               "next_comment_id": 1,
-              "user_name": (_ref = _this.row) != null ? _ref.user_name : void 0,
+              "user_name": (ref = _this.row) != null ? ref.user_name : void 0,
               "hub": _this.hub,
               "post_like": {},
               "comment": []
@@ -5523,7 +5525,7 @@ function clone(obj) {
       }
       return Page.cmd("fileGet", [this.getPath(Page.userdb) + "/content.json", false], (function(_this) {
         return function(userdb_data) {
-          var changed, field, _i, _len, _ref;
+          var changed, field, j, len, ref;
           userdb_data = JSON.parse(userdb_data);
           changed = false;
           if (!(userdb_data != null ? userdb_data.user : void 0)) {
@@ -5536,9 +5538,9 @@ function clone(obj) {
             };
             changed = true;
           }
-          _ref = ["avatar", "hub", "intro", "user_name"];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            field = _ref[_i];
+          ref = ["avatar", "hub", "intro", "user_name"];
+          for (j = 0, len = ref.length; j < len; j++) {
+            field = ref[j];
             if (userdb_data.user[0][field] !== data[field]) {
               changed = true;
               _this.log("Changed in profile:", field, userdb_data.user[0][field], "!=", data[field]);
@@ -5723,10 +5725,10 @@ function clone(obj) {
       delete this.followed_users[hub + "/" + auth_address];
       return this.getData(this.hub, (function(_this) {
         return function(data) {
-          var follow, follow_index, i, _i, _len, _ref;
-          _ref = data.follow;
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            follow = _ref[i];
+          var follow, follow_index, i, j, len, ref;
+          ref = data.follow;
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            follow = ref[i];
             if (follow.hub === hub && follow.auth_address === auth_address) {
               follow_index = i;
             }
@@ -5853,21 +5855,21 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/UserList.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/UserList.coffee ---- */
 
 
 (function() {
   var UserList,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  UserList = (function(_super) {
-    __extends(UserList, _super);
+  UserList = (function(superClass) {
+    extend(UserList, superClass);
 
-    function UserList(_at_type) {
-      this.type = _at_type != null ? _at_type : "new";
-      this.render = __bind(this.render, this);
+    function UserList(type1) {
+      this.type = type1 != null ? type1 : "new";
+      this.render = bind(this.render, this);
       this.item_list = new ItemList(User, "key");
       this.users = this.item_list.items;
       this.need_update = true;
@@ -5890,23 +5892,23 @@ function clone(obj) {
         query = "SELECT user.user_name, follow.*, user.*\nFROM follow\nLEFT JOIN user USING (auth_address, hub)\nWHERE\n follow.json_id = " + this.followed_by.row.json_id + "  AND user.json_id IS NOT NULL\n\nUNION\n\nSELECT user.user_name, follow.*, user.*\nFROM follow\nLEFT JOIN json ON (json.directory = 'data/userdb/' || follow.auth_address)\nLEFT JOIN user ON (user.json_id = json.json_id)\nWHERE\n follow.json_id = " + this.followed_by.row.json_id + "  AND user.json_id IS NOT NULL AND\n follow.date_added < " + (Time.timestamp() + 120) + "\nORDER BY date_added DESC\nLIMIT " + this.limit;
       } else if (this.type === "suggested") {
         followed_user_addresses = (function() {
-          var _ref, _results;
-          _ref = Page.user.followed_users;
-          _results = [];
-          for (key in _ref) {
-            val = _ref[key];
-            _results.push(key.replace(/.*\//, ""));
+          var ref, results;
+          ref = Page.user.followed_users;
+          results = [];
+          for (key in ref) {
+            val = ref[key];
+            results.push(key.replace(/.*\//, ""));
           }
-          return _results;
+          return results;
         })();
         followed_user_directories = (function() {
-          var _i, _len, _results;
-          _results = [];
-          for (_i = 0, _len = followed_user_addresses.length; _i < _len; _i++) {
-            key = followed_user_addresses[_i];
-            _results.push("data/users/" + key);
+          var i, len, results;
+          results = [];
+          for (i = 0, len = followed_user_addresses.length; i < len; i++) {
+            key = followed_user_addresses[i];
+            results.push("data/users/" + key);
           }
-          return _results;
+          return results;
         })();
         if (!followed_user_addresses.length) {
           return;
@@ -5919,11 +5921,11 @@ function clone(obj) {
       }
       return Page.cmd("dbQuery", [query, params], (function(_this) {
         return function(rows) {
-          var followed_by_displayed, row, rows_by_user, user_rows, username, _i, _len;
+          var followed_by_displayed, i, len, row, rows_by_user, user_rows, username;
           rows_by_user = {};
           followed_by_displayed = {};
-          for (_i = 0, _len = rows.length; _i < _len; _i++) {
-            row = rows[_i];
+          for (i = 0, len = rows.length; i < len; i++) {
+            row = rows[i];
             if (row.json_cert_user_id) {
               row.cert_user_id = row.json_cert_user_id;
               row.auth_address = row.json_directory.replace("data/userdb/", "").replace("data/users/", "");
@@ -5933,16 +5935,16 @@ function clone(obj) {
             }
             if (row.followed_by) {
               row.followed_by = ((function() {
-                var _j, _len1, _ref, _results;
-                _ref = row.followed_by.split(",");
-                _results = [];
-                for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-                  username = _ref[_j];
+                var j, len1, ref, results;
+                ref = row.followed_by.split(",");
+                results = [];
+                for (j = 0, len1 = ref.length; j < len1; j++) {
+                  username = ref[j];
                   if (!followed_by_displayed[username]) {
-                    _results.push(username);
+                    results.push(username);
                   }
                 }
-                return _results;
+                return results;
               })())[0];
               followed_by_displayed[row.followed_by] = true;
             }
@@ -5952,13 +5954,13 @@ function clone(obj) {
             }
           }
           user_rows = (function() {
-            var _results;
-            _results = [];
+            var results;
+            results = [];
             for (key in rows_by_user) {
               val = rows_by_user[key];
-              _results.push(val);
+              results.push(val);
             }
-            return _results;
+            return results;
           })();
           _this.item_list.sync(user_rows);
           _this.loading = false;
@@ -6000,30 +6002,30 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ZeroMe.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ZeroMe.coffee ---- */
 
 
 (function() {
   var ZeroMe,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty,
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   window.h = maquette.h;
 
-  ZeroMe = (function(_super) {
-    __extends(ZeroMe, _super);
+  ZeroMe = (function(superClass) {
+    extend(ZeroMe, superClass);
 
     function ZeroMe() {
-      this.queryUserdb = __bind(this.queryUserdb, this);
-      this.checkUser = __bind(this.checkUser, this);
-      this.needSite = __bind(this.needSite, this);
-      this.updateServerInfo = __bind(this.updateServerInfo, this);
-      this.updateSiteInfo = __bind(this.updateSiteInfo, this);
-      this.onOpenWebsocket = __bind(this.onOpenWebsocket, this);
-      this.handleLinkClick = __bind(this.handleLinkClick, this);
-      this.renderContent = __bind(this.renderContent, this);
+      this.queryUserdb = bind(this.queryUserdb, this);
+      this.checkUser = bind(this.checkUser, this);
+      this.needSite = bind(this.needSite, this);
+      this.updateServerInfo = bind(this.updateServerInfo, this);
+      this.updateSiteInfo = bind(this.updateSiteInfo, this);
+      this.onOpenWebsocket = bind(this.onOpenWebsocket, this);
+      this.handleLinkClick = bind(this.handleLinkClick, this);
+      this.renderContent = bind(this.renderContent, this);
       return ZeroMe.__super__.constructor.apply(this, arguments);
     }
 
@@ -6047,7 +6049,7 @@ function clone(obj) {
           _this.checkUser(function() {
             return _this.on_user_info.resolve();
           });
-          if (__indexOf.call(_this.site_info.settings.permissions, "Merger:ZeroMe") < 0) {
+          if (indexOf.call(_this.site_info.settings.permissions, "Merger:ZeroMe") < 0) {
             return _this.cmd("wrapperPermissionAdd", "Merger:ZeroMe", function() {
               return _this.updateSiteInfo(function() {
                 return _this.content.update();
@@ -6197,18 +6199,18 @@ function clone(obj) {
       return this.on_site_info.then((function(_this) {
         return function() {
           _this.logStart("Loaded localstorage");
-          return _this.cmd("wrapperGetLocalStorage", [], function(_at_local_storage) {
-            var _base, _base1;
-            _this.local_storage = _at_local_storage;
+          return _this.cmd("wrapperGetLocalStorage", [], function(local_storage) {
+            var base1, base2;
+            _this.local_storage = local_storage;
             _this.logEnd("Loaded localstorage");
             if (_this.local_storage == null) {
               _this.local_storage = {};
             }
-            if ((_base = _this.local_storage).followed_users == null) {
-              _base.followed_users = {};
+            if ((base1 = _this.local_storage).followed_users == null) {
+              base1.followed_users = {};
             }
-            if ((_base1 = _this.local_storage).settings == null) {
-              _base1.settings = {};
+            if ((base2 = _this.local_storage).settings == null) {
+              base2.settings = {};
             }
             return _this.on_local_storage.resolve(_this.local_storage);
           });
@@ -6246,7 +6248,7 @@ function clone(obj) {
         return function(merged_sites) {
           _this.merged_sites = merged_sites;
           return on_site_info.then(function() {
-            if (__indexOf.call(_this.site_info.settings.permissions, "Merger:ZeroMe") >= 0 && !_this.merged_sites[_this.userdb]) {
+            if (indexOf.call(_this.site_info.settings.permissions, "Merger:ZeroMe") >= 0 && !_this.merged_sites[_this.userdb]) {
               _this.cmd("mergerSiteAdd", _this.userdb);
             }
             return typeof cb === "function" ? cb(true) : void 0;
@@ -6294,15 +6296,15 @@ function clone(obj) {
         }
       ], (function(_this) {
         return function(res) {
-          var row, _i, _len;
+          var i, len, row;
           if ((res != null ? res.length : void 0) > 0) {
             _this.user = new User({
               hub: res[0]["hub"],
               auth_address: _this.site_info.auth_address
             });
             _this.user.row = res[0];
-            for (_i = 0, _len = res.length; _i < _len; _i++) {
-              row = res[_i];
+            for (i = 0, len = res.length; i < len; i++) {
+              row = res[i];
               if (row.site === row.hub) {
                 _this.user.row = row;
               }
@@ -6370,14 +6372,14 @@ function clone(obj) {
     };
 
     ZeroMe.prototype.setSiteInfo = function(site_info) {
-      var file_name, _ref, _ref1, _ref2;
+      var file_name, ref, ref1, ref2;
       if (site_info.address === this.address) {
         if (!this.site_info) {
           this.site_info = site_info;
           this.on_site_info.resolve();
         }
         this.site_info = site_info;
-        if (((_ref = site_info.event) != null ? _ref[0] : void 0) === "cert_changed") {
+        if (((ref = site_info.event) != null ? ref[0] : void 0) === "cert_changed") {
           this.checkUser((function(_this) {
             return function(found) {
               if (Page.site_info.cert_user_id && !found) {
@@ -6393,9 +6395,9 @@ function clone(obj) {
           })(this));
         }
       }
-      if (((_ref1 = site_info.event) != null ? _ref1[0] : void 0) === "file_done") {
+      if (((ref1 = site_info.event) != null ? ref1[0] : void 0) === "file_done") {
         file_name = site_info.event[1];
-        if (file_name.indexOf(site_info.auth_address) !== -1 && ((_ref2 = Page.user) != null ? _ref2.auth_address : void 0) !== site_info.auth_address) {
+        if (file_name.indexOf(site_info.auth_address) !== -1 && ((ref2 = Page.user) != null ? ref2.auth_address : void 0) !== site_info.auth_address) {
           return this.checkUser((function(_this) {
             return function() {
               return _this.content.update();

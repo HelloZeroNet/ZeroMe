@@ -136,8 +136,9 @@ class Post extends Class
 				@menu = new Menu()
 			followed = follows["Post follow"] and @getPostUri() in follows["Post follow"][1]
 			@menu.items = []
-			@menu.items.push ["Follow in newsfeed", ( => if followed then @unfollow() else @follow() ), followed]
-			@menu.items.push ["Mute user", @user.handleMuteClick]
+			@menu.items.push [(if followed then "Unfollow" else "Follow")+" post in newsfeed", ( => if followed then @unfollow() else @follow() ), followed]
+			if not @owned
+				@menu.items.push ["Mute user", @user.handleMuteClick]
 			@menu.items.push ["Permalink", @getLink()]
 			@menu.toggle()
 		return false
