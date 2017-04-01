@@ -290,6 +290,7 @@
 .users .user .added { font-size: 11px; color: #999; margin-left: 6px; vertical-align: 3px; }
 .users .user .intro-full { margin-left: -57px; padding-top: 18px; font-weight: 100; line-height: 1.5em; overflow: hidden; max-height: 400px; word-wrap: break-word; }
 .bg-settings { width: 150px; margin: 0 auto; }
+.bg-settings .uploadable .icon { margin: 0 auto; text-align: center; margin-left: 0px !important; }
 .no-left-padding { padding-left: 0px !important; text-align:center; }
 .users .user .bg-settings .uploadable .icon { margin-left: 67px; height: 67px; width: 75px; }
 .users .button-follow { float: right; margin-left: 5px; }
