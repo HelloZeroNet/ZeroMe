@@ -14,5 +14,4 @@
 
 .activity { padding-left: 35px; padding-bottom: 19px; font-family: Roboto, Helvetica, Arial; font-size: 15px; line-height: 1.5em; color: #888 }
 .activity .body { top: -5px; position: relative; max-height: 67px; overflow: hidden; -webkit-line-clamp: 3; -webkit-box-orient: vertical; display: -webkit-box; }
-.activity:last-child { background-color: #F6F7F8 }
 .activity.latest .circle { border-color: #666 }

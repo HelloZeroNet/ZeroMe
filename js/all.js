@@ -3285,6 +3285,28 @@ function clone(obj) {
 }).call(this);
 
 
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ChangeBackground.coffee ---- */
+
+
+(function() {
+  window.bgString = function(color, image) {
+    if (!color) {
+      color = "#FFFFF";
+    }
+    if (image) {
+      return "background: url('" + image + "') no-repeat fixed center;background-size:150%;background-color: " + color;
+    } else {
+      return "background-color: " + color;
+    }
+  };
+
+  window.setBackground = function(color, image) {
+    return document.body.style = window.bgString(color, image);
+  };
+
+}).call(this);
+
+
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentCreateProfile.coffee ---- */
 
 
@@ -3556,6 +3578,11 @@ function clone(obj) {
       }
       if (this.need_update) {
         this.log("Updating", this.type);
+        if (Page.user && Page.user.applyBackground) {
+          Page.user.applyBackground();
+        } else {
+          window.setBackground("#F6F7F8");
+        }
         this.need_update = false;
         this.new_user_list.need_update = true;
         this.suggested_user_list.need_update = true;
@@ -3681,9 +3708,11 @@ function clone(obj) {
       this.update = bind(this.update, this);
       this.render = bind(this.render, this);
       this.handleOptionalHelpClick = bind(this.handleOptionalHelpClick, this);
+      this.handleBackgroundUpload = bind(this.handleBackgroundUpload, this);
       this.handleAvatarUpload = bind(this.handleAvatarUpload, this);
       this.handleUserNameSave = bind(this.handleUserNameSave, this);
       this.handleIntroSave = bind(this.handleIntroSave, this);
+      this.handleBgColorSave = bind(this.handleBgColorSave, this);
       this.filter = bind(this.filter, this);
       this.findUser = bind(this.findUser, this);
       this.setUser = bind(this.setUser, this);
@@ -3773,6 +3802,28 @@ function clone(obj) {
       return this.need_update = true;
     };
 
+    ContentProfile.prototype.handleBgColorSave = function(new_color, cb) {
+      var color;
+      color = new_color.match(/#([a-f0-9]{3}){1,2}\b/i);
+      if (!color) {
+        cb(false);
+      }
+      color = color[0];
+      if (!color) {
+        cb(false);
+      }
+      this.user.row.bgColor = color;
+      return this.user.getData(this.user.hub, (function(_this) {
+        return function(data) {
+          data.bgColor = color;
+          return _this.user.save(data, _this.user.hub, function(res) {
+            cb(res);
+            return _this.update();
+          });
+        };
+      })(this));
+    };
+
     ContentProfile.prototype.handleIntroSave = function(intro, cb) {
       this.user.row.intro = intro;
       return this.user.getData(this.user.hub, (function(_this) {
@@ -3831,6 +3882,38 @@ function clone(obj) {
       })(this));
     };
 
+    ContentProfile.prototype.handleBackgroundUpload = function(image_base64uri) {
+      var ext, image_base64;
+      Page.cmd("fileDelete", this.user.getPath() + "/bg.jpg");
+      Page.cmd("fileDelete", this.user.getPath() + "/bg.png");
+      if (!image_base64uri) {
+        this.user.getData(this.user.hub, (function(_this) {
+          return function(data) {
+            delete data.bg;
+            return _this.user.save(data, _this.user.hub, function(res) {
+              return Page.cmd("wrapperReload");
+            });
+          };
+        })(this));
+        return false;
+      }
+      image_base64 = image_base64uri != null ? image_base64uri.replace(/.*?,/, "") : void 0;
+      ext = image_base64uri.match("image/([a-z]+)")[1];
+      if (ext === "jpeg") {
+        ext = "jpg";
+      }
+      return Page.cmd("fileWrite", [this.user.getPath() + "/bg." + ext, image_base64], (function(_this) {
+        return function(res) {
+          return _this.user.getData(_this.user.hub, function(data) {
+            data.bg = ext;
+            return _this.user.save(data, _this.user.hub, function(res) {
+              return Page.cmd("wrapperReload");
+            });
+          });
+        };
+      })(this));
+    };
+
     ContentProfile.prototype.handleOptionalHelpClick = function() {
       if (Page.server_info.rev < 1700) {
         Page.cmd("wrapperNotification", ["info", "You need ZeroNet version 0.5.0 use this feature"]);
@@ -3875,14 +3958,19 @@ function clone(obj) {
           return function(res) {
             var ref3;
             if (res) {
+              _this.user.row = res;
               _this.owned = _this.user.auth_address === ((ref3 = Page.user) != null ? ref3.auth_address : void 0);
               if (_this.owned && !_this.editable_intro) {
+                _this.editable_bgcolor = new Editable("div", _this.handleBgColorSave);
                 _this.editable_intro = new Editable("div", _this.handleIntroSave);
                 _this.editable_intro.render_function = Text.renderMarked;
                 _this.editable_user_name = new Editable("span", _this.handleUserNameSave);
                 _this.uploadable_avatar = new Uploadable(_this.handleAvatarUpload);
                 _this.uploadable_avatar.try_png = true;
                 _this.uploadable_avatar.preverse_ratio = false;
+                _this.uploadable_background = new Uploadable(_this.handleBackgroundUpload);
+                _this.uploadable_background.resize_width = 900;
+                _this.uploadable_background.resize_height = 700;
                 _this.post_create = new PostCreate();
               }
               Page.projector.scheduleRender();
@@ -3925,6 +4013,9 @@ function clone(obj) {
       if (this.post_list.loaded && !Page.on_loaded.resolved) {
         Page.on_loaded.resolve();
       }
+      if (this.loaded) {
+        this.user.applyBackground();
+      }
       return h("div#Content.center." + this.auth_address, [
         h("div.col-left", {
           classes: {
@@ -3956,10 +4047,10 @@ function clone(obj) {
                 onclick: this.handleOptionalHelpClick
               }, h("div.checkbox-skin"), h("div.title", "Help distribute this user's images"))
             ])
-          ]), h("a.user-mute", {
+          ]), this.owned && this.loaded && this.user.row.bgColor ? h("div.user.card.profile.no-left-padding", [h("div.bg-settings", [h("h2", h("b.intro-full", "Background Settings")), this.uploadable_background.render(this.user.renderBackground), h("div.bg-preview", this.editable_bgcolor.render("Background Color: " + this.user.getBackground()))])]) : void 0, !this.owned ? h("a.user-mute", {
             href: "#Mute",
             onclick: this.user.handleMuteClick
-          }, h("div.icon.icon-mute"), "Mute " + this.user.row.cert_user_id), this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
+          }, h("div.icon.icon-mute"), "Mute " + this.user.row.cert_user_id) : void 0, this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
             afterCreate: Animation.show
           }, ["Following"]) : void 0, this.user_list.render(".gray")
         ]), h("div.col-center", [
@@ -3986,6 +4077,7 @@ function clone(obj) {
   window.ContentProfile = ContentProfile;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentUsers.coffee ---- */
@@ -4760,7 +4852,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostCreate.coffee ---- */
 
 
@@ -5315,6 +5406,8 @@ function clone(obj) {
       this.handleDownloadClick = bind(this.handleDownloadClick, this);
       this.download = bind(this.download, this);
       this.handleFollowClick = bind(this.handleFollowClick, this);
+      this.applyBackground = bind(this.applyBackground, this);
+      this.renderBackground = bind(this.renderBackground, this);
       this.renderAvatar = bind(this.renderAvatar, this);
       this.hasHelp = bind(this.hasHelp, this);
       this.updateInfo = bind(this.updateInfo, this);
@@ -5434,6 +5527,23 @@ function clone(obj) {
       return "merged-ZeroMe/" + this.hub + "/data/users/" + this.auth_address + "/avatar." + this.row.avatar + cache_invalidation;
     };
 
+    User.prototype.getBackgroundLink = function() {
+      var cache_invalidation, ref;
+      cache_invalidation = "";
+      if (this.auth_address === ((ref = Page.user) != null ? ref.auth_address : void 0)) {
+        cache_invalidation = "?" + Page.cache_time;
+      }
+      return "merged-ZeroMe/" + this.hub + "/data/users/" + this.auth_address + "/bg." + this.row.bg + cache_invalidation;
+    };
+
+    User.prototype.getBackground = function() {
+      if (this.row && this.row.bgColor) {
+        return this.row.bgColor;
+      } else {
+        throw new Error("ROW ERROR");
+      }
+    };
+
     User.prototype.getDefaultData = function() {
       var ref;
       return {
@@ -5486,6 +5596,41 @@ function clone(obj) {
         attrs.style = "background: linear-gradient(" + Text.toColor(this.auth_address) + "," + Text.toColor(this.auth_address.slice(-5)) + ")";
       }
       return h("a.avatar", attrs);
+    };
+
+    User.prototype.renderBackground = function(attrs) {
+      if (attrs == null) {
+        attrs = {};
+      }
+      if (this.isSeeding() && (this.row.bg === "png" || this.row.bg === "jpg")) {
+        attrs.src = "" + (this.getBackgroundLink());
+      }
+      attrs.style = "background: #AFAFAF;width:160px;min-height:75px;";
+      return h("img.bg-preview", attrs);
+    };
+
+    User.prototype.applyBackground = function(cb) {
+      if (this.row.bgColor) {
+        if (this.isSeeding() && (this.row.bg === "png" || this.row.bg === "jpg")) {
+          window.setBackground(this.getBackground(), this.getBackgroundLink());
+        } else {
+          window.setBackground(this.getBackground());
+        }
+        if (cb) {
+          return cb();
+        }
+      } else {
+        return this.getData(this.hub, (function(_this) {
+          return function(row) {
+            if (_this.row == null) {
+              _this.row = {};
+            }
+            _this.row.bg = row.bg;
+            _this.row.bgColor = row.bgColor || "#F6F7F8";
+            return _this.applyBackground(cb);
+          };
+        })(this));
+      }
     };
 
     User.prototype.save = function(data, site, cb) {

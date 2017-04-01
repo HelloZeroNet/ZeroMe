@@ -1,6 +1,6 @@
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Activity.css ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Activity.css ---- */
 
 
 .activity-list { margin-bottom: 30px }
@@ -19,11 +19,11 @@
 
 .activity { padding-left: 35px; padding-bottom: 19px; font-family: Roboto, Helvetica, Arial; font-size: 15px; line-height: 1.5em; color: #888 }
 .activity .body { top: -5px; position: relative; max-height: 67px; overflow: hidden; -webkit-line-clamp: 3; -webkit-box-orient: vertical; display: -webkit-box; }
-.activity:last-child { background-color: #F6F7F8 }
 .activity.latest .circle { border-color: #666 }
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Button.css ---- */
+
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Button.css ---- */
 
 
 .button {
@@ -60,7 +60,7 @@
 
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Comment.css ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Comment.css ---- */
 
 
 .comment-list {
@@ -83,7 +83,7 @@
 .comment h1, .comment h2, .comment h3, .comment h4, .comment h5, .comment h6 { font-size: inherit; font-weight: bold }
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Editable.css ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Editable.css ---- */
 
 
 .editable .icon-edit { margin-left: -24px; padding: 7px; -webkit-border-radius: 30px; -moz-border-radius: 30px; -o-border-radius: 30px; -ms-border-radius: 30px; border-radius: 30px ; margin-top: -5px; position: absolute; opacity: 0; -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
@@ -97,7 +97,7 @@
 }
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Head.css ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Head.css ---- */
 
 
 .head-container { background-color: white; -webkit-box-shadow: 0px -7px 32px rgba(0,0,0,0.15); -moz-box-shadow: 0px -7px 32px rgba(0,0,0,0.15); -o-box-shadow: 0px -7px 32px rgba(0,0,0,0.15); -ms-box-shadow: 0px -7px 32px rgba(0,0,0,0.15); box-shadow: 0px -7px 32px rgba(0,0,0,0.15) ; }
@@ -120,7 +120,7 @@
 .head .menu { -webkit-box-shadow: 0px 4px 8px rgba(0,0,0,0.1) ; -moz-box-shadow: 0px 4px 8px rgba(0,0,0,0.1) ; -o-box-shadow: 0px 4px 8px rgba(0,0,0,0.1) ; -ms-box-shadow: 0px 4px 8px rgba(0,0,0,0.1) ; box-shadow: 0px 4px 8px rgba(0,0,0,0.1)  }
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Hub.css ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Hub.css ---- */
 
 
 .hub.card { padding: 21px; text-align: left; font-size: 18px; width: 80%; display: block; margin-left: auto; margin-right: auto; }
@@ -131,7 +131,7 @@
 .hubselect { padding-top: 30px }
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Maxheight.css ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Maxheight.css ---- */
 
 
 .maxheight { max-height: 550px; overflow: hidden; -webkit-transition: all 1s ease-in-out ; -moz-transition: all 1s ease-in-out ; -o-transition: all 1s ease-in-out ; -ms-transition: all 1s ease-in-out ; transition: all 1s ease-in-out  }
@@ -142,7 +142,7 @@
 }
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Menu.css ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Menu.css ---- */
 
 
 .menu {
@@ -164,7 +164,7 @@
 }
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Overlay.css ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Overlay.css ---- */
 
 
 #Overlay {
@@ -175,7 +175,7 @@
 #Overlay .img { position: absolute; background-size: contain; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; background-repeat: no-repeat; }
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Post.css ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Post.css ---- */
 
 
 .post {
@@ -274,14 +274,14 @@
 .post .img .oldversion { background-color: rgba(0, 0, 0, 0.5); padding: 10px 10px; top: 49%; position: relative; color: white; -webkit-border-radius: 25px; -moz-border-radius: 25px; -o-border-radius: 25px; -ms-border-radius: 25px; border-radius: 25px ; }
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Uploadable.css ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Uploadable.css ---- */
 
 
 .uploadable .icon-upload { opacity: 0; -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
 .uploadable .icon-upload:hover { opacity: 0.8; -webkit-transition: all 0.1s ; -moz-transition: all 0.1s ; -o-transition: all 0.1s ; -ms-transition: all 0.1s ; transition: all 0.1s  }
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/User.css ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/User.css ---- */
 
 
 .users .user { padding-left: 70px; padding-bottom: 20px }
@@ -289,6 +289,9 @@
 .users .user .intro { font-weight: 100; font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; min-height: 18px; word-wrap: break-word; }
 .users .user .added { font-size: 11px; color: #999; margin-left: 6px; vertical-align: 3px; }
 .users .user .intro-full { margin-left: -57px; padding-top: 18px; font-weight: 100; line-height: 1.5em; overflow: hidden; max-height: 400px; word-wrap: break-word; }
+.bg-settings { width: 150px; margin: 0 auto; }
+.no-left-padding { padding-left: 0px !important; text-align:center; }
+.users .user .bg-settings .uploadable .icon { margin-left: 67px; height: 67px; width: 75px; }
 .users .button-follow { float: right; margin-left: 5px; }
 .users .user.followed .button-follow, .users .user.followed .button-follow:hover {
 	background-color: #2ecc71 !important; border-color: #2ecc71 !important; color: #FFF; transform: rotate(45deg)
@@ -330,7 +333,8 @@
 .user-notfound { text-align: center; font-size: 22px; margin-top: 100px; font-weight: lighter; }
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/ZeroMe.css ---- */
+
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/ZeroMe.css ---- */
 
 
 body {
@@ -472,7 +476,7 @@ h5 { font-weight: normal; color: rgba(0, 0, 0, 0.5) }
 
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/fonts.css ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/fonts.css ---- */
 
 
 /* Base64 encoder: http://www.motobit.com/util/base64-decoder-encoder.asp */
@@ -509,7 +513,7 @@ h5 { font-weight: normal; color: rgba(0, 0, 0, 0.5) }
 }
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/icons.css ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/icons.css ---- */
 
 
 .icon {

@@ -71,6 +71,19 @@ class User extends Class
 			cache_invalidation = "?"+Page.cache_time
 		return "merged-ZeroMe/#{@hub}/data/users/#{@auth_address}/avatar.#{@row.avatar}#{cache_invalidation}"
 
+	getBackgroundLink: ->
+		cache_invalidation = ""
+		# Cache invalidation for local user
+		if @auth_address == Page.user?.auth_address
+			cache_invalidation = "?"+Page.cache_time
+		return "merged-ZeroMe/#{@hub}/data/users/#{@auth_address}/bg.#{@row.bg}#{cache_invalidation}"
+
+	getBackground: ->
+		if @row and @row.bgColor
+			return @row.bgColor
+		else
+			throw new Error("ROW ERROR")
+
 	getDefaultData: ->
 		return {
 			"next_post_id": 2,
@@ -108,6 +121,30 @@ class User extends Class
 		else
 			attrs.style = "background: linear-gradient("+Text.toColor(@auth_address)+","+Text.toColor(@auth_address.slice(-5))+")"
 		h("a.avatar", attrs)
+
+	renderBackground: (attrs={}) =>
+		if @isSeeding() and (@row.bg == "png" or @row.bg == "jpg")
+			attrs.src="#{@getBackgroundLink()}"
+		attrs.style = "background: #AFAFAF;width:160px;min-height:75px;"
+
+		h("img.bg-preview", attrs)
+
+	applyBackground: (cb) =>
+		if @row.bgColor
+			if @isSeeding() and (@row.bg == "png" or @row.bg == "jpg")
+				window.setBackground @getBackground(),@getBackgroundLink()
+			else
+				window.setBackground @getBackground()
+			if cb
+				cb()
+		else
+			@getData @hub, (row) =>
+				@row?={}
+				@row.bg=row.bg
+				@row.bgColor=row.bgColor||"#F6F7F8"
+				@applyBackground(cb)
+
+
 
 	save: (data, site=@hub, cb=null) ->
 		Page.cmd "fileWrite", [@getPath(site)+"/data.json", Text.fileEncode(data)], (res_write) =>

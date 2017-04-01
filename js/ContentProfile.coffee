@@ -81,6 +81,20 @@ class ContentProfile extends Class
 		@filter_post_id = post_id
 		@need_update = true
 
+	handleBgColorSave: (new_color, cb) =>
+		color=new_color.match(/#([a-f0-9]{3}){1,2}\b/i)
+		if not color
+			cb(false)
+		color=color[0]
+		if not color
+			cb(false)
+		@user.row.bgColor=color
+		@user.getData @user.hub, (data) =>
+			data.bgColor=color
+			@user.save data, @user.hub, (res) =>
+				cb(res)
+				@update()
+
 	handleIntroSave: (intro, cb) =>
 		@user.row.intro = intro
 		@user.getData @user.hub, (data) =>
@@ -122,6 +136,31 @@ class ContentProfile extends Class
 				@user.save data, @user.hub, (res) =>
 					Page.cmd "wrapperReload"  # Reload the page
 
+	handleBackgroundUpload: (image_base64uri) =>
+		# Cleanup previous avatars
+		Page.cmd "fileDelete", @user.getPath()+"/bg.jpg"
+		Page.cmd "fileDelete", @user.getPath()+"/bg.png"
+
+		if not image_base64uri
+			# Delete image
+			@user.getData @user.hub, (data) =>
+				delete data.bg
+				@user.save data, @user.hub, (res) =>
+					Page.cmd "wrapperReload"  # Reload the page
+			return false
+
+		# Handle upload
+		image_base64 = image_base64uri?.replace(/.*?,/, "")
+		ext = image_base64uri.match("image/([a-z]+)")[1]
+		if ext == "jpeg" then ext = "jpg"
+
+
+		Page.cmd "fileWrite", [@user.getPath()+"/bg."+ext, image_base64], (res) =>
+			@user.getData @user.hub, (data) =>
+				data.bg = ext
+				@user.save data, @user.hub, (res) =>
+					Page.cmd "wrapperReload"  # Reload the page
+
 	handleOptionalHelpClick: =>
 		if Page.server_info.rev < 1700
 			Page.cmd "wrapperNotification", ["info", "You need ZeroNet version 0.5.0 use this feature"]
@@ -144,6 +183,7 @@ class ContentProfile extends Class
 			@log "Updating"
 			@need_update = false
 
+
 			# Update components
 			@post_list.filter_post_ids = if @filter_post_id then [@filter_post_id] else null
 			@post_list?.need_update = true
@@ -156,14 +196,19 @@ class ContentProfile extends Class
 			@user.hub = @hub
 			@user.get @hub, @auth_address, (res) =>
 				if res
+					@user.row=res
 					@owned = @user.auth_address == Page.user?.auth_address
 					if @owned and not @editable_intro
+						@editable_bgcolor = new Editable("div", @handleBgColorSave)
 						@editable_intro = new Editable("div", @handleIntroSave)
 						@editable_intro.render_function = Text.renderMarked
 						@editable_user_name = new Editable("span", @handleUserNameSave)
 						@uploadable_avatar = new Uploadable(@handleAvatarUpload)
 						@uploadable_avatar.try_png = true
 						@uploadable_avatar.preverse_ratio = false
+						@uploadable_background = new Uploadable(@handleBackgroundUpload)
+						@uploadable_background.resize_width = 900
+						@uploadable_background.resize_height = 700
 						@post_create = new PostCreate()
 					Page.projector.scheduleRender()
 					@loaded = true
@@ -196,6 +241,9 @@ class ContentProfile extends Class
 
 		if @post_list.loaded and not Page.on_loaded.resolved then Page.on_loaded.resolve()
 
+		if @loaded
+			@user.applyBackground()
+
 		h("div#Content.center.#{@auth_address}", [
 			h("div.col-left", {classes: {faded: @filter_post_id}}, [
 				h("div.users", [
@@ -209,6 +257,7 @@ class ContentProfile extends Class
 								h("a", {href: @user.getLink(), onclick: Page.handleLinkClick}, @user.row.user_name)
 						),
 						h("div.cert_user_id", @user.row.cert_user_id)
+
 						if @owned
 							h("div.intro-full", @editable_intro.render(@user.row.intro))
 						else
@@ -225,10 +274,21 @@ class ContentProfile extends Class
 						)
 					])
 				]),
-				h("a.user-mute", {href: "#Mute", onclick: @user.handleMuteClick},
-					h("div.icon.icon-mute"),
-					"Mute #{@user.row.cert_user_id}"
-				),
+
+				if @owned and @loaded and @user.row.bgColor
+					h("div.user.card.profile.no-left-padding", [
+						h("div.bg-settings",[
+							h("h2", h("b.intro-full","Background Settings"))
+							@uploadable_background.render(@user.renderBackground)
+							h("div.bg-preview", @editable_bgcolor.render("Background Color: "+@user.getBackground()))
+						])
+					])
+
+				if not @owned
+					h("a.user-mute", {href: "#Mute", onclick: @user.handleMuteClick},
+						h("div.icon.icon-mute"),
+						"Mute #{@user.row.cert_user_id}"
+					)
 				@activity_list.render(),
 				if @user_list.users.length > 0
 					h("h2.sep", {afterCreate: Animation.show}, [
