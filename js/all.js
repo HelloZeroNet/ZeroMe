@@ -4087,7 +4087,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentUsers.coffee ---- */
 
 
@@ -4767,7 +4766,7 @@ function clone(obj) {
                 }, comment.user_name), h("span.sep", " \u00B7 "), h("span.address", {
                   title: user_address
                 }, comment.cert_user_id), h("span.sep", " \u2015 "), h("a.added.link", {
-                  href: "#",
+                  href: _this.getLink(),
                   title: Time.date(comment.date_added, "long")
                 }, Time.since(comment.date_added)), h("a.icon.icon-reply", {
                   href: "#Reply",
@@ -4858,6 +4857,7 @@ function clone(obj) {
   window.Post = Post;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostCreate.coffee ---- */

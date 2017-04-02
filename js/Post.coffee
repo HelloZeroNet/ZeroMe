@@ -199,7 +199,7 @@ class Post extends Class
 						h("span.sep", " \u00B7 "),
 						h("span.address", {title: user_address}, comment.cert_user_id),
 						h("span.sep", " \u2015 "),
-						h("a.added.link", {href: "#", title: Time.date(comment.date_added, "long")}, Time.since(comment.date_added)),
+						h("a.added.link", {href: @getLink(), title: Time.date(comment.date_added, "long")}, Time.since(comment.date_added)),
 						h("a.icon.icon-reply", {href: "#Reply", onclick: @handleReplyClick, user_name: comment.user_name}, "Reply")
 					])
 					if owned
