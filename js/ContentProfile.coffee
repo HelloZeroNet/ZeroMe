@@ -284,17 +284,24 @@ class ContentProfile extends Class
 						])
 					])
 
-				if not @owned
-					h("a.user-mute", {href: "#Mute", onclick: @user.handleMuteClick},
-						h("div.icon.icon-mute"),
-						"Mute #{@user.row.cert_user_id}"
-					)
-				@activity_list.render(),
-				if @user_list.users.length > 0
-					h("h2.sep", {afterCreate: Animation.show}, [
-						"Following",
+
+				h("div.light-bg", [
+					@activity_list.render(),
+					h("h2.local"+(if @user_list.users.length > 0 then ".sep" else ""), {afterCreate: Animation.show}, [
+						"Local Preferences",
+						if not @owned
+							h("br")
+							h("a.user-mute", {href: "#Mute", onclick: @user.handleMuteClick},
+								h("div.icon.icon-mute"),
+								"Mute #{@user.row.cert_user_id}"
+							)
 					])
-				@user_list.render(".gray"),
+					if @user_list.users.length > 0
+						h("h2.sep", {afterCreate: Animation.show}, [
+							"Following",
+						])
+					@user_list.render(".gray"),
+				])
 			]),
 			h("div.col-center", [
 				if @owned and not @filter_post_id

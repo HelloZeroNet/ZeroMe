@@ -63,19 +63,21 @@ class ContentFeed extends Class
 				@post_list.render()
 			]),
 			h("div.col-right.noscrollfix", [
-				@activity_list.render(),
-				if @new_user_list.users.length > 0
-					h("h2.sep.new", [
-						"New users",
-						h("a.link", {href: "?Users", onclick: Page.handleLinkClick}, "Browse all \u203A")
-					])
-				@new_user_list.render(".gray"),
+				h("div.light-bg", [
+					@activity_list.render(),
+					if @new_user_list.users.length > 0
+						h("h2.sep.new", [
+							"New users",
+							h("a.link", {href: "?Users", onclick: Page.handleLinkClick}, "Browse all \u203A")
+						])
+					@new_user_list.render(".gray"),
 
-				if @suggested_user_list.users.length > 0
-					h("h2.sep.suggested", [
-						"Suggested users"
-					])
-				@suggested_user_list.render(".gray"),
+					if @suggested_user_list.users.length > 0
+						h("h2.sep.suggested", [
+							"Suggested users"
+						])
+					@suggested_user_list.render(".gray"),
+				])
 			])
 		])
 

@@ -12,7 +12,7 @@
 .post .user { padding-bottom: 8px; height: 21px; line-height: 20px; }
 .post .user .address, .post .added, .post .sep { font-size: 14px; color: #AAA;}
 .post .body { padding-top: 2px; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; line-height: 1.5em; color: #333; word-break: break-word; overflow: hidden }
-.post .reply-name { font-size: 14px; font-family: Roboto, Helvetica, Arial; color: #000 }
+.post .reply-name { font-size: 14px; font-family: Roboto, Helvetica, Arial; color: #555; background: #EEE; padding: 4px; border-radius: 18px; }
 .post .actions { height: 30px; margin-left: -5px; }
 .post .actions .icon { margin-right: 1px }
 .post .actions .link { color: #AAA; font-size: 12px; height: 30px; vertical-align: middle; line-height: 30px; display: inline-block; padding-right: 10px }
@@ -61,7 +61,7 @@
 .post-list-type { text-align: right; }
 .post-list-type a {
 	margin-right: 10px; padding-bottom: 5px; display: inline-block; border-bottom: 2px solid rgba(0,0,0,0);
-	color: #999; margin-bottom: 7px; margin-top: 10px; margin-left: 10px; transition: all 0.3s
+	color: #555; margin-bottom: 7px; margin-top: 10px; margin-left: 10px; transition: all 0.3s
 }
 .post-list-type .active { border-bottom: 2px solid #606aff; color: #606aff; }
 .post-list-type a:hover { border-bottom: 2px solid #606aff; color: #606aff; transition: none; text-decoration: none }

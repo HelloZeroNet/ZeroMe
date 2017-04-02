@@ -3668,12 +3668,14 @@ function clone(obj) {
             }
           }, "Followed users")), this.post_list.render()
         ]), h("div.col-right.noscrollfix", [
-          this.activity_list.render(), this.new_user_list.users.length > 0 ? h("h2.sep.new", [
-            "New users", h("a.link", {
-              href: "?Users",
-              onclick: Page.handleLinkClick
-            }, "Browse all \u203A")
-          ]) : void 0, this.new_user_list.render(".gray"), this.suggested_user_list.users.length > 0 ? h("h2.sep.suggested", ["Suggested users"]) : void 0, this.suggested_user_list.render(".gray")
+          h("div.light-bg", [
+            this.activity_list.render(), this.new_user_list.users.length > 0 ? h("h2.sep.new", [
+              "New users", h("a.link", {
+                href: "?Users",
+                onclick: Page.handleLinkClick
+              }, "Browse all \u203A")
+            ]) : void 0, this.new_user_list.render(".gray"), this.suggested_user_list.users.length > 0 ? h("h2.sep.suggested", ["Suggested users"]) : void 0, this.suggested_user_list.render(".gray")
+          ])
         ])
       ]);
     };
@@ -4047,12 +4049,18 @@ function clone(obj) {
                 onclick: this.handleOptionalHelpClick
               }, h("div.checkbox-skin"), h("div.title", "Help distribute this user's images"))
             ])
-          ]), this.owned && this.loaded && this.user.row.bgColor ? h("div.user.card.profile.no-left-padding", [h("div.bg-settings", [h("h2", h("b.intro-full", "Background Settings")), this.uploadable_background.render(this.user.renderBackground), h("div.bg-preview", this.editable_bgcolor.render("Background Color: " + this.user.getBackground()))])]) : void 0, !this.owned ? h("a.user-mute", {
-            href: "#Mute",
-            onclick: this.user.handleMuteClick
-          }, h("div.icon.icon-mute"), "Mute " + this.user.row.cert_user_id) : void 0, this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
-            afterCreate: Animation.show
-          }, ["Following"]) : void 0, this.user_list.render(".gray")
+          ]), this.owned && this.loaded && this.user.row.bgColor ? h("div.user.card.profile.no-left-padding", [h("div.bg-settings", [h("h2", h("b.intro-full", "Background Settings")), this.uploadable_background.render(this.user.renderBackground), h("div.bg-preview", this.editable_bgcolor.render("Background Color: " + this.user.getBackground()))])]) : void 0, h("div.light-bg", [
+            this.activity_list.render(), h("h2.local" + (this.user_list.users.length > 0 ? ".sep" : ""), {
+              afterCreate: Animation.show
+            }, [
+              "Local Preferences", !this.owned ? (h("br"), h("a.user-mute", {
+                href: "#Mute",
+                onclick: this.user.handleMuteClick
+              }, h("div.icon.icon-mute"), "Mute " + this.user.row.cert_user_id)) : void 0
+            ]), this.user_list.users.length > 0 ? h("h2.sep", {
+              afterCreate: Animation.show
+            }, ["Following"]) : void 0, this.user_list.render(".gray")
+          ])
         ]), h("div.col-center", [
           this.owned && !this.filter_post_id ? h("div.post-create-container", {
             enterAnimation: Animation.slideDown,
