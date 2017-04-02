@@ -51,6 +51,11 @@ class ContentUsers extends Class
 			Page.projector.scheduleRender()
 
 	render: =>
+		if Page.user and Page.user.applyBackground
+			Page.user.applyBackground()
+		else
+			window.setBackground "#F6F7F8"
+
 		if @loaded and not Page.on_loaded.resolved then Page.on_loaded.resolve()
 		if @need_update or not @num_users_total
 			Page.cmd "dbQuery", "SELECT COUNT(*) AS num FROM user", (res) =>

@@ -307,6 +307,15 @@ class User extends Class
 		Page.cmd "muteAdd", [@auth_address, @row.cert_user_id, "Muted from [page](http://127.0.0.1:43110/#{Page.address}/?#{Page.history_state.url})"]
 		return false
 
+	renderCleanIntro: ->
+		text=window.stripMarkdown @row.intro
+		text=text.split("\n")
+		text.pop()
+		text=text.filter (a) => !!a #clear empty lines
+		if not text.length
+			return '…' #TODO: put in a good placeholder
+		return text[0]
+
 	renderList: (type="normal") =>
 		classname = ""
 		if type == "card" then classname = ".card"
@@ -333,7 +342,7 @@ class User extends Class
 					h("a.name.link", {href: "?ProfileName/#{@row.followed_by}", onclick: Page.handleLinkClick}, @row.followed_by)
 				])
 			else
-				h("div.intro", @row.intro)
+				h("div.intro", @renderCleanIntro())
 		])
 
 
