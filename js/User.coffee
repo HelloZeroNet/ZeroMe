@@ -130,18 +130,23 @@ class User extends Class
 		h("img.bg-preview", attrs)
 
 	applyBackground: (cb) =>
-		if @row.bgColor
+		if @row.bgColor or @row.bgUnset
+			console.trace @row
 			if @isSeeding() and (@row.bg == "png" or @row.bg == "jpg")
 				window.setBackground @getBackground(),@getBackgroundLink()
-			else
+			else if @row.bgColor
 				window.setBackground @getBackground()
+			else if @row.bgUnset
+				window.defaultBackground()
 			if cb
 				cb()
 		else
 			@getData @hub, (row) =>
 				@row?={}
 				@row.bg=row.bg
-				@row.bgColor=row.bgColor||"#F6F7F8"
+				@row.bgColor=row.bgColor
+				if not row.bgColor
+					@row.bgUnset=true
 				@applyBackground(cb)
 
 

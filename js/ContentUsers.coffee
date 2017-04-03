@@ -54,7 +54,7 @@ class ContentUsers extends Class
 		if Page.user and Page.user.applyBackground
 			Page.user.applyBackground()
 		else
-			window.setBackground "#F6F7F8"
+			window.defaultBackground()
 
 		if @loaded and not Page.on_loaded.resolved then Page.on_loaded.resolve()
 		if @need_update or not @num_users_total

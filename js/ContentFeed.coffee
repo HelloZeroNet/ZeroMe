@@ -24,7 +24,7 @@ class ContentFeed extends Class
 			if Page.user and Page.user.applyBackground
 				Page.user.applyBackground()
 			else
-				window.setBackground "#F6F7F8"
+				window.defaultBackground()
 			@need_update = false
 
 			@new_user_list.need_update = true

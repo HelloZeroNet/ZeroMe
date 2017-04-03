@@ -8,3 +8,9 @@ window.bgString=(color, image) ->
 
 window.setBackground=(color, image) ->
   document.body.style=window.bgString(color, image)
+
+window.defaultBackground= ->
+  window.setBackground window.defaultBackground.color,window.defaultBackground.image
+
+window.defaultBackground.color="#D30C37"
+window.defaultBackground.image="img/default-bg.jpg"

@@ -3731,7 +3731,17 @@ window.entities=new Html5Entities()
     return document.body.style = window.bgString(color, image);
   };
 
+  window.defaultBackground = function() {
+    console.log("DEFAULT!!", window.defaultBackground.color, window.defaultBackground.image);
+    return window.setBackground(window.defaultBackground.color, window.defaultBackground.image);
+  };
+
+  window.defaultBackground.color = "#D30C37";
+
+  window.defaultBackground.image = "img/default-bg.jpg";
+
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentCreateProfile.coffee ---- */
@@ -4008,7 +4018,7 @@ window.entities=new Html5Entities()
         if (Page.user && Page.user.applyBackground) {
           Page.user.applyBackground();
         } else {
-          window.setBackground("#F6F7F8");
+          window.defaultBackground();
         }
         this.need_update = false;
         this.new_user_list.need_update = true;
@@ -4599,7 +4609,7 @@ window.entities=new Html5Entities()
       if (Page.user && Page.user.applyBackground) {
         Page.user.applyBackground();
       } else {
-        window.setBackground("#F6F7F8");
+        window.defaultBackground();
       }
       if (this.loaded && !Page.on_loaded.resolved) {
         Page.on_loaded.resolve();
@@ -6049,11 +6059,14 @@ window.entities=new Html5Entities()
     };
 
     User.prototype.applyBackground = function(cb) {
-      if (this.row.bgColor) {
+      if (this.row.bgColor || this.row.bgUnset) {
+        console.trace(this.row);
         if (this.isSeeding() && (this.row.bg === "png" || this.row.bg === "jpg")) {
           window.setBackground(this.getBackground(), this.getBackgroundLink());
-        } else {
+        } else if (this.row.bgColor) {
           window.setBackground(this.getBackground());
+        } else if (this.row.bgUnset) {
+          window.defaultBackground();
         }
         if (cb) {
           return cb();
@@ -6065,7 +6078,10 @@ window.entities=new Html5Entities()
               _this.row = {};
             }
             _this.row.bg = row.bg;
-            _this.row.bgColor = row.bgColor || "#F6F7F8";
+            _this.row.bgColor = row.bgColor;
+            if (!row.bgColor) {
+              _this.row.bgUnset = true;
+            }
             return _this.applyBackground(cb);
           };
         })(this));
@@ -6453,7 +6469,6 @@ window.entities=new Html5Entities()
   window.User = User;
 
 }).call(this);
-
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/UserList.coffee ---- */
