@@ -81,6 +81,8 @@ class User extends Class
 	getBackground: ->
 		if @row and @row.bgColor
 			return @row.bgColor
+		else if @row and @row.bgUnset
+			return window.defaultBackground.color
 		else
 			throw new Error("ROW ERROR")
 

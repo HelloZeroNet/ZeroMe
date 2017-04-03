@@ -3743,7 +3743,6 @@ window.entities=new Html5Entities()
 }).call(this);
 
 
-
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentCreateProfile.coffee ---- */
 
 
@@ -5988,6 +5987,8 @@ window.entities=new Html5Entities()
     User.prototype.getBackground = function() {
       if (this.row && this.row.bgColor) {
         return this.row.bgColor;
+      } else if (this.row && this.row.bgUnset) {
+        return window.defaultBackground.color;
       } else {
         throw new Error("ROW ERROR");
       }
@@ -6468,6 +6469,7 @@ window.entities=new Html5Entities()
   window.User = User;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/UserList.coffee ---- */
