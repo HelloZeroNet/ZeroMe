@@ -7,6 +7,7 @@ window.bgString=(color, image) ->
     return "background-color: #{color}"
 
 window.setBackground=(color, image) ->
+  console.log "[Background] color=%c#{color}%c"+(if image then ", image=#{image}" else ""),"color:#{color}",""
   document.body.style=window.bgString(color, image)
 
 window.defaultBackground= ->

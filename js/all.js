@@ -3728,11 +3728,11 @@ window.entities=new Html5Entities()
   };
 
   window.setBackground = function(color, image) {
+    console.log(("[Background] color=%c" + color + "%c") + (image ? ", image=" + image : ""), "color:" + color, "");
     return document.body.style = window.bgString(color, image);
   };
 
   window.defaultBackground = function() {
-    console.log("DEFAULT!!", window.defaultBackground.color, window.defaultBackground.image);
     return window.setBackground(window.defaultBackground.color, window.defaultBackground.image);
   };
 
@@ -6060,7 +6060,6 @@ window.entities=new Html5Entities()
 
     User.prototype.applyBackground = function(cb) {
       if (this.row.bgColor || this.row.bgUnset) {
-        console.trace(this.row);
         if (this.isSeeding() && (this.row.bg === "png" || this.row.bg === "jpg")) {
           window.setBackground(this.getBackground(), this.getBackgroundLink());
         } else if (this.row.bgColor) {

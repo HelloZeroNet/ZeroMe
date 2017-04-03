@@ -131,7 +131,6 @@ class User extends Class
 
 	applyBackground: (cb) =>
 		if @row.bgColor or @row.bgUnset
-			console.trace @row
 			if @isSeeding() and (@row.bg == "png" or @row.bg == "jpg")
 				window.setBackground @getBackground(),@getBackgroundLink()
 			else if @row.bgColor
