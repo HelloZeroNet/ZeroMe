@@ -4485,7 +4485,7 @@ window.entities=new Html5Entities()
                 onclick: this.handleOptionalHelpClick
               }, h("div.checkbox-skin"), h("div.title", "Help distribute this user's images"))
             ])
-          ]), this.owned && this.loaded && this.user.row.bgColor ? h("div.user.card.profile.no-left-padding", [h("div.bg-settings", [h("h2", h("b.intro-full", "Background Settings")), this.uploadable_background.render(this.user.renderBackground), h("div.bg-preview", this.editable_bgcolor.render("Background Color: " + this.user.getBackground()))])]) : void 0, h("div.light-bg", [
+          ]), this.owned && this.loaded && (this.user.row.bgColor || this.user.row.bgUnset) ? h("div.user.card.profile.no-left-padding", [h("div.bg-settings", [h("h2", h("b.intro-full", "Background Settings")), this.uploadable_background.render(this.user.renderBackground), h("div.bg-preview", this.editable_bgcolor.render("Background Color: " + this.user.getBackground()))])]) : void 0, h("div.light-bg", [
             this.activity_list.render(), h("h2.local" + (this.user_list.users.length > 0 ? ".sep" : ""), {
               afterCreate: Animation.show
             }, [
@@ -6393,10 +6393,9 @@ window.entities=new Html5Entities()
       var text;
       text = window.stripMarkdown(this.row.intro);
       text = text.split("\n");
-      text.pop();
       text = text.filter((function(_this) {
         return function(a) {
-          return !!a;
+          return !!a.trim();
         };
       })(this));
       if (!text.length) {

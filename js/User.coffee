@@ -316,8 +316,7 @@ class User extends Class
 	renderCleanIntro: ->
 		text=window.stripMarkdown @row.intro
 		text=text.split("\n")
-		text.pop()
-		text=text.filter (a) => !!a #clear empty lines
+		text=text.filter (a) => !!a.trim() #clear empty lines
 		if not text.length
 			return '…' #TODO: put in a good placeholder
 		return text[0]
