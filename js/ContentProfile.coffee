@@ -268,6 +268,19 @@ class ContentProfile extends Class
 								if @user.isFollowed() then "Unfollow" else "Follow"
 							)
 						]),
+						h("div.follow-container.settings-container", [
+							if not @owned
+								h("div.button-tiny.button-mute", {href: "#Mute", onclick: @user.handleMuteClick}, [
+									h("div.icon.icon-mute"),
+									"Mute"
+								])
+							else
+								h("div.button-tiny.button-mute", {href: "#Settings", onclick: @user.handleSettingsClick}, [
+									h("div.icon.icon-small.fa.fa-gear"),
+									"Settings"
+								])
+						])
+
 						h("div.help.checkbox", {classes: {checked: @optional_helping}, onclick: @handleOptionalHelpClick},
 							h("div.checkbox-skin"),
 							h("div.title", "Help distribute this user's images")
@@ -287,15 +300,6 @@ class ContentProfile extends Class
 
 				h("div.light-bg", [
 					@activity_list.render(),
-					h("h2.local"+(if @user_list.users.length > 0 then ".sep" else ""), {afterCreate: Animation.show}, [
-						"Local Preferences",
-						if not @owned
-							h("br")
-							h("a.user-mute", {href: "#Mute", onclick: @user.handleMuteClick},
-								h("div.icon.icon-mute"),
-								"Mute #{@user.row.cert_user_id}"
-							)
-					])
 					if @user_list.users.length > 0
 						h("h2.sep", {afterCreate: Animation.show}, [
 							"Following",

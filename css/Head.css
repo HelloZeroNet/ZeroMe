@@ -1,8 +1,8 @@
-.head-container { background-color: white; box-shadow: 0px -7px 32px rgba(0,0,0,0.15); }
+.head-container { background-color: white; box-shadow: 0px -7px 32px rgba(0,0,0,0.15); max-height: 50px; }
 
 .head .logo {
 	height: 50px; padding: 4px 6px; box-sizing: border-box; display: inline-block;
-	color: white; font-size: 30px; font-weight: lighter; text-decoration: none
+	color: white; font-size: 30px; font-weight: lighter; text-decoration: none; vertical-align: top;
 }
 
 .head .right { float: right; }
@@ -16,3 +16,12 @@
 .head .settings:hover { color: #5d68ff; background-color: #FAFAFA; transition: none }
 .head .settings:active { background-color: #F5F5F5; transition: none }
 .head .menu { box-shadow: 0px 4px 8px rgba(0,0,0,0.1) }
+
+.head li { float: left; }
+.head ul { list-style-type:none; display: inline-block; margin:0; padding:0; overflow:hidden; }
+.head ul li, .head ul li a { display: block; text-align: center; color: #AAA; }
+.head ul li:hover, .head ul li a:hover {
+	background-color: #FAFAFA; transition: none; color: #4F4F4F; text-decoration: none;
+}
+.head ul li { width: 100px; height: 50px; }
+.head ul li a { margin-top: 16px; }

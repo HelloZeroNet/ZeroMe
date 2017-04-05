@@ -12,12 +12,30 @@
 	transition: all 0.5s ease-out; pointer-events: none; transition-delay: 0.5s
 }
 
+.button-tiny {
+	margin-top: 4px; border: 1px solid hsla(236,100%,79%,1); color: #5d68ff; border-radius: 33px; display: inline-block;
+	font-size: 14px; font-weight: lighter; text-align: center; transition: all 0.3s; padding: 4px 4px; background-position: -200px center;
+	min-width: 100px;
+}
+.button-tiny:hover { background-color: #5d68ff; color: #F6F7F8; text-decoration: none; border-color: #5d68ff; transition: none }
+.button-tiny:focus { transition: all 0.3s }
+.button-tiny:active { transform: translateY(1px); transition: all 0.3s, transform none; box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); outline: none; transition: none }
+
+.button.loading {
+	color: rgba(0,0,0,0) !important; background: url(../img/loading.gif) no-repeat center center !important; border-color: rgba(0,0,0,0) !important;
+	transition: all 0.5s ease-out; pointer-events: none; transition-delay: 0.5s
+}
+
 /* Follow */
 .button-follow { width: 32px; line-height: 32px; padding: 0px; border: 1px solid #aaa; color: #999; padding-left: 1px; padding-bottom: 1px; }
 .button-follow:hover { background-color: rgba(255,255,255,0.3) !important; border-color: #2ecc71 !important; color: #2ecc71 }
 .button-follow-big { padding-left: 25px; float: none; border: 1px solid #2ecc71; color: #2ecc71; min-width: 100px; }
 .button-follow-big .icon-follow { margin-right: 10px; display: inline-block; transition: transform 0.3s ease-in-out }
 .button-follow-big:hover { border-color: #2ecc71 !important; color: #2ecc71; background-color: white; text-decoration: underline; }
+
+.button-mute { float: none; border: 1px solid #2ecc71; color: #2ecc71;  }
+.button-mute .icon-mute { margin-right: 4px; display: inline-block; transition: transform 0.3s ease-in-out }
+.button-mute:hover { border-color: #2ecc71 !important; color: #2ecc71; background-color: white; text-decoration: underline; }
 
 /* Submit */
 .button-submit {

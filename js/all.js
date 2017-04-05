@@ -4478,6 +4478,14 @@ window.entities=new Html5Entities()
                   href: "#",
                   onclick: this.user.handleFollowClick
                 }, h("span.icon-follow", "+"), this.user.isFollowed() ? "Unfollow" : "Follow")
+              ]), h("div.follow-container.settings-container", [
+                !this.owned ? h("div.button-tiny.button-mute", {
+                  href: "#Mute",
+                  onclick: this.user.handleMuteClick
+                }, [h("div.icon.icon-mute"), "Mute"]) : h("div.button-tiny.button-mute", {
+                  href: "#Settings",
+                  onclick: this.user.handleSettingsClick
+                }, [h("div.icon.icon-small.fa.fa-gear"), "Settings"])
               ]), h("div.help.checkbox", {
                 classes: {
                   checked: this.optional_helping
@@ -4486,14 +4494,7 @@ window.entities=new Html5Entities()
               }, h("div.checkbox-skin"), h("div.title", "Help distribute this user's images"))
             ])
           ]), this.owned && this.loaded && (this.user.row.bgColor || this.user.row.bgUnset) ? h("div.user.card.profile.no-left-padding", [h("div.bg-settings", [h("h2", h("b.intro-full", "Background Settings")), this.uploadable_background.render(this.user.renderBackground), h("div.bg-preview", this.editable_bgcolor.render("Background Color: " + this.user.getBackground()))])]) : void 0, h("div.light-bg", [
-            this.activity_list.render(), h("h2.local" + (this.user_list.users.length > 0 ? ".sep" : ""), {
-              afterCreate: Animation.show
-            }, [
-              "Local Preferences", !this.owned ? (h("br"), h("a.user-mute", {
-                href: "#Mute",
-                onclick: this.user.handleMuteClick
-              }, h("div.icon.icon-mute"), "Mute " + this.user.row.cert_user_id)) : void 0
-            ]), this.user_list.users.length > 0 ? h("h2.sep", {
+            this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
               afterCreate: Animation.show
             }, ["Following"]) : void 0, this.user_list.render(".gray")
           ])
@@ -4519,6 +4520,56 @@ window.entities=new Html5Entities()
   })(Class);
 
   window.ContentProfile = ContentProfile;
+
+}).call(this);
+
+
+
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentSettings.coffee ---- */
+
+
+(function() {
+  var ContentSettings,
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  ContentSettings = (function(superClass) {
+    extend(ContentSettings, superClass);
+
+    function ContentSettings() {
+      this.update = bind(this.update, this);
+      this.render = bind(this.render, this);
+      this.loaded = true;
+      this.need_update = false;
+    }
+
+    ContentSettings.prototype.render = function() {
+      if (Page.user && Page.user.applyBackground) {
+        Page.user.applyBackground();
+      } else {
+        window.defaultBackground();
+      }
+      if (this.loaded && !Page.on_loaded.resolved) {
+        Page.on_loaded.resolve();
+      }
+      if (this.need_update) {
+        this.log("Updating");
+        this.need_update = false;
+      }
+      return h("div#Content.center", [h("h1", "Soon...")]);
+    };
+
+    ContentSettings.prototype.update = function() {
+      this.need_update = true;
+      return Page.projector.scheduleRender();
+    };
+
+    return ContentSettings;
+
+  })(Class);
+
+  window.ContentSettings = ContentSettings;
 
 }).call(this);
 
@@ -4788,7 +4839,7 @@ window.entities=new Html5Entities()
     };
 
     Head.prototype.render = function() {
-      var ref, ref1, ref2, ref3;
+      var el, ref, ref1, ref2, ref3;
       return h("div.head.center", [
         h("a.logo", {
           href: "?Home",
@@ -4797,7 +4848,21 @@ window.entities=new Html5Entities()
           src: "img/logo.svg",
           height: 40,
           onerror: "this.src='img/logo.png'; this.onerror=null;"
-        })), ((ref = Page.user) != null ? ref.hub : void 0) ? h("div.right.authenticated", [
+        })), h("ul", [
+          (function() {
+            var i, len, ref, results;
+            ref = [["Users", "Users", "user"], ["Settings", "Settings", "gear"]];
+            results = [];
+            for (i = 0, len = ref.length; i < len; i++) {
+              el = ref[i];
+              results.push(h("li", h("a", {
+                href: "?" + el[1],
+                onclick: Page.handleLinkClick
+              }, [h("i.fa.fa-margin.fa-" + el[2]), el[0]])));
+            }
+            return results;
+          })()
+        ]), ((ref = Page.user) != null ? ref.hub : void 0) ? h("div.right.authenticated", [
           h("div.user", h("a.name.link", {
             href: Page.user.getLink(),
             onclick: Page.handleLinkClick
@@ -6470,7 +6535,6 @@ window.entities=new Html5Entities()
 }).call(this);
 
 
-
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/UserList.coffee ---- */
 
 
@@ -6683,6 +6747,7 @@ window.entities=new Html5Entities()
       this.overlay = new Overlay();
       this.content_feed = new ContentFeed();
       this.content_users = new ContentUsers();
+      this.content_settings = new ContentSettings();
       this.content_profile = new ContentProfile();
       this.content_create_profile = new ContentCreateProfile();
       this.scrollwatcher = new Scrollwatcher();
@@ -6725,6 +6790,8 @@ window.entities=new Html5Entities()
         content = this.content_create_profile;
       } else if (this.params.urls[0] === "Users" && (content = this.content_users)) {
 
+      } else if (this.params.urls[0] === "Settings") {
+        content = this.content_settings;
       } else if (this.params.urls[0] === "ProfileName") {
         this.content_profile.findUser(this.params.urls[1], (function(_this) {
           return function(user) {
