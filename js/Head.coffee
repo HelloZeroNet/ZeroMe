@@ -117,7 +117,7 @@ class Head extends Class
 		h("div.head.center", [
 			h("a.logo", {href: "?Home", onclick: Page.handleLinkClick}, h("img", {src: "img/logo.svg", height: 40, onerror: "this.src='img/logo.png'; this.onerror=null;"})),
 			h("ul", [
-				for el in [["Users","Users","user"],["Settings","Settings","gear"]]
+				for el in [["Home","Home","home"],["Users","Users","users"],["Settings","Settings","gear"]]
 					h("li",h("a",{href:"?#{el[1]}", onclick: Page.handleLinkClick},[h("i.fa.fa-margin.fa-#{el[2]}"),el[0]]))
 			])
 			if Page.user?.hub

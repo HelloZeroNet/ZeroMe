@@ -11,6 +11,7 @@ class ContentProfile extends Class
 		@filter_post_id = null
 		@loaded = false
 		@help_distribute = false
+		@editing = false
 
 	renderNotSeeded: =>
 		return h("div#Content.center.#{@auth_address}", [
@@ -161,6 +162,9 @@ class ContentProfile extends Class
 				@user.save data, @user.hub, (res) =>
 					Page.cmd "wrapperReload"  # Reload the page
 
+	handleEditClick: =>
+		@editing=!@editing
+
 	handleOptionalHelpClick: =>
 		if Page.server_info.rev < 1700
 			Page.cmd "wrapperNotification", ["info", "You need ZeroNet version 0.5.0 use this feature"]
@@ -248,17 +252,17 @@ class ContentProfile extends Class
 			h("div.col-left", {classes: {faded: @filter_post_id}}, [
 				h("div.users", [
 					h("div.user.card.profile", {classes: {followed: @user.isFollowed()}}, [
-						if @owned then @uploadable_avatar.render(@user.renderAvatar) else @user.renderAvatar()
+						if @editing then @uploadable_avatar.render(@user.renderAvatar) else @user.renderAvatar()
 						h("span.name.link",
 							{style: "color: #{Text.toColor(@user.row.auth_address)}"},
-							if @owned
+							if @editing
 								@editable_user_name.render(@user.row.user_name)
 							else
 								h("a", {href: @user.getLink(), onclick: Page.handleLinkClick}, @user.row.user_name)
 						),
 						h("div.cert_user_id", @user.row.cert_user_id)
 
-						if @owned
+						if @editing
 							h("div.intro-full", @editable_intro.render(@user.row.intro))
 						else
 							h("div.intro-full", {innerHTML: Text.renderMarked(@user.row.intro)})
@@ -285,10 +289,16 @@ class ContentProfile extends Class
 							h("div.checkbox-skin"),
 							h("div.title", "Help distribute this user's images")
 						)
+
+						if @owned
+							h("div.help.editmode.checkbox", {classes: {checked: @editing}, onclick: @handleEditClick},
+								h("div.checkbox-skin"),
+								h("div.title", "Enable Editing")
+							)
 					])
 				]),
 
-				if @owned and @loaded and (@user.row.bgColor || @user.row.bgUnset)
+				if @editing and @loaded and (@user.row.bgColor || @user.row.bgUnset)
 					h("div.user.card.profile.no-left-padding", [
 						h("div.bg-settings",[
 							h("h2", h("b.intro-full","Background Settings"))

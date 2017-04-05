@@ -4146,6 +4146,7 @@ window.entities=new Html5Entities()
       this.update = bind(this.update, this);
       this.render = bind(this.render, this);
       this.handleOptionalHelpClick = bind(this.handleOptionalHelpClick, this);
+      this.handleEditClick = bind(this.handleEditClick, this);
       this.handleBackgroundUpload = bind(this.handleBackgroundUpload, this);
       this.handleAvatarUpload = bind(this.handleAvatarUpload, this);
       this.handleUserNameSave = bind(this.handleUserNameSave, this);
@@ -4166,6 +4167,7 @@ window.entities=new Html5Entities()
       this.filter_post_id = null;
       this.loaded = false;
       this.help_distribute = false;
+      this.editing = false;
     }
 
     ContentProfile.prototype.renderNotSeeded = function() {
@@ -4352,6 +4354,10 @@ window.entities=new Html5Entities()
       })(this));
     };
 
+    ContentProfile.prototype.handleEditClick = function() {
+      return this.editing = !this.editing;
+    };
+
     ContentProfile.prototype.handleOptionalHelpClick = function() {
       if (Page.server_info.rev < 1700) {
         Page.cmd("wrapperNotification", ["info", "You need ZeroNet version 0.5.0 use this feature"]);
@@ -4466,12 +4472,12 @@ window.entities=new Html5Entities()
                 followed: this.user.isFollowed()
               }
             }, [
-              this.owned ? this.uploadable_avatar.render(this.user.renderAvatar) : this.user.renderAvatar(), h("span.name.link", {
+              this.editing ? this.uploadable_avatar.render(this.user.renderAvatar) : this.user.renderAvatar(), h("span.name.link", {
                 style: "color: " + (Text.toColor(this.user.row.auth_address))
-              }, this.owned ? this.editable_user_name.render(this.user.row.user_name) : h("a", {
+              }, this.editing ? this.editable_user_name.render(this.user.row.user_name) : h("a", {
                 href: this.user.getLink(),
                 onclick: Page.handleLinkClick
-              }, this.user.row.user_name)), h("div.cert_user_id", this.user.row.cert_user_id), this.owned ? h("div.intro-full", this.editable_intro.render(this.user.row.intro)) : h("div.intro-full", {
+              }, this.user.row.user_name)), h("div.cert_user_id", this.user.row.cert_user_id), this.editing ? h("div.intro-full", this.editable_intro.render(this.user.row.intro)) : h("div.intro-full", {
                 innerHTML: Text.renderMarked(this.user.row.intro)
               }), h("div.follow-container", [
                 h("a.button.button-follow-big", {
@@ -4491,9 +4497,14 @@ window.entities=new Html5Entities()
                   checked: this.optional_helping
                 },
                 onclick: this.handleOptionalHelpClick
-              }, h("div.checkbox-skin"), h("div.title", "Help distribute this user's images"))
+              }, h("div.checkbox-skin"), h("div.title", "Help distribute this user's images")), this.owned ? h("div.help.editmode.checkbox", {
+                classes: {
+                  checked: this.editing
+                },
+                onclick: this.handleEditClick
+              }, h("div.checkbox-skin"), h("div.title", "Enable Editing")) : void 0
             ])
-          ]), this.owned && this.loaded && (this.user.row.bgColor || this.user.row.bgUnset) ? h("div.user.card.profile.no-left-padding", [h("div.bg-settings", [h("h2", h("b.intro-full", "Background Settings")), this.uploadable_background.render(this.user.renderBackground), h("div.bg-preview", this.editable_bgcolor.render("Background Color: " + this.user.getBackground()))])]) : void 0, h("div.light-bg", [
+          ]), this.editing && this.loaded && (this.user.row.bgColor || this.user.row.bgUnset) ? h("div.user.card.profile.no-left-padding", [h("div.bg-settings", [h("h2", h("b.intro-full", "Background Settings")), this.uploadable_background.render(this.user.renderBackground), h("div.bg-preview", this.editable_bgcolor.render("Background Color: " + this.user.getBackground()))])]) : void 0, h("div.light-bg", [
             this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
               afterCreate: Animation.show
             }, ["Following"]) : void 0, this.user_list.render(".gray")
@@ -4522,7 +4533,6 @@ window.entities=new Html5Entities()
   window.ContentProfile = ContentProfile;
 
 }).call(this);
-
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentSettings.coffee ---- */
@@ -4851,7 +4861,7 @@ window.entities=new Html5Entities()
         })), h("ul", [
           (function() {
             var i, len, ref, results;
-            ref = [["Users", "Users", "user"], ["Settings", "Settings", "gear"]];
+            ref = [["Home", "Home", "home"], ["Users", "Users", "users"], ["Settings", "Settings", "gear"]];
             results = [];
             for (i = 0, len = ref.length; i < len; i++) {
               el = ref[i];
@@ -4909,6 +4919,7 @@ window.entities=new Html5Entities()
   window.Head = Head;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/Post.coffee ---- */
