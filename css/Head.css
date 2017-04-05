@@ -23,5 +23,4 @@
 .head ul li:hover, .head ul li a:hover {
 	background-color: #FAFAFA; transition: none; color: #4F4F4F; text-decoration: none;
 }
-.head ul li { width: 100px; height: 50px; }
-.head ul li a { margin-top: 16px; }
+.head ul li a { padding-top: 16px; width: 100px; height: 34px; }
