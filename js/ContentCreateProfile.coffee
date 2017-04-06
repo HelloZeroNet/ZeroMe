@@ -107,6 +107,7 @@ class ContentCreateProfile extends Class
 		if @need_update
 			@updateHubs()
 			@need_update = false
+			Page.changeTitle "Create Profile"
 
 		h("div#Content.center.content-signup", [
 			h("h1", "Create new profile"),

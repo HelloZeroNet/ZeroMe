@@ -31,6 +31,12 @@ class ZeroMe extends ZeroFrame
 					@updateSiteInfo =>
 						@content.update()
 
+	changeTitle: (title) ->
+		suffix=@site_info?.content?.title||"ZeroMe"
+		if title
+			Page.cmd "wrapperSetTitle", "#{title} | #{suffix}"
+		else
+			Page.cmd "wrapperSetTitle", "#{suffix}"
 
 	createProjector: ->
 		@projector = maquette.createProjector()

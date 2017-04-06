@@ -21,6 +21,7 @@ class ContentFeed extends Class
 
 		if @need_update
 			@log "Updating", @type
+			Page.changeTitle("Home")
 			if Page.user and Page.user.applyBackground
 				Page.user.applyBackground()
 			else

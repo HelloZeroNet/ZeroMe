@@ -64,6 +64,7 @@ class ContentUsers extends Class
 		if @need_update
 			@log "Updating"
 			@need_update = false
+			Page.changeTitle "Users"
 
 			# Update components
 			@user_list_recent?.need_update = true

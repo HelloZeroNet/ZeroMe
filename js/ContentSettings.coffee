@@ -13,6 +13,7 @@ class ContentSettings extends Class
 		if @need_update
 			@log "Updating"
 			@need_update = false
+			Page.changeTitle "Settings"
 
 		h("div#Content.center", [
 			h("h1","Soon...")

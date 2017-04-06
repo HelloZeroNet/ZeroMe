@@ -14,6 +14,7 @@ class ContentProfile extends Class
 		@editing = false
 
 	renderNotSeeded: =>
+		window.defaultBackground()
 		return h("div#Content.center.#{@auth_address}", [
 			h("div.col-left", [
 				h("div.users", [
@@ -187,6 +188,12 @@ class ContentProfile extends Class
 			@log "Updating"
 			@need_update = false
 
+			if @user and @user.row
+				Page.changeTitle(@user.row.user_name)
+			else
+				Page.changeTitle()
+				@need_update = true
+
 
 			# Update components
 			@post_list.filter_post_ids = if @filter_post_id then [@filter_post_id] else null
@@ -258,7 +265,7 @@ class ContentProfile extends Class
 							if @editing
 								@editable_user_name.render(@user.row.user_name)
 							else
-								h("a", {href: @user.getLink(), onclick: Page.handleLinkClick}, @user.row.user_name)
+								h("a", {href: @user.getLink(), onclick: Page.handleLinkClick, style: "color: inherit"}, @user.row.user_name)
 						),
 						h("div.cert_user_id", @user.row.cert_user_id)
 

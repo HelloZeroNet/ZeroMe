@@ -3926,6 +3926,7 @@ window.entities=new Html5Entities()
       if (this.need_update) {
         this.updateHubs();
         this.need_update = false;
+        Page.changeTitle("Create Profile");
       }
       return h("div#Content.center.content-signup", [
         h("h1", "Create new profile"), h("a.button.button-submit.button-certselect.certselect", {
@@ -4014,6 +4015,7 @@ window.entities=new Html5Entities()
       }
       if (this.need_update) {
         this.log("Updating", this.type);
+        Page.changeTitle("Home");
         if (Page.user && Page.user.applyBackground) {
           Page.user.applyBackground();
         } else {
@@ -4171,6 +4173,7 @@ window.entities=new Html5Entities()
     }
 
     ContentProfile.prototype.renderNotSeeded = function() {
+      window.defaultBackground();
       return h("div#Content.center." + this.auth_address, [
         h("div.col-left", [
           h("div.users", [
@@ -4385,6 +4388,12 @@ window.entities=new Html5Entities()
       if (this.need_update) {
         this.log("Updating");
         this.need_update = false;
+        if (this.user && this.user.row) {
+          Page.changeTitle(this.user.row.user_name);
+        } else {
+          Page.changeTitle();
+          this.need_update = true;
+        }
         this.post_list.filter_post_ids = this.filter_post_id ? [this.filter_post_id] : null;
         if ((ref = this.post_list) != null) {
           ref.need_update = true;
@@ -4476,7 +4485,8 @@ window.entities=new Html5Entities()
                 style: "color: " + (Text.toColor(this.user.row.auth_address))
               }, this.editing ? this.editable_user_name.render(this.user.row.user_name) : h("a", {
                 href: this.user.getLink(),
-                onclick: Page.handleLinkClick
+                onclick: Page.handleLinkClick,
+                style: "color: inherit"
               }, this.user.row.user_name)), h("div.cert_user_id", this.user.row.cert_user_id), this.editing ? h("div.intro-full", this.editable_intro.render(this.user.row.intro)) : h("div.intro-full", {
                 innerHTML: Text.renderMarked(this.user.row.intro)
               }), h("div.follow-container", [
@@ -4535,6 +4545,7 @@ window.entities=new Html5Entities()
 }).call(this);
 
 
+
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentSettings.coffee ---- */
 
 
@@ -4566,6 +4577,7 @@ window.entities=new Html5Entities()
       if (this.need_update) {
         this.log("Updating");
         this.need_update = false;
+        Page.changeTitle("Settings");
       }
       return h("div#Content.center", [h("h1", "Soon...")]);
     };
@@ -4685,6 +4697,7 @@ window.entities=new Html5Entities()
       if (this.need_update) {
         this.log("Updating");
         this.need_update = false;
+        Page.changeTitle("Users");
         if ((ref = this.user_list_recent) != null) {
           ref.need_update = true;
         }
@@ -6551,7 +6564,6 @@ window.entities=new Html5Entities()
 }).call(this);
 
 
-
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/UserList.coffee ---- */
 
 
@@ -6757,6 +6769,16 @@ window.entities=new Html5Entities()
           }
         };
       })(this));
+    };
+
+    ZeroMe.prototype.changeTitle = function(title) {
+      var ref, ref1, suffix;
+      suffix = ((ref = this.site_info) != null ? (ref1 = ref.content) != null ? ref1.title : void 0 : void 0) || "ZeroMe";
+      if (title) {
+        return Page.cmd("wrapperSetTitle", title + " | " + suffix);
+      } else {
+        return Page.cmd("wrapperSetTitle", "" + suffix);
+      }
     };
 
     ZeroMe.prototype.createProjector = function() {
