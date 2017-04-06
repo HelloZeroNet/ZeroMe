@@ -68,9 +68,15 @@
 
 /* Submit */
 .button-submit {
-	padding: 12px 20px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; -ms-border-radius: 3px; border-radius: 3px; margin-top: 11px; background: #5d68ff; /* box-shadow: 0px 1px 4px rgba(93, 104, 255, 0.41); */ border: none; border-bottom: 2px solid #4952c7; font-weight: bold; color: #ffffff; font-size: 12px; text-transform: uppercase; margin-left: 10px; text-indent: 20px; background-image: url(../img/post.svg); background-size: 40px; background-position: 1px 1px; background-repeat: no-repeat;
+	padding: 12px 20px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; -ms-border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; -ms-border-radius: 3px; border-radius: 3px ; margin-top: 11px; background: #5d68ff;
+	/* -webkit-box-shadow: 0px 1px 4px rgba(93, 104, 255, 0.41); -moz-box-shadow: 0px 1px 4px rgba(93, 104, 255, 0.41); -o-box-shadow: 0px 1px 4px rgba(93, 104, 255, 0.41); -ms-box-shadow: 0px 1px 4px rgba(93, 104, 255, 0.41); box-shadow: 0px 1px 4px rgba(93, 104, 255, 0.41) ; */
+	border: none; border-bottom: 2px solid #4952c7; font-weight: bold; color: #ffffff; font-size: 12px; text-transform: uppercase; text-indent: 5px;
 }
 .button-submit:hover { color: white; background-color: #6d78ff }
+.button-submit:not(.select-user) {
+	background-size: 40px; background-position: 1px 1px; background-repeat: no-repeat;
+	background-image: url(../img/post.svg); margin-left: 10px; text-indent: 20px;
+}
 
 .button-small { padding: 7px 20px; margin-left: 10px }
 .button-outline { background-color: white; border: 1px solid #EEE; border-bottom: 2px solid #EEE; color: #AAA; }
@@ -143,8 +149,7 @@
 .head ul li:hover, .head ul li a:hover {
 	background-color: #FAFAFA; -webkit-transition: none; -moz-transition: none; -o-transition: none; -ms-transition: none; transition: none ; color: #4F4F4F; text-decoration: none;
 }
-.head ul li { width: 100px; height: 50px; }
-.head ul li a { margin-top: 16px; }
+.head ul li a { padding-top: 16px; width: 100px; height: 34px; }
 
 
 
