@@ -120,9 +120,11 @@ class User extends Class
 	renderAvatar: (attrs={}) =>
 		if @isSeeding() and (@row.avatar == "png" or @row.avatar == "jpg")
 			attrs.style = "background-image: url('#{@getAvatarLink()}')"
+			h("a.avatar", attrs)
 		else
 			attrs.style = "background: linear-gradient("+Text.toColor(@auth_address)+","+Text.toColor(@auth_address.slice(-5))+")"
-		h("a.avatar", attrs)
+			attrs.src="img/user-shape.png"
+			h("img.avatar",attrs)
 
 	renderBackground: (attrs={}) =>
 		if @isSeeding() and (@row.bg == "png" or @row.bg == "jpg")

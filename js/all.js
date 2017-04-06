@@ -5740,7 +5740,6 @@ window.entities=new Html5Entities()
 }).call(this);
 
 
-
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostMeta.coffee ---- */
 
 
@@ -6122,10 +6121,12 @@ window.entities=new Html5Entities()
       }
       if (this.isSeeding() && (this.row.avatar === "png" || this.row.avatar === "jpg")) {
         attrs.style = "background-image: url('" + (this.getAvatarLink()) + "')";
+        return h("a.avatar", attrs);
       } else {
         attrs.style = "background: linear-gradient(" + Text.toColor(this.auth_address) + "," + Text.toColor(this.auth_address.slice(-5)) + ")";
+        attrs.src = "img/user-shape.png";
+        return h("img.avatar", attrs);
       }
-      return h("a.avatar", attrs);
     };
 
     User.prototype.renderBackground = function(attrs) {
@@ -6548,6 +6549,7 @@ window.entities=new Html5Entities()
   window.User = User;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/UserList.coffee ---- */
