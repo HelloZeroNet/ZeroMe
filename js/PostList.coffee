@@ -37,8 +37,11 @@ class PostList extends Class
 		if @filter_post_ids
 			where += "AND post_id IN #{Text.sqlIn(@filter_post_ids)} "
 
-		if Page.local_storage.settings.hide_hello_zerome
-			where += "AND post_id > 1 "
+		if Page.local_storage_loaded
+			if Page.local_storage.settings.hide_hello_zerome
+				where += "AND post_id > 1 "
+		else
+			@need_update = true
 
 		query = "
 			SELECT

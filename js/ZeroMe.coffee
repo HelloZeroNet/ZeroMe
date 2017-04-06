@@ -17,6 +17,8 @@ class ZeroMe extends ZeroFrame
 		@on_user_info = new Promise()
 		@on_loaded = new Promise()
 		@local_storage = null
+		@local_storage_loaded = false
+		@loadLocalStorage()
 
 		@on_site_info.then =>
 			# Load user data
@@ -56,7 +58,6 @@ class ZeroMe extends ZeroFrame
 
 		@projector.replace($("#Head"), @head.render)
 		@projector.replace($("#Overlay"), @overlay.render)
-		@loadLocalStorage()
 
 		# Update every minute to keep time since fields up-to date
 		setInterval ( ->
@@ -153,6 +154,7 @@ class ZeroMe extends ZeroFrame
 			@logStart "Loaded localstorage"
 			@cmd "wrapperGetLocalStorage", [], (@local_storage) =>
 				@logEnd "Loaded localstorage"
+				@local_storage_loaded = true
 				@local_storage ?= {}
 				@local_storage.followed_users ?= {}
 				@local_storage.settings ?= {}

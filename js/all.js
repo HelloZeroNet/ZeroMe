@@ -4921,7 +4921,6 @@ window.entities=new Html5Entities()
 }).call(this);
 
 
-
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/Post.coffee ---- */
 
 
@@ -5592,8 +5591,12 @@ window.entities=new Html5Entities()
       if (this.filter_post_ids) {
         where += "AND post_id IN " + (Text.sqlIn(this.filter_post_ids)) + " ";
       }
-      if (Page.local_storage.settings.hide_hello_zerome) {
-        where += "AND post_id > 1 ";
+      if (Page.local_storage_loaded) {
+        if (Page.local_storage.settings.hide_hello_zerome) {
+          where += "AND post_id > 1 ";
+        }
+      } else {
+        this.need_update = true;
       }
       query = "SELECT * FROM post LEFT JOIN json ON (post.json_id = json.json_id) " + where + " ORDER BY date_added DESC LIMIT " + (this.limit + 1);
       this.logStart("Update");
@@ -5735,6 +5738,7 @@ window.entities=new Html5Entities()
   window.PostList = PostList;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostMeta.coffee ---- */
@@ -6735,6 +6739,8 @@ window.entities=new Html5Entities()
       this.on_user_info = new Promise();
       this.on_loaded = new Promise();
       this.local_storage = null;
+      this.local_storage_loaded = false;
+      this.loadLocalStorage();
       return this.on_site_info.then((function(_this) {
         return function() {
           _this.checkUser(function() {
@@ -6779,7 +6785,6 @@ window.entities=new Html5Entities()
       })(this));
       this.projector.replace($("#Head"), this.head.render);
       this.projector.replace($("#Overlay"), this.overlay.render);
-      this.loadLocalStorage();
       return setInterval((function() {
         return Page.projector.scheduleRender();
       }), 60 * 1000);
@@ -6897,6 +6902,7 @@ window.entities=new Html5Entities()
             var base1, base2;
             _this.local_storage = local_storage;
             _this.logEnd("Loaded localstorage");
+            _this.local_storage_loaded = true;
             if (_this.local_storage == null) {
               _this.local_storage = {};
             }
