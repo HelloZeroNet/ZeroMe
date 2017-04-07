@@ -1,0 +1,9 @@
+.checkbox-skin { background-color: #CCC; width: 35px; height: 18px; border-radius: 15px; transition: all 0.3s ease-in-out; display: inline-block; }
+.checkbox-skin:before {
+	content: ""; position: relative; width: 14px; background-color: white; height: 14px; display: block; border-radius: 100%; margin-top: 2px; margin-left: 2px;
+	transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+.checkbox .title { display: inline; line-height: 30px; vertical-align: 4px; margin-left: 11px; }
+.checkbox.checked .checkbox-skin:before { margin-left: 19px; }
+.checkbox.checked .checkbox-skin { background-color: #2ECC71; }
+.checkbox.disabled .checkbox-skin { opacity: 0.5; }

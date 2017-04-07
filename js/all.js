@@ -3740,6 +3740,22 @@ window.entities=new Html5Entities()
 
   window.defaultBackground.image = "img/default-bg.jpg";
 
+  window.stripBackground = function() {
+    return document.body.style = "";
+  };
+
+  window.otherPageBackground = function() {
+    if (Page.getSetting("hide_background_timeline")) {
+      return window.stripBackground();
+    } else {
+      if (Page.user && Page.user.applyBackground) {
+        return Page.user.applyBackground();
+      } else {
+        return window.defaultBackground();
+      }
+    }
+  };
+
 }).call(this);
 
 
@@ -4016,11 +4032,7 @@ window.entities=new Html5Entities()
       if (this.need_update) {
         this.log("Updating", this.type);
         Page.changeTitle("Home");
-        if (Page.user && Page.user.applyBackground) {
-          Page.user.applyBackground();
-        } else {
-          window.defaultBackground();
-        }
+        window.otherPageBackground();
         this.need_update = false;
         this.new_user_list.need_update = true;
         this.suggested_user_list.need_update = true;
@@ -4545,7 +4557,6 @@ window.entities=new Html5Entities()
 }).call(this);
 
 
-
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentSettings.coffee ---- */
 
 
@@ -4561,16 +4572,54 @@ window.entities=new Html5Entities()
     function ContentSettings() {
       this.update = bind(this.update, this);
       this.render = bind(this.render, this);
+      this.renderCheck = bind(this.renderCheck, this);
       this.loaded = true;
       this.need_update = false;
     }
 
-    ContentSettings.prototype.render = function() {
-      if (Page.user && Page.user.applyBackground) {
-        Page.user.applyBackground();
-      } else {
-        window.defaultBackground();
+    ContentSettings.prototype.fncs = {};
+
+    ContentSettings.prototype.renderCheck = function(key, name, desc, attrs) {
+      var base;
+      if (desc == null) {
+        desc = "";
       }
+      if (attrs == null) {
+        attrs = {};
+      }
+      if ((base = this.fncs)[key] == null) {
+        base[key] = (function(_this) {
+          return function(item) {
+            if (attrs.disabled_by && Page.local_storage.settings[attrs.disabled_by]) {
+              return false;
+            }
+            Page.local_storage.settings[key] = !Page.local_storage.settings[key];
+            Page.projector.scheduleRender();
+            Page.saveLocalStorage();
+            Page.content.need_update = true;
+            return false;
+          };
+        })(this);
+      }
+      return h("div.checkbox.setting", {
+        classes: {
+          checked: Page.local_storage.settings[key],
+          disabled: attrs.disabled_by && Page.local_storage.settings[attrs.disabled_by]
+        },
+        onclick: this.fncs[key]
+      }, h("div.checkbox-skin"), h("div.title", name), desc ? (!Array.isArray(desc) ? desc = [desc] : void 0, desc.map((function(_this) {
+        return function(d) {
+          if (d.startsWith("!WARN")) {
+            return h("div.desc.red", d.replace("!WARN", "WARNING:"));
+          } else {
+            return h("div.desc", d);
+          }
+        };
+      })(this))) : void 0, h("br", key));
+    };
+
+    ContentSettings.prototype.render = function() {
+      window.otherPageBackground();
       if (this.loaded && !Page.on_loaded.resolved) {
         Page.on_loaded.resolve();
       }
@@ -4579,7 +4628,17 @@ window.entities=new Html5Entities()
         this.need_update = false;
         Page.changeTitle("Settings");
       }
-      return h("div#Content.center", [h("h1", "Soon...")]);
+      return h("div#Content.center", [
+        Page.local_storage_loaded ? h("div.post.settings", {
+          style: "border-radius: 16px"
+        }, [
+          h("br", "top"), h("h1", "Settings"), h("h2.sep", ""), this.renderCheck("hide_hello_zerome", 'Hide "Hello ZeroMe!" messages', "This actually just hides a user's first post"), this.renderCheck("autoload_media", "Autoload images", ["This will automatically load images in posts", "!WARN This might also autoload images you don't want to see or seed!"]), this.renderCheck("gimme_stars", "I want my stars back", "Replace the heart with a star"), h("h2.sep", "Background"), this.renderCheck("disable_background", "Disable the background feature entierly"), this.renderCheck("load_others_background_disabled", "Don't load other users backgrounds", "", {
+            disabled_by: "disable_background"
+          }), this.renderCheck("hide_background_timeline", "Don't show background on the feed/timeline and other pages", "", {
+            disabled_by: "disable_background"
+          }), h("br", "bottom")
+        ]) : (h("h1", "Loading Settings..."), this.need_update = true)
+      ]);
     };
 
     ContentSettings.prototype.update = function() {
@@ -4594,6 +4653,7 @@ window.entities=new Html5Entities()
   window.ContentSettings = ContentSettings;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentUsers.coffee ---- */
@@ -4678,11 +4738,7 @@ window.entities=new Html5Entities()
 
     ContentUsers.prototype.render = function() {
       var ref, ref1, ref2;
-      if (Page.user && Page.user.applyBackground) {
-        Page.user.applyBackground();
-      } else {
-        window.defaultBackground();
-      }
+      window.otherPageBackground();
       if (this.loaded && !Page.on_loaded.resolved) {
         Page.on_loaded.resolve();
       }
@@ -5878,7 +5934,7 @@ window.entities=new Html5Entities()
     };
 
     PostMeta.prototype.render = function() {
-      var height, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, style_fullsize, style_preview, width;
+      var height, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, style_fullsize, style_preview, width;
       if (this.meta.img) {
         if (!this.image_preview) {
           this.image_preview = new ImagePreview();
@@ -5907,14 +5963,14 @@ window.entities=new Html5Entities()
           href: "#",
           onclick: this.handleImageClick,
           style: style_fullsize
-        }), Page.server_info.rev < 1700 ? h("small.oldversion", "You need ZeroNet 0.5.0 to view this image") : void 0, ((ref5 = this.image_preview) != null ? ref5.optional_info : void 0) ? h("a.show", {
+        }), Page.server_info.rev < 1700 ? h("small.oldversion", "You need ZeroNet 0.5.0 to view this image") : void 0, ((ref5 = this.image_preview) != null ? ref5.optional_info : void 0) ? (h("a.show", {
           href: "#",
           onclick: this.handleImageClick
-        }, h("div.title", "Loading...\nShow image")) : void 0, ((ref6 = this.image_preview) != null ? ref6.optional_info : void 0) ? h("a.details", {
+        }, h("div.title", "Loading...\nShow image")), Page.getSetting("autoload_media") && !((ref6 = this.image_preview.optional_info) != null ? ref6.is_downloaded : void 0) ? setTimeout(this.handleImageClick, 0) : void 0) : void 0, ((ref7 = this.image_preview) != null ? ref7.optional_info : void 0) ? h("a.details", {
           href: "#Settings",
           onclick: Page.returnFalse,
           onmousedown: this.handleImageSettingsClick
-        }, [h("div.size", Text.formatSize((ref7 = this.image_preview.optional_info) != null ? ref7.size : void 0)), h("div.peers.icon-profile"), (ref8 = this.image_preview.optional_info) != null ? ref8.peer : void 0, h("a.image-settings", "\u22EE"), this.menu_image ? this.menu_image.render(".menu-right") : void 0]) : void 0);
+        }, [h("div.size", Text.formatSize((ref8 = this.image_preview.optional_info) != null ? ref8.size : void 0)), h("div.peers.icon-profile"), (ref9 = this.image_preview.optional_info) != null ? ref9.peer : void 0, h("a.image-settings", "\u22EE"), this.menu_image ? this.menu_image.render(".menu-right") : void 0]) : void 0);
       }
     };
 
@@ -6154,31 +6210,37 @@ window.entities=new Html5Entities()
     };
 
     User.prototype.applyBackground = function(cb) {
-      if (this.row.bgColor || this.row.bgUnset) {
-        if (this.isSeeding() && (this.row.bg === "png" || this.row.bg === "jpg")) {
-          window.setBackground(this.getBackground(), this.getBackgroundLink());
-        } else if (this.row.bgColor) {
-          window.setBackground(this.getBackground());
-        } else if (this.row.bgUnset) {
-          window.defaultBackground();
-        }
-        if (cb) {
-          return cb();
-        }
+      if (Page.getSetting("disable_background")) {
+        return window.stripBackground();
+      } else if (Page.user.getLink() !== this.getLink() && Page.getSetting("load_others_background_disabled")) {
+        return window.defaultBackground();
       } else {
-        return this.getData(this.hub, (function(_this) {
-          return function(row) {
-            if (_this.row == null) {
-              _this.row = {};
-            }
-            _this.row.bg = row.bg;
-            _this.row.bgColor = row.bgColor;
-            if (!row.bgColor) {
-              _this.row.bgUnset = true;
-            }
-            return _this.applyBackground(cb);
-          };
-        })(this));
+        if (this.row.bgColor || this.row.bgUnset) {
+          if (this.isSeeding() && (this.row.bg === "png" || this.row.bg === "jpg")) {
+            window.setBackground(this.getBackground(), this.getBackgroundLink());
+          } else if (this.row.bgColor) {
+            window.setBackground(this.getBackground());
+          } else if (this.row.bgUnset) {
+            window.defaultBackground();
+          }
+          if (cb) {
+            return cb();
+          }
+        } else {
+          return this.getData(this.hub, (function(_this) {
+            return function(row) {
+              if (_this.row == null) {
+                _this.row = {};
+              }
+              _this.row.bg = row.bg;
+              _this.row.bgColor = row.bgColor;
+              if (!row.bgColor) {
+                _this.row.bgUnset = true;
+              }
+              return _this.applyBackground(cb);
+            };
+          })(this));
+        }
       }
     };
 
@@ -7075,6 +7137,17 @@ window.entities=new Html5Entities()
           }
         };
       })(this));
+    };
+
+    ZeroMe.prototype.getSetting = function(key) {
+      var ref, ref1;
+      if ((ref = this.local_storage) != null ? (ref1 = ref.settings) != null ? ref1[key] : void 0 : void 0) {
+        return true;
+      } else if (!this.local_storage_loaded) {
+        return this.log("WARN: Getting setting " + key + " but storage has not been loaded yet");
+      } else {
+        return false;
+      }
     };
 
     ZeroMe.prototype.onRequest = function(cmd, params) {

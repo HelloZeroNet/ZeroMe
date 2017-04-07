@@ -15,3 +15,15 @@ window.defaultBackground= ->
 
 window.defaultBackground.color="#D30C37"
 window.defaultBackground.image="img/default-bg.jpg"
+
+window.stripBackground= ->
+  document.body.style=""
+
+window.otherPageBackground= ->
+	if Page.getSetting "hide_background_timeline"
+		window.stripBackground()
+	else
+		if Page.user and Page.user.applyBackground
+			Page.user.applyBackground()
+		else
+			window.defaultBackground()

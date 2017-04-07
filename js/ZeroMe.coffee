@@ -262,6 +262,13 @@ class ZeroMe extends ZeroFrame
 			else
 				cb?(false)
 
+	getSetting: (key) ->
+		if @local_storage?.settings?[key]
+			return true
+		else if not @local_storage_loaded
+			@log "WARN: Getting setting #{key} but storage has not been loaded yet"
+		else
+			return false
 
 	# Parse incoming requests from UiWebsocket server
 	onRequest: (cmd, params) ->

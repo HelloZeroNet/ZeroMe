@@ -134,23 +134,28 @@ class User extends Class
 		h("img.bg-preview", attrs)
 
 	applyBackground: (cb) =>
-		if @row.bgColor or @row.bgUnset
-			if @isSeeding() and (@row.bg == "png" or @row.bg == "jpg")
-				window.setBackground @getBackground(),@getBackgroundLink()
-			else if @row.bgColor
-				window.setBackground @getBackground()
-			else if @row.bgUnset
-				window.defaultBackground()
-			if cb
-				cb()
+		if Page.getSetting "disable_background"
+			window.stripBackground()
+		else if Page.user.getLink() != @getLink() and Page.getSetting "load_others_background_disabled"
+			window.defaultBackground()
 		else
-			@getData @hub, (row) =>
-				@row?={}
-				@row.bg=row.bg
-				@row.bgColor=row.bgColor
-				if not row.bgColor
-					@row.bgUnset=true
-				@applyBackground(cb)
+			if @row.bgColor or @row.bgUnset
+				if @isSeeding() and (@row.bg == "png" or @row.bg == "jpg")
+					window.setBackground @getBackground(),@getBackgroundLink()
+				else if @row.bgColor
+					window.setBackground @getBackground()
+				else if @row.bgUnset
+					window.defaultBackground()
+				if cb
+					cb()
+			else
+				@getData @hub, (row) =>
+					@row?={}
+					@row.bg=row.bg
+					@row.bgColor=row.bgColor
+					if not row.bgColor
+						@row.bgUnset=true
+					@applyBackground(cb)
 
 
 

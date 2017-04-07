@@ -51,10 +51,7 @@ class ContentUsers extends Class
 			Page.projector.scheduleRender()
 
 	render: =>
-		if Page.user and Page.user.applyBackground
-			Page.user.applyBackground()
-		else
-			window.defaultBackground()
+		window.otherPageBackground()
 
 		if @loaded and not Page.on_loaded.resolved then Page.on_loaded.resolve()
 		if @need_update or not @num_users_total

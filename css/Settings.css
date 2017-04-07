@@ -1,0 +1,9 @@
+.checkbox.setting .desc { color: #888; margin-left: 30px; }
+.checkbox.setting .title { color: #555; }
+.red { color: #FF0000 !important; font-weight: bold !important; }
+
+.settings .sep {
+  font-weight: lighter;
+  color: #222;
+  font-size: 24px;
+}

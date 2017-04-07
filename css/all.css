@@ -84,6 +84,21 @@
 
 
 
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Checkbox.css ---- */
+
+
+.checkbox-skin { background-color: #CCC; width: 35px; height: 18px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -o-border-radius: 15px; -ms-border-radius: 15px; border-radius: 15px ; -webkit-transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; -ms-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out ; display: inline-block; }
+.checkbox-skin:before {
+	content: ""; position: relative; width: 14px; background-color: white; height: 14px; display: block; -webkit-border-radius: 100%; -moz-border-radius: 100%; -o-border-radius: 100%; -ms-border-radius: 100%; border-radius: 100% ; margin-top: 2px; margin-left: 2px;
+	-webkit-transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86); -moz-transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86); -o-transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86); -ms-transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86); transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86) ;
+}
+.checkbox .title { display: inline; line-height: 30px; vertical-align: 4px; margin-left: 11px; }
+.checkbox.checked .checkbox-skin:before { margin-left: 19px; }
+.checkbox.checked .checkbox-skin { background-color: #2ECC71; }
+.checkbox.disabled .checkbox-skin { opacity: 0.5; }
+
+
+
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Comment.css ---- */
 
 
@@ -308,6 +323,21 @@
 
 
 
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Settings.css ---- */
+
+
+.checkbox.setting .desc { color: #888; margin-left: 30px; }
+.checkbox.setting .title { color: #555; }
+.red { color: #FF0000 !important; font-weight: bold !important; }
+
+.settings .sep {
+  font-weight: lighter;
+  color: #222;
+  font-size: 24px;
+}
+
+
+
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Uploadable.css ---- */
 
 
@@ -354,15 +384,6 @@
 .user.card.notseeding .button-follow { border-color: #EFEFEF; }
 
 .user .help { margin-left: -57px; font-size: 14px; color: #AAA; }
-
-.checkbox-skin { background-color: #CCC; width: 35px; height: 18px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -o-border-radius: 15px; -ms-border-radius: 15px; border-radius: 15px ; -webkit-transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; -ms-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out ; display: inline-block; }
-.checkbox-skin:before {
-	content: ""; position: relative; width: 14px; background-color: white; height: 14px; display: block; -webkit-border-radius: 100%; -moz-border-radius: 100%; -o-border-radius: 100%; -ms-border-radius: 100%; border-radius: 100% ; margin-top: 2px; margin-left: 2px;
-	-webkit-transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86); -moz-transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86); -o-transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86); -ms-transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86); transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86) ;
-}
-.checkbox .title { display: inline; line-height: 30px; vertical-align: 4px; margin-left: 11px; }
-.checkbox.checked .checkbox-skin:before { margin-left: 19px; }
-.checkbox.checked .checkbox-skin { background-color: #2ECC71; }
 
 .user-mute { display: block; margin-top: 16px; font-size: 14px; margin-bottom: 16px; color: #555; }
 .user-notfound { text-align: center; font-size: 22px; margin-top: 100px; font-weight: lighter; }
