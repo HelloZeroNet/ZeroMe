@@ -4655,7 +4655,6 @@ window.entities=new Html5Entities()
 }).call(this);
 
 
-
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentUsers.coffee ---- */
 
 
@@ -5426,7 +5425,7 @@ window.entities=new Html5Entities()
             },
             href: "#Like",
             onclick: this.handleLikeClick
-          }, h("div.icon.icon-heart", {
+          }, h("div" + (Page.getSetting("gimme_stars") ? ".fa.fa-star.icon-star" : ".icon.icon-heart"), {
             classes: {
               active: (ref3 = Page.user) != null ? ref3.likes[post_uri] : void 0
             }
@@ -5442,6 +5441,7 @@ window.entities=new Html5Entities()
   window.Post = Post;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostCreate.coffee ---- */
