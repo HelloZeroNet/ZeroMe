@@ -38,15 +38,6 @@ class Head extends Class
 				return @handleFollowMenuItemClick("New followers", item)
 			), @follows["New followers"]]
 
-			@menu.items.push ['Hide "Hello ZeroMe!" messages', ( (item) =>
-				Page.local_storage.settings.hide_hello_zerome = not Page.local_storage.settings.hide_hello_zerome
-				item[2] = Page.local_storage.settings.hide_hello_zerome
-				Page.projector.scheduleRender()
-				Page.saveLocalStorage()
-				Page.content.need_update = true
-				return false
-			), Page.local_storage.settings.hide_hello_zerome]
-
 			@menu.toggle()
 			Page.projector.scheduleRender()
 		return false

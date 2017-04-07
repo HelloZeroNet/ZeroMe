@@ -136,7 +136,7 @@ class User extends Class
 	applyBackground: (cb) =>
 		if Page.getSetting "disable_background"
 			window.stripBackground()
-		else if Page.user.getLink() != @getLink() and Page.getSetting "load_others_background_disabled"
+		else if (if Page.user and Page.user.getLink then Page?.user?.getLink() != @getLink() else false) and Page.getSetting "load_others_background_disabled"
 			window.defaultBackground()
 		else
 			if @row.bgColor or @row.bgUnset

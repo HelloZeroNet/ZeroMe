@@ -3762,7 +3762,6 @@ window.entities=new Html5Entities()
 }).call(this);
 
 
-
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentCreateProfile.coffee ---- */
 
 
@@ -4887,16 +4886,6 @@ window.entities=new Html5Entities()
             "Follow new followers", (function(item) {
               return _this.handleFollowMenuItemClick("New followers", item);
             }), _this.follows["New followers"]
-          ]);
-          _this.menu.items.push([
-            'Hide "Hello ZeroMe!" messages', (function(item) {
-              Page.local_storage.settings.hide_hello_zerome = !Page.local_storage.settings.hide_hello_zerome;
-              item[2] = Page.local_storage.settings.hide_hello_zerome;
-              Page.projector.scheduleRender();
-              Page.saveLocalStorage();
-              Page.content.need_update = true;
-              return false;
-            }), Page.local_storage.settings.hide_hello_zerome
           ]);
           _this.menu.toggle();
           return Page.projector.scheduleRender();
@@ -6213,9 +6202,10 @@ window.entities=new Html5Entities()
     };
 
     User.prototype.applyBackground = function(cb) {
+      var ref;
       if (Page.getSetting("disable_background")) {
         return window.stripBackground();
-      } else if (Page.user.getLink() !== this.getLink() && Page.getSetting("load_others_background_disabled")) {
+      } else if ((Page.user && Page.user.getLink ? (typeof Page !== "undefined" && Page !== null ? (ref = Page.user) != null ? ref.getLink() : void 0 : void 0) !== this.getLink() : false) && Page.getSetting("load_others_background_disabled")) {
         return window.defaultBackground();
       } else {
         if (this.row.bgColor || this.row.bgUnset) {
@@ -6627,6 +6617,7 @@ window.entities=new Html5Entities()
   window.User = User;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/UserList.coffee ---- */
