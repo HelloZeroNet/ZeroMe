@@ -7,6 +7,8 @@ window.bgString=(color, image) ->
     return "background-color: #{color}"
 
 window.setBackground=(color, image) ->
+  if Page.getSetting "disable_background"
+    return window.stripBackground()
   console.log "[Background] color=%c#{color}%c"+(if image then ", image=#{image}" else ""),"color:#{color}",""
   document.body.style=window.bgString(color, image)
 
@@ -20,7 +22,7 @@ window.stripBackground= ->
   document.body.style=""
 
 window.otherPageBackground= ->
-	if Page.getSetting "hide_background_timeline"
+	if Page.getSetting "hide_background_timeline" or Page.getSetting "disable_background"
 		window.stripBackground()
 	else
 		if Page.user and Page.user.applyBackground

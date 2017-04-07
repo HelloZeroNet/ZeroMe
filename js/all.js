@@ -3728,6 +3728,9 @@ window.entities=new Html5Entities()
   };
 
   window.setBackground = function(color, image) {
+    if (Page.getSetting("disable_background")) {
+      return window.stripBackground();
+    }
     console.log(("[Background] color=%c" + color + "%c") + (image ? ", image=" + image : ""), "color:" + color, "");
     return document.body.style = window.bgString(color, image);
   };
@@ -3745,7 +3748,7 @@ window.entities=new Html5Entities()
   };
 
   window.otherPageBackground = function() {
-    if (Page.getSetting("hide_background_timeline")) {
+    if (Page.getSetting("hide_background_timeline" || Page.getSetting("disable_background"))) {
       return window.stripBackground();
     } else {
       if (Page.user && Page.user.applyBackground) {
@@ -3757,6 +3760,7 @@ window.entities=new Html5Entities()
   };
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentCreateProfile.coffee ---- */
@@ -5441,7 +5445,6 @@ window.entities=new Html5Entities()
   window.Post = Post;
 
 }).call(this);
-
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostCreate.coffee ---- */
