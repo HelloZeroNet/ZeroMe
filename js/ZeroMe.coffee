@@ -86,7 +86,7 @@ class ZeroMe extends ZeroFrame
 			@content_profile.setUser(@params.urls[1], @params.urls[2]).filter(null)
 		else if @params.urls[0] == "Post"
 			content = @content_profile
-			changed = (@content_profile.auth_address != @params.urls[2])
+			changed = (@content_profile.auth_address != @params.urls[2] or @content_profile.filter_post_id != @params.urls[3])
 			@content_profile.setUser(@params.urls[1], @params.urls[2]).filter(@params.urls[3])
 		else
 			content = @content_feed

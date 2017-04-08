@@ -2948,7 +2948,7 @@ function clone(obj) {
     ActivityList.prototype.queryActivities = function(cb) {
       var query, where;
       if (this.directories === "all") {
-        where = "WHERE date_added > " + (Time.timestamp() - 60 * 60 * 6) + " AND date_added < " + (Time.timestamp() + 120) + " ";
+        where = "WHERE date_added > " + (Time.timestamp() - 60 * 60 * 24 * 2) + " AND date_added < " + (Time.timestamp() + 120) + " ";
       } else {
         where = "WHERE json.directory IN " + (Text.sqlIn(this.directories)) + " AND date_added < " + (Time.timestamp() + 120) + " ";
       }
@@ -3047,7 +3047,7 @@ function clone(obj) {
     };
 
     ActivityList.prototype.renderActivity = function(activity_group) {
-      var activity, activity_more, activity_user_link, back, body, now, subject_post_link, subject_user_link, _i, _j, _len, _len1, _ref, _ref1;
+      var activity, activity_more, activity_user_link, back, body, now, subject_post_link, subject_user_link, title, _i, _j, _len, _len1, _ref, _ref1;
       back = [];
       now = Time.timestamp();
       activity = activity_group[0];
@@ -3126,9 +3126,14 @@ function clone(obj) {
       } else {
         body = activity.body;
       }
+      if (activity.body) {
+        title = Time.since(activity.date_added) + " - " + (activity.body.length > 500 ? activity.body.slice(0, 501) + "..." : activity.body);
+      } else {
+        title = Time.since(activity.date_added);
+      }
       back.push(h("div.activity", {
         key: activity.cert_user_id + "_" + activity.date_added + "_" + activity_group.length,
-        title: Time.since(activity.date_added),
+        title: title,
         classes: {
           latest: now - activity.date_added < 600
         },
@@ -3545,7 +3550,7 @@ function clone(obj) {
     };
 
     ContentFeed.prototype.render = function() {
-      var followed, key;
+      var followed, key, like, _;
       if (this.post_list.loaded && !Page.on_loaded.resolved) {
         Page.on_loaded.resolve();
       }
@@ -3568,8 +3573,31 @@ function clone(obj) {
           if (Page.user.hub) {
             this.post_list.directories.push("data/users/" + Page.user.auth_address);
           }
+          this.post_list.filter_post_ids = null;
+        } else if (this.type === "liked") {
+          this.post_list.directories = (function() {
+            var _ref, _results;
+            _ref = Page.user.likes;
+            _results = [];
+            for (like in _ref) {
+              _ = _ref[like];
+              _results.push("data/users/" + (like.split('_')[0]));
+            }
+            return _results;
+          })();
+          this.post_list.filter_post_ids = (function() {
+            var _ref, _results;
+            _ref = Page.user.likes;
+            _results = [];
+            for (like in _ref) {
+              _ = _ref[like];
+              _results.push(like.split('_')[1]);
+            }
+            return _results;
+          })();
         } else {
           this.post_list.directories = "all";
+          this.post_list.filter_post_ids = null;
         }
         this.post_list.need_update = true;
         if (this.type === "followed") {
@@ -3598,6 +3626,13 @@ function clone(obj) {
               active: this.type === "everyone"
             }
           }, "Everyone"), h("a.link", {
+            href: "#Liked",
+            onclick: this.handleListTypeClick,
+            type: "liked",
+            classes: {
+              active: this.type === "liked"
+            }
+          }, "Liked"), h("a.link", {
             href: "#Followed+users",
             onclick: this.handleListTypeClick,
             type: "followed",
@@ -3823,7 +3858,7 @@ function clone(obj) {
       if (this.need_update) {
         this.log("Updating");
         this.need_update = false;
-        this.post_list.filter_post_id = this.filter_post_id;
+        this.post_list.filter_post_ids = this.filter_post_id ? [this.filter_post_id] : null;
         if ((_ref = this.post_list) != null) {
           _ref.need_update = true;
         }
@@ -4219,7 +4254,9 @@ function clone(obj) {
           href: "?Home",
           onclick: Page.handleLinkClick
         }, h("img", {
-          src: "img/logo.png"
+          src: "img/logo.svg",
+          height: 40,
+          onerror: "this.src='img/logo.png'; this.onerror=null;"
         })), ((_ref = Page.user) != null ? _ref.hub : void 0) ? h("div.right.authenticated", [
           h("div.user", h("a.name.link", {
             href: Page.user.getLink(),
@@ -4311,6 +4348,7 @@ function clone(obj) {
       this.comment_limit = 3;
       this.menu = null;
       this.meta = null;
+      this.css_style = "";
       this.setRow(row);
     }
 
@@ -4525,6 +4563,7 @@ function clone(obj) {
     };
 
     Post.prototype.handleSettingsClick = function() {
+      this.css_style = "z-index: " + this.row.date_added + "; position: relative";
       Page.cmd("feedListFollow", [], (function(_this) {
         return function(follows) {
           var followed, _ref;
@@ -4543,6 +4582,7 @@ function clone(obj) {
             }), followed
           ]);
           _this.menu.items.push(["Mute user", _this.user.handleMuteClick]);
+          _this.menu.items.push(["Permalink", _this.getLink()]);
           return _this.menu.toggle();
         };
       })(this));
@@ -4659,7 +4699,8 @@ function clone(obj) {
         animate_scrollfix: true,
         classes: {
           selected: this.row.selected
-        }
+        },
+        style: this.css_style
       }, [
         h("div.user", [
           this.user.renderAvatar({
@@ -4715,6 +4756,7 @@ function clone(obj) {
   window.Post = Post;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostCreate.coffee ---- */
@@ -4890,19 +4932,30 @@ function clone(obj) {
       this.addScrollwatcher = __bind(this.addScrollwatcher, this);
       this.handleMoreClick = __bind(this.handleMoreClick, this);
       this.update = __bind(this.update, this);
+      this.queryLikes = __bind(this.queryLikes, this);
       this.queryComments = __bind(this.queryComments, this);
       this.item_list = new ItemList(Post, "key");
       this.posts = this.item_list.items;
       this.need_update = true;
       this.directories = [];
       this.loaded = false;
-      this.filter_post_id = null;
+      this.filter_post_ids = null;
       this.limit = 10;
     }
 
     PostList.prototype.queryComments = function(post_uris, cb) {
       var query;
       query = "SELECT post_uri, comment.body, comment.date_added, comment.comment_id, json.cert_auth_type, json.cert_user_id, json.user_name, json.hub, json.directory, json.site FROM comment LEFT JOIN json USING (json_id) WHERE ? AND date_added < " + (Time.timestamp() + 120) + " ORDER BY date_added DESC";
+      return Page.cmd("dbQuery", [
+        query, {
+          post_uri: post_uris
+        }
+      ], cb);
+    };
+
+    PostList.prototype.queryLikes = function(post_uris, cb) {
+      var query;
+      query = "SELECT post_uri, COUNT(*) AS likes FROM post_like WHERE ? GROUP BY post_uri";
       return Page.cmd("dbQuery", [
         query, {
           post_uri: post_uris
@@ -4919,14 +4972,13 @@ function clone(obj) {
       } else {
         where = "WHERE directory IN " + (Text.sqlIn(this.directories)) + " AND post_id IS NOT NULL AND post.date_added < " + (Time.timestamp() + 120) + " ";
       }
-      if (this.filter_post_id) {
-        where += "AND post_id = :post_id ";
-        param.post_id = this.filter_post_id;
+      if (this.filter_post_ids) {
+        where += "AND post_id IN " + (Text.sqlIn(this.filter_post_ids)) + " ";
       }
       if (Page.local_storage.settings.hide_hello_zerome) {
         where += "AND post_id > 1 ";
       }
-      query = "SELECT (SELECT COUNT(*) FROM post_like WHERE 'data/users/' || post_uri =  directory || '_' || post_id) AS likes, * FROM post LEFT JOIN json ON (post.json_id = json.json_id) " + where + " ORDER BY date_added DESC LIMIT " + (this.limit + 1);
+      query = "SELECT * FROM post LEFT JOIN json ON (post.json_id = json.json_id) " + where + " ORDER BY date_added DESC LIMIT " + (this.limit + 1);
       this.logStart("Update");
       return Page.cmd("dbQuery", [query, param], (function(_this) {
         return function(rows) {
@@ -4939,8 +4991,8 @@ function clone(obj) {
             row["post_uri"] = row["directory"].replace("data/users/", "") + "_" + row["post_id"];
             post_uris.push(row["post_uri"]);
           }
-          return _this.queryComments(post_uris, function(comment_rows) {
-            var comment_db, comment_row, _j, _k, _len1, _len2, _name;
+          _this.queryComments(post_uris, function(comment_rows) {
+            var comment_db, comment_row, _j, _k, _len1, _len2, _name, _ref;
             comment_db = {};
             for (_j = 0, _len1 = comment_rows.length; _j < _len1; _j++) {
               comment_row = comment_rows[_j];
@@ -4952,7 +5004,7 @@ function clone(obj) {
             for (_k = 0, _len2 = rows.length; _k < _len2; _k++) {
               row = rows[_k];
               row["comments"] = comment_db[row.site + "/" + row.post_uri];
-              if (row.post_id === parseInt(_this.filter_post_id)) {
+              if (((_ref = _this.filter_post_ids) != null ? _ref.length : void 0) === 1 && row.post_id === parseInt(_this.filter_post_ids[0])) {
                 row.selected = true;
               }
             }
@@ -4963,6 +5015,20 @@ function clone(obj) {
             if (_this.posts.length > _this.limit) {
               return _this.addScrollwatcher();
             }
+          });
+          return _this.queryLikes(post_uris, function(like_rows) {
+            var like_db, like_row, _j, _k, _len1, _len2;
+            like_db = {};
+            for (_j = 0, _len1 = like_rows.length; _j < _len1; _j++) {
+              like_row = like_rows[_j];
+              like_db[like_row["post_uri"]] = like_row["likes"];
+            }
+            for (_k = 0, _len2 = rows.length; _k < _len2; _k++) {
+              row = rows[_k];
+              row["likes"] = like_db[row["post_uri"]];
+            }
+            _this.item_list.sync(rows);
+            return Page.projector.scheduleRender();
           });
         };
       })(this));
@@ -6053,7 +6119,7 @@ function clone(obj) {
         this.content_profile.setUser(this.params.urls[1], this.params.urls[2]).filter(null);
       } else if (this.params.urls[0] === "Post") {
         content = this.content_profile;
-        changed = this.content_profile.auth_address !== this.params.urls[2];
+        changed = this.content_profile.auth_address !== this.params.urls[2] || this.content_profile.filter_post_id !== this.params.urls[3];
         this.content_profile.setUser(this.params.urls[1], this.params.urls[2]).filter(this.params.urls[3]);
       } else {
         content = this.content_feed;
