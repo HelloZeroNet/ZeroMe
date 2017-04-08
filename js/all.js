@@ -2715,6 +2715,7 @@ window.entities=new Html5Entities()
       } else {
         text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="');
       }
+      text = text.replace(/href="\.\/\?/g, 'href="?');
       text = text.replace(/href="\?/g, 'onclick="return Page.handleLinkClick(window.event)" href="?');
       return text;
     };
@@ -4163,6 +4164,7 @@ window.entities=new Html5Entities()
       this.update = bind(this.update, this);
       this.render = bind(this.render, this);
       this.handleOptionalHelpClick = bind(this.handleOptionalHelpClick, this);
+      this.settingsClick = bind(this.settingsClick, this);
       this.handleEditClick = bind(this.handleEditClick, this);
       this.handleBackgroundUpload = bind(this.handleBackgroundUpload, this);
       this.handleAvatarUpload = bind(this.handleAvatarUpload, this);
@@ -4376,6 +4378,10 @@ window.entities=new Html5Entities()
       return this.editing = !this.editing;
     };
 
+    ContentProfile.prototype.settingsClick = function() {
+      return Page.setUrl("?Settings");
+    };
+
     ContentProfile.prototype.handleOptionalHelpClick = function() {
       if (Page.server_info.rev < 1700) {
         Page.cmd("wrapperNotification", ["info", "You need ZeroNet version 0.5.0 use this feature"]);
@@ -4525,8 +4531,7 @@ window.entities=new Html5Entities()
                   href: "#Mute",
                   onclick: this.user.handleMuteClick
                 }, [h("div.icon.icon-mute"), "Mute"]) : h("div.button-tiny.button-mute", {
-                  href: "?Settings",
-                  onclick: Page.handleLinkClick
+                  onclick: this.settingsClick
                 }, [h("div.icon.icon-small.fa.fa-gear"), "Settings"])
               ]), h("div.help.checkbox", {
                 classes: {
@@ -4564,6 +4569,7 @@ window.entities=new Html5Entities()
   window.ContentProfile = ContentProfile;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentSettings.coffee ---- */

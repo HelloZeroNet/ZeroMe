@@ -46,6 +46,7 @@ class Text
 		else
 			text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="')
 		# Add no-refresh linking to local links
+		text = text.replace(/href="\.\/\?/g, 'href="?')
 		text = text.replace(/href="\?/g, 'onclick="return Page.handleLinkClick(window.event)" href="?')
 		return text
 

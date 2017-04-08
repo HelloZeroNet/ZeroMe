@@ -13,11 +13,14 @@
 }
 
 .button-tiny {
+	text-decoration: none !important;
 	margin-top: 4px; border: 1px solid hsla(236,100%,79%,1); color: #5d68ff; border-radius: 33px; display: inline-block;
 	font-size: 14px; font-weight: lighter; text-align: center; transition: all 0.3s; padding: 4px 4px; background-position: -200px center;
 	min-width: 100px;
 }
-.button-tiny:hover { background-color: #5d68ff; color: #F6F7F8; text-decoration: none; border-color: #5d68ff; transition: none }
+/*.button-tiny:hover { background-color: #5d68ff; color: #F6F7F8; text-decoration: none; border-color: #5d68ff; transition: none }*/
+.button-tiny:hover { background-color: #2ecc71 !important; border-color: #2ecc71 !important; color: #FFF !important; }
+.button-tiny:hover .icon { filter: sepia(1) }
 .button-tiny:focus { transition: all 0.3s }
 .button-tiny:active { transform: translateY(1px); transition: all 0.3s, transform none; box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); outline: none; transition: none }
 

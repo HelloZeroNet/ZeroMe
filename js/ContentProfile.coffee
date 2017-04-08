@@ -166,6 +166,9 @@ class ContentProfile extends Class
 	handleEditClick: =>
 		@editing=!@editing
 
+	settingsClick: =>
+		Page.setUrl("?Settings")
+
 	handleOptionalHelpClick: =>
 		if Page.server_info.rev < 1700
 			Page.cmd "wrapperNotification", ["info", "You need ZeroNet version 0.5.0 use this feature"]
@@ -291,7 +294,7 @@ class ContentProfile extends Class
 									"Mute"
 								])
 							else
-								h("div.button-tiny.button-mute", {href: "?Settings", onclick: Page.handleLinkClick}, [
+								h("div.button-tiny.button-mute", {onclick: @settingsClick}, [
 									h("div.icon.icon-small.fa.fa-gear"),
 									"Settings"
 								])
