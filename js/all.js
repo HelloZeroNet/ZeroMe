@@ -4566,7 +4566,6 @@ window.entities=new Html5Entities()
 }).call(this);
 
 
-
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentSettings.coffee ---- */
 
 
@@ -6888,7 +6887,17 @@ window.entities=new Html5Entities()
       var changed, content;
       this.params = Text.queryParse(query);
       this.log("Route", this.params);
-      if (this.params.urls[0] === "Create+profile") {
+      if (!this.params.urls) {
+        content = {
+          update: function() {
+            return false;
+          },
+          render: function() {
+            return false;
+          }
+        };
+        return this.setUrl("?Home");
+      } else if (this.params.urls[0] === "Create+profile") {
         content = this.content_create_profile;
       } else if (this.params.urls[0] === "Users" && (content = this.content_users)) {
 

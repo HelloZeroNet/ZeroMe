@@ -81,7 +81,14 @@ class ZeroMe extends ZeroFrame
 		@params = Text.queryParse(query)
 		@log "Route", @params
 
-		if @params.urls[0] == "Create+profile"
+		if not @params.urls
+			content =
+				update: ->
+					return false
+				render: ->
+					return false
+			return @setUrl("?Home")
+		else if @params.urls[0] == "Create+profile"
 			content = @content_create_profile
 		else if @params.urls[0] == "Users" and
 			content = @content_users
