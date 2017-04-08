@@ -4510,24 +4510,30 @@ window.entities=new Html5Entities()
                   onclick: this.user.handleFollowClick
                 }, h("span.icon-follow", "+"), this.user.isFollowed() ? "Unfollow" : "Follow")
               ]), h("div.follow-container.settings-container", [
-                !this.owned ? h("div.button-tiny.button-mute", {
+                this.owned ? h("div.button-tiny.button-mute", {
+                  classes: {
+                    "button-active": this.editing
+                  },
+                  href: "#Edit",
+                  style: "transition: all 0.5s;margin-right:10px",
+                  onclick: this.handleEditClick
+                }, [
+                  h("div.icon.icon-small.icon-edit", {
+                    style: "margin-right: 6px;"
+                  }), "Edit Profile"
+                ]) : void 0, !this.owned ? h("div.button-tiny.button-mute", {
                   href: "#Mute",
                   onclick: this.user.handleMuteClick
                 }, [h("div.icon.icon-mute"), "Mute"]) : h("div.button-tiny.button-mute", {
-                  href: "#Settings",
-                  onclick: this.user.handleSettingsClick
+                  href: "?Settings",
+                  onclick: Page.handleLinkClick
                 }, [h("div.icon.icon-small.fa.fa-gear"), "Settings"])
               ]), h("div.help.checkbox", {
                 classes: {
                   checked: this.optional_helping
                 },
                 onclick: this.handleOptionalHelpClick
-              }, h("div.checkbox-skin"), h("div.title", "Help distribute this user's images")), this.owned ? h("div.help.editmode.checkbox", {
-                classes: {
-                  checked: this.editing
-                },
-                onclick: this.handleEditClick
-              }, h("div.checkbox-skin"), h("div.title", "Enable Editing")) : void 0
+              }, h("div.checkbox-skin"), h("div.title", "Help distribute this user's images"))
             ])
           ]), this.editing && this.loaded && (this.user.row.bgColor || this.user.row.bgUnset) ? h("div.user.card.profile.no-left-padding", [h("div.bg-settings", [h("h2", h("b.intro-full", "Background Settings")), this.uploadable_background.render(this.user.renderBackground), h("div.bg-preview", this.editable_bgcolor.render("Background Color: " + this.user.getBackground()))])]) : void 0, h("div.light-bg", [
             this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
@@ -4558,6 +4564,7 @@ window.entities=new Html5Entities()
   window.ContentProfile = ContentProfile;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentSettings.coffee ---- */
@@ -6617,7 +6624,6 @@ window.entities=new Html5Entities()
   window.User = User;
 
 }).call(this);
-
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/UserList.coffee ---- */

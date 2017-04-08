@@ -280,13 +280,18 @@ class ContentProfile extends Class
 							)
 						]),
 						h("div.follow-container.settings-container", [
+							if @owned
+								h("div.button-tiny.button-mute", {classes: {"button-active": @editing}, href: "#Edit", style:"transition: all 0.5s;margin-right:10px", onclick: @handleEditClick}, [
+									h("div.icon.icon-small.icon-edit", {style:"margin-right: 6px;"}),
+									"Edit Profile"
+								])
 							if not @owned
 								h("div.button-tiny.button-mute", {href: "#Mute", onclick: @user.handleMuteClick}, [
 									h("div.icon.icon-mute"),
 									"Mute"
 								])
 							else
-								h("div.button-tiny.button-mute", {href: "#Settings", onclick: @user.handleSettingsClick}, [
+								h("div.button-tiny.button-mute", {href: "?Settings", onclick: Page.handleLinkClick}, [
 									h("div.icon.icon-small.fa.fa-gear"),
 									"Settings"
 								])
@@ -297,11 +302,6 @@ class ContentProfile extends Class
 							h("div.title", "Help distribute this user's images")
 						)
 
-						if @owned
-							h("div.help.editmode.checkbox", {classes: {checked: @editing}, onclick: @handleEditClick},
-								h("div.checkbox-skin"),
-								h("div.title", "Enable Editing")
-							)
 					])
 				]),
 

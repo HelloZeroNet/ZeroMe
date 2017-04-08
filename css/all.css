@@ -50,6 +50,9 @@
 .button-tiny:focus { -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
 .button-tiny:active { -webkit-transform: translateY(1px); -moz-transform: translateY(1px); -o-transform: translateY(1px); -ms-transform: translateY(1px); transform: translateY(1px) ; -webkit-transition: all 0.3s, transform none; -moz-transition: all 0.3s, transform none; -o-transition: all 0.3s, transform none; -ms-transition: all 0.3s, transform none; transition: all 0.3s, transform none ; -webkit-box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); -moz-box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); -o-box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); -ms-box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41) ; outline: none; -webkit-transition: none ; -moz-transition: none ; -o-transition: none ; -ms-transition: none ; transition: none  }
 
+.button-active { background-color: #2ecc71 !important; border-color: #2ecc71 !important; color: #FFF !important; }
+.button-active .icon { -webkit-filter: sepia(1) ; -moz-filter: sepia(1) ; -o-filter: sepia(1) ; -ms-filter: sepia(1) ; filter: sepia(1)  }
+
 .button.loading {
 	color: rgba(0,0,0,0) !important; background: url(../img/loading.gif) no-repeat center center !important; border-color: rgba(0,0,0,0) !important;
 	-webkit-transition: all 0.5s ease-out; -moz-transition: all 0.5s ease-out; -o-transition: all 0.5s ease-out; -ms-transition: all 0.5s ease-out; transition: all 0.5s ease-out ; pointer-events: none; transition-delay: 0.5s
@@ -352,7 +355,7 @@
 .users .user .nameline { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 26px }
 .users .user .intro { font-weight: 100; font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; min-height: 18px; word-wrap: break-word; }
 .users .user .added { font-size: 11px; color: #999; margin-left: 6px; vertical-align: 3px; }
-.users .user .intro-full { margin-left: -57px; padding-top: 18px; font-weight: 100; line-height: 1.5em; overflow: hidden; max-height: 400px; word-wrap: break-word; }
+.users .user .intro-full { overflow-y: scroll; margin-left: -57px; padding-top: 18px; font-weight: 100; line-height: 1.5em; overflow: hidden; max-height: 400px; word-wrap: break-word; }
 .bg-settings { width: 150px; margin: 0 auto; }
 .bg-settings .uploadable .icon { margin: 0 auto; text-align: center; margin-left: 0px !important; }
 .no-left-padding { padding-left: 0px !important; text-align:center; }
