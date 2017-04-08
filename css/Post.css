@@ -1,5 +1,5 @@
 .post {
-	background-color: white; padding: 16px 20px; padding-left: 80px; border-radius: 4px; backface-visibility: hidden; transform-style: preserve-3d; transform: translateZ(0);
+	background-color: rgba(255,255,255,0.9); padding: 16px 20px; padding-left: 80px; border-radius: 4px; backface-visibility: hidden; transform-style: preserve-3d; transform: translateZ(0);
 	border: 1px solid #EEF0F1; border-bottom: 2px solid #ECEDEE; margin-bottom: 12px; transition: all 0.3s;
 }
 .post.selected { box-shadow: 0px 0px 40px rgba(0,0,0,0.1); }
