@@ -3,7 +3,6 @@ body {
 	backface-visibility: hidden; height: 100%; position: absolute; width: 100%; overflow-x: hidden; height: 35000px
 }
 body.loaded { height: 100%; overflow: auto }
-.loaded { background-size: 100% !important; }
 p, h1, h2, h3, h4 { margin: 0px; padding-bottom: 0.6em; }
 
 input.text, textarea { border: 1px solid #EEE; padding: 15px 15px; transition: all 0.3s; width: 100%; box-sizing: border-box; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; line-height: 1.4em; }
