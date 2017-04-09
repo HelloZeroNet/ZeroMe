@@ -6,8 +6,7 @@
 	"Follow username mentions": "关注用户名提醒",
 	"Follow comments on your posts": "关注你的帖子评论",
 	"Follow new followers": "关注新关注者",
-
-	"Hide \"Hello ZeroMe!\" messages": "隐藏 \"你好 ZeroMe!\" 消息",
+	"Hide \\\"Hello ZeroMe!\\\" messages": "隐藏 \\\"你好 ZeroMe!\\\" 消息",
 	"This actually just hides a user's first post": "事实上就是隐藏用户的第一个帖子",
 	"Autoload images": "自动载入图片",
 	"This will automatically load images in posts": "这将自动载入帖子中的图片",
@@ -70,9 +69,11 @@
 	"Reply": "回复",
 
 	"Everyone": "所有人",
+	"Liked": "喜欢的",
 	"Followed users": "关注的用户",
 	"Show more posts...": "显示更多帖子...",
 	"Mute user": "屏蔽用户",
+	"Permalink": "固定链接",
 	"Show more comments...": "显示更多评论...",
 	"No posts yet": "还没有帖子",
 	"Let's follow some users!": "让我们关注一些用户吧！",
