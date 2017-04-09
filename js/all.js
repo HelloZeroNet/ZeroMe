@@ -4216,7 +4216,7 @@ function clone(obj) {
             }), _this.follows["New followers"]
           ]);
           _this.menu.items.push([
-            'Hide "Hello ZeroMe!" messages', (function(item) {
+            "Hide \"Hello ZeroMe!\" messages", (function(item) {
               Page.local_storage.settings.hide_hello_zerome = !Page.local_storage.settings.hide_hello_zerome;
               item[2] = Page.local_storage.settings.hide_hello_zerome;
               Page.projector.scheduleRender();

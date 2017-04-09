@@ -38,7 +38,7 @@ class Head extends Class
 				return @handleFollowMenuItemClick("New followers", item)
 			), @follows["New followers"]]
 
-			@menu.items.push ['Hide "Hello ZeroMe!" messages', ( (item) =>
+			@menu.items.push ["Hide \"Hello ZeroMe!\" messages", ( (item) =>
 				Page.local_storage.settings.hide_hello_zerome = not Page.local_storage.settings.hide_hello_zerome
 				item[2] = Page.local_storage.settings.hide_hello_zerome
 				Page.projector.scheduleRender()
