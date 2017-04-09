@@ -46,7 +46,7 @@ class ContentSettings extends Class
 					h("br","top") #make it "unique"
 					h("h1","Settings")
 					h("h2.sep","")
-					@renderCheck("hide_hello_zerome",'Hide \"Hello ZeroMe!\" messages',"This actually just hides a user's first post")
+					@renderCheck("hide_hello_zerome","Hide \"Hello ZeroMe!\" messages","This actually just hides a user's first post")
 					@renderCheck("autoload_media","Autoload images",["This will automatically load images in posts","!WARN This might also autoload images you don't want to see or seed!"])
 					@renderCheck("gimme_stars","I want my stars back","Replace the heart with a star")
 					@renderCheck("transparent","Enable transparency","",{postRun:() => document.body.className = "loaded"+Page.otherClasses()})
