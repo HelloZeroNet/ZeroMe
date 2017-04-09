@@ -18,8 +18,13 @@
 }
 
 .activity { padding-left: 35px; padding-bottom: 19px; font-family: Roboto, Helvetica, Arial; font-size: 15px; line-height: 1.5em; color: #777 }
-.light-bg { background: rgba(255, 255, 255, 0.9); padding: 5px; }
-.no-transparent .light-bg { background: white; }
+
+.light-bg {
+    background-color: #ffffff; opacity: 0.9; border: 1px solid #EEF0F1; padding: 15px;
+    -webkit-border-radius: 4px; -moz-border-radius: 4px; -o-border-radius: 4px; -ms-border-radius: 4px; border-radius: 4px ;
+}
+.no-transparent .light-bg { opacity: 1; }
+
 .activity .body { top: -5px; position: relative; max-height: 67px; overflow: hidden; -webkit-line-clamp: 3; -webkit-box-orient: vertical; display: -webkit-box; }
 .activity.latest .circle { border-color: #666 }
 
@@ -383,8 +388,10 @@ textarea { background: rgba(255, 255, 255, 0.5); }
 .user .avatar { position: absolute; margin-left: -67px }
 
 .user.card { padding: 15px; padding-left: 75px; overflow: hidden }
-.user.card.profile { margin-bottom: 30px; background-color: rgba(255, 255, 255, 0.9); }
+
+.user.card.profile { margin-bottom: 30px; background-color: rgba(255, 255, 255, 0.9); border: 1px solid #EEF0F1; }
 .no-transparent .user.card.profile { background-color: white; }
+
 .user.card .avatar { margin-top: -4px; position: absolute; margin-left: -60px; }
 .user.card .follow-container { margin-left: -57px; text-align: center; margin-top: 30px; margin-bottom: 20px; }
 
