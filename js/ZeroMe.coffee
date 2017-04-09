@@ -59,8 +59,8 @@ class ZeroMe extends ZeroFrame
 		# Remove fake long body
 		@on_loaded.then =>
 			@log "onloaded"
-			window.requestAnimationFrame ->
-				document.body.className = "loaded"
+			window.requestAnimationFrame =>
+				document.body.className = "loaded"+@otherClasses()
 
 		@projector.replace($("#Head"), @head.render)
 		@projector.replace($("#Overlay"), @overlay.render)
@@ -144,7 +144,7 @@ class ZeroMe extends ZeroFrame
 			@history_state["scrollTop"] = 0
 
 			@on_loaded.resolved = false
-			document.body.className = ""
+			document.body.className = ""+@otherClasses()
 
 			@setUrl e.currentTarget.search
 			return false
@@ -185,6 +185,11 @@ class ZeroMe extends ZeroFrame
 	onOpenWebsocket: (e) =>
 		@updateSiteInfo()
 		@updateServerInfo()
+
+	otherClasses: =>
+		res=[]
+		if not @getSetting("transparent") then res.push("no-transparent")
+		if res.length then return " "+res.join(" ") else return ""
 
 
 	updateSiteInfo: (cb=null) =>
@@ -286,7 +291,7 @@ class ZeroMe extends ZeroFrame
 				if not params.state.url
 					params.state.url = params.href.replace /.*\?/, ""
 				@on_loaded.resolved = false
-				document.body.className = ""
+				document.body.className = ""+@otherClasses()
 				window.scroll(window.pageXOffset, params.state.scrollTop or 0)
 				@route(params.state.url or "")
 		else

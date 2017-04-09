@@ -3722,7 +3722,7 @@ window.entities=new Html5Entities()
       color = "#FFFFF";
     }
     if (image) {
-      return "background: url('" + image + "') no-repeat fixed center;background-size:150%;background-color: " + color;
+      return "background: url('" + image + "') no-repeat fixed center;background-size: cover;background-color: " + color;
     } else {
       return "background-color: " + color;
     }
@@ -4571,7 +4571,6 @@ window.entities=new Html5Entities()
 }).call(this);
 
 
-
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentSettings.coffee ---- */
 
 
@@ -4609,6 +4608,9 @@ window.entities=new Html5Entities()
               return false;
             }
             Page.local_storage.settings[key] = !Page.local_storage.settings[key];
+            if (attrs.postRun) {
+              attrs.postRun(Page.local_storage.settings[key]);
+            }
             Page.projector.scheduleRender();
             Page.saveLocalStorage();
             Page.content.need_update = true;
@@ -4647,7 +4649,13 @@ window.entities=new Html5Entities()
         Page.local_storage_loaded ? h("div.post.settings", {
           style: "border-radius: 16px"
         }, [
-          h("br", "top"), h("h1", "Settings"), h("h2.sep", ""), this.renderCheck("hide_hello_zerome", 'Hide "Hello ZeroMe!" messages', "This actually just hides a user's first post"), this.renderCheck("autoload_media", "Autoload images", ["This will automatically load images in posts", "!WARN This might also autoload images you don't want to see or seed!"]), this.renderCheck("gimme_stars", "I want my stars back", "Replace the heart with a star"), h("h2.sep", "Background"), this.renderCheck("disable_background", "Disable the background feature entierly"), this.renderCheck("load_others_background_disabled", "Don't load other users backgrounds", "", {
+          h("br", "top"), h("h1", "Settings"), h("h2.sep", ""), this.renderCheck("hide_hello_zerome", 'Hide "Hello ZeroMe!" messages', "This actually just hides a user's first post"), this.renderCheck("autoload_media", "Autoload images", ["This will automatically load images in posts", "!WARN This might also autoload images you don't want to see or seed!"]), this.renderCheck("gimme_stars", "I want my stars back", "Replace the heart with a star"), this.renderCheck("transparent", "Enable transparency", "", {
+            postRun: (function(_this) {
+              return function() {
+                return document.body.className = "loaded" + Page.otherClasses();
+              };
+            })(this)
+          }), h("h2.sep", "Background"), this.renderCheck("disable_background", "Disable the background feature entierly"), this.renderCheck("load_others_background_disabled", "Don't load other users backgrounds", "", {
             disabled_by: "disable_background"
           }), this.renderCheck("hide_background_timeline", "Don't show background on the feed/timeline and other pages", "", {
             disabled_by: "disable_background"
@@ -4668,6 +4676,7 @@ window.entities=new Html5Entities()
   window.ContentSettings = ContentSettings;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentUsers.coffee ---- */
@@ -6799,6 +6808,7 @@ window.entities=new Html5Entities()
       this.needSite = bind(this.needSite, this);
       this.updateServerInfo = bind(this.updateServerInfo, this);
       this.updateSiteInfo = bind(this.updateSiteInfo, this);
+      this.otherClasses = bind(this.otherClasses, this);
       this.onOpenWebsocket = bind(this.onOpenWebsocket, this);
       this.handleLinkClick = bind(this.handleLinkClick, this);
       this.renderContent = bind(this.renderContent, this);
@@ -6870,7 +6880,7 @@ window.entities=new Html5Entities()
         return function() {
           _this.log("onloaded");
           return window.requestAnimationFrame(function() {
-            return document.body.className = "loaded";
+            return document.body.className = "loaded" + _this.otherClasses();
           });
         };
       })(this));
@@ -6974,7 +6984,7 @@ window.entities=new Html5Entities()
         window.scroll(window.pageXOffset, 0);
         this.history_state["scrollTop"] = 0;
         this.on_loaded.resolved = false;
-        document.body.className = "";
+        document.body.className = "" + this.otherClasses();
         this.setUrl(e.currentTarget.search);
         return false;
       }
@@ -7037,6 +7047,19 @@ window.entities=new Html5Entities()
     ZeroMe.prototype.onOpenWebsocket = function(e) {
       this.updateSiteInfo();
       return this.updateServerInfo();
+    };
+
+    ZeroMe.prototype.otherClasses = function() {
+      var res;
+      res = [];
+      if (!this.getSetting("transparent")) {
+        res.push("no-transparent");
+      }
+      if (res.length) {
+        return " " + res.join(" ");
+      } else {
+        return "";
+      }
     };
 
     ZeroMe.prototype.updateSiteInfo = function(cb) {
@@ -7174,7 +7197,7 @@ window.entities=new Html5Entities()
             params.state.url = params.href.replace(/.*\?/, "");
           }
           this.on_loaded.resolved = false;
-          document.body.className = "";
+          document.body.className = "" + this.otherClasses();
           window.scroll(window.pageXOffset, params.state.scrollTop || 0);
           return this.route(params.state.url || "");
         }

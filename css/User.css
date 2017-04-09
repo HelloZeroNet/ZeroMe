@@ -21,7 +21,10 @@
 .user .avatar { position: absolute; margin-left: -67px }
 
 .user.card { padding: 15px; padding-left: 75px; overflow: hidden }
+
 .user.card.profile { margin-bottom: 30px; background-color: rgba(255, 255, 255, 0.9); border: 1px solid #EEF0F1; }
+.no-transparent .user.card.profile { background-color: white; }
+
 .user.card .avatar { margin-top: -4px; position: absolute; margin-left: -60px; }
 .user.card .follow-container { margin-left: -57px; text-align: center; margin-top: 30px; margin-bottom: 20px; }
 
