@@ -2,6 +2,7 @@
 	"Home": "首页",
 	"Users": "用户",
 	"Settings": "设置",
+	"Edit Profile": "编辑用户资料",
 
 	"Visitor": "访客",
 	"Select your account": "选择你的帐户",
@@ -25,6 +26,7 @@
 
 	"Follow": "关注",
 	"Unfollow": "取消关注",
+	"Mute": "屏蔽",
 	" post in newsfeed": "帖子在新闻源中",
 	"Followed by ": "被关注于 ",
 	"Help distribute this user's images": "帮助分发这个用户的图片",
@@ -32,6 +34,7 @@
 	"Activity feed": "活动信息流",
 	"Show more...": "显示更多...",
 	"Mute ": "屏蔽",
+	"Background Settings": "背景设置",
 
 	" started following ": " 开始关注 ",
 	" commented on ": " 评论了 ",

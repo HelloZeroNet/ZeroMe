@@ -2,6 +2,7 @@
 	"Home": "首頁",
 	"Users": "用戶",
 	"Settings": "設定",
+	"Edit Profile": "編輯用戶資料",
 
 	"Visitor": "訪客",
 	"Select your account": "選擇你的帳戶",
@@ -25,12 +26,15 @@
 
 	"Follow": "關注",
 	"Unfollow": "取消關注",
+	"Mute": "屏蔽",
 	" post in newsfeed": "帖子在新聞源中",
 	"Followed by ": "被關注於 ",
 	"Help distribute this user's images": "幫助分發這個用戶的圖片",
 	"Following": "已關注",
 	"Activity feed": "活動資訊流",
 	"Show more...": "顯示更多...",
+	"Mute ": "屏蔽",
+	"Background Settings": "背景設定",
 
 	" started following ": " 開始關注 ",
 	" commented on ": " 評論了 ",
