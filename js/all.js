@@ -4649,7 +4649,7 @@ window.entities=new Html5Entities()
         Page.local_storage_loaded ? h("div.post.settings", {
           style: "border-radius: 16px"
         }, [
-          h("br", "top"), h("h1", "Settings"), h("h2.sep", ""), this.renderCheck("hide_hello_zerome", 'Hide "Hello ZeroMe!" messages', "This actually just hides a user's first post"), this.renderCheck("autoload_media", "Autoload images", ["This will automatically load images in posts", "!WARN This might also autoload images you don't want to see or seed!"]), this.renderCheck("gimme_stars", "I want my stars back", "Replace the heart with a star"), this.renderCheck("no_transparent", "Disable transparency", "", {
+          h("br", "top"), h("h1", "Settings"), h("h2.sep", ""), this.renderCheck("hide_hello_zerome", 'Hide "Hello ZeroMe!" messages', "This actually just hides a user's first post"), this.renderCheck("autoload_media", "Autoload images", ["This will automatically load images in posts", "!WARN This might also autoload images you don't want to see or seed!"]), this.renderCheck("gimme_stars", "I want my stars back", "Replace the heart with a star"), this.renderCheck("transparent", "Enable transparency", "", {
             postRun: (function(_this) {
               return function() {
                 return document.body.className = "loaded" + Page.otherClasses();
@@ -7052,7 +7052,7 @@ window.entities=new Html5Entities()
     ZeroMe.prototype.otherClasses = function() {
       var res;
       res = [];
-      if (this.getSetting("no_transparent")) {
+      if (!this.getSetting("transparent")) {
         res.push("no-transparent");
       }
       if (res.length) {

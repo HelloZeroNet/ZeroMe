@@ -188,7 +188,7 @@ class ZeroMe extends ZeroFrame
 
 	otherClasses: =>
 		res=[]
-		if @getSetting("no_transparent") then res.push("no-transparent")
+		if not @getSetting("transparent") then res.push("no-transparent")
 		if res.length then return " "+res.join(" ") else return ""
 
 

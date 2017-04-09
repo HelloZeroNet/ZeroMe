@@ -49,7 +49,7 @@ class ContentSettings extends Class
 					@renderCheck("hide_hello_zerome",'Hide "Hello ZeroMe!" messages',"This actually just hides a user's first post")
 					@renderCheck("autoload_media","Autoload images",["This will automatically load images in posts","!WARN This might also autoload images you don't want to see or seed!"])
 					@renderCheck("gimme_stars","I want my stars back","Replace the heart with a star")
-					@renderCheck("no_transparent","Disable transparency","",{postRun:() => document.body.className = "loaded"+Page.otherClasses()})
+					@renderCheck("transparent","Enable transparency","",{postRun:() => document.body.className = "loaded"+Page.otherClasses()})
 					h("h2.sep","Background")
 					@renderCheck("disable_background","Disable the background feature entierly")
 					@renderCheck("load_others_background_disabled","Don't load other users backgrounds","",{disabled_by:"disable_background"})
