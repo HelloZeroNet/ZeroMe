@@ -1,0 +1,80 @@
+{
+    "Visitor": "Visitante",
+    "Select your account": "Selecione sua conta",
+    "You need a profile for this feature": "Para utilizar este recurso, você necessita um perfil",
+
+    "Follow username mentions": "Acompanhar menções ao seu username",
+    "Follow comments on your posts": "Acompanhar comentários em seus posts",
+    "Follow new followers": "Acompanhar novos seguidores",
+
+    "Follow": "Seguir",
+    "Unfollow": "Deixar de seguir",
+    "Help distribute this user's images": "Ajudar a distribuir as imagens deste usuário",
+    "Following": "Seguindo",
+    "Activity feed": "Feed de atividades",
+    "Show more...": "Exibir mais..",
+
+    " started following ": " começou a seguir ",
+    " commented on ": " comentou em ",
+    " liked ": " curtiu ",
+    "'s ": "'s",
+    "_(post, like post)": "post",
+    "_(post, comment post)": "commentar",
+
+    "Cancel": "Cancelar",
+    "Save": "Salvar",
+    "Delete": "Deletar",
+
+    "User's profile site not loaded to your client yet.": "O hub do perfil do usuário ainda não foi carregado para seu dispositivo.",
+    "Download user's site": "Baixar hub do usuário",
+
+    "Browse all \\u203A": "Ver todos \\u203A",
+    "New users": "Novos usuários",
+    "Suggested users": "Usuários sugeridos",
+
+    "Create new profile": "Criar novo perfil",
+    "Creating new profile...": "Criando novo perfil..",
+    "Checking user on selected hub...": "Checando usuário no hub selecionado..",
+    "User \" + Page.site_info.cert_user_id + \" already exists on this hub": "O usuário \" + Page.site_info.cert_user_id + \" já existe neste hub",
+    "Select ID...": "Selecionar ID...",
+    "Seeded HUBs": "Hubs semeados",
+    "Available HUBs": "Hubs disponíveis",
+    "(With this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)": "(Com isto você seleciona onde seu perfil é armazenado. Não há diferença no conteúdo e você poderá alcançar todos os usuários à partir de qualquer hub)",
+
+    "Random ZeroNet user": "Usuário aleatório da ZeroNet",
+    "Hello ZeroMe!": "Olá, ZeroMe!",
+
+    "Loading...\\nShow image": "Carregando..\\nExibir imagem",
+    "Help distribute this user's new images": "Ajudar a distribuir as novas imagens deste usuário",
+    "Delete image": "Deletar imagem",
+    "Show image": "Exibir imagem",
+    "'s new images": "'s novas imagens",
+
+    "Comment": "Comentar",
+    "Add your comment": "Adicionar seu comentário",
+    "Reply": "Responder",
+
+    "Everyone": "Todos",
+    "Followed users": "Usuários que sigo",
+    "Show more posts...": "Exibir mais posts..",
+    "Show more comments...": "Exibir mais comentários..",
+    "No posts yet": "Nenhum post ainda..",
+    "Let's follow some users!": "Bora seguir alguns usuários!",
+
+    "Select user to post new content": "Selecione o usuário para postar novo conteúdo",
+    "Write something...": "Escreva algo..",
+    "Submit new post": "Postar",
+    "Invalid image, only jpg format supported": "Imagem inválida. Somente o formato JPG é suportado",
+
+    "Follow in newsfeed": "Seguir no feed de notícias",
+
+    "New users in ZeroMe": "Novos usuários no ZeroMe",
+    "Total: ": "Total: ",
+    " registered users": " usuários registrados",
+
+    " minutes ago": " minutos atrás",
+    " hours ago": " horas atràs",
+    " days ago": "dias atrás",
+    "on ": "em ",
+    "Just now": "Agora mesmo"
+}

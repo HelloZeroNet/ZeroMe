@@ -145,7 +145,7 @@ class ContentProfile extends Class
 			@need_update = false
 
 			# Update components
-			@post_list.filter_post_id = @filter_post_id
+			@post_list.filter_post_ids = if @filter_post_id then [@filter_post_id] else null
 			@post_list?.need_update = true
 			@user_list?.need_update = true
 			@activity_list?.need_update = true

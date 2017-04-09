@@ -9,6 +9,7 @@ class Post extends Class
 		@comment_limit = 3
 		@menu = null
 		@meta = null
+		@css_style = ""
 		@setRow(row)
 
 	setRow: (row) ->
@@ -129,6 +130,7 @@ class Post extends Class
 		return "#{@user.auth_address}_#{@row.post_id}"
 
 	handleSettingsClick: =>
+		@css_style = "z-index: #{@row.date_added}; position: relative"
 		Page.cmd "feedListFollow", [], (follows) =>
 			if not @menu
 				@menu = new Menu()
@@ -136,6 +138,7 @@ class Post extends Class
 			@menu.items = []
 			@menu.items.push ["Follow in newsfeed", ( => if followed then @unfollow() else @follow() ), followed]
 			@menu.items.push ["Mute user", @user.handleMuteClick]
+			@menu.items.push ["Permalink", @getLink()]
 			@menu.toggle()
 		return false
 
@@ -211,7 +214,7 @@ class Post extends Class
 
 	render: =>
 		[site, post_uri] = @row.key.split("-")
-		h("div.post", {key: @row.key, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, animate_scrollfix: true, classes: {selected: @row.selected}}, [
+		h("div.post", {key: @row.key, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, animate_scrollfix: true, classes: {selected: @row.selected}, style: @css_style}, [
 			h("div.user", [
 				@user.renderAvatar({href: @user.getLink(), onclick: Page.handleLinkClick}),
 				h("a.name.link", {href: @user.getLink(), onclick: Page.handleLinkClick, style: "color: #{Text.toColor(@user.auth_address)}"},

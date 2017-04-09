@@ -1,0 +1,80 @@
+{
+    "Visitor": "Bezoeker",
+    "Select your account": "Selecteer je profiel",
+    "You need a profile for this feature": "Je hebt een profiel nodig voor deze feature",
+
+    "Follow username mentions": "Volg gebruikersnaam vernoemingen",
+    "Follow comments on your posts": "Volg commentaar op je posts",
+    "Follow new followers": "Volg nieuwe volgers",
+
+    "Follow": "Volg",
+    "Unfollow": "Ontvolg",
+    "Help distribute this user's images": "Help met het verspreiden van deze gebruiker zijn/haar afbeeldingen",
+    "Following": "Volgend",
+    "Activity feed": "Activiteiten feed",
+    "Show more...": "Toon meer...",
+
+    " started following ": " gestart met volgen ",
+    " commented on ": " geplaatst op ",
+    " liked ": " leuk gevonden ",
+    "'s ": "'s",
+    "_(post, like post)": "post",
+    "_(post, comment post)": "commentar",
+
+    "Cancel": "Annuleren",
+    "Save": "Opslaan",
+    "Delete": "Verwijderen",
+
+    "User's profile site not loaded to your client yet.": "Gebruiker zijn/haar profiel site staat nog niet in je client.",
+    "Download user's site": "Dewnload gebruiker zijn/haar site",
+
+    "Browse all \\u203A": "Alles browsen \\u203A",
+    "New users": "Nieuwe gebruikers",
+    "Suggested users": "Gesuggereerde gebruikers",
+
+    "Create new profile": "Nieuw profiel aanmaken",
+    "Creating new profile...": "Nieuw profiel aanmaken...",
+    "Checking user on selected hub...": "Controleren van gebruiker op geselecteerde hub...",
+    "User \" + Page.site_info.cert_user_id + \" already exists on this hub": "Gebruiker \" + Page.site_info.cert_user_id + \" bestaat al op deze hub",
+    "Select ID...": "Selecteer ID...",
+    "Seeded HUBs": "Verspreidde HUBs",
+    "Available HUBs": "Beschikbare HUBs",
+    "(With this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)": "(Met dit kies je waar je profiel wordt opgeslagen. Er is geen verschil met inhoud en je kunt alle gebruikers bereiken op elke hub)",
+
+    "Random ZeroNet user": "Willekeurige ZereNet gebruiker",
+    "Hello ZeroMe!": "Hallo ZeroMe!",
+
+    "Loading...\\nShow image": "Laden...\\nToon afbeelding",
+    "Help distribute this user's new images": "Help met het verspreiden van deze gebruiker zijn/haar nieuwe afbeeldingen",
+    "Delete image": "Verwijder afbeelding",
+    "Show image": "Toon afbeelding",
+    "'s new images": "'s nieuwe afbeeldingen",
+
+    "Comment": "Commentaar",
+    "Add your comment": "Jouw commentaar toevoegen",
+    "Reply": "Antwoord",
+
+    "Everyone": "Iedereen",
+    "Followed users": "Gevolgde gebruikers",
+    "Show more posts...": "Toon meer posts...",
+    "Show more comments...": "Toon meer commentaar...",
+    "No posts yet": "Nog geen posts",
+    "Let's follow some users!": "Laten we wat gebruikers gaan volgen!",
+
+    "Select user to post new content": "Selecteer gebruiker om nieuwe inhoud mee to posten",
+    "Write something...": "Schrijf iets...",
+    "Submit new post": "Nieuwe post toevoegen",
+    "Invalid image, only jpg format supported": "Invalide afbeelding, enkel het jpg formaat is ondersteund",
+
+    "Follow in newsfeed": "Volgen in nieuwsfeed",
+
+    "New users in ZeroMe": "Nieuwe gebruikers in ZeroMe",
+    "Total: ": "Totaal: ",
+    " registered users": " geregistreerde gebruikers",
+
+    " minutes ago": " minuten geleden",
+    " hours ago": " uren geleden",
+    " days ago": "dagen geleden",
+    "on ": "op",
+    "Just now": "Zojuist"
+}
