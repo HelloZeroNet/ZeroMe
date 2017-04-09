@@ -4943,7 +4943,7 @@ window.entities=new Html5Entities()
         })), h("ul", [
           (function() {
             var i, len, ref, results;
-            ref = [["Home", "Home", "home"], ["Users", "Users", "users"], ["Settings", "Settings", "gear"]];
+            ref = [["Home", 'Home', "home"], ["Users", 'Users', "users"], ["Settings", 'Settings', "gear"]];
             results = [];
             for (i = 0, len = ref.length; i < len; i++) {
               el = ref[i];
@@ -6915,9 +6915,9 @@ window.entities=new Html5Entities()
         return this.setUrl("?Home");
       } else if (this.params.urls[0] === "Create+profile") {
         content = this.content_create_profile;
-      } else if (this.params.urls[0] === "Users" && (content = this.content_users)) {
+      } else if (this.params.urls[0] === 'Users' && (content = this.content_users)) {
 
-      } else if (this.params.urls[0] === "Settings") {
+      } else if (this.params.urls[0] === 'Settings') {
         content = this.content_settings;
       } else if (this.params.urls[0] === "ProfileName") {
         this.content_profile.findUser(this.params.urls[1], (function(_this) {

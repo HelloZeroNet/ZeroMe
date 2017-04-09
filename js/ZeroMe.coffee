@@ -90,9 +90,9 @@ class ZeroMe extends ZeroFrame
 			return @setUrl("?Home")
 		else if @params.urls[0] == "Create+profile"
 			content = @content_create_profile
-		else if @params.urls[0] == "Users" and
+		else if @params.urls[0] == 'Users' and
 			content = @content_users
-		else if @params.urls[0] == "Settings"
+		else if @params.urls[0] == 'Settings'
 			content = @content_settings
 		else if @params.urls[0] == "ProfileName"
 			@content_profile.findUser @params.urls[1], (user) =>
