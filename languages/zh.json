@@ -6,7 +6,18 @@
 	"Follow username mentions": "关注用户名提醒",
 	"Follow comments on your posts": "关注你的帖子评论",
 	"Follow new followers": "关注新关注者",
+
 	"Hide \"Hello ZeroMe!\" messages": "隐藏 \"你好 ZeroMe!\" 消息",
+	"This actually just hides a user's first post": "事实上就是隐藏用户的第一个帖子",
+	"Autoload images": "自动载入图片",
+	"This will automatically load images in posts": "这将自动载入帖子中的图片",
+	"!WARN This might also autoload images you don't want to see or seed!": "警告！该选项可能也会自动载入你不想看到并做种的图片",
+	"I want my stars back": "我想让我的星回来",
+	"Replace the heart with a star": "用星来代替心",
+
+	"Disable the background feature entierly": "完全禁用背景特性",
+	"Don't load other users backgrounds": "不要载入其他用户的背景",
+	"Don't show background on the feed/timeline and other pages": "不要在信息流/时间线和其他页面上显示背景",
 
 	"Follow": "关注",
 	"Unfollow": "取消关注",
