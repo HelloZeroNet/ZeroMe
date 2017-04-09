@@ -1,4 +1,9 @@
 {
+	"Home": "首页",
+	"Users": "用户",
+	"Settings": "设置",
+	"Edit Profile": "编辑用户资料",
+
 	"Visitor": "访客",
 	"Select your account": "选择你的帐户",
 	"You need a profile for this feature": "你需要创建一个新的用户资料来实现这个特性",
@@ -13,6 +18,7 @@
 	"!WARN This might also autoload images you don't want to see or seed!": "警告！该选项可能也会自动载入你不想看到并做种的图片",
 	"I want my stars back": "我想让我的星回来",
 	"Replace the heart with a star": "用星来代替心",
+	"Enable transparency": "启用透明度",
 
 	"Disable the background feature entierly": "完全禁用背景特性",
 	"Don't load other users backgrounds": "不要载入其他用户的背景",
@@ -20,12 +26,15 @@
 
 	"Follow": "关注",
 	"Unfollow": "取消关注",
+	"Mute": "屏蔽",
+	" post in newsfeed": "帖子在新闻源中",
 	"Followed by ": "被关注于 ",
 	"Help distribute this user's images": "帮助分发这个用户的图片",
 	"Following": "已关注",
 	"Activity feed": "活动信息流",
 	"Show more...": "显示更多...",
 	"Mute ": "屏蔽",
+	"Background Settings": "背景设置",
 
 	" started following ": " 开始关注 ",
 	" commented on ": " 评论了 ",

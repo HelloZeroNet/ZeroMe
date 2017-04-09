@@ -1,4 +1,9 @@
 {
+	"Home": "首頁",
+	"Users": "用戶",
+	"Settings": "設定",
+	"Edit Profile": "編輯用戶資料",
+
 	"Visitor": "訪客",
 	"Select your account": "選擇你的帳戶",
 	"You need a profile for this feature": "你需要建立一個新的用戶檔案來實現這個特性",
@@ -13,6 +18,7 @@
 	"!WARN This might also autoload images you don't want to see or seed!": "警告！該選項可能也會自動載入你不想看到並做種的圖片",
 	"I want my stars back": "我想讓我的星回來",
 	"Replace the heart with a star": "用星來代替心",
+	"Enable transparency": "启用透明度",
 
 	"Disable the background feature entierly": "完全禁用背景特性",
 	"Don't load other users backgrounds": "不要載入其他用戶的背景",
@@ -20,11 +26,15 @@
 
 	"Follow": "關注",
 	"Unfollow": "取消關注",
+	"Mute": "屏蔽",
+	" post in newsfeed": "帖子在新聞源中",
 	"Followed by ": "被關注於 ",
 	"Help distribute this user's images": "幫助分發這個用戶的圖片",
 	"Following": "已關注",
 	"Activity feed": "活動資訊流",
 	"Show more...": "顯示更多...",
+	"Mute ": "屏蔽",
+	"Background Settings": "背景設定",
 
 	" started following ": " 開始關注 ",
 	" commented on ": " 評論了 ",
