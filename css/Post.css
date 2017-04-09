@@ -2,6 +2,7 @@
 	background-color: rgba(255,255,255,0.9); padding: 16px 20px; padding-left: 80px; border-radius: 4px; backface-visibility: hidden; transform-style: preserve-3d; transform: translateZ(0);
 	border: 1px solid #EEF0F1; border-bottom: 2px solid #ECEDEE; margin-bottom: 12px; transition: all 0.3s;
 }
+.no-transparent .post { background-color: white; }
 .post.selected { box-shadow: 0px 0px 40px rgba(0,0,0,0.1); }
 
 .post .user .settings { float: right; color: #AAA; opacity: 0; transition: all 0.3s; padding: 0px 10px; margin-right: -10px }
@@ -36,6 +37,7 @@
 .post-create-container { margin-bottom: 12px }
 .post-create { transition: all 0.6s }
 textarea { background: rgba(255, 255, 255, 0.5); }
+.no-transparent textarea { background: white; }
 .post-create .postfield {
 	font-family: Roboto; font-size: 16px; border: 1px solid rgba(255, 255, 255, 0.3); padding: 15px 15px;
 	font-size: 16px; width: 100%; height: 52px; box-sizing: border-box; padding-right: 40px;
