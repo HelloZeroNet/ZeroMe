@@ -36,6 +36,7 @@ class Editable extends Class
 		if @editing
 			return h("div.editable.editing", {exitAnimation: Animation.slideUp},
 				@field_edit.render(body),
+				h("div.post-preview", @field_edit.attrs2),
 				h("div.editablebuttons",
 					h("a.link", {href: "#Cancel", onclick: @handleCancelClick, tabindex: "-1"}, "Cancel"),
 					if @handleDelete
