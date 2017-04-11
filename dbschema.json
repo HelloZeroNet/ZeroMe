@@ -21,7 +21,7 @@
 				"follow",
 				{"node": "post_like", "table": "post_like", "key_col": "post_uri", "val_col": "date_added"}
 			],
-			"to_json_table": [ "hub", "user_name", "avatar", "intro" ]
+			"to_json_table": [ "hub", "user_name", "avatar", "intro", "bg", "bgColor" ]
 		}
 	},
 	"tables": {
@@ -36,10 +36,12 @@
 				["hub", "TEXT"],
 				["user_name", "TEXT"],
 				["intro", "TEXT"],
-				["avatar", "TEXT"]
+				["avatar", "TEXT"],
+				["bg", "TEXT"],
+				["bgColor", "TEXT"]
 			],
 			"indexes": ["CREATE UNIQUE INDEX path ON json(directory, site, file_name)"],
-			"schema_changed": 4
+			"schema_changed": 5
 		},
 		"post": {
 			"cols": [

@@ -4678,7 +4678,6 @@ window.entities=new Html5Entities()
 }).call(this);
 
 
-
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentUsers.coffee ---- */
 
 
@@ -6015,6 +6014,7 @@ window.entities=new Html5Entities()
       this.handleDownloadClick = bind(this.handleDownloadClick, this);
       this.download = bind(this.download, this);
       this.handleFollowClick = bind(this.handleFollowClick, this);
+      this.saveUserdb = bind(this.saveUserdb, this);
       this.applyBackground = bind(this.applyBackground, this);
       this.renderBackground = bind(this.renderBackground, this);
       this.renderAvatar = bind(this.renderAvatar, this);
@@ -6172,6 +6172,7 @@ window.entities=new Html5Entities()
             "body": "Hello ZeroMe!"
           }
         ],
+        "bgColor": window.defaultBackground.color = "#D30C37",
         "post_like": {},
         "comment": [],
         "follow": []
@@ -6229,6 +6230,9 @@ window.entities=new Html5Entities()
       } else if ((Page.user && Page.user.getLink ? (typeof Page !== "undefined" && Page !== null ? (ref = Page.user) != null ? ref.getLink() : void 0 : void 0) !== this.getLink() : false) && Page.getSetting("load_others_background_disabled")) {
         return window.defaultBackground();
       } else {
+        if (this.row.bg && !this.row.bgColor) {
+          this.row.bgUnset = true;
+        }
         if (this.row.bgColor || this.row.bgUnset) {
           if (this.isSeeding() && (this.row.bg === "png" || this.row.bg === "jpg")) {
             window.setBackground(this.getBackground(), this.getBackgroundLink());
@@ -6241,6 +6245,7 @@ window.entities=new Html5Entities()
             return cb();
           }
         } else {
+          console.trace("Loading background async, should not happen");
           return this.getData(this.hub, (function(_this) {
             return function(row) {
               if (_this.row == null) {
@@ -6308,7 +6313,7 @@ window.entities=new Html5Entities()
             };
             changed = true;
           }
-          ref = ["avatar", "hub", "intro", "user_name"];
+          ref = ["avatar", "hub", "intro", "user_name", "bg", "bgColor"];
           for (j = 0, len = ref.length; j < len; j++) {
             field = ref[j];
             if (userdb_data.user[0][field] !== data[field]) {
@@ -6638,6 +6643,7 @@ window.entities=new Html5Entities()
   window.User = User;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/UserList.coffee ---- */

@@ -100,6 +100,7 @@ class User extends Class
 				"date_added": Time.timestamp(),
 				"body": "Hello ZeroMe!"
 			}],
+			"bgColor": window.defaultBackground.color="#D30C37"
 			"post_like": {},
 			"comment": [],
 			"follow": []
@@ -139,6 +140,8 @@ class User extends Class
 		else if (if Page.user and Page.user.getLink then Page?.user?.getLink() != @getLink() else false) and Page.getSetting "load_others_background_disabled"
 			window.defaultBackground()
 		else
+			if @row.bg and not @row.bgColor
+				@row.bgUnset=true
 			if @row.bgColor or @row.bgUnset
 				if @isSeeding() and (@row.bg == "png" or @row.bg == "jpg")
 					window.setBackground @getBackground(),@getBackgroundLink()
@@ -149,6 +152,7 @@ class User extends Class
 				if cb
 					cb()
 			else
+				console.trace "Loading background async, should not happen"
 				@getData @hub, (row) =>
 					@row?={}
 					@row.bg=row.bg
@@ -170,7 +174,7 @@ class User extends Class
 				if site == @hub and res_write == "ok" and res_sign == "ok"
 					@saveUserdb(data)
 
-	saveUserdb: (data, cb) ->
+	saveUserdb: (data, cb) =>
 		cert_provider = Page.site_info.cert_user_id.replace(/.*@/, "")
 		if cert_provider not in ["zeroid.bit", "zeroverse.bit"]
 			@log "Cert provider #{cert_provider} not supported by userdb!"
@@ -184,7 +188,7 @@ class User extends Class
 					user: [{date_added: Time.timestamp()}]
 				}
 				changed = true
-			for field in ["avatar", "hub", "intro", "user_name"]
+			for field in ["avatar", "hub", "intro", "user_name", "bg", "bgColor"]
 				if userdb_data.user[0][field] != data[field]
 					changed = true
 					@log "Changed in profile:", field, userdb_data.user[0][field], "!=", data[field]
