@@ -2,7 +2,8 @@
 
 .head .logo {
 	height: 50px; padding: 4px 6px; box-sizing: border-box; display: inline-block;
-	color: white; font-size: 30px; font-weight: lighter; text-decoration: none; vertical-align: top;
+	color: white; font-size: 30px; font-weight: lighter; text-decoration: none; vertical-align: top; width: calc(100% - 474px);
+	text-align: center;
 }
 
 .head .right { float: right; }
