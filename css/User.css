@@ -32,7 +32,7 @@
 .users.gray .button-follow:hover, .users.gray .button-follow:active { color: #2ecc71; }
 .users.gray .name { color: #333; }
 
-.user .uploadable .icon-upload { position: absolute; margin-left: -48px; z-index: 999; margin-top: 7px }
+.user .uploadable .icon-upload { position: absolute; margin-left: -60px; z-index: 999; margin-top: -4px; opacity: 1; background-color: rgba(0, 0, 0, 0.5); background-position: 11px 11px; width: 50px; height: 50px; border-radius: 50%; }
 .user.notseeding .button-follow { border-color: #E0E0E0; }
 .user.card.notseeding .button-follow { border-color: #EFEFEF; }
 
