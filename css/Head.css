@@ -13,8 +13,8 @@
 	display: inline-block; height: 50px; width: 50px; text-align: center; vertical-align: middle; transition: all 0.3s;
 	border-left: 1px solid #EEE; line-height: 50px; font-size: 20px; color: #AAA; font-weight: normal; text-decoration: none;
 }
-.head .settings:hover { color: #5d68ff; background-color: #FAFAFA; transition: none }
-.head .settings:active { background-color: #F5F5F5; transition: none }
+.head .settings:hover { color: #fff; background-color: rgb(211, 12, 55); transition: none }
+.head .settings:active { filter: opacity(0.5); transition: none }
 .head .menu { box-shadow: 0px 4px 8px rgba(0,0,0,0.1) }
 
 .head li { float: left; }
