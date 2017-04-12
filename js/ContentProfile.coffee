@@ -312,6 +312,7 @@ class ContentProfile extends Class
 					h("div.user.card.profile.no-left-padding", [
 						h("div.bg-settings",[
 							h("h2", h("b.intro-full","Theme Settings"))
+					                h("div","Background:"))
 							@uploadable_background.render(@user.renderBackground)
 							h("div.bg-preview", @editable_bgcolor.render("Theme Color: "+@user.getBackground()))
 						])
