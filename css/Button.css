@@ -5,7 +5,7 @@
 .button:hover { background-color: #5d68ff; color: #F6F7F8; text-decoration: none; border-color: #5d68ff; transition: none }
 .button:hover .icon { background-color: #FFF; transition: none }
 .button:focus { transition: all 0.3s }
-.button:active { transform: translateY(1px); transition: all 0.3s, transform none; box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); outline: none; transition: none }
+.button:active { transform: translateY(1px); transition: all 0.3s, transform none; box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); outline: none; transition: none; filter:opacity(0.5) }
 
 .button.loading {
 	color: rgba(0,0,0,0) !important; background: url(../img/loading.gif) no-repeat center center !important; border-color: rgba(0,0,0,0) !important;
