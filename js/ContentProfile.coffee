@@ -311,9 +311,9 @@ class ContentProfile extends Class
 				if @editing and @loaded and (@user.row.bgColor || @user.row.bgUnset)
 					h("div.user.card.profile.no-left-padding", [
 						h("div.bg-settings",[
-							h("h2", h("b.intro-full","Background Settings"))
+							h("h2", h("b.intro-full","Theme Settings"))
 							@uploadable_background.render(@user.renderBackground)
-							h("div.bg-preview", @editable_bgcolor.render("Background Color: "+@user.getBackground()))
+							h("div.bg-preview", @editable_bgcolor.render("Theme Color: "+@user.getBackground()))
 						])
 					])
 
