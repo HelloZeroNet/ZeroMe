@@ -23,4 +23,7 @@
 .head ul li:hover, .head ul li a:hover {
 	background-color: rgb(211, 12, 55); transition: none; color: #fff; text-decoration: none;
 }
+.head ul li:active, .head ul li a:active {
+    filter: opacity(0.5);
+}
 .head ul li a { padding-top: 16px; width: 100px; height: 34px; }
