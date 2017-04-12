@@ -21,6 +21,6 @@
 .head ul { list-style-type:none; display: inline-block; margin:0; padding:0; overflow:hidden; }
 .head ul li, .head ul li a { display: block; text-align: center; color: #AAA; }
 .head ul li:hover, .head ul li a:hover {
-	background-color: #FAFAFA; transition: none; color: #4F4F4F; text-decoration: none;
+	background-color: rgb(211, 12, 55); transition: none; color: #fff; text-decoration: none;
 }
 .head ul li a { padding-top: 16px; width: 100px; height: 34px; }
