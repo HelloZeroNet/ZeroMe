@@ -235,7 +235,7 @@ class Post extends Class
 			if @meta
 				@meta.render()
 			h("div.actions", [
-				h("a.icon.icon-comment.link", {href: "#Comment", onclick: @handleCommentClick} h("i.fa.fa-comment-o") "Comment"),
+				h("a.icon.icon-comment.link", {href: "#Comment", onclick: @handleCommentClick}, h("i.fa.fa-comment-o"), "Comment"),
 				h("a.like.link", {classes: {active: Page.user?.likes[post_uri], loading: @submitting_like, "like-zero": @row.likes == 0}, href: "#Like", onclick: @handleLikeClick},
 					h("div"+(if Page.getSetting "gimme_stars" then ".fa.fa-star.icon-star" else ".icon.icon-heart"), {classes: {active: Page.user?.likes[post_uri]}}),
 					if @row.likes then @row.likes
