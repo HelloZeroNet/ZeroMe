@@ -109,7 +109,8 @@ class Head extends Class
 			h("ul", [
 				for el in [["Home",'Home',"home"],["Users",'Users',"users"],["Settings",'Settings',"gear"]]
 					h("li",h("a",{href:"?#{el[1]}", onclick: Page.handleLinkClick},[h("i.fa.fa-margin.fa-#{el[2]}"),el[0]]))
-			])
+			]),
+						h("a.logo", {href: "?Home", onclick: Page.handleLinkClick}, h("img", {src: "img/logo.svg", height: 40, onerror: "this.src='img/logo.png'; this.onerror=null;"})),
 			if Page.user?.hub
 				# Registered user
 				h("div.right.authenticated", [
@@ -142,7 +143,6 @@ class Head extends Class
 				])
 			else
 				h("div.right.unknown")
-		]),
-			h("a.logo", {href: "?Home", onclick: Page.handleLinkClick}, h("img", {src: "img/logo.svg", height: 40, onerror: "this.src='img/logo.png'; this.onerror=null;"}))
+		])
 
 window.Head = Head
