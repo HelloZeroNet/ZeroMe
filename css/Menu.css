@@ -9,8 +9,8 @@
 .menu-item { display: block; text-decoration: none; color: black; padding: 6px 24px; transition: all 0.2s; border-bottom: none; font-weight: normal; padding-left: 32px; white-space: nowrap; }
 .menu-item-separator { margin-top: 3px; margin-bottom: 3px; border-top: 1px solid #eee }
 
-.menu-item:hover { background-color: #F6F6F6; transition: none; color: inherit; cursor: pointer; color: black; text-decoration: none }
-.menu-item:active, .menu-item:focus { background-color: #AF3BFF; color: white; transition: none }
+.menu-item:hover { background-color: rgb(211, 12, 55); transition: none; color: inherit; cursor: pointer; color: #fff; text-decoration: none }
+.menu-item:active, .menu-item:focus { filter: opacity(0.5); transition: none }
 .menu-item.selected:before {
 	content: "L"; display: inline-block; transform: rotateZ(45deg) scaleX(-1); line-height: 15px;
 	font-weight: bold; position: absolute; margin-left: -14px; font-size: 12px; margin-top: 2px;
