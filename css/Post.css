@@ -26,6 +26,8 @@ a.icon.link:active {
     border-radius: 5px;
 }
 .post .actions .link.active { color: #5d68ff; }
+.post .actions .link.active:hover { filter: opacity(0.5) }
+.post .actions .link.active:active { color: #fff }
 .post .actions .like { width: 35px; margin-right: 0px; transition: width 0.3s, margin-right 0.3s; white-space: nowrap; position: relative; }
 .post .actions .like.like-zero { width: 20px; margin-right: 5px; }
 

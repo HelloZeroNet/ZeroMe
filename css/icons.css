@@ -45,7 +45,6 @@
 .icon-star.active {
 	color: #FFEA00;
 }
-.icon-heart.active { color: #5d68ff; filter: sepia(1) hue-rotate(192deg) brightness(0.55) saturate(5) }
 
 .icon-up { font-weight: normal !important; font-size: 15px; font-family: Tahoma; vertical-align: -4px; padding-right: 5px; display: inline; height: 1px; }
 .icon-upload {
