@@ -37,8 +37,7 @@
 .icon-share:empty { padding-right: 0px }
 
 .icon-heart {
-	padding-left: 32px; padding-right: 2px; background-position: 7px 5px;
-	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAASBAMAAACp/uMjAAAAMFBMVEUAAACqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqobnPPZAAAAD3RSTlMADcS4pt/IwK9qXE9ELRXt9n51AAAAaElEQVQI12PABRhtGRguC4CZQl8f8MUrggX1/yeK/f8kABL8//+L////imBBEAAJM/+HAgMGHhjzAAPDfgjrN1AbF4S5AGTafBDrJ9gKFhDTAWJz////P6COYAaZBAX13+FuY1JAcywAx1BERa6oCoIAAAAASUVORK5CYII=')
+	    font-size: 17px; padding-left: 10px; padding-right: 5px;
 }
 .icon-star {
 	    font-size: 17px; padding-left: 10px; padding-right: 5px;
