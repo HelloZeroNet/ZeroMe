@@ -15,7 +15,7 @@
 .post .body { padding-top: 2px; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; line-height: 1.5em; color: #333; word-break: break-word; overflow: hidden }
 .post .reply-name { font-size: 14px; font-family: Roboto, Helvetica, Arial; color: #555; background: #EEE; padding: 4px; border-radius: 18px; }
 .post .actions { height: 30px; margin-left: -5px; }
-.post .actions .icon { margin-right: 1px }
+.post .actions .icon { margin-right: 1px; text-decoration: none }
 .post .actions .link { color: #AAA; font-size: 12px; height: 30px; vertical-align: middle; line-height: 30px; display: inline-block; padding-right: 10px }
 a.icon.link:hover {
     color: rgb(211, 12, 55);
