@@ -77,8 +77,8 @@ textarea { background: rgba(255, 255, 255, 0.5); }
 	margin-right: 10px; padding-bottom: 5px; display: inline-block; border-bottom: 2px solid rgba(0,0,0,0);
 	color: #555; margin-bottom: 7px; margin-top: 10px; margin-left: 10px; transition: all 0.3s
 }
-.post-list-type .active { border-bottom: 2px solid #606aff; color: #606aff; }
-.post-list-type a:hover { border-bottom: 2px solid #606aff; color: #606aff; transition: none; text-decoration: none }
+.post-list-type .active { border-bottom: 2px solid rgb(211, 12, 55); color: rgb(211, 12, 55) }
+.post-list-type a:hover { border-bottom: 2px solid rgb(211, 12, 55); color: rgb(211, 12, 55); transition: none; text-decoration: none }
 
 .post .img { background-size: cover; text-align: center; position: relative; margin-bottom: 10px; }
 .post .img .show {
