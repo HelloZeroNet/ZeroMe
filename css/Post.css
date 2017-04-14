@@ -71,7 +71,8 @@ textarea { background: rgba(255, 255, 255, 0.5); }
 .post-create:not(.editing) .image { opacity: 0; height: 0px; }
 
 .post-list-empty { text-align: center; padding-top: 100px }
-.post-list-type { text-align: right; }
+.post-list-type { text-align: right; background-color: rgba(255,255,255,0.9); padding: 0px 20px; padding-left: 80px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -o-border-radius: 4px; -ms-border-radius: 4px; border-radius: 4px; -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -o-backface-visibility: hidden; -ms-backface-visibility: hidden; backface-visibility: hidden; transform-style: preserve-3d; -webkit-transform: translateZ(0); -moz-transform: translateZ(0); -o-transform: translateZ(0); -ms-transform: translateZ(0); transform: translateZ(0); border: 1px solid #EEF0F1; border-bottom: 2px solid #ECEDEE; margin-bottom: 12px; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s }
+.no-transparent .post-list-type { background-color: white }
 .post-list-type a {
 	margin-right: 10px; padding-bottom: 5px; display: inline-block; border-bottom: 2px solid rgba(0,0,0,0);
 	color: #555; margin-bottom: 7px; margin-top: 10px; margin-left: 10px; transition: all 0.3s
