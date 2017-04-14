@@ -1,6 +1,6 @@
 .icon {
 	display: inline-block; vertical-align: text-bottom; background-repeat: no-repeat; height: 30px;
-	vertical-align: middle; line-height: 30px; color: #AAA; font-size: 12px; transition: background-color 0.3s;
+	vertical-align: middle; line-height: 30px; font-size: 12px; transition: background-color 0.3s;
 }
 .icon.icon-button:hover { background-color: #F3F3F3; outline: 0px solid #F3F3F3; transition: none; }
 .icon.loading { pointer-events: none; animation: bounce .3s infinite alternate ease-out; animation-delay: 1s; }
