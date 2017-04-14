@@ -17,6 +17,14 @@
 .post .actions { height: 30px; margin-left: -5px; }
 .post .actions .icon { margin-right: 1px }
 .post .actions .link { color: #AAA; font-size: 12px; height: 30px; vertical-align: middle; line-height: 30px; display: inline-block; padding-right: 10px }
+a.icon.link:hover {
+    color: rgb(211, 12, 55);
+}
+a.icon.link:active {
+    background: rgb(211, 12, 55);
+    color: #fff;
+    border-radius: 5px;
+}
 .post .actions .link.active { color: #5d68ff; }
 .post .actions .like { width: 35px; margin-right: 0px; transition: width 0.3s, margin-right 0.3s; white-space: nowrap; position: relative; }
 .post .actions .like.like-zero { width: 20px; margin-right: 5px; }
