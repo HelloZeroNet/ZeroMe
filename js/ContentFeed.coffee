@@ -54,9 +54,9 @@ class ContentFeed extends Class
 			h("div.col-center", [
 				@post_create.render(),
 				h("div.post-list-type",
-					h("a.link", {href: "#Everyone", onclick: @handleListTypeClick, type: "everyone", classes: {active: @type == "everyone"}}, "Everyone")
-					h("a.link", {href: "#Liked", onclick: @handleListTypeClick, type: "liked", classes: {active: @type == "liked"}}, "Liked")
-					h("a.link", {href: "#Followed+users", onclick: @handleListTypeClick, type: "followed", classes: {active: @type == "followed"}}, "Followed users")
+					h("a.link", {href: "#Everyone", onclick: @handleListTypeClick, type: "everyone", classes: {active: @type == "everyone"}}, h("i.fa.fa-globe"), " Everyone")
+					h("a.link", {href: "#Liked", onclick: @handleListTypeClick, type: "liked", classes: {active: @type == "liked"}}, h("i.fa.fa-heart"), " Liked")
+					h("a.link", {href: "#Followed+users", onclick: @handleListTypeClick, type: "followed", classes: {active: @type == "followed"}}, h("i.fa.fa-user-plus"), " Followed users")
 				),
 				@post_list.render()
 			]),
