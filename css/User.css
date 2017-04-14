@@ -14,6 +14,10 @@
 .users .user.followed .button-follow-big {
 	background-color: #2ecc71 !important; border-color: #2ecc71 !important; color: #FFF
 }
+.users .user.followed .button-follow-big:hover {
+    background: rgba(255, 0, 0, 0.5)!important;
+    border-color: rgba(255, 0, 0, 0.5)!important;
+}
 .users .user.followed .button-follow-big .icon-follow { transform: rotate(45deg); }
 
 .user .name { font-weight: bold; color: #5d68ff; overflow: hidden; max-width: 200px; display: inline-block; white-space: nowrap; vertical-align: text-bottom; text-overflow: ellipsis }
