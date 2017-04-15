@@ -5,6 +5,15 @@ class ContentSettings extends Class
 
 	fncs: {}
 
+	section: (name,ar) =>
+		h("div", [
+			h("h2.sep",name)
+			for e in ar
+				if e
+					e
+			h("br",name)
+		])
+
 	renderCheck: (key,name,desc="",attrs={}) =>
 		@fncs[key]?=(item) =>
 			if attrs.disabled_by and Page.local_storage.settings[attrs.disabled_by]
@@ -32,6 +41,11 @@ class ContentSettings extends Class
 			h("br",key)
 		)
 
+	handleSearchInput: (e=null) =>
+		@search = e.target.value
+		Page.projector.scheduleRender()
+		Page.content.need_update = true
+
 	render: =>
 		window.otherPageBackground()
 
@@ -45,19 +59,25 @@ class ContentSettings extends Class
 			if Page.local_storage_loaded
 				h("div.post.settings",{style:"border-radius: 16px"},[
 					h("br","top") #make it "unique"
-					h("h1","Settings")
-					h("h2.sep","")
-					@renderCheck("hide_hello_zerome","Hide \"Hello ZeroMe!\" messages","This actually just hides a user's first post")
-					@renderCheck("autoload_media","Autoload images",["This will automatically load images in posts","!WARN This might also autoload images you don't want to see or seed!"])
-					@renderCheck("gimme_stars","I want my stars back","Replace the heart with a star")
-					@renderCheck("transparent","Enable transparency")
-					h("h2.sep","Background")
-					@renderCheck("disable_background","Disable the background feature entierly")
-					@renderCheck("load_others_background_disabled","Don't load other users backgrounds","",{disabled_by:"disable_background"})
-					@renderCheck("hide_background_timeline","Don't show background on the feed/timeline and other pages","",{disabled_by:"disable_background"})
-					h("h2.sep","Header")
-					@renderCheck("sticky_header","Enable Sticky Header")
-					@renderCheck("logo_left","Move logo to the left")
+					h("div",{style:"display:flex;"},[
+						h("h1",{style:"margin:6px;"},"Settings")
+						h("input.text.search",{style:"width: 70%; margin-bottom: 0px; height: 20px; margin: 6px; margin-top: 8px; margin-left: 25px;",value:@search,placeholder:"Search in settings..."})
+					])
+					@section("", [
+						@renderCheck("hide_hello_zerome","Hide \"Hello ZeroMe!\" messages","This actually just hides a user's first post")
+						@renderCheck("autoload_media","Autoload images",["This will automatically load images in posts","!WARN This might also autoload images you don't want to see or seed!"])
+						@renderCheck("gimme_stars","I want my stars back","Replace the heart with a star")
+						@renderCheck("transparent","Enable transparency")
+					])
+					@section("Background", [
+						@renderCheck("disable_background","Disable the background feature entierly")
+						@renderCheck("load_others_background_disabled","Don't load other users backgrounds","",{disabled_by:"disable_background"})
+						@renderCheck("hide_background_timeline","Don't show background on the feed/timeline and other pages","",{disabled_by:"disable_background"})
+					])
+					@section("Header", [
+						@renderCheck("not_sticky_header","Disable Sticky Header")
+						@renderCheck("logo_left","Move logo to the left")
+					])
 					h("br","bottom") #make it "unique"
 				])
 			else

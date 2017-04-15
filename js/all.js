@@ -4586,12 +4586,33 @@ window.entities=new Html5Entities()
     function ContentSettings() {
       this.update = bind(this.update, this);
       this.render = bind(this.render, this);
+      this.handleSearchInput = bind(this.handleSearchInput, this);
       this.renderCheck = bind(this.renderCheck, this);
+      this.section = bind(this.section, this);
       this.loaded = true;
       this.need_update = false;
     }
 
     ContentSettings.prototype.fncs = {};
+
+    ContentSettings.prototype.section = function(name, ar) {
+      var e;
+      return h("div", [
+        h("h2.sep", name), (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = ar.length; i < len; i++) {
+            e = ar[i];
+            if (e) {
+              results.push(e);
+            } else {
+              results.push(void 0);
+            }
+          }
+          return results;
+        })(), h("br", name)
+      ]);
+    };
 
     ContentSettings.prototype.renderCheck = function(key, name, desc, attrs) {
       var base;
@@ -4636,6 +4657,15 @@ window.entities=new Html5Entities()
       })(this))) : void 0, h("br", key));
     };
 
+    ContentSettings.prototype.handleSearchInput = function(e) {
+      if (e == null) {
+        e = null;
+      }
+      this.search = e.target.value;
+      Page.projector.scheduleRender();
+      return Page.content.need_update = true;
+    };
+
     ContentSettings.prototype.render = function() {
       window.otherPageBackground();
       if (this.loaded && !Page.on_loaded.resolved) {
@@ -4650,11 +4680,23 @@ window.entities=new Html5Entities()
         Page.local_storage_loaded ? h("div.post.settings", {
           style: "border-radius: 16px"
         }, [
-          h("br", "top"), h("h1", "Settings"), h("h2.sep", ""), this.renderCheck("hide_hello_zerome", "Hide \"Hello ZeroMe!\" messages", "This actually just hides a user's first post"), this.renderCheck("autoload_media", "Autoload images", ["This will automatically load images in posts", "!WARN This might also autoload images you don't want to see or seed!"]), this.renderCheck("gimme_stars", "I want my stars back", "Replace the heart with a star"), this.renderCheck("transparent", "Enable transparency"), h("h2.sep", "Background"), this.renderCheck("disable_background", "Disable the background feature entierly"), this.renderCheck("load_others_background_disabled", "Don't load other users backgrounds", "", {
-            disabled_by: "disable_background"
-          }), this.renderCheck("hide_background_timeline", "Don't show background on the feed/timeline and other pages", "", {
-            disabled_by: "disable_background"
-          }), h("h2.sep", "Header"), this.renderCheck("sticky_header", "Enable Sticky Header"), this.renderCheck("logo_left", "Move logo to the left"), h("br", "bottom")
+          h("br", "top"), h("div", {
+            style: "display:flex;"
+          }, [
+            h("h1", {
+              style: "margin:6px;"
+            }, "Settings"), h("input.text.search", {
+              style: "width: 70%; margin-bottom: 0px; height: 20px; margin: 6px; margin-top: 8px; margin-left: 25px;",
+              value: this.search,
+              placeholder: "Search in settings..."
+            })
+          ]), this.section("", [this.renderCheck("hide_hello_zerome", "Hide \"Hello ZeroMe!\" messages", "This actually just hides a user's first post"), this.renderCheck("autoload_media", "Autoload images", ["This will automatically load images in posts", "!WARN This might also autoload images you don't want to see or seed!"]), this.renderCheck("gimme_stars", "I want my stars back", "Replace the heart with a star"), this.renderCheck("transparent", "Enable transparency")]), this.section("Background", [
+            this.renderCheck("disable_background", "Disable the background feature entierly"), this.renderCheck("load_others_background_disabled", "Don't load other users backgrounds", "", {
+              disabled_by: "disable_background"
+            }), this.renderCheck("hide_background_timeline", "Don't show background on the feed/timeline and other pages", "", {
+              disabled_by: "disable_background"
+            })
+          ]), this.section("Header", [this.renderCheck("not_sticky_header", "Disable Sticky Header"), this.renderCheck("logo_left", "Move logo to the left")]), h("br", "bottom")
         ]) : (h("h1", "Loading Settings..."), this.need_update = true)
       ]);
     };
@@ -4671,6 +4713,7 @@ window.entities=new Html5Entities()
   window.ContentSettings = ContentSettings;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentUsers.coffee ---- */
@@ -4996,7 +5039,6 @@ window.entities=new Html5Entities()
   window.Head = Head;
 
 }).call(this);
-
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/Post.coffee ---- */
@@ -7060,7 +7102,7 @@ window.entities=new Html5Entities()
       if (this.getSetting("logo_left")) {
         res.push("logo-left");
       }
-      if (this.getSetting("sticky_header")) {
+      if (!this.getSetting("not_sticky_header")) {
         res.push("sticky-header");
       }
       if (res.length) {

@@ -190,7 +190,7 @@ class ZeroMe extends ZeroFrame
 		res=[]
 		if not @getSetting("transparent") then res.push("no-transparent")
 		if @getSetting("logo_left") then res.push("logo-left")
-		if @getSetting("sticky_header") then res.push("sticky-header")
+		if not @getSetting("not_sticky_header") then res.push("sticky-header")
 		if res.length then return " "+res.join(" ") else return ""
 
 
