@@ -4148,7 +4148,6 @@ window.entities=new Html5Entities()
 }).call(this);
 
 
-
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentProfile.coffee ---- */
 
 
@@ -4572,7 +4571,6 @@ window.entities=new Html5Entities()
 }).call(this);
 
 
-
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentSettings.coffee ---- */
 
 
@@ -4948,9 +4946,7 @@ window.entities=new Html5Entities()
             }
             return results;
           })()
-        ]), h("div.logo", {
-          onclick: Page.handleLinkClick
-        }, h("img", {
+        ]), h("div.logo", h("img", {
           src: "img/logo.svg",
           height: 40,
           onerror: "this.src='img/logo.png'; this.onerror=null;"
@@ -5456,7 +5452,6 @@ window.entities=new Html5Entities()
   window.Post = Post;
 
 }).call(this);
-
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostCreate.coffee ---- */
