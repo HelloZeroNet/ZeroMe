@@ -4611,6 +4611,7 @@ window.entities=new Html5Entities()
             if (attrs.postRun) {
               attrs.postRun(Page.local_storage.settings[key]);
             }
+            document.body.className = "loaded" + Page.otherClasses();
             Page.projector.scheduleRender();
             Page.saveLocalStorage();
             Page.content.need_update = true;
@@ -4649,17 +4650,11 @@ window.entities=new Html5Entities()
         Page.local_storage_loaded ? h("div.post.settings", {
           style: "border-radius: 16px"
         }, [
-          h("br", "top"), h("h1", "Settings"), h("h2.sep", ""), this.renderCheck("hide_hello_zerome", "Hide \"Hello ZeroMe!\" messages", "This actually just hides a user's first post"), this.renderCheck("autoload_media", "Autoload images", ["This will automatically load images in posts", "!WARN This might also autoload images you don't want to see or seed!"]), this.renderCheck("gimme_stars", "I want my stars back", "Replace the heart with a star"), this.renderCheck("transparent", "Enable transparency", "", {
-            postRun: (function(_this) {
-              return function() {
-                return document.body.className = "loaded" + Page.otherClasses();
-              };
-            })(this)
-          }), h("h2.sep", "Background"), this.renderCheck("disable_background", "Disable the background feature entierly"), this.renderCheck("load_others_background_disabled", "Don't load other users backgrounds", "", {
+          h("br", "top"), h("h1", "Settings"), h("h2.sep", ""), this.renderCheck("hide_hello_zerome", "Hide \"Hello ZeroMe!\" messages", "This actually just hides a user's first post"), this.renderCheck("autoload_media", "Autoload images", ["This will automatically load images in posts", "!WARN This might also autoload images you don't want to see or seed!"]), this.renderCheck("gimme_stars", "I want my stars back", "Replace the heart with a star"), this.renderCheck("transparent", "Enable transparency"), h("h2.sep", "Background"), this.renderCheck("disable_background", "Disable the background feature entierly"), this.renderCheck("load_others_background_disabled", "Don't load other users backgrounds", "", {
             disabled_by: "disable_background"
           }), this.renderCheck("hide_background_timeline", "Don't show background on the feed/timeline and other pages", "", {
             disabled_by: "disable_background"
-          }), h("br", "bottom")
+          }), h("h2.sep", "Header"), this.renderCheck("sticky_header", "Enable Sticky Header"), this.renderCheck("logo_left", "Move logo to the left"), h("br", "bottom")
         ]) : (h("h1", "Loading Settings..."), this.need_update = true)
       ]);
     };
@@ -4932,7 +4927,11 @@ window.entities=new Html5Entities()
     Head.prototype.render = function() {
       var el, ref, ref1, ref2, ref3;
       return h("div.head.center", [
-        h("ul", [
+        Page.getSetting("logo_left") ? h("div.logo", h("img", {
+          src: "img/logo.svg",
+          height: 40,
+          onerror: "this.src='img/logo.png'; this.onerror=null;"
+        })) : void 0, h("ul", [
           (function() {
             var i, len, ref, results;
             ref = [["Home", 'Home', "home"], ["Users", 'Users', "users"], ["Settings", 'Settings', "gear"]];
@@ -4946,11 +4945,11 @@ window.entities=new Html5Entities()
             }
             return results;
           })()
-        ]), h("div.logo", h("img", {
+        ]), !Page.getSetting("logo_left") ? h("div.logo", h("img", {
           src: "img/logo.svg",
           height: 40,
           onerror: "this.src='img/logo.png'; this.onerror=null;"
-        })), ((ref = Page.user) != null ? ref.hub : void 0) ? h("div.right.authenticated", [
+        })) : void 0, ((ref = Page.user) != null ? ref.hub : void 0) ? h("div.right.authenticated", [
           h("div.user", h("a.name.link", {
             href: Page.user.getLink(),
             onclick: Page.handleLinkClick
@@ -7057,6 +7056,12 @@ window.entities=new Html5Entities()
       res = [];
       if (!this.getSetting("transparent")) {
         res.push("no-transparent");
+      }
+      if (this.getSetting("logo_left")) {
+        res.push("logo-left");
+      }
+      if (this.getSetting("sticky_header")) {
+        res.push("sticky-header");
       }
       if (res.length) {
         return " " + res.join(" ");

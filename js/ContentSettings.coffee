@@ -12,6 +12,7 @@ class ContentSettings extends Class
 			Page.local_storage.settings[key] = not Page.local_storage.settings[key]
 			if attrs.postRun
 				attrs.postRun(Page.local_storage.settings[key])
+			document.body.className = "loaded"+Page.otherClasses()
 			Page.projector.scheduleRender()
 			Page.saveLocalStorage()
 			Page.content.need_update = true
@@ -49,11 +50,14 @@ class ContentSettings extends Class
 					@renderCheck("hide_hello_zerome","Hide \"Hello ZeroMe!\" messages","This actually just hides a user's first post")
 					@renderCheck("autoload_media","Autoload images",["This will automatically load images in posts","!WARN This might also autoload images you don't want to see or seed!"])
 					@renderCheck("gimme_stars","I want my stars back","Replace the heart with a star")
-					@renderCheck("transparent","Enable transparency","",{postRun:() => document.body.className = "loaded"+Page.otherClasses()})
+					@renderCheck("transparent","Enable transparency")
 					h("h2.sep","Background")
 					@renderCheck("disable_background","Disable the background feature entierly")
 					@renderCheck("load_others_background_disabled","Don't load other users backgrounds","",{disabled_by:"disable_background"})
 					@renderCheck("hide_background_timeline","Don't show background on the feed/timeline and other pages","",{disabled_by:"disable_background"})
+					h("h2.sep","Header")
+					@renderCheck("sticky_header","Enable Sticky Header")
+					@renderCheck("logo_left","Move logo to the left")
 					h("br","bottom") #make it "unique"
 				])
 			else
