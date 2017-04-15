@@ -1,4 +1,4 @@
-.head-container { background-color: white; box-shadow: 0px -7px 32px rgba(0,0,0,0.15); width: 100%; max-height: 50px; position: fixed; z-index: 1 }
+.head-container { background-color: white; box-shadow: 0px -7px 32px rgba(0,0,0,0.15); width: 100%; max-height: 50px; position: fixed; z-index: 2 }
 
 .head .logo {
 	height: 50px; padding: 4px 6px; box-sizing: border-box; display: inline-block;
