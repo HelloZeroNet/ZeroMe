@@ -45,11 +45,12 @@
 
 /* Submit */
 .button-submit {
-	padding: 12px 20px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; -ms-border-radius: 3px; border-radius: 3px; margin-top: 11px; background: #5d68ff;
+	padding: 12px 20px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; -ms-border-radius: 3px; border-radius: 3px; margin-top: 11px; background: rgb(211, 12, 55);
 	/* box-shadow: 0px 1px 4px rgba(93, 104, 255, 0.41); */
-	border: none; border-bottom: 2px solid #4952c7; font-weight: bold; color: #ffffff; font-size: 12px; text-transform: uppercase;
+	border: none; border-bottom: 2px solid rgba(0, 0, 0, 0.5); font-weight: bold; color: #ffffff; font-size: 12px; text-transform: uppercase;
 }
-.button-submit:hover { color: white; background-color: #6d78ff }
+.button-submit:hover { background: rgb(211, 12, 55); -webkit-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; -moz-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; -o-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; -ms-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; padding: 13px 20px; border: none }
+.post-create .button-submit:not(.select-user) { background-size: 40px; background-position: 1px 1px; background-repeat: no-repeat; background-image: url(../img/post.svg); margin-left: 10px; text-indent: 20px }
 .post-create .button-submit:not(.select-user) {
 	background-size: 40px; background-position: 1px 1px; background-repeat: no-repeat;
 	background-image: url(../img/post.svg); margin-left: 10px; text-indent: 20px;
