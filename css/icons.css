@@ -42,9 +42,6 @@
 .icon-star {
 	    font-size: 17px; padding-left: 10px; padding-right: 5px;
 }
-.icon-star.active {
-	color: #FFEA00;
-}
 
 .icon-up { font-weight: normal !important; font-size: 15px; font-family: Tahoma; vertical-align: -4px; padding-right: 5px; display: inline; height: 1px; }
 .icon-upload {

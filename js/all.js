@@ -4106,21 +4106,21 @@ window.entities=new Html5Entities()
             classes: {
               active: this.type === "everyone"
             }
-          }, "Everyone"), h("a.link", {
+          }, h("i.fa.fa-globe"), " Everyone"), h("a.link", {
             href: "#Liked",
             onclick: this.handleListTypeClick,
             type: "liked",
             classes: {
               active: this.type === "liked"
             }
-          }, "Liked"), h("a.link", {
+          }, h("i.fa.fa-heart"), " Liked"), h("a.link", {
             href: "#Followed+users",
             onclick: this.handleListTypeClick,
             type: "followed",
             classes: {
               active: this.type === "followed"
             }
-          }, "Followed users")), this.post_list.render()
+          }, h("i.fa.fa-user-plus"), " Followed users")), this.post_list.render()
         ]), h("div.col-right.noscrollfix", [
           h("div.light-bg", [
             this.activity_list.render(), this.new_user_list.users.length > 0 ? h("h2.sep.new", [
@@ -4146,6 +4146,7 @@ window.entities=new Html5Entities()
   window.ContentFeed = ContentFeed;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentProfile.coffee ---- */
@@ -4540,7 +4541,7 @@ window.entities=new Html5Entities()
                 onclick: this.handleOptionalHelpClick
               }, h("div.checkbox-skin"), h("div.title", "Help distribute this user's images"))
             ])
-          ]), this.editing && this.loaded && (this.user.row.bgColor || this.user.row.bgUnset) ? h("div.user.card.profile.no-left-padding", [h("div.bg-settings", [h("h2", h("b.intro-full", "Background Settings")), this.uploadable_background.render(this.user.renderBackground), h("div.bg-preview", this.editable_bgcolor.render("Background Color: " + this.user.getBackground()))])]) : void 0, h("div.light-bg", [
+          ]), this.editing && this.loaded && (this.user.row.bgColor || this.user.row.bgUnset) ? h("div.user.card.profile.no-left-padding", [h("div.bg-settings", [h("h2", h("b.intro-full", "Theme Settings")), h("div", "Background"), this.uploadable_background.render(this.user.renderBackground), h("div.bg-preview", this.editable_bgcolor.render("Theme Color: " + this.user.getBackground()))])]) : void 0, h("div.light-bg", [
             this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
               afterCreate: Animation.show
             }, ["Following"]) : void 0, this.user_list.render(".gray")
@@ -4569,6 +4570,7 @@ window.entities=new Html5Entities()
   window.ContentProfile = ContentProfile;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentSettings.coffee ---- */
@@ -4932,14 +4934,7 @@ window.entities=new Html5Entities()
     Head.prototype.render = function() {
       var el, ref, ref1, ref2, ref3;
       return h("div.head.center", [
-        h("a.logo", {
-          href: "?Home",
-          onclick: Page.handleLinkClick
-        }, h("img", {
-          src: "img/logo.svg",
-          height: 40,
-          onerror: "this.src='img/logo.png'; this.onerror=null;"
-        })), h("ul", [
+        h("ul", [
           (function() {
             var i, len, ref, results;
             ref = [["Home", 'Home', "home"], ["Users", 'Users', "users"], ["Settings", 'Settings', "gear"]];
@@ -4953,7 +4948,13 @@ window.entities=new Html5Entities()
             }
             return results;
           })()
-        ]), ((ref = Page.user) != null ? ref.hub : void 0) ? h("div.right.authenticated", [
+        ]), h("div.logo", {
+          onclick: Page.handleLinkClick
+        }, h("img", {
+          src: "img/logo.svg",
+          height: 40,
+          onerror: "this.src='img/logo.png'; this.onerror=null;"
+        })), ((ref = Page.user) != null ? ref.hub : void 0) ? h("div.right.authenticated", [
           h("div.user", h("a.name.link", {
             href: Page.user.getLink(),
             onclick: Page.handleLinkClick
@@ -5000,6 +5001,7 @@ window.entities=new Html5Entities()
   window.Head = Head;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/Post.coffee ---- */
@@ -5427,10 +5429,10 @@ window.entities=new Html5Entities()
           afterCreate: Maxheight.apply,
           afterUpdate: Maxheight.apply
         }), this.meta ? this.meta.render() : void 0, h("div.actions", [
-          h("a.icon.icon-comment.link", {
+          h("a.icon.link", {
             href: "#Comment",
             onclick: this.handleCommentClick
-          }, "Comment"), h("a.like.link", {
+          }, h("i.fa.fa-comment.icon-comment"), "Comment"), h("a.icon.link", {
             classes: {
               active: (ref2 = Page.user) != null ? ref2.likes[post_uri] : void 0,
               loading: this.submitting_like,
@@ -5438,7 +5440,7 @@ window.entities=new Html5Entities()
             },
             href: "#Like",
             onclick: this.handleLikeClick
-          }, h("div" + (Page.getSetting("gimme_stars") ? ".fa.fa-star.icon-star" : ".icon.icon-heart"), {
+          }, h("div" + (Page.getSetting("gimme_stars") ? ".fa.fa-star.icon-star" : ".fa.fa-heart.icon-heart"), {
             classes: {
               active: (ref3 = Page.user) != null ? ref3.likes[post_uri] : void 0
             }
@@ -5454,6 +5456,7 @@ window.entities=new Html5Entities()
   window.Post = Post;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostCreate.coffee ---- */
@@ -6643,7 +6646,6 @@ window.entities=new Html5Entities()
   window.User = User;
 
 }).call(this);
-
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/UserList.coffee ---- */
