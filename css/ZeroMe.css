@@ -23,6 +23,8 @@ h2 a.link { font-size: 13px; margin-left: 10px; font-weight: normal; margin-top:
 h2.sep { border-top: 1px solid #EEE; padding-top: 20px }
 h5 { font-weight: normal; color: rgba(0, 0, 0, 0.5) }
 
+.invisible { display: none; }
+
 .center { width: 960px; margin-left: auto; margin-right: auto; }
 
 /* Content */

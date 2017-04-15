@@ -6,13 +6,13 @@ class ContentSettings extends Class
 	fncs: {}
 
 	section: (name,ar) =>
-		h("div", [
-			h("h2.sep",name)
-			for e in ar
-				if e
+		if ar.filter(((e) => !e.properties.classes.invisible)).length
+			h("div.setting"+name, [
+				h("h2.sep",name)
+				for e in ar
 					e
-			h("br",name)
-		])
+				h("br",name)
+			])
 
 	renderCheck: (key,name,desc="",attrs={}) =>
 		@fncs[key]?=(item) =>
@@ -27,7 +27,7 @@ class ContentSettings extends Class
 			Page.content.need_update = true
 			return false
 
-		h("div.checkbox.setting", {classes: {checked: Page.local_storage.settings[key], disabled: attrs.disabled_by and Page.local_storage.settings[attrs.disabled_by]}, onclick: @fncs[key]},
+		h("div.checkbox.setting", {classes: {invisible: (if not @search or (name.indexOf(@search)!=-1) then false else true),checked: Page.local_storage.settings[key], disabled: attrs.disabled_by and Page.local_storage.settings[attrs.disabled_by]}, onclick: @fncs[key]},
 			h("div.checkbox-skin"),
 			h("div.title", name)
 			if desc
@@ -45,6 +45,7 @@ class ContentSettings extends Class
 		@search = e.target.value
 		Page.projector.scheduleRender()
 		Page.content.need_update = true
+		return false
 
 	render: =>
 		window.otherPageBackground()
@@ -61,7 +62,7 @@ class ContentSettings extends Class
 					h("br","top") #make it "unique"
 					h("div",{style:"display:flex;"},[
 						h("h1",{style:"margin:6px;"},"Settings")
-						h("input.text.search",{style:"width: 70%; margin-bottom: 0px; height: 20px; margin: 6px; margin-top: 8px; margin-left: 25px;",value:@search,placeholder:"Search in settings..."})
+						h("input.text.search",{style:"width: 70%; margin-bottom: 0px; height: 20px; margin: 6px; margin-top: 8px; margin-left: 25px;",value:@search,placeholder:"Search in settings...", oninput: @handleSearchInput})
 					])
 					@section("", [
 						@renderCheck("hide_hello_zerome","Hide \"Hello ZeroMe!\" messages","This actually just hides a user's first post")

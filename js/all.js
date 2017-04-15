@@ -4597,21 +4597,23 @@ window.entities=new Html5Entities()
 
     ContentSettings.prototype.section = function(name, ar) {
       var e;
-      return h("div", [
-        h("h2.sep", name), (function() {
-          var i, len, results;
-          results = [];
-          for (i = 0, len = ar.length; i < len; i++) {
-            e = ar[i];
-            if (e) {
+      if (ar.filter(((function(_this) {
+        return function(e) {
+          return !e.properties.classes.invisible;
+        };
+      })(this))).length) {
+        return h("div.setting" + name, [
+          h("h2.sep", name), (function() {
+            var i, len, results;
+            results = [];
+            for (i = 0, len = ar.length; i < len; i++) {
+              e = ar[i];
               results.push(e);
-            } else {
-              results.push(void 0);
             }
-          }
-          return results;
-        })(), h("br", name)
-      ]);
+            return results;
+          })(), h("br", name)
+        ]);
+      }
     };
 
     ContentSettings.prototype.renderCheck = function(key, name, desc, attrs) {
@@ -4642,6 +4644,7 @@ window.entities=new Html5Entities()
       }
       return h("div.checkbox.setting", {
         classes: {
+          invisible: (!this.search || (name.indexOf(this.search) !== -1) ? false : true),
           checked: Page.local_storage.settings[key],
           disabled: attrs.disabled_by && Page.local_storage.settings[attrs.disabled_by]
         },
@@ -4663,7 +4666,8 @@ window.entities=new Html5Entities()
       }
       this.search = e.target.value;
       Page.projector.scheduleRender();
-      return Page.content.need_update = true;
+      Page.content.need_update = true;
+      return false;
     };
 
     ContentSettings.prototype.render = function() {
@@ -4688,7 +4692,8 @@ window.entities=new Html5Entities()
             }, "Settings"), h("input.text.search", {
               style: "width: 70%; margin-bottom: 0px; height: 20px; margin: 6px; margin-top: 8px; margin-left: 25px;",
               value: this.search,
-              placeholder: "Search in settings..."
+              placeholder: "Search in settings...",
+              oninput: this.handleSearchInput
             })
           ]), this.section("", [this.renderCheck("hide_hello_zerome", "Hide \"Hello ZeroMe!\" messages", "This actually just hides a user's first post"), this.renderCheck("autoload_media", "Autoload images", ["This will automatically load images in posts", "!WARN This might also autoload images you don't want to see or seed!"]), this.renderCheck("gimme_stars", "I want my stars back", "Replace the heart with a star"), this.renderCheck("transparent", "Enable transparency")]), this.section("Background", [
             this.renderCheck("disable_background", "Disable the background feature entierly"), this.renderCheck("load_others_background_disabled", "Don't load other users backgrounds", "", {
