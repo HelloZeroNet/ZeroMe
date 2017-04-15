@@ -62,7 +62,7 @@ class ContentSettings extends Class
 					h("br","top") #make it "unique"
 					h("div",{style:"display:flex;"},[
 						h("h1",{style:"margin:6px;"},"Settings")
-						h("input.text.search",{style:"width: 70%; margin-bottom: 0px; height: 20px; margin: 6px; margin-top: 8px; margin-left: 25px;",value:@search,placeholder:"Search in settings...", oninput: @handleSearchInput})
+						h("input.text.search",{value:@search,placeholder:"Search in settings...", oninput: @handleSearchInput})
 					])
 					@section("", [
 						@renderCheck("hide_hello_zerome","Hide \"Hello ZeroMe!\" messages","This actually just hides a user's first post")
