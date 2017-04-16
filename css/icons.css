@@ -57,10 +57,8 @@
     position: relative;
     top: 6px;
 }
-
-.icon-add:hover { background: rgb(211, 12, 55); color: #fff }
-
-.icon-add:active { color: rgb(211, 12, 55); filter: opacity(0.5) }
+.icon-add:hover { background: rgba(211, 12, 55, 0.15) }
+.icon-add:active { background-color: rgb(211, 12, 55)!important; outline: none!important; color: #fff }
 
 .icon-mute {
 	width: 17px; height: 14px; background-repeat: no-repeat; padding-right: 5px; vertical-align: -2px; opacity: 0.2;
