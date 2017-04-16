@@ -38,6 +38,8 @@
 .button-follow-big { padding-left: 25px; float: none; border: 1px solid #2ecc71; color: #2ecc71; min-width: 100px; }
 .button-follow-big .icon-follow { margin-right: 10px; display: inline-block; transition: transform 0.3s ease-in-out }
 .button-follow-big:hover { border-color: #2ecc71 !important; color: #fff; background-color: #2ecc71 }
+.users .user.followed .button-follow-big:hover::after { content: "Unfollow" }
+.users .user.followed .button-follow-big::after { content: "Following" }
 
 .button-mute { float: none; border: 1px solid #2ecc71; color: #2ecc71;  }
 .button-mute .icon-mute { margin-right: 4px; display: inline-block; transition: transform 0.3s ease-in-out }
