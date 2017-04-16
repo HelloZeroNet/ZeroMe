@@ -39,7 +39,7 @@ class Editable extends Class
 				h("div.editablebuttons",
 					h("a.link", {href: "#Cancel", onclick: @handleCancelClick, tabindex: "-1"}, "Cancel"),
 					if @handleDelete
-						h("a.button.button-submit.button-small.button-outline", {href: "#Delete", onclick: @handleDeleteClick, tabindex: "-1"}, "Delete")
+						h("a.button.button-submit.button-small.button-outline", {href: "#Delete", onclick: @handleDeleteClick, tabindex: "-1"})
 					h("a.button.button-submit.button-small", {href: "#Save", onclick: @handleSaveClick}, "Save")
 				)
 			)
