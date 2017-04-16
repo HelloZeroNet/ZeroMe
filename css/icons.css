@@ -60,7 +60,7 @@
 
 .icon-add:hover { background: rgb(211, 12, 55); color: #fff }
 
-.icon-add:active { filter: opacity(0.5) }
+.icon-add:active { color: rgb(211, 12, 55); filter: opacity(0.5) }
 
 .icon-mute {
 	width: 17px; height: 14px; background-repeat: no-repeat; padding-right: 5px; vertical-align: -2px; opacity: 0.2;
