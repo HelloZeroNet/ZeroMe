@@ -27,7 +27,7 @@ class ContentSettings extends Class
 			Page.content.need_update = true
 			return false
 
-		h("div.checkbox.setting", {classes: {invisible: (if not @search or (name.indexOf(@search)!=-1) then false else true),checked: Page.local_storage.settings[key], disabled: attrs.disabled_by and Page.local_storage.settings[attrs.disabled_by]}, onclick: @fncs[key]},
+		h("div.checkbox.setting", {classes: {invisible: (if not @search or (name.toLowerCase().indexOf(@search.toLowerCase())!=-1) then false else true),checked: Page.local_storage.settings[key], disabled: attrs.disabled_by and Page.local_storage.settings[attrs.disabled_by]}, onclick: @fncs[key]},
 			h("div.checkbox-skin"),
 			h("div.title", name)
 			if desc

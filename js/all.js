@@ -4571,7 +4571,6 @@ window.entities=new Html5Entities()
 }).call(this);
 
 
-
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentSettings.coffee ---- */
 
 
@@ -4645,7 +4644,7 @@ window.entities=new Html5Entities()
       }
       return h("div.checkbox.setting", {
         classes: {
-          invisible: (!this.search || (name.indexOf(this.search) !== -1) ? false : true),
+          invisible: (!this.search || (name.toLowerCase().indexOf(this.search.toLowerCase()) !== -1) ? false : true),
           checked: Page.local_storage.settings[key],
           disabled: attrs.disabled_by && Page.local_storage.settings[attrs.disabled_by]
         },
@@ -4718,6 +4717,7 @@ window.entities=new Html5Entities()
   window.ContentSettings = ContentSettings;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentUsers.coffee ---- */
