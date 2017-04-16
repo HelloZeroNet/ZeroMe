@@ -1,6 +1,6 @@
 
 .post-2-column { display:flex; margin-left: -700px; }
-.post-list { margin: 6px; }
+.post-2-column .post-list { margin: 6px; }
 
 .center < .post-2-column { margin-left: 800px; }
 
