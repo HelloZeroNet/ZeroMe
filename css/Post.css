@@ -11,10 +11,10 @@
 .no-transparent .post { background-color: white; }
 .post.selected { box-shadow: 0px 0px 40px rgba(0,0,0,0.1); }
 
-.post .user .settings { float: right; color: #AAA; opacity: 0; transition: all 0.3s; padding: 0px 10px; margin-right: -10px }
+.post .user .settings { float: right; color: #AAA; transition: all 0.3s; padding: 0px 10px; margin-right: -10px }
 .post .user .settings:hover { text-decoration: none; color: #333 }
 .post .user .settings:active { background-color: #F5F5F5; transition: none }
-.post .user:hover .settings { opacity: 1; transition: none }
+.post .user:hover .settings { transition: none }
 
 .post .user { padding-bottom: 8px; height: 21px; line-height: 20px; }
 .post .user .address, .post .added, .post .sep { font-size: 14px; color: #AAA;}
