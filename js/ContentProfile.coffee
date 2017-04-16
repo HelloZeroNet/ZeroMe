@@ -284,7 +284,7 @@ class ContentProfile extends Class
 						]),
 						h("div.follow-container.settings-container", [
 							if @owned
-								h("div.button-tiny.button-mute", {classes: {"button-active": @editing}, href: "#Edit", style:"transition: all 0.5s;margin-right:10px", onclick: @handleEditClick}, [
+								h("div.button-tiny.button-mute", {classes: {"button-active": @editing}, href: "#Edit", style:"transition: all 0.5s;margin-right:10px", title: "Make your profile more personal", onclick: @handleEditClick}, [
 									h("div.icon.icon-small.icon-edit", {style:"margin-right: 6px;"}),
 									"Edit Profile"
 								])
