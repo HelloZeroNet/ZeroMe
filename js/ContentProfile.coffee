@@ -31,7 +31,7 @@ class ContentProfile extends Class
 						h("div.follow-container", [
 							h("a.button.button-follow-big", {href: "#", onclick: @user.handleFollowClick, classes: {loading: @user.submitting_follow}},
 								h("span.icon-follow", "+"),
-								if @user.isFollowed() then "" else "Follow"
+								if not @user.isFollowed() then "Follow"
 							)
 						])
 					])
@@ -279,7 +279,7 @@ class ContentProfile extends Class
 						h("div.follow-container", [
 							h("a.button.button-follow-big", {href: "#", onclick: @user.handleFollowClick},
 								h("span.icon-follow", "+"),
-								if @user.isFollowed() then "Unfollow" else "Follow"
+								if not @user.isFollowed() then "Follow"
 							)
 						]),
 						h("div.follow-container.settings-container", [

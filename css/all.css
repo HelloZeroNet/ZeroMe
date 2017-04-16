@@ -73,6 +73,8 @@
 .button-follow-big { padding-left: 25px; float: none; border: 1px solid #2ecc71; color: #2ecc71; min-width: 100px; }
 .button-follow-big .icon-follow { margin-right: 10px; display: inline-block; -webkit-transition: transform 0.3s ease-in-out ; -moz-transition: transform 0.3s ease-in-out ; -o-transition: transform 0.3s ease-in-out ; -ms-transition: transform 0.3s ease-in-out ; transition: transform 0.3s ease-in-out  }
 .button-follow-big:hover { border-color: #2ecc71 !important; color: #fff; background-color: #2ecc71 }
+.users .user.followed .button-follow-big:hover::after { content: "Unfollow" }
+.users .user.followed .button-follow-big::after { content: "Following" }
 
 .button-mute { float: none; border: 1px solid #2ecc71; color: #2ecc71;  }
 .button-mute .icon-mute { margin-right: 4px; display: inline-block; -webkit-transition: transform 0.3s ease-in-out ; -moz-transition: transform 0.3s ease-in-out ; -o-transition: transform 0.3s ease-in-out ; -ms-transition: transform 0.3s ease-in-out ; transition: transform 0.3s ease-in-out  }
@@ -85,6 +87,19 @@
 	border: none; border-bottom: 2px solid rgba(0, 0, 0, 0.5); font-weight: bold; color: #ffffff; font-size: 12px; text-transform: uppercase;
 }
 .button-submit:hover { background: rgb(211, 12, 55); -webkit-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; -moz-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; -o-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; -ms-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; -webkit-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; -moz-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; -o-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; -ms-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important ; padding: 13px 20px; border: none }
+
+.button-submit.button-small:hover {
+    padding: 8px 20px;
+    border: none!important;
+}
+
+.button-submit.button-small[href="#Delete"]:hover::after {content: "Caution!";}
+.button-submit.button-small[href="#Delete"]::after {content: "Delete";}
+.button-submit.button-small[href="#Delete"]:hover {
+    background: red;
+    color: #fff;
+}
+
 .post-create .button-submit:not(.select-user) { background-size: 40px; background-position: 1px 1px; background-repeat: no-repeat; background-image: url(../img/post.svg); margin-left: 10px; text-indent: 20px }
 .post-create .button-submit:not(.select-user) {
 	background-size: 40px; background-position: 1px 1px; background-repeat: no-repeat;
@@ -372,6 +387,14 @@ textarea { background: rgba(255, 255, 255, 0.5); }
   font-size: 24px;
 }
 
+.settings .text.search {
+    width: 28%;
+    margin-bottom: 0px;
+    height: 20px;
+    margin: 6px;
+    margin-top: 8px;
+    margin-left: 25px;
+}
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Uploadable.css ---- */

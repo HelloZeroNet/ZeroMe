@@ -2083,7 +2083,7 @@ window.entities=new Html5Entities()
           href: "#Delete",
           onclick: this.handleDeleteClick,
           tabindex: "-1"
-        }, "Delete") : void 0, h("a.button.button-submit.button-small", {
+        }) : void 0, h("a.button.button-submit.button-small", {
           href: "#Save",
           onclick: this.handleSaveClick
         }, "Save")));
@@ -4206,7 +4206,7 @@ window.entities=new Html5Entities()
                   classes: {
                     loading: this.user.submitting_follow
                   }
-                }, h("span.icon-follow", "+"), this.user.isFollowed() ? "Unfollow" : "Follow")
+                }, h("span.icon-follow", "+"), !this.user.isFollowed() ? "Follow" : void 0)
               ])
             ])
           ])
@@ -4514,7 +4514,7 @@ window.entities=new Html5Entities()
                 h("a.button.button-follow-big", {
                   href: "#",
                   onclick: this.user.handleFollowClick
-                }, h("span.icon-follow", "+"), this.user.isFollowed() ? "Unfollow" : "Follow")
+                }, h("span.icon-follow", "+"), !this.user.isFollowed() ? "Follow" : void 0)
               ]), h("div.follow-container.settings-container", [
                 this.owned ? h("div.button-tiny.button-mute", {
                   classes: {
@@ -4569,6 +4569,7 @@ window.entities=new Html5Entities()
   window.ContentProfile = ContentProfile;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentSettings.coffee ---- */
@@ -4690,7 +4691,6 @@ window.entities=new Html5Entities()
             h("h1", {
               style: "margin:6px;"
             }, "Settings"), h("input.text.search", {
-              style: "width: 70%; margin-bottom: 0px; height: 20px; margin: 6px; margin-top: 8px; margin-left: 25px;",
               value: this.search,
               placeholder: "Search in settings...",
               oninput: this.handleSearchInput
@@ -4718,7 +4718,6 @@ window.entities=new Html5Entities()
   window.ContentSettings = ContentSettings;
 
 }).call(this);
-
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentUsers.coffee ---- */
