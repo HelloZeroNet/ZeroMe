@@ -263,6 +263,12 @@ body:not(.logo-left) .head .logo { width: 42%; }
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/css/Post.css ---- */
 
 
+
+.post-2-column { display:flex; margin-left: -700px; }
+.post-list { margin: 6px; }
+
+.center < .post-2-column { margin-left: 800px; }
+
 .post {
 	background-color: rgba(255,255,255,0.9); padding: 16px 20px; padding-left: 80px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -o-border-radius: 4px; -ms-border-radius: 4px; border-radius: 4px ; -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -o-backface-visibility: hidden; -ms-backface-visibility: hidden; backface-visibility: hidden ; transform-style: preserve-3d; -webkit-transform: translateZ(0); -moz-transform: translateZ(0); -o-transform: translateZ(0); -ms-transform: translateZ(0); transform: translateZ(0) ;
 	border: 1px solid #EEF0F1; border-bottom: 2px solid #ECEDEE; margin-bottom: 12px; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ;

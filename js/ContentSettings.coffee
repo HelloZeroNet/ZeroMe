@@ -65,7 +65,6 @@ class ContentSettings extends Class
 						h("input.text.search",{value:@search,placeholder:"Search in settings...", oninput: @handleSearchInput})
 					])
 					@section("", [
-						@renderCheck("hide_hello_zerome","Hide \"Hello ZeroMe!\" messages","This actually just hides a user's first post")
 						@renderCheck("autoload_media","Autoload images",["This will automatically load images in posts","!WARN This might also autoload images you don't want to see or seed!"])
 						@renderCheck("gimme_stars","I want my stars back","Replace the heart with a star")
 						@renderCheck("transparent","Enable transparency")
@@ -78,6 +77,10 @@ class ContentSettings extends Class
 					@section("Header", [
 						@renderCheck("not_sticky_header","Disable Sticky Header")
 						@renderCheck("logo_left","Move logo to the left")
+					])
+					@section("Feed", [
+						@renderCheck("hide_hello_zerome","Hide \"Hello ZeroMe!\" messages","This actually just hides a user's first post")
+						@renderCheck("two_column","Show two columns instead of one")
 					])
 					h("br","bottom") #make it "unique"
 				])

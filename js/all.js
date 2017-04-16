@@ -4694,13 +4694,13 @@ window.entities=new Html5Entities()
               placeholder: "Search in settings...",
               oninput: this.handleSearchInput
             })
-          ]), this.section("", [this.renderCheck("hide_hello_zerome", "Hide \"Hello ZeroMe!\" messages", "This actually just hides a user's first post"), this.renderCheck("autoload_media", "Autoload images", ["This will automatically load images in posts", "!WARN This might also autoload images you don't want to see or seed!"]), this.renderCheck("gimme_stars", "I want my stars back", "Replace the heart with a star"), this.renderCheck("transparent", "Enable transparency")]), this.section("Background", [
+          ]), this.section("", [this.renderCheck("autoload_media", "Autoload images", ["This will automatically load images in posts", "!WARN This might also autoload images you don't want to see or seed!"]), this.renderCheck("gimme_stars", "I want my stars back", "Replace the heart with a star"), this.renderCheck("transparent", "Enable transparency")]), this.section("Background", [
             this.renderCheck("disable_background", "Disable the background feature entierly"), this.renderCheck("load_others_background_disabled", "Don't load other users backgrounds", "", {
               disabled_by: "disable_background"
             }), this.renderCheck("hide_background_timeline", "Don't show background on the feed/timeline and other pages", "", {
               disabled_by: "disable_background"
             })
-          ]), this.section("Header", [this.renderCheck("not_sticky_header", "Disable Sticky Header"), this.renderCheck("logo_left", "Move logo to the left")]), h("br", "bottom")
+          ]), this.section("Header", [this.renderCheck("not_sticky_header", "Disable Sticky Header"), this.renderCheck("logo_left", "Move logo to the left")]), this.section("Feed", [this.renderCheck("hide_hello_zerome", "Hide \"Hello ZeroMe!\" messages", "This actually just hides a user's first post"), this.renderCheck("two_column", "Show two columns instead of one")]), h("br", "bottom")
         ]) : (h("h1", "Loading Settings..."), this.need_update = true)
       ]);
     };
@@ -4717,7 +4717,6 @@ window.entities=new Html5Entities()
   window.ContentSettings = ContentSettings;
 
 }).call(this);
-
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentUsers.coffee ---- */
@@ -5813,6 +5812,7 @@ window.entities=new Html5Entities()
     };
 
     PostList.prototype.render = function() {
+      var f, l1, l2;
       if (this.need_update) {
         this.update();
       }
@@ -5833,26 +5833,75 @@ window.entities=new Html5Entities()
           ]);
         }
       }
-      return [
-        h("div.post-list", this.posts.slice(0, +this.limit + 1 || 9e9).map((function(_this) {
+      if (Page.getSetting("two_column")) {
+        f = false;
+        l1 = [];
+        l2 = [];
+        this.posts.slice(0, this.limit).map((function(_this) {
           return function(post) {
-            var err;
-            try {
-              return post.render();
-            } catch (error) {
-              err = error;
-              h("div.error", ["Post render error:", err.message]);
-              return Debug.formatException(err);
+            f = !f;
+            if (f) {
+              return l1.push(post);
+            } else {
+              return l2.push(post);
             }
           };
-        })(this))), this.posts.length > this.limit ? h("a.more.small", {
-          href: "#More",
-          onclick: this.handleMoreClick,
-          enterAnimation: Animation.slideDown,
-          exitAnimation: Animation.slideUp,
-          afterCreate: this.storeMoreTag
-        }, "Show more posts...") : void 0
-      ];
+        })(this));
+        return [
+          h("div.post-2-column", [
+            h("div.post-list", l1.map((function(_this) {
+              return function(post) {
+                var err;
+                try {
+                  return post.render();
+                } catch (error) {
+                  err = error;
+                  h("div.error", ["Post render error:", err.message]);
+                  return Debug.formatException(err);
+                }
+              };
+            })(this))), h("div.post-list", l2.map((function(_this) {
+              return function(post) {
+                var err;
+                try {
+                  return post.render();
+                } catch (error) {
+                  err = error;
+                  h("div.error", ["Post render error:", err.message]);
+                  return Debug.formatException(err);
+                }
+              };
+            })(this)))
+          ]), this.posts.length > this.limit ? h("a.more.small", {
+            href: "#More",
+            onclick: this.handleMoreClick,
+            enterAnimation: Animation.slideDown,
+            exitAnimation: Animation.slideUp,
+            afterCreate: this.storeMoreTag
+          }, "Show more posts...") : void 0
+        ];
+      } else {
+        return [
+          h("div.post-list", this.posts.slice(0, +this.limit + 1 || 9e9).map((function(_this) {
+            return function(post) {
+              var err;
+              try {
+                return post.render();
+              } catch (error) {
+                err = error;
+                h("div.error", ["Post render error:", err.message]);
+                return Debug.formatException(err);
+              }
+            };
+          })(this))), this.posts.length > this.limit ? h("a.more.small", {
+            href: "#More",
+            onclick: this.handleMoreClick,
+            enterAnimation: Animation.slideDown,
+            exitAnimation: Animation.slideUp,
+            afterCreate: this.storeMoreTag
+          }, "Show more posts...") : void 0
+        ];
+      }
     };
 
     return PostList;
@@ -5862,6 +5911,7 @@ window.entities=new Html5Entities()
   window.PostList = PostList;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostMeta.coffee ---- */
