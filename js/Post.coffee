@@ -226,7 +226,7 @@ class Post extends Class
 				h("span.sep", " \u2015 "),
 				h("a.added.link", {href: @getLink(), title: Time.date(@row.date_added, "long"), onclick: Page.handleLinkClick}, Time.since(@row.date_added)),
 				if @menu then @menu.render(".menu-right"),
-				h("a.settings", {href: "#Settings", onclick: Page.returnFalse, onmousedown: @handleSettingsClick}, "\u22EE")
+				h("a.settings", {href: "#Settings", title="Options for this post", onclick: Page.returnFalse, onmousedown: @handleSettingsClick}, "\u22EE")
 			])
 			if @owned
 				@editable_body.render(@row.body)
