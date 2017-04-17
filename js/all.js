@@ -4522,6 +4522,7 @@ window.entities=new Html5Entities()
                   },
                   href: "#Edit",
                   style: "transition: all 0.5s;margin-right:10px",
+                  title: "Make your profile more personal",
                   onclick: this.handleEditClick
                 }, [
                   h("div.icon.icon-small.icon-edit", {
@@ -4569,6 +4570,7 @@ window.entities=new Html5Entities()
   window.ContentProfile = ContentProfile;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentSettings.coffee ---- */
@@ -4976,6 +4978,7 @@ window.entities=new Html5Entities()
         Page.getSetting("logo_left") ? h("div.logo", h("img", {
           src: "img/logo.svg",
           height: 40,
+          title: "ZeroMe",
           onerror: "this.src='img/logo.png'; this.onerror=null;"
         })) : void 0, h("ul", [
           (function() {
@@ -4994,6 +4997,7 @@ window.entities=new Html5Entities()
         ]), !Page.getSetting("logo_left") ? h("div.logo", h("img", {
           src: "img/logo.svg",
           height: 40,
+          title: "ZeroMe",
           onerror: "this.src='img/logo.png'; this.onerror=null;"
         })) : void 0, ((ref = Page.user) != null ? ref.hub : void 0) ? h("div.right.authenticated", [
           h("div.user", h("a.name.link", {
@@ -5042,6 +5046,7 @@ window.entities=new Html5Entities()
   window.Head = Head;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/Post.coffee ---- */
@@ -5458,6 +5463,7 @@ window.entities=new Html5Entities()
             onclick: Page.handleLinkClick
           }, Time.since(this.row.date_added)), this.menu ? this.menu.render(".menu-right") : void 0, h("a.settings", {
             href: "#Settings",
+            title: "Options for this post",
             onclick: Page.returnFalse,
             onmousedown: this.handleSettingsClick
           }, "\u22EE")
@@ -5471,6 +5477,7 @@ window.entities=new Html5Entities()
         }), this.meta ? this.meta.render() : void 0, h("div.actions", [
           h("a.icon.link", {
             href: "#Comment",
+            title: "What do you think?",
             onclick: this.handleCommentClick
           }, h("i.fa.fa-comment.icon-comment"), "Comment"), h("a.icon.link", {
             classes: {
@@ -5479,6 +5486,7 @@ window.entities=new Html5Entities()
               "like-zero": this.row.likes === 0
             },
             href: "#Like",
+            title: "Like",
             onclick: this.handleLikeClick
           }, h("div" + (Page.getSetting("gimme_stars") ? ".fa.fa-star.icon-star" : ".fa.fa-heart.icon-heart"), {
             classes: {
@@ -5496,6 +5504,7 @@ window.entities=new Html5Entities()
   window.Post = Post;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostCreate.coffee ---- */
@@ -5597,10 +5606,7 @@ window.entities=new Html5Entities()
           classes: {
             editing: this.is_editing
           }
-        }, h("div.user", user.renderAvatar()), h("a.icon-image.link", {
-          href: "#",
-          onclick: this.handleUploadClick
-        }), this.field_post.render(), this.image.base64uri ? h("div.image", {
+        }, h("div.user", user.renderAvatar()), this.field_post.render(), this.image.base64uri ? h("div.image", {
           style: "background-image: url(" + this.image.base64uri + "); height: " + (this.image.getSize(530, 600)[1]) + "px",
           classes: {
             empty: false
@@ -5615,7 +5621,11 @@ window.entities=new Html5Entities()
           classes: {
             empty: true
           }
-        }), h("div.postbuttons", h("a.button.button-submit", {
+        }), h("div.postbuttons", h("a.icon-add.link", {
+          href: "#",
+          title: "Add a photo",
+          onclick: this.handleUploadClick
+        }, h("i.fa.fa-picture-o")), h("a.button.button-submit", {
           href: "#Submit",
           onclick: this.handlePostSubmit
         }, "Submit new post")), h("div", {
@@ -5651,6 +5661,7 @@ window.entities=new Html5Entities()
   window.PostCreate = PostCreate;
 
 }).call(this);
+
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostList.coffee ---- */
@@ -5911,7 +5922,6 @@ window.entities=new Html5Entities()
   window.PostList = PostList;
 
 }).call(this);
-
 
 
 /* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostMeta.coffee ---- */
