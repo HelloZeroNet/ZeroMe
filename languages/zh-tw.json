@@ -8,11 +8,17 @@
 	"Select your account": "選擇你的帳戶",
 	"You need a profile for this feature": "你需要建立一個新的用戶檔案來實現這個特性",
 
+	"Download profile site": "下載用戶資料網站",
+	"User's profile site not loaded to your client yet.": "該用戶的用戶資料尚未載入你的客戶端",
+	"Download user's site": "下載用戶的網站",
+
 	"Follow username mentions": "關注用戶名提醒",
 	"Follow comments on your posts": "關注你的帖子評論",
 	"Follow new followers": "關注新關注者",
 	"Hide \\\"Hello ZeroMe!\\\" messages": "隱藏 \\\"你好 ZeroMe!\\\" 訊息",
 	"This actually just hides a user's first post": "事實上就是隱藏用戶的第一個帖子",
+
+	"Search in settings...": "在設定中搜尋...",
 	"Autoload images": "自動載入圖片",
 	"This will automatically load images in posts": "這將自動載入帖子中的圖片",
 	"!WARN This might also autoload images you don't want to see or seed!": "警告！該選項可能也會自動載入你不想看到並做種的圖片",
@@ -20,9 +26,17 @@
 	"Replace the heart with a star": "用星來代替心",
 	"Enable transparency": "启用透明度",
 
+	"Background": "背景",
+	"Header": "頭部",
+	"Feed": "資訊流",
+
+	"Disable Sticky Header": "禁用粘性導航欄",
+	"Move logo to the left": "將 Logo 移到左邊",
+	"Show two columns instead of one": "雙列顯示",
+
 	"Disable the background feature entierly": "完全禁用背景特性",
 	"Don't load other users backgrounds": "不要載入其他用戶的背景",
-	"Don't show background on the feed/timeline and other pages": "不要在信息流/時間線和其他頁面上顯示背景",
+	"Don't show background on the feed/timeline and other pages": "不要在資訊流/時間線和其他頁面上顯示背景",
 
 	"Follow": "關注",
 	"Unfollow": "取消關注",
@@ -34,7 +48,7 @@
 	"Activity feed": "活動資訊流",
 	"Show more...": "顯示更多...",
 	"Mute ": "屏蔽",
-	"Background Settings": "背景設定",
+	"Theme Settings": "主題設定",
 
 	" started following ": " 開始關注 ",
 	" commented on ": " 評論了 ",
@@ -77,9 +91,9 @@
 	"Add your comment": "加入你的評論",
 	"Reply": "回復",
 
-	"Everyone": "所有人",
-	"Liked": "喜歡的",
-	"Followed users": "關注的用戶",
+	" Everyone": "所有人",
+	" Liked": "喜歡的",
+	" Followed users": "關注的用戶",
 	"Show more posts...": "顯示更多帖子...",
 	"Mute user": "屏蔽用戶",
 	"Permalink": "固定鏈接",
