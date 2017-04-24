@@ -1,7 +1,8 @@
 .comment-list {
-    background-color: #fafafa; padding-left: 80px; margin-left: -80px; padding-right: 20px; margin-right: -20px; margin-bottom: -17px; padding-bottom: 10px;
+    background-color: transparent; padding-left: 80px; margin-left: -80px; padding-right: 20px; margin-right: -20px; margin-bottom: -17px; padding-bottom: 10px;
     border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; padding-top: 19px; margin-top: 10px; border-top: 1px solid #E3E3E3; font-size: 85%;
 }
+.no-transparent .comment-list { background-color: #fafafa; }
 .comment-list .body { padding-top: 0px }
 .comment-list .body p { padding: 0px }
 

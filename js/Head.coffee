@@ -38,15 +38,6 @@ class Head extends Class
 				return @handleFollowMenuItemClick("New followers", item)
 			), @follows["New followers"]]
 
-			@menu.items.push ["Hide \"Hello ZeroMe!\" messages", ( (item) =>
-				Page.local_storage.settings.hide_hello_zerome = not Page.local_storage.settings.hide_hello_zerome
-				item[2] = Page.local_storage.settings.hide_hello_zerome
-				Page.projector.scheduleRender()
-				Page.saveLocalStorage()
-				Page.content.need_update = true
-				return false
-			), Page.local_storage.settings.hide_hello_zerome]
-
 			@menu.toggle()
 			Page.projector.scheduleRender()
 		return false
@@ -115,7 +106,14 @@ class Head extends Class
 
 	render: =>
 		h("div.head.center", [
-			h("a.logo", {href: "?Home", onclick: Page.handleLinkClick}, h("img", {src: "img/logo.svg", height: 40, onerror: "this.src='img/logo.png'; this.onerror=null;"})),
+			if Page.getSetting("logo_left")
+				h("div.logo", h("img", {src: "img/logo.svg", height: 40, title: "ZeroMe", onerror: "this.src='img/logo.png'; this.onerror=null;"}))
+			h("ul", [
+				for el in [["Home",'Home',"home"],["Users",'Users',"users"],["Settings",'Settings',"gear"]]
+					h("li",h("a",{href:"?#{el[1]}", onclick: Page.handleLinkClick},[h("i.fa.fa-margin.fa-#{el[2]}"),el[0]]))
+			]),
+			if not Page.getSetting("logo_left")
+				h("div.logo", h("img", {src: "img/logo.svg", height: 40, title: "ZeroMe", onerror: "this.src='img/logo.png'; this.onerror=null;"}))
 			if Page.user?.hub
 				# Registered user
 				h("div.right.authenticated", [

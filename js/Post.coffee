@@ -136,8 +136,9 @@ class Post extends Class
 				@menu = new Menu()
 			followed = follows["Post follow"] and @getPostUri() in follows["Post follow"][1]
 			@menu.items = []
-			@menu.items.push ["Follow in newsfeed", ( => if followed then @unfollow() else @follow() ), followed]
-			@menu.items.push ["Mute user", @user.handleMuteClick]
+			@menu.items.push [(if followed then "Unfollow" else "Follow")+" post in newsfeed", ( => if followed then @unfollow() else @follow() ), followed]
+			if not @owned
+				@menu.items.push ["Mute user", @user.handleMuteClick]
 			@menu.items.push ["Permalink", @getLink()]
 			@menu.toggle()
 		return false
@@ -198,7 +199,7 @@ class Post extends Class
 						h("span.sep", " \u00B7 "),
 						h("span.address", {title: user_address}, comment.cert_user_id),
 						h("span.sep", " \u2015 "),
-						h("a.added.link", {href: "#", title: Time.date(comment.date_added, "long")}, Time.since(comment.date_added)),
+						h("a.added.link", {href: @getLink(), title: Time.date(comment.date_added, "long")}, Time.since(comment.date_added)),
 						h("a.icon.icon-reply", {href: "#Reply", onclick: @handleReplyClick, user_name: comment.user_name}, "Reply")
 					])
 					if owned
@@ -225,7 +226,7 @@ class Post extends Class
 				h("span.sep", " \u2015 "),
 				h("a.added.link", {href: @getLink(), title: Time.date(@row.date_added, "long"), onclick: Page.handleLinkClick}, Time.since(@row.date_added)),
 				if @menu then @menu.render(".menu-right"),
-				h("a.settings", {href: "#Settings", onclick: Page.returnFalse, onmousedown: @handleSettingsClick}, "\u22EE")
+				h("a.settings", {href: "#Settings", title: "Options for this post", onclick: Page.returnFalse, onmousedown: @handleSettingsClick}, "\u22EE")
 			])
 			if @owned
 				@editable_body.render(@row.body)
@@ -234,9 +235,9 @@ class Post extends Class
 			if @meta
 				@meta.render()
 			h("div.actions", [
-				h("a.icon.icon-comment.link", {href: "#Comment", onclick: @handleCommentClick}, "Comment"),
-				h("a.like.link", {classes: {active: Page.user?.likes[post_uri], loading: @submitting_like, "like-zero": @row.likes == 0}, href: "#Like", onclick: @handleLikeClick},
-					h("div.icon.icon-heart", {classes: {active: Page.user?.likes[post_uri]}}),
+				h("a.icon.link", {href: "#Comment", title: "What do you think?", onclick: @handleCommentClick}, h("i.fa.fa-comment.icon-comment"), "Comment"),
+				h("a.icon.link", {classes: {active: Page.user?.likes[post_uri], loading: @submitting_like, "like-zero": @row.likes == 0}, href: "#Like", title: "Like", onclick: @handleLikeClick},
+					h("div"+(if Page.getSetting "gimme_stars" then ".fa.fa-star.icon-star" else ".fa.fa-heart.icon-heart"), {classes: {active: Page.user?.likes[post_uri]}}),
 					if @row.likes then @row.likes
 				)
 				# h("a.icon.icon-share.link", {href: "#Share"}, "Share"),

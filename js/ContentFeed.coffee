@@ -21,6 +21,8 @@ class ContentFeed extends Class
 
 		if @need_update
 			@log "Updating", @type
+			Page.changeTitle("Home")
+			window.otherPageBackground()
 			@need_update = false
 
 			@new_user_list.need_update = true
@@ -52,26 +54,28 @@ class ContentFeed extends Class
 			h("div.col-center", [
 				@post_create.render(),
 				h("div.post-list-type",
-					h("a.link", {href: "#Everyone", onclick: @handleListTypeClick, type: "everyone", classes: {active: @type == "everyone"}}, "Everyone")
-					h("a.link", {href: "#Liked", onclick: @handleListTypeClick, type: "liked", classes: {active: @type == "liked"}}, "Liked")
-					h("a.link", {href: "#Followed+users", onclick: @handleListTypeClick, type: "followed", classes: {active: @type == "followed"}}, "Followed users")
+					h("a.link", {href: "#Everyone", onclick: @handleListTypeClick, type: "everyone", classes: {active: @type == "everyone"}}, h("i.fa.fa-globe"), " Everyone")
+					h("a.link", {href: "#Liked", onclick: @handleListTypeClick, type: "liked", classes: {active: @type == "liked"}}, h("i.fa.fa-heart"), " Liked")
+					h("a.link", {href: "#Followed+users", onclick: @handleListTypeClick, type: "followed", classes: {active: @type == "followed"}}, h("i.fa.fa-user-plus"), " Followed users")
 				),
 				@post_list.render()
 			]),
 			h("div.col-right.noscrollfix", [
-				@activity_list.render(),
-				if @new_user_list.users.length > 0
-					h("h2.sep.new", [
-						"New users",
-						h("a.link", {href: "?Users", onclick: Page.handleLinkClick}, "Browse all \u203A")
-					])
-				@new_user_list.render(".gray"),
+				h("div.light-bg", [
+					@activity_list.render(),
+					if @new_user_list.users.length > 0
+						h("h2.sep.new", [
+							"New users",
+							h("a.link", {href: "?Users", onclick: Page.handleLinkClick}, "Browse all \u203A")
+						])
+					@new_user_list.render(".gray"),
 
-				if @suggested_user_list.users.length > 0
-					h("h2.sep.suggested", [
-						"Suggested users"
-					])
-				@suggested_user_list.render(".gray"),
+					if @suggested_user_list.users.length > 0
+						h("h2.sep.suggested", [
+							"Suggested users"
+						])
+					@suggested_user_list.render(".gray"),
+				])
 			])
 		])
 

@@ -5,7 +5,27 @@
 .button:hover { background-color: #5d68ff; color: #F6F7F8; text-decoration: none; border-color: #5d68ff; transition: none }
 .button:hover .icon { background-color: #FFF; transition: none }
 .button:focus { transition: all 0.3s }
-.button:active { transform: translateY(1px); transition: all 0.3s, transform none; box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); outline: none; transition: none }
+.button:active { transform: translateY(1px); transition: all 0.3s, transform none; box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); outline: none; transition: none; filter:opacity(0.5) }
+
+.button.loading {
+	color: rgba(0,0,0,0) !important; background: url(../img/loading.gif) no-repeat center center !important; border-color: rgba(0,0,0,0) !important;
+	transition: all 0.5s ease-out; pointer-events: none; transition-delay: 0.5s
+}
+
+.button-tiny {
+	text-decoration: none !important;
+	margin-top: 4px; border: 1px solid hsla(236,100%,79%,1); color: #5d68ff; border-radius: 33px; display: inline-block;
+	font-size: 14px; font-weight: lighter; text-align: center; transition: all 0.3s; padding: 4px 4px; background-position: -200px center;
+	min-width: 100px;
+}
+/*.button-tiny:hover { background-color: #5d68ff; color: #F6F7F8; text-decoration: none; border-color: #5d68ff; transition: none }*/
+.button-tiny:hover { background-color: #2ecc71 !important; border-color: #2ecc71 !important; color: #FFF !important; }
+.button-tiny:hover .icon { filter: sepia(1) blur(0.5px) }
+.button-tiny:focus { transition: all 0.3s }
+.button-tiny:active { transform: translateY(1px); transition: all 0.3s, transform none; box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); outline: none; transition: none }
+
+.button-active { background-color: #2ecc71 !important; border-color: #2ecc71 !important; color: #FFF !important; }
+.button-active .icon { filter: sepia(1) }
 
 .button.loading {
 	color: rgba(0,0,0,0) !important; background: url(../img/loading.gif) no-repeat center center !important; border-color: rgba(0,0,0,0) !important;
@@ -17,14 +37,39 @@
 .button-follow:hover { background-color: rgba(255,255,255,0.3) !important; border-color: #2ecc71 !important; color: #2ecc71 }
 .button-follow-big { padding-left: 25px; float: none; border: 1px solid #2ecc71; color: #2ecc71; min-width: 100px; }
 .button-follow-big .icon-follow { margin-right: 10px; display: inline-block; transition: transform 0.3s ease-in-out }
-.button-follow-big:hover { border-color: #2ecc71 !important; color: #2ecc71; background-color: white; text-decoration: underline; }
+.button-follow-big:hover { border-color: #2ecc71 !important; color: #fff; background-color: #2ecc71 }
+.users .user.followed .button-follow-big:hover::after { content: "Unfollow" }
+.users .user.followed .button-follow-big::after { content: "Following" }
+
+.button-mute { float: none; border: 1px solid #2ecc71; color: #2ecc71;  }
+.button-mute .icon-mute { margin-right: 4px; display: inline-block; transition: transform 0.3s ease-in-out }
+.button-mute:hover { border-color: #2ecc71 !important; color: #2ecc71; background-color: white; text-decoration: underline; }
 
 /* Submit */
 .button-submit {
-	padding: 12px 30px; border-radius: 3px; margin-top: 11px; background-color: #5d68ff; /*box-shadow: 0px 1px 4px rgba(93, 104, 255, 0.41);*/
-	border: none; border-bottom: 2px solid #4952c7; font-weight: bold;  color: #ffffff; font-size: 12px; text-transform: uppercase; margin-left: 10px;
+	padding: 12px 20px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; -ms-border-radius: 3px; border-radius: 3px; margin-top: 11px; background: rgb(211, 12, 55);
+	/* box-shadow: 0px 1px 4px rgba(93, 104, 255, 0.41); */
+	border: none; border-bottom: 2px solid rgba(0, 0, 0, 0.5); font-weight: bold; color: #ffffff; font-size: 12px; text-transform: uppercase;
 }
-.button-submit:hover { color: white; background-color: #6d78ff }
+.button-submit:hover { background: rgb(211, 12, 55); -webkit-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; -moz-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; -o-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; -ms-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.5) !important; padding: 13px 20px; border: none }
+
+.button-submit.button-small:hover {
+    padding: 8px 20px;
+    border: none!important;
+}
+
+.button-submit.button-small[href="#Delete"]:hover::after {content: "Caution!";}
+.button-submit.button-small[href="#Delete"]::after {content: "Delete";}
+.button-submit.button-small[href="#Delete"]:hover {
+    background: red;
+    color: #fff;
+}
+
+.post-create .button-submit:not(.select-user) { background-size: 40px; background-position: 1px 1px; background-repeat: no-repeat; background-image: url(../img/post.svg); margin-left: 10px; text-indent: 20px }
+.post-create .button-submit:not(.select-user) {
+	background-size: 40px; background-position: 1px 1px; background-repeat: no-repeat;
+	background-image: url(../img/post.svg); margin-left: 10px; text-indent: 20px;
+}
 
 .button-small { padding: 7px 20px; margin-left: 10px }
 .button-outline { background-color: white; border: 1px solid #EEE; border-bottom: 2px solid #EEE; color: #AAA; }

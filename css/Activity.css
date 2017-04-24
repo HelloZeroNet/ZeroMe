@@ -12,7 +12,13 @@
 	margin-left: -28px; border-radius: 15px; background-color: #f6f7f8
 }
 
-.activity { padding-left: 35px; padding-bottom: 19px; font-family: Roboto, Helvetica, Arial; font-size: 15px; line-height: 1.5em; color: #888 }
+.activity { padding-left: 35px; padding-bottom: 19px; font-family: Roboto, Helvetica, Arial; font-size: 15px; line-height: 1.5em; color: #777 }
+
+.light-bg {
+    background-color: #ffffff; opacity: 0.9; border: 1px solid #EEF0F1; padding: 15px;
+    border-radius: 4px;
+}
+.no-transparent .light-bg { opacity: 1; }
+
 .activity .body { top: -5px; position: relative; max-height: 67px; overflow: hidden; -webkit-line-clamp: 3; -webkit-box-orient: vertical; display: -webkit-box; }
-.activity:last-child { background-color: #F6F7F8 }
 .activity.latest .circle { border-color: #666 }

@@ -1,11 +1,11 @@
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Class.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/Class.coffee ---- */
 
 
 (function() {
   var Class,
-    __slice = [].slice;
+    slice = [].slice;
 
   Class = (function() {
     function Class() {}
@@ -14,7 +14,7 @@
 
     Class.prototype.log = function() {
       var args;
-      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
       if (!this.trace) {
         return;
       }
@@ -28,23 +28,23 @@
 
     Class.prototype.logStart = function() {
       var args, name;
-      name = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
       if (!this.trace) {
         return;
       }
       this.logtimers || (this.logtimers = {});
       this.logtimers[name] = +(new Date);
       if (args.length > 0) {
-        this.log.apply(this, ["" + name].concat(__slice.call(args), ["(started)"]));
+        this.log.apply(this, ["" + name].concat(slice.call(args), ["(started)"]));
       }
       return this;
     };
 
     Class.prototype.logEnd = function() {
       var args, ms, name;
-      name = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
       ms = +(new Date) - this.logtimers[name];
-      this.log.apply(this, ["" + name].concat(__slice.call(args), ["(Done in " + ms + "ms)"]));
+      this.log.apply(this, ["" + name].concat(slice.call(args), ["(Done in " + ms + "ms)"]));
       return this;
     };
 
@@ -57,7 +57,7 @@
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Dollar.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/Dollar.coffee ---- */
 
 
 (function() {
@@ -70,39 +70,39 @@
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Promise.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/Promise.coffee ---- */
 
 
 (function() {
   var Promise,
-    __slice = [].slice;
+    slice = [].slice;
 
   Promise = (function() {
     Promise.join = function() {
-      var args, num_uncompleted, promise, task, task_id, tasks, _fn, _i, _len;
-      tasks = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      var args, fn, i, len, num_uncompleted, promise, task, task_id, tasks;
+      tasks = 1 <= arguments.length ? slice.call(arguments, 0) : [];
       num_uncompleted = tasks.length;
       args = new Array(num_uncompleted);
       promise = new Promise();
-      _fn = function(task_id) {
+      fn = function(task_id) {
         return task.then(function() {
-          var callback, _j, _len1, _ref, _results;
+          var callback, j, len1, ref, results;
           args[task_id] = Array.prototype.slice.call(arguments);
           num_uncompleted--;
           if (num_uncompleted === 0) {
-            _ref = promise.callbacks;
-            _results = [];
-            for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-              callback = _ref[_j];
-              _results.push(callback.apply(promise, args));
+            ref = promise.callbacks;
+            results = [];
+            for (j = 0, len1 = ref.length; j < len1; j++) {
+              callback = ref[j];
+              results.push(callback.apply(promise, args));
             }
-            return _results;
+            return results;
           }
         });
       };
-      for (task_id = _i = 0, _len = tasks.length; _i < _len; task_id = ++_i) {
+      for (task_id = i = 0, len = tasks.length; i < len; task_id = ++i) {
         task = tasks[task_id];
-        _fn(task_id);
+        fn(task_id);
       }
       return promise;
     };
@@ -115,7 +115,7 @@
     }
 
     Promise.prototype.resolve = function() {
-      var back, callback, _i, _len, _ref;
+      var back, callback, i, len, ref;
       if (this.resolved) {
         return false;
       }
@@ -125,9 +125,9 @@
         this.data = [true];
       }
       this.result = this.data[0];
-      _ref = this.callbacks;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        callback = _ref[_i];
+      ref = this.callbacks;
+      for (i = 0, len = ref.length; i < len; i++) {
+        callback = ref[i];
         back = callback.apply(callback, this.data);
       }
       if (this.end_promise && back && back.then) {
@@ -200,7 +200,7 @@
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Property.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/Property.coffee ---- */
 
 
 (function() {
@@ -211,7 +211,7 @@
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Prototypes.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/Prototypes.coffee ---- */
 
 
 (function() {
@@ -238,12 +238,12 @@
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/RateLimitCb.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/RateLimitCb.coffee ---- */
 
 
 (function() {
   var call_after_interval, calling, last_time,
-    __slice = [].slice;
+    slice = [].slice;
 
   last_time = {};
 
@@ -279,7 +279,7 @@
       return calling[fn] = args;
     } else {
       last_time[fn] = Date.now();
-      return fn.apply(this, [cb].concat(__slice.call(args)));
+      return fn.apply(this, [cb].concat(slice.call(args)));
     }
   };
 
@@ -318,7 +318,7 @@
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/anime.min.js ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/anime.min.js ---- */
 
 
 /*
@@ -350,7 +350,7 @@ c.raf=requestAnimationFrame(c.tick)};b.restart=function(){b.reversed&&y(b);b.pau
 function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.random=function(a,b){return Math.floor(Math.random()*(b-a+1))+a};return l});
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/clone.js ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/clone.js ---- */
 
 
 function clone(obj) {
@@ -363,7 +363,209 @@ function clone(obj) {
 }
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/maquette.js ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/htmlentities.js ---- */
+
+
+//html entits
+//src https://github.com/mdevils/node-html-entities/blob/master/lib/html5-entities.js
+
+(function() {
+var ENTITIES = [['Aacute', [193]], ['aacute', [225]], ['Abreve', [258]], ['abreve', [259]], ['ac', [8766]], ['acd', [8767]], ['acE', [8766, 819]], ['Acirc', [194]], ['acirc', [226]], ['acute', [180]], ['Acy', [1040]], ['acy', [1072]], ['AElig', [198]], ['aelig', [230]], ['af', [8289]], ['Afr', [120068]], ['afr', [120094]], ['Agrave', [192]], ['agrave', [224]], ['alefsym', [8501]], ['aleph', [8501]], ['Alpha', [913]], ['alpha', [945]], ['Amacr', [256]], ['amacr', [257]], ['amalg', [10815]], ['amp', [38]], ['AMP', [38]], ['andand', [10837]], ['And', [10835]], ['and', [8743]], ['andd', [10844]], ['andslope', [10840]], ['andv', [10842]], ['ang', [8736]], ['ange', [10660]], ['angle', [8736]], ['angmsdaa', [10664]], ['angmsdab', [10665]], ['angmsdac', [10666]], ['angmsdad', [10667]], ['angmsdae', [10668]], ['angmsdaf', [10669]], ['angmsdag', [10670]], ['angmsdah', [10671]], ['angmsd', [8737]], ['angrt', [8735]], ['angrtvb', [8894]], ['angrtvbd', [10653]], ['angsph', [8738]], ['angst', [197]], ['angzarr', [9084]], ['Aogon', [260]], ['aogon', [261]], ['Aopf', [120120]], ['aopf', [120146]], ['apacir', [10863]], ['ap', [8776]], ['apE', [10864]], ['ape', [8778]], ['apid', [8779]], ['apos', [39]], ['ApplyFunction', [8289]], ['approx', [8776]], ['approxeq', [8778]], ['Aring', [197]], ['aring', [229]], ['Ascr', [119964]], ['ascr', [119990]], ['Assign', [8788]], ['ast', [42]], ['asymp', [8776]], ['asympeq', [8781]], ['Atilde', [195]], ['atilde', [227]], ['Auml', [196]], ['auml', [228]], ['awconint', [8755]], ['awint', [10769]], ['backcong', [8780]], ['backepsilon', [1014]], ['backprime', [8245]], ['backsim', [8765]], ['backsimeq', [8909]], ['Backslash', [8726]], ['Barv', [10983]], ['barvee', [8893]], ['barwed', [8965]], ['Barwed', [8966]], ['barwedge', [8965]], ['bbrk', [9141]], ['bbrktbrk', [9142]], ['bcong', [8780]], ['Bcy', [1041]], ['bcy', [1073]], ['bdquo', [8222]], ['becaus', [8757]], ['because', [8757]], ['Because', [8757]], ['bemptyv', [10672]], ['bepsi', [1014]], ['bernou', [8492]], ['Bernoullis', [8492]], ['Beta', [914]], ['beta', [946]], ['beth', [8502]], ['between', [8812]], ['Bfr', [120069]], ['bfr', [120095]], ['bigcap', [8898]], ['bigcirc', [9711]], ['bigcup', [8899]], ['bigodot', [10752]], ['bigoplus', [10753]], ['bigotimes', [10754]], ['bigsqcup', [10758]], ['bigstar', [9733]], ['bigtriangledown', [9661]], ['bigtriangleup', [9651]], ['biguplus', [10756]], ['bigvee', [8897]], ['bigwedge', [8896]], ['bkarow', [10509]], ['blacklozenge', [10731]], ['blacksquare', [9642]], ['blacktriangle', [9652]], ['blacktriangledown', [9662]], ['blacktriangleleft', [9666]], ['blacktriangleright', [9656]], ['blank', [9251]], ['blk12', [9618]], ['blk14', [9617]], ['blk34', [9619]], ['block', [9608]], ['bne', [61, 8421]], ['bnequiv', [8801, 8421]], ['bNot', [10989]], ['bnot', [8976]], ['Bopf', [120121]], ['bopf', [120147]], ['bot', [8869]], ['bottom', [8869]], ['bowtie', [8904]], ['boxbox', [10697]], ['boxdl', [9488]], ['boxdL', [9557]], ['boxDl', [9558]], ['boxDL', [9559]], ['boxdr', [9484]], ['boxdR', [9554]], ['boxDr', [9555]], ['boxDR', [9556]], ['boxh', [9472]], ['boxH', [9552]], ['boxhd', [9516]], ['boxHd', [9572]], ['boxhD', [9573]], ['boxHD', [9574]], ['boxhu', [9524]], ['boxHu', [9575]], ['boxhU', [9576]], ['boxHU', [9577]], ['boxminus', [8863]], ['boxplus', [8862]], ['boxtimes', [8864]], ['boxul', [9496]], ['boxuL', [9563]], ['boxUl', [9564]], ['boxUL', [9565]], ['boxur', [9492]], ['boxuR', [9560]], ['boxUr', [9561]], ['boxUR', [9562]], ['boxv', [9474]], ['boxV', [9553]], ['boxvh', [9532]], ['boxvH', [9578]], ['boxVh', [9579]], ['boxVH', [9580]], ['boxvl', [9508]], ['boxvL', [9569]], ['boxVl', [9570]], ['boxVL', [9571]], ['boxvr', [9500]], ['boxvR', [9566]], ['boxVr', [9567]], ['boxVR', [9568]], ['bprime', [8245]], ['breve', [728]], ['Breve', [728]], ['brvbar', [166]], ['bscr', [119991]], ['Bscr', [8492]], ['bsemi', [8271]], ['bsim', [8765]], ['bsime', [8909]], ['bsolb', [10693]], ['bsol', [92]], ['bsolhsub', [10184]], ['bull', [8226]], ['bullet', [8226]], ['bump', [8782]], ['bumpE', [10926]], ['bumpe', [8783]], ['Bumpeq', [8782]], ['bumpeq', [8783]], ['Cacute', [262]], ['cacute', [263]], ['capand', [10820]], ['capbrcup', [10825]], ['capcap', [10827]], ['cap', [8745]], ['Cap', [8914]], ['capcup', [10823]], ['capdot', [10816]], ['CapitalDifferentialD', [8517]], ['caps', [8745, 65024]], ['caret', [8257]], ['caron', [711]], ['Cayleys', [8493]], ['ccaps', [10829]], ['Ccaron', [268]], ['ccaron', [269]], ['Ccedil', [199]], ['ccedil', [231]], ['Ccirc', [264]], ['ccirc', [265]], ['Cconint', [8752]], ['ccups', [10828]], ['ccupssm', [10832]], ['Cdot', [266]], ['cdot', [267]], ['cedil', [184]], ['Cedilla', [184]], ['cemptyv', [10674]], ['cent', [162]], ['centerdot', [183]], ['CenterDot', [183]], ['cfr', [120096]], ['Cfr', [8493]], ['CHcy', [1063]], ['chcy', [1095]], ['check', [10003]], ['checkmark', [10003]], ['Chi', [935]], ['chi', [967]], ['circ', [710]], ['circeq', [8791]], ['circlearrowleft', [8634]], ['circlearrowright', [8635]], ['circledast', [8859]], ['circledcirc', [8858]], ['circleddash', [8861]], ['CircleDot', [8857]], ['circledR', [174]], ['circledS', [9416]], ['CircleMinus', [8854]], ['CirclePlus', [8853]], ['CircleTimes', [8855]], ['cir', [9675]], ['cirE', [10691]], ['cire', [8791]], ['cirfnint', [10768]], ['cirmid', [10991]], ['cirscir', [10690]], ['ClockwiseContourIntegral', [8754]], ['CloseCurlyDoubleQuote', [8221]], ['CloseCurlyQuote', [8217]], ['clubs', [9827]], ['clubsuit', [9827]], ['colon', [58]], ['Colon', [8759]], ['Colone', [10868]], ['colone', [8788]], ['coloneq', [8788]], ['comma', [44]], ['commat', [64]], ['comp', [8705]], ['compfn', [8728]], ['complement', [8705]], ['complexes', [8450]], ['cong', [8773]], ['congdot', [10861]], ['Congruent', [8801]], ['conint', [8750]], ['Conint', [8751]], ['ContourIntegral', [8750]], ['copf', [120148]], ['Copf', [8450]], ['coprod', [8720]], ['Coproduct', [8720]], ['copy', [169]], ['COPY', [169]], ['copysr', [8471]], ['CounterClockwiseContourIntegral', [8755]], ['crarr', [8629]], ['cross', [10007]], ['Cross', [10799]], ['Cscr', [119966]], ['cscr', [119992]], ['csub', [10959]], ['csube', [10961]], ['csup', [10960]], ['csupe', [10962]], ['ctdot', [8943]], ['cudarrl', [10552]], ['cudarrr', [10549]], ['cuepr', [8926]], ['cuesc', [8927]], ['cularr', [8630]], ['cularrp', [10557]], ['cupbrcap', [10824]], ['cupcap', [10822]], ['CupCap', [8781]], ['cup', [8746]], ['Cup', [8915]], ['cupcup', [10826]], ['cupdot', [8845]], ['cupor', [10821]], ['cups', [8746, 65024]], ['curarr', [8631]], ['curarrm', [10556]], ['curlyeqprec', [8926]], ['curlyeqsucc', [8927]], ['curlyvee', [8910]], ['curlywedge', [8911]], ['curren', [164]], ['curvearrowleft', [8630]], ['curvearrowright', [8631]], ['cuvee', [8910]], ['cuwed', [8911]], ['cwconint', [8754]], ['cwint', [8753]], ['cylcty', [9005]], ['dagger', [8224]], ['Dagger', [8225]], ['daleth', [8504]], ['darr', [8595]], ['Darr', [8609]], ['dArr', [8659]], ['dash', [8208]], ['Dashv', [10980]], ['dashv', [8867]], ['dbkarow', [10511]], ['dblac', [733]], ['Dcaron', [270]], ['dcaron', [271]], ['Dcy', [1044]], ['dcy', [1076]], ['ddagger', [8225]], ['ddarr', [8650]], ['DD', [8517]], ['dd', [8518]], ['DDotrahd', [10513]], ['ddotseq', [10871]], ['deg', [176]], ['Del', [8711]], ['Delta', [916]], ['delta', [948]], ['demptyv', [10673]], ['dfisht', [10623]], ['Dfr', [120071]], ['dfr', [120097]], ['dHar', [10597]], ['dharl', [8643]], ['dharr', [8642]], ['DiacriticalAcute', [180]], ['DiacriticalDot', [729]], ['DiacriticalDoubleAcute', [733]], ['DiacriticalGrave', [96]], ['DiacriticalTilde', [732]], ['diam', [8900]], ['diamond', [8900]], ['Diamond', [8900]], ['diamondsuit', [9830]], ['diams', [9830]], ['die', [168]], ['DifferentialD', [8518]], ['digamma', [989]], ['disin', [8946]], ['div', [247]], ['divide', [247]], ['divideontimes', [8903]], ['divonx', [8903]], ['DJcy', [1026]], ['djcy', [1106]], ['dlcorn', [8990]], ['dlcrop', [8973]], ['dollar', [36]], ['Dopf', [120123]], ['dopf', [120149]], ['Dot', [168]], ['dot', [729]], ['DotDot', [8412]], ['doteq', [8784]], ['doteqdot', [8785]], ['DotEqual', [8784]], ['dotminus', [8760]], ['dotplus', [8724]], ['dotsquare', [8865]], ['doublebarwedge', [8966]], ['DoubleContourIntegral', [8751]], ['DoubleDot', [168]], ['DoubleDownArrow', [8659]], ['DoubleLeftArrow', [8656]], ['DoubleLeftRightArrow', [8660]], ['DoubleLeftTee', [10980]], ['DoubleLongLeftArrow', [10232]], ['DoubleLongLeftRightArrow', [10234]], ['DoubleLongRightArrow', [10233]], ['DoubleRightArrow', [8658]], ['DoubleRightTee', [8872]], ['DoubleUpArrow', [8657]], ['DoubleUpDownArrow', [8661]], ['DoubleVerticalBar', [8741]], ['DownArrowBar', [10515]], ['downarrow', [8595]], ['DownArrow', [8595]], ['Downarrow', [8659]], ['DownArrowUpArrow', [8693]], ['DownBreve', [785]], ['downdownarrows', [8650]], ['downharpoonleft', [8643]], ['downharpoonright', [8642]], ['DownLeftRightVector', [10576]], ['DownLeftTeeVector', [10590]], ['DownLeftVectorBar', [10582]], ['DownLeftVector', [8637]], ['DownRightTeeVector', [10591]], ['DownRightVectorBar', [10583]], ['DownRightVector', [8641]], ['DownTeeArrow', [8615]], ['DownTee', [8868]], ['drbkarow', [10512]], ['drcorn', [8991]], ['drcrop', [8972]], ['Dscr', [119967]], ['dscr', [119993]], ['DScy', [1029]], ['dscy', [1109]], ['dsol', [10742]], ['Dstrok', [272]], ['dstrok', [273]], ['dtdot', [8945]], ['dtri', [9663]], ['dtrif', [9662]], ['duarr', [8693]], ['duhar', [10607]], ['dwangle', [10662]], ['DZcy', [1039]], ['dzcy', [1119]], ['dzigrarr', [10239]], ['Eacute', [201]], ['eacute', [233]], ['easter', [10862]], ['Ecaron', [282]], ['ecaron', [283]], ['Ecirc', [202]], ['ecirc', [234]], ['ecir', [8790]], ['ecolon', [8789]], ['Ecy', [1069]], ['ecy', [1101]], ['eDDot', [10871]], ['Edot', [278]], ['edot', [279]], ['eDot', [8785]], ['ee', [8519]], ['efDot', [8786]], ['Efr', [120072]], ['efr', [120098]], ['eg', [10906]], ['Egrave', [200]], ['egrave', [232]], ['egs', [10902]], ['egsdot', [10904]], ['el', [10905]], ['Element', [8712]], ['elinters', [9191]], ['ell', [8467]], ['els', [10901]], ['elsdot', [10903]], ['Emacr', [274]], ['emacr', [275]], ['empty', [8709]], ['emptyset', [8709]], ['EmptySmallSquare', [9723]], ['emptyv', [8709]], ['EmptyVerySmallSquare', [9643]], ['emsp13', [8196]], ['emsp14', [8197]], ['emsp', [8195]], ['ENG', [330]], ['eng', [331]], ['ensp', [8194]], ['Eogon', [280]], ['eogon', [281]], ['Eopf', [120124]], ['eopf', [120150]], ['epar', [8917]], ['eparsl', [10723]], ['eplus', [10865]], ['epsi', [949]], ['Epsilon', [917]], ['epsilon', [949]], ['epsiv', [1013]], ['eqcirc', [8790]], ['eqcolon', [8789]], ['eqsim', [8770]], ['eqslantgtr', [10902]], ['eqslantless', [10901]], ['Equal', [10869]], ['equals', [61]], ['EqualTilde', [8770]], ['equest', [8799]], ['Equilibrium', [8652]], ['equiv', [8801]], ['equivDD', [10872]], ['eqvparsl', [10725]], ['erarr', [10609]], ['erDot', [8787]], ['escr', [8495]], ['Escr', [8496]], ['esdot', [8784]], ['Esim', [10867]], ['esim', [8770]], ['Eta', [919]], ['eta', [951]], ['ETH', [208]], ['eth', [240]], ['Euml', [203]], ['euml', [235]], ['euro', [8364]], ['excl', [33]], ['exist', [8707]], ['Exists', [8707]], ['expectation', [8496]], ['exponentiale', [8519]], ['ExponentialE', [8519]], ['fallingdotseq', [8786]], ['Fcy', [1060]], ['fcy', [1092]], ['female', [9792]], ['ffilig', [64259]], ['fflig', [64256]], ['ffllig', [64260]], ['Ffr', [120073]], ['ffr', [120099]], ['filig', [64257]], ['FilledSmallSquare', [9724]], ['FilledVerySmallSquare', [9642]], ['fjlig', [102, 106]], ['flat', [9837]], ['fllig', [64258]], ['fltns', [9649]], ['fnof', [402]], ['Fopf', [120125]], ['fopf', [120151]], ['forall', [8704]], ['ForAll', [8704]], ['fork', [8916]], ['forkv', [10969]], ['Fouriertrf', [8497]], ['fpartint', [10765]], ['frac12', [189]], ['frac13', [8531]], ['frac14', [188]], ['frac15', [8533]], ['frac16', [8537]], ['frac18', [8539]], ['frac23', [8532]], ['frac25', [8534]], ['frac34', [190]], ['frac35', [8535]], ['frac38', [8540]], ['frac45', [8536]], ['frac56', [8538]], ['frac58', [8541]], ['frac78', [8542]], ['frasl', [8260]], ['frown', [8994]], ['fscr', [119995]], ['Fscr', [8497]], ['gacute', [501]], ['Gamma', [915]], ['gamma', [947]], ['Gammad', [988]], ['gammad', [989]], ['gap', [10886]], ['Gbreve', [286]], ['gbreve', [287]], ['Gcedil', [290]], ['Gcirc', [284]], ['gcirc', [285]], ['Gcy', [1043]], ['gcy', [1075]], ['Gdot', [288]], ['gdot', [289]], ['ge', [8805]], ['gE', [8807]], ['gEl', [10892]], ['gel', [8923]], ['geq', [8805]], ['geqq', [8807]], ['geqslant', [10878]], ['gescc', [10921]], ['ges', [10878]], ['gesdot', [10880]], ['gesdoto', [10882]], ['gesdotol', [10884]], ['gesl', [8923, 65024]], ['gesles', [10900]], ['Gfr', [120074]], ['gfr', [120100]], ['gg', [8811]], ['Gg', [8921]], ['ggg', [8921]], ['gimel', [8503]], ['GJcy', [1027]], ['gjcy', [1107]], ['gla', [10917]], ['gl', [8823]], ['glE', [10898]], ['glj', [10916]], ['gnap', [10890]], ['gnapprox', [10890]], ['gne', [10888]], ['gnE', [8809]], ['gneq', [10888]], ['gneqq', [8809]], ['gnsim', [8935]], ['Gopf', [120126]], ['gopf', [120152]], ['grave', [96]], ['GreaterEqual', [8805]], ['GreaterEqualLess', [8923]], ['GreaterFullEqual', [8807]], ['GreaterGreater', [10914]], ['GreaterLess', [8823]], ['GreaterSlantEqual', [10878]], ['GreaterTilde', [8819]], ['Gscr', [119970]], ['gscr', [8458]], ['gsim', [8819]], ['gsime', [10894]], ['gsiml', [10896]], ['gtcc', [10919]], ['gtcir', [10874]], ['gt', [62]], ['GT', [62]], ['Gt', [8811]], ['gtdot', [8919]], ['gtlPar', [10645]], ['gtquest', [10876]], ['gtrapprox', [10886]], ['gtrarr', [10616]], ['gtrdot', [8919]], ['gtreqless', [8923]], ['gtreqqless', [10892]], ['gtrless', [8823]], ['gtrsim', [8819]], ['gvertneqq', [8809, 65024]], ['gvnE', [8809, 65024]], ['Hacek', [711]], ['hairsp', [8202]], ['half', [189]], ['hamilt', [8459]], ['HARDcy', [1066]], ['hardcy', [1098]], ['harrcir', [10568]], ['harr', [8596]], ['hArr', [8660]], ['harrw', [8621]], ['Hat', [94]], ['hbar', [8463]], ['Hcirc', [292]], ['hcirc', [293]], ['hearts', [9829]], ['heartsuit', [9829]], ['hellip', [8230]], ['hercon', [8889]], ['hfr', [120101]], ['Hfr', [8460]], ['HilbertSpace', [8459]], ['hksearow', [10533]], ['hkswarow', [10534]], ['hoarr', [8703]], ['homtht', [8763]], ['hookleftarrow', [8617]], ['hookrightarrow', [8618]], ['hopf', [120153]], ['Hopf', [8461]], ['horbar', [8213]], ['HorizontalLine', [9472]], ['hscr', [119997]], ['Hscr', [8459]], ['hslash', [8463]], ['Hstrok', [294]], ['hstrok', [295]], ['HumpDownHump', [8782]], ['HumpEqual', [8783]], ['hybull', [8259]], ['hyphen', [8208]], ['Iacute', [205]], ['iacute', [237]], ['ic', [8291]], ['Icirc', [206]], ['icirc', [238]], ['Icy', [1048]], ['icy', [1080]], ['Idot', [304]], ['IEcy', [1045]], ['iecy', [1077]], ['iexcl', [161]], ['iff', [8660]], ['ifr', [120102]], ['Ifr', [8465]], ['Igrave', [204]], ['igrave', [236]], ['ii', [8520]], ['iiiint', [10764]], ['iiint', [8749]], ['iinfin', [10716]], ['iiota', [8489]], ['IJlig', [306]], ['ijlig', [307]], ['Imacr', [298]], ['imacr', [299]], ['image', [8465]], ['ImaginaryI', [8520]], ['imagline', [8464]], ['imagpart', [8465]], ['imath', [305]], ['Im', [8465]], ['imof', [8887]], ['imped', [437]], ['Implies', [8658]], ['incare', [8453]], ['in', [8712]], ['infin', [8734]], ['infintie', [10717]], ['inodot', [305]], ['intcal', [8890]], ['int', [8747]], ['Int', [8748]], ['integers', [8484]], ['Integral', [8747]], ['intercal', [8890]], ['Intersection', [8898]], ['intlarhk', [10775]], ['intprod', [10812]], ['InvisibleComma', [8291]], ['InvisibleTimes', [8290]], ['IOcy', [1025]], ['iocy', [1105]], ['Iogon', [302]], ['iogon', [303]], ['Iopf', [120128]], ['iopf', [120154]], ['Iota', [921]], ['iota', [953]], ['iprod', [10812]], ['iquest', [191]], ['iscr', [119998]], ['Iscr', [8464]], ['isin', [8712]], ['isindot', [8949]], ['isinE', [8953]], ['isins', [8948]], ['isinsv', [8947]], ['isinv', [8712]], ['it', [8290]], ['Itilde', [296]], ['itilde', [297]], ['Iukcy', [1030]], ['iukcy', [1110]], ['Iuml', [207]], ['iuml', [239]], ['Jcirc', [308]], ['jcirc', [309]], ['Jcy', [1049]], ['jcy', [1081]], ['Jfr', [120077]], ['jfr', [120103]], ['jmath', [567]], ['Jopf', [120129]], ['jopf', [120155]], ['Jscr', [119973]], ['jscr', [119999]], ['Jsercy', [1032]], ['jsercy', [1112]], ['Jukcy', [1028]], ['jukcy', [1108]], ['Kappa', [922]], ['kappa', [954]], ['kappav', [1008]], ['Kcedil', [310]], ['kcedil', [311]], ['Kcy', [1050]], ['kcy', [1082]], ['Kfr', [120078]], ['kfr', [120104]], ['kgreen', [312]], ['KHcy', [1061]], ['khcy', [1093]], ['KJcy', [1036]], ['kjcy', [1116]], ['Kopf', [120130]], ['kopf', [120156]], ['Kscr', [119974]], ['kscr', [120000]], ['lAarr', [8666]], ['Lacute', [313]], ['lacute', [314]], ['laemptyv', [10676]], ['lagran', [8466]], ['Lambda', [923]], ['lambda', [955]], ['lang', [10216]], ['Lang', [10218]], ['langd', [10641]], ['langle', [10216]], ['lap', [10885]], ['Laplacetrf', [8466]], ['laquo', [171]], ['larrb', [8676]], ['larrbfs', [10527]], ['larr', [8592]], ['Larr', [8606]], ['lArr', [8656]], ['larrfs', [10525]], ['larrhk', [8617]], ['larrlp', [8619]], ['larrpl', [10553]], ['larrsim', [10611]], ['larrtl', [8610]], ['latail', [10521]], ['lAtail', [10523]], ['lat', [10923]], ['late', [10925]], ['lates', [10925, 65024]], ['lbarr', [10508]], ['lBarr', [10510]], ['lbbrk', [10098]], ['lbrace', [123]], ['lbrack', [91]], ['lbrke', [10635]], ['lbrksld', [10639]], ['lbrkslu', [10637]], ['Lcaron', [317]], ['lcaron', [318]], ['Lcedil', [315]], ['lcedil', [316]], ['lceil', [8968]], ['lcub', [123]], ['Lcy', [1051]], ['lcy', [1083]], ['ldca', [10550]], ['ldquo', [8220]], ['ldquor', [8222]], ['ldrdhar', [10599]], ['ldrushar', [10571]], ['ldsh', [8626]], ['le', [8804]], ['lE', [8806]], ['LeftAngleBracket', [10216]], ['LeftArrowBar', [8676]], ['leftarrow', [8592]], ['LeftArrow', [8592]], ['Leftarrow', [8656]], ['LeftArrowRightArrow', [8646]], ['leftarrowtail', [8610]], ['LeftCeiling', [8968]], ['LeftDoubleBracket', [10214]], ['LeftDownTeeVector', [10593]], ['LeftDownVectorBar', [10585]], ['LeftDownVector', [8643]], ['LeftFloor', [8970]], ['leftharpoondown', [8637]], ['leftharpoonup', [8636]], ['leftleftarrows', [8647]], ['leftrightarrow', [8596]], ['LeftRightArrow', [8596]], ['Leftrightarrow', [8660]], ['leftrightarrows', [8646]], ['leftrightharpoons', [8651]], ['leftrightsquigarrow', [8621]], ['LeftRightVector', [10574]], ['LeftTeeArrow', [8612]], ['LeftTee', [8867]], ['LeftTeeVector', [10586]], ['leftthreetimes', [8907]], ['LeftTriangleBar', [10703]], ['LeftTriangle', [8882]], ['LeftTriangleEqual', [8884]], ['LeftUpDownVector', [10577]], ['LeftUpTeeVector', [10592]], ['LeftUpVectorBar', [10584]], ['LeftUpVector', [8639]], ['LeftVectorBar', [10578]], ['LeftVector', [8636]], ['lEg', [10891]], ['leg', [8922]], ['leq', [8804]], ['leqq', [8806]], ['leqslant', [10877]], ['lescc', [10920]], ['les', [10877]], ['lesdot', [10879]], ['lesdoto', [10881]], ['lesdotor', [10883]], ['lesg', [8922, 65024]], ['lesges', [10899]], ['lessapprox', [10885]], ['lessdot', [8918]], ['lesseqgtr', [8922]], ['lesseqqgtr', [10891]], ['LessEqualGreater', [8922]], ['LessFullEqual', [8806]], ['LessGreater', [8822]], ['lessgtr', [8822]], ['LessLess', [10913]], ['lesssim', [8818]], ['LessSlantEqual', [10877]], ['LessTilde', [8818]], ['lfisht', [10620]], ['lfloor', [8970]], ['Lfr', [120079]], ['lfr', [120105]], ['lg', [8822]], ['lgE', [10897]], ['lHar', [10594]], ['lhard', [8637]], ['lharu', [8636]], ['lharul', [10602]], ['lhblk', [9604]], ['LJcy', [1033]], ['ljcy', [1113]], ['llarr', [8647]], ['ll', [8810]], ['Ll', [8920]], ['llcorner', [8990]], ['Lleftarrow', [8666]], ['llhard', [10603]], ['lltri', [9722]], ['Lmidot', [319]], ['lmidot', [320]], ['lmoustache', [9136]], ['lmoust', [9136]], ['lnap', [10889]], ['lnapprox', [10889]], ['lne', [10887]], ['lnE', [8808]], ['lneq', [10887]], ['lneqq', [8808]], ['lnsim', [8934]], ['loang', [10220]], ['loarr', [8701]], ['lobrk', [10214]], ['longleftarrow', [10229]], ['LongLeftArrow', [10229]], ['Longleftarrow', [10232]], ['longleftrightarrow', [10231]], ['LongLeftRightArrow', [10231]], ['Longleftrightarrow', [10234]], ['longmapsto', [10236]], ['longrightarrow', [10230]], ['LongRightArrow', [10230]], ['Longrightarrow', [10233]], ['looparrowleft', [8619]], ['looparrowright', [8620]], ['lopar', [10629]], ['Lopf', [120131]], ['lopf', [120157]], ['loplus', [10797]], ['lotimes', [10804]], ['lowast', [8727]], ['lowbar', [95]], ['LowerLeftArrow', [8601]], ['LowerRightArrow', [8600]], ['loz', [9674]], ['lozenge', [9674]], ['lozf', [10731]], ['lpar', [40]], ['lparlt', [10643]], ['lrarr', [8646]], ['lrcorner', [8991]], ['lrhar', [8651]], ['lrhard', [10605]], ['lrm', [8206]], ['lrtri', [8895]], ['lsaquo', [8249]], ['lscr', [120001]], ['Lscr', [8466]], ['lsh', [8624]], ['Lsh', [8624]], ['lsim', [8818]], ['lsime', [10893]], ['lsimg', [10895]], ['lsqb', [91]], ['lsquo', [8216]], ['lsquor', [8218]], ['Lstrok', [321]], ['lstrok', [322]], ['ltcc', [10918]], ['ltcir', [10873]], ['lt', [60]], ['LT', [60]], ['Lt', [8810]], ['ltdot', [8918]], ['lthree', [8907]], ['ltimes', [8905]], ['ltlarr', [10614]], ['ltquest', [10875]], ['ltri', [9667]], ['ltrie', [8884]], ['ltrif', [9666]], ['ltrPar', [10646]], ['lurdshar', [10570]], ['luruhar', [10598]], ['lvertneqq', [8808, 65024]], ['lvnE', [8808, 65024]], ['macr', [175]], ['male', [9794]], ['malt', [10016]], ['maltese', [10016]], ['Map', [10501]], ['map', [8614]], ['mapsto', [8614]], ['mapstodown', [8615]], ['mapstoleft', [8612]], ['mapstoup', [8613]], ['marker', [9646]], ['mcomma', [10793]], ['Mcy', [1052]], ['mcy', [1084]], ['mdash', [8212]], ['mDDot', [8762]], ['measuredangle', [8737]], ['MediumSpace', [8287]], ['Mellintrf', [8499]], ['Mfr', [120080]], ['mfr', [120106]], ['mho', [8487]], ['micro', [181]], ['midast', [42]], ['midcir', [10992]], ['mid', [8739]], ['middot', [183]], ['minusb', [8863]], ['minus', [8722]], ['minusd', [8760]], ['minusdu', [10794]], ['MinusPlus', [8723]], ['mlcp', [10971]], ['mldr', [8230]], ['mnplus', [8723]], ['models', [8871]], ['Mopf', [120132]], ['mopf', [120158]], ['mp', [8723]], ['mscr', [120002]], ['Mscr', [8499]], ['mstpos', [8766]], ['Mu', [924]], ['mu', [956]], ['multimap', [8888]], ['mumap', [8888]], ['nabla', [8711]], ['Nacute', [323]], ['nacute', [324]], ['nang', [8736, 8402]], ['nap', [8777]], ['napE', [10864, 824]], ['napid', [8779, 824]], ['napos', [329]], ['napprox', [8777]], ['natural', [9838]], ['naturals', [8469]], ['natur', [9838]], ['nbsp', [160]], ['nbump', [8782, 824]], ['nbumpe', [8783, 824]], ['ncap', [10819]], ['Ncaron', [327]], ['ncaron', [328]], ['Ncedil', [325]], ['ncedil', [326]], ['ncong', [8775]], ['ncongdot', [10861, 824]], ['ncup', [10818]], ['Ncy', [1053]], ['ncy', [1085]], ['ndash', [8211]], ['nearhk', [10532]], ['nearr', [8599]], ['neArr', [8663]], ['nearrow', [8599]], ['ne', [8800]], ['nedot', [8784, 824]], ['NegativeMediumSpace', [8203]], ['NegativeThickSpace', [8203]], ['NegativeThinSpace', [8203]], ['NegativeVeryThinSpace', [8203]], ['nequiv', [8802]], ['nesear', [10536]], ['nesim', [8770, 824]], ['NestedGreaterGreater', [8811]], ['NestedLessLess', [8810]], ['nexist', [8708]], ['nexists', [8708]], ['Nfr', [120081]], ['nfr', [120107]], ['ngE', [8807, 824]], ['nge', [8817]], ['ngeq', [8817]], ['ngeqq', [8807, 824]], ['ngeqslant', [10878, 824]], ['nges', [10878, 824]], ['nGg', [8921, 824]], ['ngsim', [8821]], ['nGt', [8811, 8402]], ['ngt', [8815]], ['ngtr', [8815]], ['nGtv', [8811, 824]], ['nharr', [8622]], ['nhArr', [8654]], ['nhpar', [10994]], ['ni', [8715]], ['nis', [8956]], ['nisd', [8954]], ['niv', [8715]], ['NJcy', [1034]], ['njcy', [1114]], ['nlarr', [8602]], ['nlArr', [8653]], ['nldr', [8229]], ['nlE', [8806, 824]], ['nle', [8816]], ['nleftarrow', [8602]], ['nLeftarrow', [8653]], ['nleftrightarrow', [8622]], ['nLeftrightarrow', [8654]], ['nleq', [8816]], ['nleqq', [8806, 824]], ['nleqslant', [10877, 824]], ['nles', [10877, 824]], ['nless', [8814]], ['nLl', [8920, 824]], ['nlsim', [8820]], ['nLt', [8810, 8402]], ['nlt', [8814]], ['nltri', [8938]], ['nltrie', [8940]], ['nLtv', [8810, 824]], ['nmid', [8740]], ['NoBreak', [8288]], ['NonBreakingSpace', [160]], ['nopf', [120159]], ['Nopf', [8469]], ['Not', [10988]], ['not', [172]], ['NotCongruent', [8802]], ['NotCupCap', [8813]], ['NotDoubleVerticalBar', [8742]], ['NotElement', [8713]], ['NotEqual', [8800]], ['NotEqualTilde', [8770, 824]], ['NotExists', [8708]], ['NotGreater', [8815]], ['NotGreaterEqual', [8817]], ['NotGreaterFullEqual', [8807, 824]], ['NotGreaterGreater', [8811, 824]], ['NotGreaterLess', [8825]], ['NotGreaterSlantEqual', [10878, 824]], ['NotGreaterTilde', [8821]], ['NotHumpDownHump', [8782, 824]], ['NotHumpEqual', [8783, 824]], ['notin', [8713]], ['notindot', [8949, 824]], ['notinE', [8953, 824]], ['notinva', [8713]], ['notinvb', [8951]], ['notinvc', [8950]], ['NotLeftTriangleBar', [10703, 824]], ['NotLeftTriangle', [8938]], ['NotLeftTriangleEqual', [8940]], ['NotLess', [8814]], ['NotLessEqual', [8816]], ['NotLessGreater', [8824]], ['NotLessLess', [8810, 824]], ['NotLessSlantEqual', [10877, 824]], ['NotLessTilde', [8820]], ['NotNestedGreaterGreater', [10914, 824]], ['NotNestedLessLess', [10913, 824]], ['notni', [8716]], ['notniva', [8716]], ['notnivb', [8958]], ['notnivc', [8957]], ['NotPrecedes', [8832]], ['NotPrecedesEqual', [10927, 824]], ['NotPrecedesSlantEqual', [8928]], ['NotReverseElement', [8716]], ['NotRightTriangleBar', [10704, 824]], ['NotRightTriangle', [8939]], ['NotRightTriangleEqual', [8941]], ['NotSquareSubset', [8847, 824]], ['NotSquareSubsetEqual', [8930]], ['NotSquareSuperset', [8848, 824]], ['NotSquareSupersetEqual', [8931]], ['NotSubset', [8834, 8402]], ['NotSubsetEqual', [8840]], ['NotSucceeds', [8833]], ['NotSucceedsEqual', [10928, 824]], ['NotSucceedsSlantEqual', [8929]], ['NotSucceedsTilde', [8831, 824]], ['NotSuperset', [8835, 8402]], ['NotSupersetEqual', [8841]], ['NotTilde', [8769]], ['NotTildeEqual', [8772]], ['NotTildeFullEqual', [8775]], ['NotTildeTilde', [8777]], ['NotVerticalBar', [8740]], ['nparallel', [8742]], ['npar', [8742]], ['nparsl', [11005, 8421]], ['npart', [8706, 824]], ['npolint', [10772]], ['npr', [8832]], ['nprcue', [8928]], ['nprec', [8832]], ['npreceq', [10927, 824]], ['npre', [10927, 824]], ['nrarrc', [10547, 824]], ['nrarr', [8603]], ['nrArr', [8655]], ['nrarrw', [8605, 824]], ['nrightarrow', [8603]], ['nRightarrow', [8655]], ['nrtri', [8939]], ['nrtrie', [8941]], ['nsc', [8833]], ['nsccue', [8929]], ['nsce', [10928, 824]], ['Nscr', [119977]], ['nscr', [120003]], ['nshortmid', [8740]], ['nshortparallel', [8742]], ['nsim', [8769]], ['nsime', [8772]], ['nsimeq', [8772]], ['nsmid', [8740]], ['nspar', [8742]], ['nsqsube', [8930]], ['nsqsupe', [8931]], ['nsub', [8836]], ['nsubE', [10949, 824]], ['nsube', [8840]], ['nsubset', [8834, 8402]], ['nsubseteq', [8840]], ['nsubseteqq', [10949, 824]], ['nsucc', [8833]], ['nsucceq', [10928, 824]], ['nsup', [8837]], ['nsupE', [10950, 824]], ['nsupe', [8841]], ['nsupset', [8835, 8402]], ['nsupseteq', [8841]], ['nsupseteqq', [10950, 824]], ['ntgl', [8825]], ['Ntilde', [209]], ['ntilde', [241]], ['ntlg', [8824]], ['ntriangleleft', [8938]], ['ntrianglelefteq', [8940]], ['ntriangleright', [8939]], ['ntrianglerighteq', [8941]], ['Nu', [925]], ['nu', [957]], ['num', [35]], ['numero', [8470]], ['numsp', [8199]], ['nvap', [8781, 8402]], ['nvdash', [8876]], ['nvDash', [8877]], ['nVdash', [8878]], ['nVDash', [8879]], ['nvge', [8805, 8402]], ['nvgt', [62, 8402]], ['nvHarr', [10500]], ['nvinfin', [10718]], ['nvlArr', [10498]], ['nvle', [8804, 8402]], ['nvlt', [60, 8402]], ['nvltrie', [8884, 8402]], ['nvrArr', [10499]], ['nvrtrie', [8885, 8402]], ['nvsim', [8764, 8402]], ['nwarhk', [10531]], ['nwarr', [8598]], ['nwArr', [8662]], ['nwarrow', [8598]], ['nwnear', [10535]], ['Oacute', [211]], ['oacute', [243]], ['oast', [8859]], ['Ocirc', [212]], ['ocirc', [244]], ['ocir', [8858]], ['Ocy', [1054]], ['ocy', [1086]], ['odash', [8861]], ['Odblac', [336]], ['odblac', [337]], ['odiv', [10808]], ['odot', [8857]], ['odsold', [10684]], ['OElig', [338]], ['oelig', [339]], ['ofcir', [10687]], ['Ofr', [120082]], ['ofr', [120108]], ['ogon', [731]], ['Ograve', [210]], ['ograve', [242]], ['ogt', [10689]], ['ohbar', [10677]], ['ohm', [937]], ['oint', [8750]], ['olarr', [8634]], ['olcir', [10686]], ['olcross', [10683]], ['oline', [8254]], ['olt', [10688]], ['Omacr', [332]], ['omacr', [333]], ['Omega', [937]], ['omega', [969]], ['Omicron', [927]], ['omicron', [959]], ['omid', [10678]], ['ominus', [8854]], ['Oopf', [120134]], ['oopf', [120160]], ['opar', [10679]], ['OpenCurlyDoubleQuote', [8220]], ['OpenCurlyQuote', [8216]], ['operp', [10681]], ['oplus', [8853]], ['orarr', [8635]], ['Or', [10836]], ['or', [8744]], ['ord', [10845]], ['order', [8500]], ['orderof', [8500]], ['ordf', [170]], ['ordm', [186]], ['origof', [8886]], ['oror', [10838]], ['orslope', [10839]], ['orv', [10843]], ['oS', [9416]], ['Oscr', [119978]], ['oscr', [8500]], ['Oslash', [216]], ['oslash', [248]], ['osol', [8856]], ['Otilde', [213]], ['otilde', [245]], ['otimesas', [10806]], ['Otimes', [10807]], ['otimes', [8855]], ['Ouml', [214]], ['ouml', [246]], ['ovbar', [9021]], ['OverBar', [8254]], ['OverBrace', [9182]], ['OverBracket', [9140]], ['OverParenthesis', [9180]], ['para', [182]], ['parallel', [8741]], ['par', [8741]], ['parsim', [10995]], ['parsl', [11005]], ['part', [8706]], ['PartialD', [8706]], ['Pcy', [1055]], ['pcy', [1087]], ['percnt', [37]], ['period', [46]], ['permil', [8240]], ['perp', [8869]], ['pertenk', [8241]], ['Pfr', [120083]], ['pfr', [120109]], ['Phi', [934]], ['phi', [966]], ['phiv', [981]], ['phmmat', [8499]], ['phone', [9742]], ['Pi', [928]], ['pi', [960]], ['pitchfork', [8916]], ['piv', [982]], ['planck', [8463]], ['planckh', [8462]], ['plankv', [8463]], ['plusacir', [10787]], ['plusb', [8862]], ['pluscir', [10786]], ['plus', [43]], ['plusdo', [8724]], ['plusdu', [10789]], ['pluse', [10866]], ['PlusMinus', [177]], ['plusmn', [177]], ['plussim', [10790]], ['plustwo', [10791]], ['pm', [177]], ['Poincareplane', [8460]], ['pointint', [10773]], ['popf', [120161]], ['Popf', [8473]], ['pound', [163]], ['prap', [10935]], ['Pr', [10939]], ['pr', [8826]], ['prcue', [8828]], ['precapprox', [10935]], ['prec', [8826]], ['preccurlyeq', [8828]], ['Precedes', [8826]], ['PrecedesEqual', [10927]], ['PrecedesSlantEqual', [8828]], ['PrecedesTilde', [8830]], ['preceq', [10927]], ['precnapprox', [10937]], ['precneqq', [10933]], ['precnsim', [8936]], ['pre', [10927]], ['prE', [10931]], ['precsim', [8830]], ['prime', [8242]], ['Prime', [8243]], ['primes', [8473]], ['prnap', [10937]], ['prnE', [10933]], ['prnsim', [8936]], ['prod', [8719]], ['Product', [8719]], ['profalar', [9006]], ['profline', [8978]], ['profsurf', [8979]], ['prop', [8733]], ['Proportional', [8733]], ['Proportion', [8759]], ['propto', [8733]], ['prsim', [8830]], ['prurel', [8880]], ['Pscr', [119979]], ['pscr', [120005]], ['Psi', [936]], ['psi', [968]], ['puncsp', [8200]], ['Qfr', [120084]], ['qfr', [120110]], ['qint', [10764]], ['qopf', [120162]], ['Qopf', [8474]], ['qprime', [8279]], ['Qscr', [119980]], ['qscr', [120006]], ['quaternions', [8461]], ['quatint', [10774]], ['quest', [63]], ['questeq', [8799]], ['quot', [34]], ['QUOT', [34]], ['rAarr', [8667]], ['race', [8765, 817]], ['Racute', [340]], ['racute', [341]], ['radic', [8730]], ['raemptyv', [10675]], ['rang', [10217]], ['Rang', [10219]], ['rangd', [10642]], ['range', [10661]], ['rangle', [10217]], ['raquo', [187]], ['rarrap', [10613]], ['rarrb', [8677]], ['rarrbfs', [10528]], ['rarrc', [10547]], ['rarr', [8594]], ['Rarr', [8608]], ['rArr', [8658]], ['rarrfs', [10526]], ['rarrhk', [8618]], ['rarrlp', [8620]], ['rarrpl', [10565]], ['rarrsim', [10612]], ['Rarrtl', [10518]], ['rarrtl', [8611]], ['rarrw', [8605]], ['ratail', [10522]], ['rAtail', [10524]], ['ratio', [8758]], ['rationals', [8474]], ['rbarr', [10509]], ['rBarr', [10511]], ['RBarr', [10512]], ['rbbrk', [10099]], ['rbrace', [125]], ['rbrack', [93]], ['rbrke', [10636]], ['rbrksld', [10638]], ['rbrkslu', [10640]], ['Rcaron', [344]], ['rcaron', [345]], ['Rcedil', [342]], ['rcedil', [343]], ['rceil', [8969]], ['rcub', [125]], ['Rcy', [1056]], ['rcy', [1088]], ['rdca', [10551]], ['rdldhar', [10601]], ['rdquo', [8221]], ['rdquor', [8221]], ['rdsh', [8627]], ['real', [8476]], ['realine', [8475]], ['realpart', [8476]], ['reals', [8477]], ['Re', [8476]], ['rect', [9645]], ['reg', [174]], ['REG', [174]], ['ReverseElement', [8715]], ['ReverseEquilibrium', [8651]], ['ReverseUpEquilibrium', [10607]], ['rfisht', [10621]], ['rfloor', [8971]], ['rfr', [120111]], ['Rfr', [8476]], ['rHar', [10596]], ['rhard', [8641]], ['rharu', [8640]], ['rharul', [10604]], ['Rho', [929]], ['rho', [961]], ['rhov', [1009]], ['RightAngleBracket', [10217]], ['RightArrowBar', [8677]], ['rightarrow', [8594]], ['RightArrow', [8594]], ['Rightarrow', [8658]], ['RightArrowLeftArrow', [8644]], ['rightarrowtail', [8611]], ['RightCeiling', [8969]], ['RightDoubleBracket', [10215]], ['RightDownTeeVector', [10589]], ['RightDownVectorBar', [10581]], ['RightDownVector', [8642]], ['RightFloor', [8971]], ['rightharpoondown', [8641]], ['rightharpoonup', [8640]], ['rightleftarrows', [8644]], ['rightleftharpoons', [8652]], ['rightrightarrows', [8649]], ['rightsquigarrow', [8605]], ['RightTeeArrow', [8614]], ['RightTee', [8866]], ['RightTeeVector', [10587]], ['rightthreetimes', [8908]], ['RightTriangleBar', [10704]], ['RightTriangle', [8883]], ['RightTriangleEqual', [8885]], ['RightUpDownVector', [10575]], ['RightUpTeeVector', [10588]], ['RightUpVectorBar', [10580]], ['RightUpVector', [8638]], ['RightVectorBar', [10579]], ['RightVector', [8640]], ['ring', [730]], ['risingdotseq', [8787]], ['rlarr', [8644]], ['rlhar', [8652]], ['rlm', [8207]], ['rmoustache', [9137]], ['rmoust', [9137]], ['rnmid', [10990]], ['roang', [10221]], ['roarr', [8702]], ['robrk', [10215]], ['ropar', [10630]], ['ropf', [120163]], ['Ropf', [8477]], ['roplus', [10798]], ['rotimes', [10805]], ['RoundImplies', [10608]], ['rpar', [41]], ['rpargt', [10644]], ['rppolint', [10770]], ['rrarr', [8649]], ['Rrightarrow', [8667]], ['rsaquo', [8250]], ['rscr', [120007]], ['Rscr', [8475]], ['rsh', [8625]], ['Rsh', [8625]], ['rsqb', [93]], ['rsquo', [8217]], ['rsquor', [8217]], ['rthree', [8908]], ['rtimes', [8906]], ['rtri', [9657]], ['rtrie', [8885]], ['rtrif', [9656]], ['rtriltri', [10702]], ['RuleDelayed', [10740]], ['ruluhar', [10600]], ['rx', [8478]], ['Sacute', [346]], ['sacute', [347]], ['sbquo', [8218]], ['scap', [10936]], ['Scaron', [352]], ['scaron', [353]], ['Sc', [10940]], ['sc', [8827]], ['sccue', [8829]], ['sce', [10928]], ['scE', [10932]], ['Scedil', [350]], ['scedil', [351]], ['Scirc', [348]], ['scirc', [349]], ['scnap', [10938]], ['scnE', [10934]], ['scnsim', [8937]], ['scpolint', [10771]], ['scsim', [8831]], ['Scy', [1057]], ['scy', [1089]], ['sdotb', [8865]], ['sdot', [8901]], ['sdote', [10854]], ['searhk', [10533]], ['searr', [8600]], ['seArr', [8664]], ['searrow', [8600]], ['sect', [167]], ['semi', [59]], ['seswar', [10537]], ['setminus', [8726]], ['setmn', [8726]], ['sext', [10038]], ['Sfr', [120086]], ['sfr', [120112]], ['sfrown', [8994]], ['sharp', [9839]], ['SHCHcy', [1065]], ['shchcy', [1097]], ['SHcy', [1064]], ['shcy', [1096]], ['ShortDownArrow', [8595]], ['ShortLeftArrow', [8592]], ['shortmid', [8739]], ['shortparallel', [8741]], ['ShortRightArrow', [8594]], ['ShortUpArrow', [8593]], ['shy', [173]], ['Sigma', [931]], ['sigma', [963]], ['sigmaf', [962]], ['sigmav', [962]], ['sim', [8764]], ['simdot', [10858]], ['sime', [8771]], ['simeq', [8771]], ['simg', [10910]], ['simgE', [10912]], ['siml', [10909]], ['simlE', [10911]], ['simne', [8774]], ['simplus', [10788]], ['simrarr', [10610]], ['slarr', [8592]], ['SmallCircle', [8728]], ['smallsetminus', [8726]], ['smashp', [10803]], ['smeparsl', [10724]], ['smid', [8739]], ['smile', [8995]], ['smt', [10922]], ['smte', [10924]], ['smtes', [10924, 65024]], ['SOFTcy', [1068]], ['softcy', [1100]], ['solbar', [9023]], ['solb', [10692]], ['sol', [47]], ['Sopf', [120138]], ['sopf', [120164]], ['spades', [9824]], ['spadesuit', [9824]], ['spar', [8741]], ['sqcap', [8851]], ['sqcaps', [8851, 65024]], ['sqcup', [8852]], ['sqcups', [8852, 65024]], ['Sqrt', [8730]], ['sqsub', [8847]], ['sqsube', [8849]], ['sqsubset', [8847]], ['sqsubseteq', [8849]], ['sqsup', [8848]], ['sqsupe', [8850]], ['sqsupset', [8848]], ['sqsupseteq', [8850]], ['square', [9633]], ['Square', [9633]], ['SquareIntersection', [8851]], ['SquareSubset', [8847]], ['SquareSubsetEqual', [8849]], ['SquareSuperset', [8848]], ['SquareSupersetEqual', [8850]], ['SquareUnion', [8852]], ['squarf', [9642]], ['squ', [9633]], ['squf', [9642]], ['srarr', [8594]], ['Sscr', [119982]], ['sscr', [120008]], ['ssetmn', [8726]], ['ssmile', [8995]], ['sstarf', [8902]], ['Star', [8902]], ['star', [9734]], ['starf', [9733]], ['straightepsilon', [1013]], ['straightphi', [981]], ['strns', [175]], ['sub', [8834]], ['Sub', [8912]], ['subdot', [10941]], ['subE', [10949]], ['sube', [8838]], ['subedot', [10947]], ['submult', [10945]], ['subnE', [10955]], ['subne', [8842]], ['subplus', [10943]], ['subrarr', [10617]], ['subset', [8834]], ['Subset', [8912]], ['subseteq', [8838]], ['subseteqq', [10949]], ['SubsetEqual', [8838]], ['subsetneq', [8842]], ['subsetneqq', [10955]], ['subsim', [10951]], ['subsub', [10965]], ['subsup', [10963]], ['succapprox', [10936]], ['succ', [8827]], ['succcurlyeq', [8829]], ['Succeeds', [8827]], ['SucceedsEqual', [10928]], ['SucceedsSlantEqual', [8829]], ['SucceedsTilde', [8831]], ['succeq', [10928]], ['succnapprox', [10938]], ['succneqq', [10934]], ['succnsim', [8937]], ['succsim', [8831]], ['SuchThat', [8715]], ['sum', [8721]], ['Sum', [8721]], ['sung', [9834]], ['sup1', [185]], ['sup2', [178]], ['sup3', [179]], ['sup', [8835]], ['Sup', [8913]], ['supdot', [10942]], ['supdsub', [10968]], ['supE', [10950]], ['supe', [8839]], ['supedot', [10948]], ['Superset', [8835]], ['SupersetEqual', [8839]], ['suphsol', [10185]], ['suphsub', [10967]], ['suplarr', [10619]], ['supmult', [10946]], ['supnE', [10956]], ['supne', [8843]], ['supplus', [10944]], ['supset', [8835]], ['Supset', [8913]], ['supseteq', [8839]], ['supseteqq', [10950]], ['supsetneq', [8843]], ['supsetneqq', [10956]], ['supsim', [10952]], ['supsub', [10964]], ['supsup', [10966]], ['swarhk', [10534]], ['swarr', [8601]], ['swArr', [8665]], ['swarrow', [8601]], ['swnwar', [10538]], ['szlig', [223]], ['Tab', [9]], ['target', [8982]], ['Tau', [932]], ['tau', [964]], ['tbrk', [9140]], ['Tcaron', [356]], ['tcaron', [357]], ['Tcedil', [354]], ['tcedil', [355]], ['Tcy', [1058]], ['tcy', [1090]], ['tdot', [8411]], ['telrec', [8981]], ['Tfr', [120087]], ['tfr', [120113]], ['there4', [8756]], ['therefore', [8756]], ['Therefore', [8756]], ['Theta', [920]], ['theta', [952]], ['thetasym', [977]], ['thetav', [977]], ['thickapprox', [8776]], ['thicksim', [8764]], ['ThickSpace', [8287, 8202]], ['ThinSpace', [8201]], ['thinsp', [8201]], ['thkap', [8776]], ['thksim', [8764]], ['THORN', [222]], ['thorn', [254]], ['tilde', [732]], ['Tilde', [8764]], ['TildeEqual', [8771]], ['TildeFullEqual', [8773]], ['TildeTilde', [8776]], ['timesbar', [10801]], ['timesb', [8864]], ['times', [215]], ['timesd', [10800]], ['tint', [8749]], ['toea', [10536]], ['topbot', [9014]], ['topcir', [10993]], ['top', [8868]], ['Topf', [120139]], ['topf', [120165]], ['topfork', [10970]], ['tosa', [10537]], ['tprime', [8244]], ['trade', [8482]], ['TRADE', [8482]], ['triangle', [9653]], ['triangledown', [9663]], ['triangleleft', [9667]], ['trianglelefteq', [8884]], ['triangleq', [8796]], ['triangleright', [9657]], ['trianglerighteq', [8885]], ['tridot', [9708]], ['trie', [8796]], ['triminus', [10810]], ['TripleDot', [8411]], ['triplus', [10809]], ['trisb', [10701]], ['tritime', [10811]], ['trpezium', [9186]], ['Tscr', [119983]], ['tscr', [120009]], ['TScy', [1062]], ['tscy', [1094]], ['TSHcy', [1035]], ['tshcy', [1115]], ['Tstrok', [358]], ['tstrok', [359]], ['twixt', [8812]], ['twoheadleftarrow', [8606]], ['twoheadrightarrow', [8608]], ['Uacute', [218]], ['uacute', [250]], ['uarr', [8593]], ['Uarr', [8607]], ['uArr', [8657]], ['Uarrocir', [10569]], ['Ubrcy', [1038]], ['ubrcy', [1118]], ['Ubreve', [364]], ['ubreve', [365]], ['Ucirc', [219]], ['ucirc', [251]], ['Ucy', [1059]], ['ucy', [1091]], ['udarr', [8645]], ['Udblac', [368]], ['udblac', [369]], ['udhar', [10606]], ['ufisht', [10622]], ['Ufr', [120088]], ['ufr', [120114]], ['Ugrave', [217]], ['ugrave', [249]], ['uHar', [10595]], ['uharl', [8639]], ['uharr', [8638]], ['uhblk', [9600]], ['ulcorn', [8988]], ['ulcorner', [8988]], ['ulcrop', [8975]], ['ultri', [9720]], ['Umacr', [362]], ['umacr', [363]], ['uml', [168]], ['UnderBar', [95]], ['UnderBrace', [9183]], ['UnderBracket', [9141]], ['UnderParenthesis', [9181]], ['Union', [8899]], ['UnionPlus', [8846]], ['Uogon', [370]], ['uogon', [371]], ['Uopf', [120140]], ['uopf', [120166]], ['UpArrowBar', [10514]], ['uparrow', [8593]], ['UpArrow', [8593]], ['Uparrow', [8657]], ['UpArrowDownArrow', [8645]], ['updownarrow', [8597]], ['UpDownArrow', [8597]], ['Updownarrow', [8661]], ['UpEquilibrium', [10606]], ['upharpoonleft', [8639]], ['upharpoonright', [8638]], ['uplus', [8846]], ['UpperLeftArrow', [8598]], ['UpperRightArrow', [8599]], ['upsi', [965]], ['Upsi', [978]], ['upsih', [978]], ['Upsilon', [933]], ['upsilon', [965]], ['UpTeeArrow', [8613]], ['UpTee', [8869]], ['upuparrows', [8648]], ['urcorn', [8989]], ['urcorner', [8989]], ['urcrop', [8974]], ['Uring', [366]], ['uring', [367]], ['urtri', [9721]], ['Uscr', [119984]], ['uscr', [120010]], ['utdot', [8944]], ['Utilde', [360]], ['utilde', [361]], ['utri', [9653]], ['utrif', [9652]], ['uuarr', [8648]], ['Uuml', [220]], ['uuml', [252]], ['uwangle', [10663]], ['vangrt', [10652]], ['varepsilon', [1013]], ['varkappa', [1008]], ['varnothing', [8709]], ['varphi', [981]], ['varpi', [982]], ['varpropto', [8733]], ['varr', [8597]], ['vArr', [8661]], ['varrho', [1009]], ['varsigma', [962]], ['varsubsetneq', [8842, 65024]], ['varsubsetneqq', [10955, 65024]], ['varsupsetneq', [8843, 65024]], ['varsupsetneqq', [10956, 65024]], ['vartheta', [977]], ['vartriangleleft', [8882]], ['vartriangleright', [8883]], ['vBar', [10984]], ['Vbar', [10987]], ['vBarv', [10985]], ['Vcy', [1042]], ['vcy', [1074]], ['vdash', [8866]], ['vDash', [8872]], ['Vdash', [8873]], ['VDash', [8875]], ['Vdashl', [10982]], ['veebar', [8891]], ['vee', [8744]], ['Vee', [8897]], ['veeeq', [8794]], ['vellip', [8942]], ['verbar', [124]], ['Verbar', [8214]], ['vert', [124]], ['Vert', [8214]], ['VerticalBar', [8739]], ['VerticalLine', [124]], ['VerticalSeparator', [10072]], ['VerticalTilde', [8768]], ['VeryThinSpace', [8202]], ['Vfr', [120089]], ['vfr', [120115]], ['vltri', [8882]], ['vnsub', [8834, 8402]], ['vnsup', [8835, 8402]], ['Vopf', [120141]], ['vopf', [120167]], ['vprop', [8733]], ['vrtri', [8883]], ['Vscr', [119985]], ['vscr', [120011]], ['vsubnE', [10955, 65024]], ['vsubne', [8842, 65024]], ['vsupnE', [10956, 65024]], ['vsupne', [8843, 65024]], ['Vvdash', [8874]], ['vzigzag', [10650]], ['Wcirc', [372]], ['wcirc', [373]], ['wedbar', [10847]], ['wedge', [8743]], ['Wedge', [8896]], ['wedgeq', [8793]], ['weierp', [8472]], ['Wfr', [120090]], ['wfr', [120116]], ['Wopf', [120142]], ['wopf', [120168]], ['wp', [8472]], ['wr', [8768]], ['wreath', [8768]], ['Wscr', [119986]], ['wscr', [120012]], ['xcap', [8898]], ['xcirc', [9711]], ['xcup', [8899]], ['xdtri', [9661]], ['Xfr', [120091]], ['xfr', [120117]], ['xharr', [10231]], ['xhArr', [10234]], ['Xi', [926]], ['xi', [958]], ['xlarr', [10229]], ['xlArr', [10232]], ['xmap', [10236]], ['xnis', [8955]], ['xodot', [10752]], ['Xopf', [120143]], ['xopf', [120169]], ['xoplus', [10753]], ['xotime', [10754]], ['xrarr', [10230]], ['xrArr', [10233]], ['Xscr', [119987]], ['xscr', [120013]], ['xsqcup', [10758]], ['xuplus', [10756]], ['xutri', [9651]], ['xvee', [8897]], ['xwedge', [8896]], ['Yacute', [221]], ['yacute', [253]], ['YAcy', [1071]], ['yacy', [1103]], ['Ycirc', [374]], ['ycirc', [375]], ['Ycy', [1067]], ['ycy', [1099]], ['yen', [165]], ['Yfr', [120092]], ['yfr', [120118]], ['YIcy', [1031]], ['yicy', [1111]], ['Yopf', [120144]], ['yopf', [120170]], ['Yscr', [119988]], ['yscr', [120014]], ['YUcy', [1070]], ['yucy', [1102]], ['yuml', [255]], ['Yuml', [376]], ['Zacute', [377]], ['zacute', [378]], ['Zcaron', [381]], ['zcaron', [382]], ['Zcy', [1047]], ['zcy', [1079]], ['Zdot', [379]], ['zdot', [380]], ['zeetrf', [8488]], ['ZeroWidthSpace', [8203]], ['Zeta', [918]], ['zeta', [950]], ['zfr', [120119]], ['Zfr', [8488]], ['ZHcy', [1046]], ['zhcy', [1078]], ['zigrarr', [8669]], ['zopf', [120171]], ['Zopf', [8484]], ['Zscr', [119989]], ['zscr', [120015]], ['zwj', [8205]], ['zwnj', [8204]]];
+
+var alphaIndex = {};
+var charIndex = {};
+
+createIndexes(alphaIndex, charIndex);
+
+/**
+ * @constructor
+ */
+function Html5Entities() {}
+
+/**
+ * @param {String} str
+ * @returns {String}
+ */
+Html5Entities.prototype.decode = function(str) {
+    if (str.length === 0) {
+        return '';
+    }
+    return str.replace(/&(#?[\w\d]+);?/g, function(s, entity) {
+        var chr;
+        if (entity.charAt(0) === "#") {
+            var code = entity.charAt(1) === 'x' ?
+                parseInt(entity.substr(2).toLowerCase(), 16) :
+                parseInt(entity.substr(1));
+
+            if (!(isNaN(code) || code < -32768 || code > 65535)) {
+                chr = String.fromCharCode(code);
+            }
+        } else {
+            chr = alphaIndex[entity];
+        }
+        return chr || s;
+    });
+};
+
+/**
+ * @param {String} str
+ * @returns {String}
+ */
+ Html5Entities.decode = function(str) {
+    return new Html5Entities().decode(str);
+ };
+
+/**
+ * @param {String} str
+ * @returns {String}
+ */
+Html5Entities.prototype.encode = function(str) {
+    var strLength = str.length;
+    if (strLength === 0) {
+        return '';
+    }
+    var result = '';
+    var i = 0;
+    while (i < strLength) {
+        var charInfo = charIndex[str.charCodeAt(i)];
+        if (charInfo) {
+            var alpha = charInfo[str.charCodeAt(i + 1)];
+            if (alpha) {
+                i++;
+            } else {
+                alpha = charInfo[''];
+            }
+            if (alpha) {
+                result += "&" + alpha + ";";
+                i++;
+                continue;
+            }
+        }
+        result += str.charAt(i);
+        i++;
+    }
+    return result;
+};
+
+/**
+ * @param {String} str
+ * @returns {String}
+ */
+ Html5Entities.encode = function(str) {
+    return new Html5Entities().encode(str);
+ };
+
+/**
+ * @param {String} str
+ * @returns {String}
+ */
+Html5Entities.prototype.encodeNonUTF = function(str) {
+    var strLength = str.length;
+    if (strLength === 0) {
+        return '';
+    }
+    var result = '';
+    var i = 0;
+    while (i < strLength) {
+        var c = str.charCodeAt(i);
+        var charInfo = charIndex[c];
+        if (charInfo) {
+            var alpha = charInfo[str.charCodeAt(i + 1)];
+            if (alpha) {
+                i++;
+            } else {
+                alpha = charInfo[''];
+            }
+            if (alpha) {
+                result += "&" + alpha + ";";
+                i++;
+                continue;
+            }
+        }
+        if (c < 32 || c > 126) {
+            result += '&#' + c + ';';
+        } else {
+            result += str.charAt(i);
+        }
+        i++;
+    }
+    return result;
+};
+
+/**
+ * @param {String} str
+ * @returns {String}
+ */
+ Html5Entities.encodeNonUTF = function(str) {
+    return new Html5Entities().encodeNonUTF(str);
+ };
+
+/**
+ * @param {String} str
+ * @returns {String}
+ */
+Html5Entities.prototype.encodeNonASCII = function(str) {
+    var strLength = str.length;
+    if (strLength === 0) {
+        return '';
+    }
+    var result = '';
+    var i = 0;
+    while (i < strLength) {
+        var c = str.charCodeAt(i);
+        if (c <= 255) {
+            result += str[i++];
+            continue;
+        }
+        result += '&#' + c + ';';
+        i++
+    }
+    return result;
+};
+
+/**
+ * @param {String} str
+ * @returns {String}
+ */
+ Html5Entities.encodeNonASCII = function(str) {
+    return new Html5Entities().encodeNonASCII(str);
+ };
+
+/**
+ * @param {Object} alphaIndex Passed by reference.
+ * @param {Object} charIndex Passed by reference.
+ */
+function createIndexes(alphaIndex, charIndex) {
+    var i = ENTITIES.length;
+    var _results = [];
+    while (i--) {
+        var e = ENTITIES[i];
+        var alpha = e[0];
+        var chars = e[1];
+        var chr = chars[0];
+        var addChar = (chr < 32 || chr > 126) || chr === 62 || chr === 60 || chr === 38 || chr === 34 || chr === 39;
+        var charInfo;
+        if (addChar) {
+            charInfo = charIndex[chr] = charIndex[chr] || {};
+        }
+        if (chars[1]) {
+            var chr2 = chars[1];
+            alphaIndex[alpha] = String.fromCharCode(chr) + String.fromCharCode(chr2);
+            _results.push(addChar && (charInfo[chr2] = alpha));
+        } else {
+            alphaIndex[alpha] = String.fromCharCode(chr);
+            _results.push(addChar && (charInfo[''] = alpha));
+        }
+    }
+}
+
+window.entities=new Html5Entities()
+
+}());
+
+
+
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/maquette.js ---- */
 
 
 (function (root, factory) {
@@ -1142,7 +1344,7 @@ function clone(obj) {
 
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/marked.min.js ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/marked.min.js ---- */
 
 
 /**
@@ -1153,7 +1355,221 @@ function clone(obj) {
 (function(){var block={newline:/^\n+/,code:/^( {4}[^\n]+\n*)+/,fences:noop,hr:/^( *[-*_]){3,} *(?:\n+|$)/,heading:/^ *(#{1,6}) *([^\n]+?) *#* *(?:\n+|$)/,nptable:noop,lheading:/^([^\n]+)\n *(=|-){2,} *(?:\n+|$)/,blockquote:/^( *>[^\n]+(\n(?!def)[^\n]+)*\n*)+/,list:/^( *)(bull) [\s\S]+?(?:hr|def|\n{2,}(?! )(?!\1bull )\n*|\s*$)/,html:/^ *(?:comment|closed|closing) *(?:\n{2,}|\s*$)/,def:/^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +["(]([^\n]+)[")])? *(?:\n+|$)/,table:noop,paragraph:/^((?:[^\n]+\n?(?!hr|heading|lheading|blockquote|tag|def))+)\n*/,text:/^[^\n]+/};block.bullet=/(?:[*+-]|\d+\.)/;block.item=/^( *)(bull) [^\n]*(?:\n(?!\1bull )[^\n]*)*/;block.item=replace(block.item,"gm")(/bull/g,block.bullet)();block.list=replace(block.list)(/bull/g,block.bullet)("hr","\\n+(?=\\1?(?:[-*_] *){3,}(?:\\n+|$))")("def","\\n+(?="+block.def.source+")")();block.blockquote=replace(block.blockquote)("def",block.def)();block._tag="(?!(?:"+"a|em|strong|small|s|cite|q|dfn|abbr|data|time|code"+"|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo"+"|span|br|wbr|ins|del|img)\\b)\\w+(?!:/|[^\\w\\s@]*@)\\b";block.html=replace(block.html)("comment",/<!--[\s\S]*?-->/)("closed",/<(tag)[\s\S]+?<\/\1>/)("closing",/<tag(?:"[^"]*"|'[^']*'|[^'">])*?>/)(/tag/g,block._tag)();block.paragraph=replace(block.paragraph)("hr",block.hr)("heading",block.heading)("lheading",block.lheading)("blockquote",block.blockquote)("tag","<"+block._tag)("def",block.def)();block.normal=merge({},block);block.gfm=merge({},block.normal,{fences:/^ *(`{3,}|~{3,}) *(\S+)? *\n([\s\S]+?)\s*\1 *(?:\n+|$)/,paragraph:/^/});block.gfm.paragraph=replace(block.paragraph)("(?!","(?!"+block.gfm.fences.source.replace("\\1","\\2")+"|"+block.list.source.replace("\\1","\\3")+"|")();block.tables=merge({},block.gfm,{nptable:/^ *(\S.*\|.*)\n *([-:]+ *\|[-| :]*)\n((?:.*\|.*(?:\n|$))*)\n*/,table:/^ *\|(.+)\n *\|( *[-:]+[-| :]*)\n((?: *\|.*(?:\n|$))*)\n*/});function Lexer(options){this.tokens=[];this.tokens.links={};this.options=options||marked.defaults;this.rules=block.normal;if(this.options.gfm){if(this.options.tables){this.rules=block.tables}else{this.rules=block.gfm}}}Lexer.rules=block;Lexer.lex=function(src,options){var lexer=new Lexer(options);return lexer.lex(src)};Lexer.prototype.lex=function(src){src=src.replace(/\r\n|\r/g,"\n").replace(/\t/g,"    ").replace(/\u00a0/g," ").replace(/\u2424/g,"\n");return this.token(src,true)};Lexer.prototype.token=function(src,top,bq){var src=src.replace(/^ +$/gm,""),next,loose,cap,bull,b,item,space,i,l;while(src){if(cap=this.rules.newline.exec(src)){src=src.substring(cap[0].length);if(cap[0].length>1){this.tokens.push({type:"space"})}}if(cap=this.rules.code.exec(src)){src=src.substring(cap[0].length);cap=cap[0].replace(/^ {4}/gm,"");this.tokens.push({type:"code",text:!this.options.pedantic?cap.replace(/\n+$/,""):cap});continue}if(cap=this.rules.fences.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"code",lang:cap[2],text:cap[3]});continue}if(cap=this.rules.heading.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"heading",depth:cap[1].length,text:cap[2]});continue}if(top&&(cap=this.rules.nptable.exec(src))){src=src.substring(cap[0].length);item={type:"table",header:cap[1].replace(/^ *| *\| *$/g,"").split(/ *\| */),align:cap[2].replace(/^ *|\| *$/g,"").split(/ *\| */),cells:cap[3].replace(/\n$/,"").split("\n")};for(i=0;i<item.align.length;i++){if(/^ *-+: *$/.test(item.align[i])){item.align[i]="right"}else if(/^ *:-+: *$/.test(item.align[i])){item.align[i]="center"}else if(/^ *:-+ *$/.test(item.align[i])){item.align[i]="left"}else{item.align[i]=null}}for(i=0;i<item.cells.length;i++){item.cells[i]=item.cells[i].split(/ *\| */)}this.tokens.push(item);continue}if(cap=this.rules.lheading.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"heading",depth:cap[2]==="="?1:2,text:cap[1]});continue}if(cap=this.rules.hr.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"hr"});continue}if(cap=this.rules.blockquote.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"blockquote_start"});cap=cap[0].replace(/^ *> ?/gm,"");this.token(cap,top,true);this.tokens.push({type:"blockquote_end"});continue}if(cap=this.rules.list.exec(src)){src=src.substring(cap[0].length);bull=cap[2];this.tokens.push({type:"list_start",ordered:bull.length>1});cap=cap[0].match(this.rules.item);next=false;l=cap.length;i=0;for(;i<l;i++){item=cap[i];space=item.length;item=item.replace(/^ *([*+-]|\d+\.) +/,"");if(~item.indexOf("\n ")){space-=item.length;item=!this.options.pedantic?item.replace(new RegExp("^ {1,"+space+"}","gm"),""):item.replace(/^ {1,4}/gm,"")}if(this.options.smartLists&&i!==l-1){b=block.bullet.exec(cap[i+1])[0];if(bull!==b&&!(bull.length>1&&b.length>1)){src=cap.slice(i+1).join("\n")+src;i=l-1}}loose=next||/\n\n(?!\s*$)/.test(item);if(i!==l-1){next=item.charAt(item.length-1)==="\n";if(!loose)loose=next}this.tokens.push({type:loose?"loose_item_start":"list_item_start"});this.token(item,false,bq);this.tokens.push({type:"list_item_end"})}this.tokens.push({type:"list_end"});continue}if(cap=this.rules.html.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:this.options.sanitize?"paragraph":"html",pre:cap[1]==="pre"||cap[1]==="script"||cap[1]==="style",text:cap[0]});continue}if(!bq&&top&&(cap=this.rules.def.exec(src))){src=src.substring(cap[0].length);this.tokens.links[cap[1].toLowerCase()]={href:cap[2],title:cap[3]};continue}if(top&&(cap=this.rules.table.exec(src))){src=src.substring(cap[0].length);item={type:"table",header:cap[1].replace(/^ *| *\| *$/g,"").split(/ *\| */),align:cap[2].replace(/^ *|\| *$/g,"").split(/ *\| */),cells:cap[3].replace(/(?: *\| *)?\n$/,"").split("\n")};for(i=0;i<item.align.length;i++){if(/^ *-+: *$/.test(item.align[i])){item.align[i]="right"}else if(/^ *:-+: *$/.test(item.align[i])){item.align[i]="center"}else if(/^ *:-+ *$/.test(item.align[i])){item.align[i]="left"}else{item.align[i]=null}}for(i=0;i<item.cells.length;i++){item.cells[i]=item.cells[i].replace(/^ *\| *| *\| *$/g,"").split(/ *\| */)}this.tokens.push(item);continue}if(top&&(cap=this.rules.paragraph.exec(src))){src=src.substring(cap[0].length);this.tokens.push({type:"paragraph",text:cap[1].charAt(cap[1].length-1)==="\n"?cap[1].slice(0,-1):cap[1]});continue}if(cap=this.rules.text.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"text",text:cap[0]});continue}if(src){throw new Error("Infinite loop on byte: "+src.charCodeAt(0))}}return this.tokens};var inline={escape:/^\\([\\`*{}\[\]()#+\-.!_>])/,autolink:/^<([^ >]+(@|:\/)[^ >]+)>/,url:noop,tag:/^<!--[\s\S]*?-->|^<\/?\w+(?:"[^"]*"|'[^']*'|[^'">])*?>/,link:/^!?\[(inside)\]\(href\)/,reflink:/^!?\[(inside)\]\s*\[([^\]]*)\]/,nolink:/^!?\[((?:\[[^\]]*\]|[^\[\]])*)\]/,strong:/^__([\s\S]+?)__(?!_)|^\*\*([\s\S]+?)\*\*(?!\*)/,em:/^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,code:/^(`+)\s*([\s\S]*?[^`])\s*\1(?!`)/,br:/^ {2,}\n(?!\s*$)/,del:noop,text:/^[\s\S]+?(?=[\\<!\[_*`]| {2,}\n|$)/};inline._inside=/(?:\[[^\]]*\]|[^\[\]]|\](?=[^\[]*\]))*/;inline._href=/\s*<?([\s\S]*?)>?(?:\s+['"]([\s\S]*?)['"])?\s*/;inline.link=replace(inline.link)("inside",inline._inside)("href",inline._href)();inline.reflink=replace(inline.reflink)("inside",inline._inside)();inline.normal=merge({},inline);inline.pedantic=merge({},inline.normal,{strong:/^__(?=\S)([\s\S]*?\S)__(?!_)|^\*\*(?=\S)([\s\S]*?\S)\*\*(?!\*)/,em:/^_(?=\S)([\s\S]*?\S)_(?!_)|^\*(?=\S)([\s\S]*?\S)\*(?!\*)/});inline.gfm=merge({},inline.normal,{escape:replace(inline.escape)("])","~|])")(),url:/^(https?:\/\/[^\s<]+[^<.,:;"')\]\s])/,del:/^~~(?=\S)([\s\S]*?\S)~~/,text:replace(inline.text)("]|","~]|")("|","|https?://|")()});inline.breaks=merge({},inline.gfm,{br:replace(inline.br)("{2,}","*")(),text:replace(inline.gfm.text)("{2,}","*")()});function InlineLexer(links,options){this.options=options||marked.defaults;this.links=links;this.rules=inline.normal;this.renderer=this.options.renderer||new Renderer;this.renderer.options=this.options;if(!this.links){throw new Error("Tokens array requires a `links` property.")}if(this.options.gfm){if(this.options.breaks){this.rules=inline.breaks}else{this.rules=inline.gfm}}else if(this.options.pedantic){this.rules=inline.pedantic}}InlineLexer.rules=inline;InlineLexer.output=function(src,links,options){var inline=new InlineLexer(links,options);return inline.output(src)};InlineLexer.prototype.output=function(src){var out="",link,text,href,cap;while(src){if(cap=this.rules.escape.exec(src)){src=src.substring(cap[0].length);out+=cap[1];continue}if(cap=this.rules.autolink.exec(src)){src=src.substring(cap[0].length);if(cap[2]==="@"){text=cap[1].charAt(6)===":"?this.mangle(cap[1].substring(7)):this.mangle(cap[1]);href=this.mangle("mailto:")+text}else{text=escape(cap[1]);href=text}out+=this.renderer.link(href,null,text);continue}if(!this.inLink&&(cap=this.rules.url.exec(src))){src=src.substring(cap[0].length);text=escape(cap[1]);href=text;out+=this.renderer.link(href,null,text);continue}if(cap=this.rules.tag.exec(src)){if(!this.inLink&&/^<a /i.test(cap[0])){this.inLink=true}else if(this.inLink&&/^<\/a>/i.test(cap[0])){this.inLink=false}src=src.substring(cap[0].length);out+=this.options.sanitize?escape(cap[0]):cap[0];continue}if(cap=this.rules.link.exec(src)){src=src.substring(cap[0].length);this.inLink=true;out+=this.outputLink(cap,{href:cap[2],title:cap[3]});this.inLink=false;continue}if((cap=this.rules.reflink.exec(src))||(cap=this.rules.nolink.exec(src))){src=src.substring(cap[0].length);link=(cap[2]||cap[1]).replace(/\s+/g," ");link=this.links[link.toLowerCase()];if(!link||!link.href){out+=cap[0].charAt(0);src=cap[0].substring(1)+src;continue}this.inLink=true;out+=this.outputLink(cap,link);this.inLink=false;continue}if(cap=this.rules.strong.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.strong(this.output(cap[2]||cap[1]));continue}if(cap=this.rules.em.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.em(this.output(cap[2]||cap[1]));continue}if(cap=this.rules.code.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.codespan(escape(cap[2],true));continue}if(cap=this.rules.br.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.br();continue}if(cap=this.rules.del.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.del(this.output(cap[1]));continue}if(cap=this.rules.text.exec(src)){src=src.substring(cap[0].length);out+=escape(this.smartypants(cap[0]));continue}if(src){throw new Error("Infinite loop on byte: "+src.charCodeAt(0))}}return out};InlineLexer.prototype.outputLink=function(cap,link){var href=escape(link.href),title=link.title?escape(link.title):null;return cap[0].charAt(0)!=="!"?this.renderer.link(href,title,this.output(cap[1])):this.renderer.image(href,title,escape(cap[1]))};InlineLexer.prototype.smartypants=function(text){if(!this.options.smartypants)return text;return text.replace(/--/g,"—").replace(/(^|[-\u2014/(\[{"\s])'/g,"$1‘").replace(/'/g,"’").replace(/(^|[-\u2014/(\[{\u2018\s])"/g,"$1“").replace(/"/g,"”").replace(/\.{3}/g,"…")};InlineLexer.prototype.mangle=function(text){var out="",l=text.length,i=0,ch;for(;i<l;i++){ch=text.charCodeAt(i);if(Math.random()>.5){ch="x"+ch.toString(16)}out+="&#"+ch+";"}return out};function Renderer(options){this.options=options||{}}Renderer.prototype.code=function(code,lang,escaped){if(this.options.highlight){var out=this.options.highlight(code,lang);if(out!=null&&out!==code){escaped=true;code=out}}if(!lang){return"<pre><code>"+(escaped?code:escape(code,true))+"\n</code></pre>"}return'<pre><code class="'+this.options.langPrefix+escape(lang,true)+'">'+(escaped?code:escape(code,true))+"\n</code></pre>\n"};Renderer.prototype.blockquote=function(quote){return"<blockquote>\n"+quote+"</blockquote>\n"};Renderer.prototype.html=function(html){return html};Renderer.prototype.heading=function(text,level,raw){return"<h"+level+' id="'+this.options.headerPrefix+raw.toLowerCase().replace(/[^\w]+/g,"-")+'">'+text+"</h"+level+">\n"};Renderer.prototype.hr=function(){return this.options.xhtml?"<hr/>\n":"<hr>\n"};Renderer.prototype.list=function(body,ordered){var type=ordered?"ol":"ul";return"<"+type+">\n"+body+"</"+type+">\n"};Renderer.prototype.listitem=function(text){return"<li>"+text+"</li>\n"};Renderer.prototype.paragraph=function(text){return"<p>"+text+"</p>\n"};Renderer.prototype.table=function(header,body){return"<table>\n"+"<thead>\n"+header+"</thead>\n"+"<tbody>\n"+body+"</tbody>\n"+"</table>\n"};Renderer.prototype.tablerow=function(content){return"<tr>\n"+content+"</tr>\n"};Renderer.prototype.tablecell=function(content,flags){var type=flags.header?"th":"td";var tag=flags.align?"<"+type+' style="text-align:'+flags.align+'">':"<"+type+">";return tag+content+"</"+type+">\n"};Renderer.prototype.strong=function(text){return"<strong>"+text+"</strong>"};Renderer.prototype.em=function(text){return"<em>"+text+"</em>"};Renderer.prototype.codespan=function(text){return"<code>"+text+"</code>"};Renderer.prototype.br=function(){return this.options.xhtml?"<br/>":"<br>"};Renderer.prototype.del=function(text){return"<del>"+text+"</del>"};Renderer.prototype.link=function(href,title,text){if(this.options.sanitize){try{var prot=decodeURIComponent(unescape(href)).replace(/[^\w:]/g,"").toLowerCase()}catch(e){return""}if(prot.indexOf("javascript:")===0){return""}}var out='<a href="'+href+'"';if(title){out+=' title="'+title+'"'}out+=">"+text+"</a>";return out};Renderer.prototype.image=function(href,title,text){var out='<img src="'+href+'" alt="'+text+'"';if(title){out+=' title="'+title+'"'}out+=this.options.xhtml?"/>":">";return out};function Parser(options){this.tokens=[];this.token=null;this.options=options||marked.defaults;this.options.renderer=this.options.renderer||new Renderer;this.renderer=this.options.renderer;this.renderer.options=this.options}Parser.parse=function(src,options,renderer){var parser=new Parser(options,renderer);return parser.parse(src)};Parser.prototype.parse=function(src){this.inline=new InlineLexer(src.links,this.options,this.renderer);this.tokens=src.reverse();var out="";while(this.next()){out+=this.tok()}return out};Parser.prototype.next=function(){return this.token=this.tokens.pop()};Parser.prototype.peek=function(){return this.tokens[this.tokens.length-1]||0};Parser.prototype.parseText=function(){var body=this.token.text;while(this.peek().type==="text"){body+="\n"+this.next().text}return this.inline.output(body)};Parser.prototype.tok=function(){switch(this.token.type){case"space":{return""}case"hr":{return this.renderer.hr()}case"heading":{return this.renderer.heading(this.inline.output(this.token.text),this.token.depth,this.token.text)}case"code":{return this.renderer.code(this.token.text,this.token.lang,this.token.escaped)}case"table":{var header="",body="",i,row,cell,flags,j;cell="";for(i=0;i<this.token.header.length;i++){flags={header:true,align:this.token.align[i]};cell+=this.renderer.tablecell(this.inline.output(this.token.header[i]),{header:true,align:this.token.align[i]})}header+=this.renderer.tablerow(cell);for(i=0;i<this.token.cells.length;i++){row=this.token.cells[i];cell="";for(j=0;j<row.length;j++){cell+=this.renderer.tablecell(this.inline.output(row[j]),{header:false,align:this.token.align[j]})}body+=this.renderer.tablerow(cell)}return this.renderer.table(header,body)}case"blockquote_start":{var body="";while(this.next().type!=="blockquote_end"){body+=this.tok()}return this.renderer.blockquote(body)}case"list_start":{var body="",ordered=this.token.ordered;while(this.next().type!=="list_end"){body+=this.tok()}return this.renderer.list(body,ordered)}case"list_item_start":{var body="";while(this.next().type!=="list_item_end"){body+=this.token.type==="text"?this.parseText():this.tok()}return this.renderer.listitem(body)}case"loose_item_start":{var body="";while(this.next().type!=="list_item_end"){body+=this.tok()}return this.renderer.listitem(body)}case"html":{var html=!this.token.pre&&!this.options.pedantic?this.inline.output(this.token.text):this.token.text;return this.renderer.html(html)}case"paragraph":{return this.renderer.paragraph(this.inline.output(this.token.text))}case"text":{return this.renderer.paragraph(this.parseText())}}};function escape(html,encode){return html.replace(!encode?/&(?!#?\w+;)/g:/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}function unescape(html){return html.replace(/&([#\w]+);/g,function(_,n){n=n.toLowerCase();if(n==="colon")return":";if(n.charAt(0)==="#"){return n.charAt(1)==="x"?String.fromCharCode(parseInt(n.substring(2),16)):String.fromCharCode(+n.substring(1))}return""})}function replace(regex,opt){regex=regex.source;opt=opt||"";return function self(name,val){if(!name)return new RegExp(regex,opt);val=val.source||val;val=val.replace(/(^|[^\[])\^/g,"$1");regex=regex.replace(name,val);return self}}function noop(){}noop.exec=noop;function merge(obj){var i=1,target,key;for(;i<arguments.length;i++){target=arguments[i];for(key in target){if(Object.prototype.hasOwnProperty.call(target,key)){obj[key]=target[key]}}}return obj}function marked(src,opt,callback){if(callback||typeof opt==="function"){if(!callback){callback=opt;opt=null}opt=merge({},marked.defaults,opt||{});var highlight=opt.highlight,tokens,pending,i=0;try{tokens=Lexer.lex(src,opt)}catch(e){return callback(e)}pending=tokens.length;var done=function(err){if(err){opt.highlight=highlight;return callback(err)}var out;try{out=Parser.parse(tokens,opt)}catch(e){err=e}opt.highlight=highlight;return err?callback(err):callback(null,out)};if(!highlight||highlight.length<3){return done()}delete opt.highlight;if(!pending)return done();for(;i<tokens.length;i++){(function(token){if(token.type!=="code"){return--pending||done()}return highlight(token.text,token.lang,function(err,code){if(err)return done(err);if(code==null||code===token.text){return--pending||done()}token.text=code;token.escaped=true;--pending||done()})})(tokens[i])}return}try{if(opt)opt=merge({},marked.defaults,opt);return Parser.parse(Lexer.lex(src,opt),opt)}catch(e){e.message+="\nPlease report this to https://github.com/chjj/marked.";if((opt||marked.defaults).silent){return"<p>An error occured:</p><pre>"+escape(e.message+"",true)+"</pre>"}throw e}}marked.options=marked.setOptions=function(opt){merge(marked.defaults,opt);return marked};marked.defaults={gfm:true,tables:true,breaks:false,pedantic:false,sanitize:false,smartLists:false,silent:false,highlight:null,langPrefix:"lang-",smartypants:false,headerPrefix:"",renderer:new Renderer,xhtml:false};marked.Parser=Parser;marked.parser=Parser.parse;marked.Renderer=Renderer;marked.Lexer=Lexer;marked.lexer=Lexer.lex;marked.InlineLexer=InlineLexer;marked.inlineLexer=InlineLexer.output;marked.parse=marked;if(typeof module!=="undefined"&&typeof exports==="object"){module.exports=marked}else if(typeof define==="function"&&define.amd){define(function(){return marked})}else{this.marked=marked}}).call(function(){return this||(typeof window!=="undefined"?window:global)}());
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Animation.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/lib/striptags.js ---- */
+
+
+'use strict';
+
+//src from https://github.com/ericnorris/striptags/blob/master/src/striptags.js
+
+(function (global) {
+
+    const STATE_PLAINTEXT = Symbol('plaintext');
+    const STATE_HTML      = Symbol('html');
+    const STATE_COMMENT   = Symbol('comment');
+
+    const ALLOWED_TAGS_REGEX  = /<(\w*)>/g;
+    const NORMALIZE_TAG_REGEX = /<\/?([^\s\/>]+)/;
+
+    function striptags(html, allowable_tags, tag_replacement) {
+        html            = html || '';
+        allowable_tags  = allowable_tags || [];
+        tag_replacement = tag_replacement || '';
+
+        let context = init_context(allowable_tags, tag_replacement);
+
+        return striptags_internal(html, context);
+    }
+
+    function init_striptags_stream(allowable_tags, tag_replacement) {
+        allowable_tags  = allowable_tags || [];
+        tag_replacement = tag_replacement || '';
+
+        let context = init_context(allowable_tags, tag_replacement);
+
+        return function striptags_stream(html) {
+            return striptags_internal(html || '', context);
+        };
+    }
+
+    striptags.init_streaming_mode = init_striptags_stream;
+
+    function init_context(allowable_tags, tag_replacement) {
+        allowable_tags = parse_allowable_tags(allowable_tags);
+
+        return {
+            allowable_tags,
+            tag_replacement,
+
+            state         : STATE_PLAINTEXT,
+            tag_buffer    : '',
+            depth         : 0,
+            in_quote_char : ''
+        };
+    }
+
+    function striptags_internal(html, context) {
+        let allowable_tags  = context.allowable_tags;
+        let tag_replacement = context.tag_replacement;
+
+        let state         = context.state;
+        let tag_buffer    = context.tag_buffer;
+        let depth         = context.depth;
+        let in_quote_char = context.in_quote_char;
+        let output        = '';
+
+        for (let idx = 0, length = html.length; idx < length; idx++) {
+            let char = html[idx];
+
+            if (state === STATE_PLAINTEXT) {
+                switch (char) {
+                    case '<':
+                        state       = STATE_HTML;
+                        tag_buffer += char;
+                        break;
+
+                    default:
+                        output += char;
+                        break;
+                }
+            }
+
+            else if (state === STATE_HTML) {
+                switch (char) {
+                    case '<':
+                        // ignore '<' if inside a quote
+                        if (in_quote_char) {
+                            break;
+                        }
+
+                        // we're seeing a nested '<'
+                        depth++;
+                        break;
+
+                    case '>':
+                        // ignore '>' if inside a quote
+                        if (in_quote_char) {
+                            break;
+                        }
+
+                        // something like this is happening: '<<>>'
+                        if (depth) {
+                            depth--;
+
+                            break;
+                        }
+
+                        // this is closing the tag in tag_buffer
+                        in_quote_char = '';
+                        state         = STATE_PLAINTEXT;
+                        tag_buffer   += '>';
+
+                        if (allowable_tags.has(normalize_tag(tag_buffer))) {
+                            output += tag_buffer;
+                        } else {
+                            output += tag_replacement;
+                        }
+
+                        tag_buffer = '';
+                        break;
+
+                    case '"':
+                    case '\'':
+                        // catch both single and double quotes
+
+                        if (char === in_quote_char) {
+                            in_quote_char = '';
+                        } else {
+                            in_quote_char = in_quote_char || char;
+                        }
+
+                        tag_buffer += char;
+                        break;
+
+                    case '-':
+                        if (tag_buffer === '<!-') {
+                            state = STATE_COMMENT;
+                        }
+
+                        tag_buffer += char;
+                        break;
+
+                    case ' ':
+                    case '\n':
+                        if (tag_buffer === '<') {
+                            state      = STATE_PLAINTEXT;
+                            output    += '< ';
+                            tag_buffer = '';
+
+                            break;
+                        }
+
+                        tag_buffer += char;
+                        break;
+
+                    default:
+                        tag_buffer += char;
+                        break;
+                }
+            }
+
+            else if (state === STATE_COMMENT) {
+                switch (char) {
+                    case '>':
+                        if (tag_buffer.slice(-2) == '--') {
+                            // close the comment
+                            state = STATE_PLAINTEXT;
+                        }
+
+                        tag_buffer = '';
+                        break;
+
+                    default:
+                        tag_buffer += char;
+                        break;
+                }
+            }
+        }
+
+        // save the context for future iterations
+        context.state         = state;
+        context.tag_buffer    = tag_buffer;
+        context.depth         = depth;
+        context.in_quote_char = in_quote_char;
+
+        return output;
+    }
+
+    function parse_allowable_tags(allowable_tags) {
+        let tags_array = [];
+
+        if (typeof allowable_tags === 'string') {
+            let match;
+
+            while ((match = ALLOWED_TAGS_REGEX.exec(allowable_tags)) !== null) {
+                tags_array.push(match[1]);
+            }
+        }
+
+        else if (typeof allowable_tags[Symbol.iterator] === 'function') {
+            tags_array = allowable_tags;
+        }
+
+        return new Set(tags_array);
+    }
+
+    function normalize_tag(tag_buffer) {
+        let match = NORMALIZE_TAG_REGEX.exec(tag_buffer);
+
+        return match ? match[1].toLowerCase() : null;
+    }
+        // Browser
+        global.striptags = striptags;
+}(window));
+
+
+
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Animation.coffee ---- */
 
 
 (function() {
@@ -1324,8 +1740,8 @@ function clone(obj) {
     };
 
     Animation.prototype.show = function(elem, props) {
-      var delay, _ref;
-      delay = ((_ref = arguments[arguments.length - 2]) != null ? _ref.delay : void 0) * 1000 || 1;
+      var delay, ref;
+      delay = ((ref = arguments[arguments.length - 2]) != null ? ref.delay : void 0) * 1000 || 1;
       elem.className += " animate";
       elem.style.opacity = 0;
       setTimeout((function() {
@@ -1339,8 +1755,8 @@ function clone(obj) {
     };
 
     Animation.prototype.hide = function(elem, remove_func, props) {
-      var delay, _ref;
-      delay = ((_ref = arguments[arguments.length - 2]) != null ? _ref.delay : void 0) * 1000 || 1;
+      var delay, ref;
+      delay = ((ref = arguments[arguments.length - 2]) != null ? ref.delay : void 0) * 1000 || 1;
       elem.className += " animate";
       setTimeout((function() {
         return elem.style.opacity = 0;
@@ -1413,30 +1829,30 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Autosize.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Autosize.coffee ---- */
 
 
 (function() {
   var Autosize,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  Autosize = (function(_super) {
-    __extends(Autosize, _super);
+  Autosize = (function(superClass) {
+    extend(Autosize, superClass);
 
-    function Autosize(_at_attrs) {
-      var _base;
-      this.attrs = _at_attrs != null ? _at_attrs : {};
-      this.render = __bind(this.render, this);
-      this.handleKeydown = __bind(this.handleKeydown, this);
-      this.handleInput = __bind(this.handleInput, this);
-      this.autoHeight = __bind(this.autoHeight, this);
-      this.setValue = __bind(this.setValue, this);
-      this.storeNode = __bind(this.storeNode, this);
+    function Autosize(attrs1) {
+      var base;
+      this.attrs = attrs1 != null ? attrs1 : {};
+      this.render = bind(this.render, this);
+      this.handleKeydown = bind(this.handleKeydown, this);
+      this.handleInput = bind(this.handleInput, this);
+      this.autoHeight = bind(this.autoHeight, this);
+      this.setValue = bind(this.setValue, this);
+      this.storeNode = bind(this.storeNode, this);
       this.node = null;
-      if ((_base = this.attrs).classes == null) {
-        _base.classes = {};
+      if ((base = this.attrs).classes == null) {
+        base.classes = {};
       }
       this.attrs.classes.loading = false;
       this.attrs.oninput = this.handleInput;
@@ -1551,7 +1967,7 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Debug.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Debug.coffee ---- */
 
 
 (function() {
@@ -1584,28 +2000,28 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Editable.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Editable.coffee ---- */
 
 
 (function() {
   var Editable,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  Editable = (function(_super) {
-    __extends(Editable, _super);
+  Editable = (function(superClass) {
+    extend(Editable, superClass);
 
-    function Editable(_at_type, _at_handleSave, _at_handleDelete) {
-      this.type = _at_type;
-      this.handleSave = _at_handleSave;
-      this.handleDelete = _at_handleDelete;
-      this.render = __bind(this.render, this);
-      this.handleSaveClick = __bind(this.handleSaveClick, this);
-      this.handleDeleteClick = __bind(this.handleDeleteClick, this);
-      this.handleCancelClick = __bind(this.handleCancelClick, this);
-      this.handleEditClick = __bind(this.handleEditClick, this);
-      this.storeNode = __bind(this.storeNode, this);
+    function Editable(type, handleSave, handleDelete) {
+      this.type = type;
+      this.handleSave = handleSave;
+      this.handleDelete = handleDelete;
+      this.render = bind(this.render, this);
+      this.handleSaveClick = bind(this.handleSaveClick, this);
+      this.handleDeleteClick = bind(this.handleDeleteClick, this);
+      this.handleCancelClick = bind(this.handleCancelClick, this);
+      this.handleEditClick = bind(this.handleEditClick, this);
+      this.storeNode = bind(this.storeNode, this);
       this.node = null;
       this.editing = false;
       this.render_function = null;
@@ -1667,7 +2083,7 @@ function clone(obj) {
           href: "#Delete",
           onclick: this.handleDeleteClick,
           tabindex: "-1"
-        }, "Delete") : void 0, h("a.button.button-submit.button-small", {
+        }) : void 0, h("a.button.button-submit.button-small", {
           href: "#Save",
           onclick: this.handleSaveClick
         }, "Save")));
@@ -1695,20 +2111,20 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/ImagePreview.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/ImagePreview.coffee ---- */
 
 
 (function() {
   var ImagePreview,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ImagePreview = (function(_super) {
-    __extends(ImagePreview, _super);
+  ImagePreview = (function(superClass) {
+    extend(ImagePreview, superClass);
 
     function ImagePreview() {
-      this.setPreviewData = __bind(this.setPreviewData, this);
+      this.setPreviewData = bind(this.setPreviewData, this);
       this.width = 0;
       this.height = 0;
       this.preview_data = "";
@@ -1730,14 +2146,14 @@ function clone(obj) {
       return [Math.round(width), Math.round(height)];
     };
 
-    ImagePreview.prototype.setPreviewData = function(_at_preview_data) {
-      var colors, pixels, _ref;
-      this.preview_data = _at_preview_data;
-      return _ref = this.preview_data.split(","), this.width = _ref[0], this.height = _ref[1], colors = _ref[2], pixels = _ref[3], _ref;
+    ImagePreview.prototype.setPreviewData = function(preview_data) {
+      var colors, pixels, ref;
+      this.preview_data = preview_data;
+      return ref = this.preview_data.split(","), this.width = ref[0], this.height = ref[1], colors = ref[2], pixels = ref[3], ref;
     };
 
     ImagePreview.prototype.getPreviewUri = function(target_width, target_height) {
-      var b, back, canvas, color, color_codes, colors, ctx, di, g, height, hex, i, image_data, pixel, pixels, r, width, _i, _j, _len, _len1, _ref, _ref1;
+      var b, back, canvas, color, color_codes, colors, ctx, di, g, height, hex, i, image_data, j, k, len, len1, pixel, pixels, r, ref, ref1, width;
       if (target_width == null) {
         target_width = 10;
       }
@@ -1745,8 +2161,8 @@ function clone(obj) {
         target_height = 10;
       }
       this.logStart("Render");
-      _ref = this.preview_data.split(","), this.width = _ref[0], this.height = _ref[1], colors = _ref[2], pixels = _ref[3];
-      _ref1 = this.getSize(target_width, target_height), width = _ref1[0], height = _ref1[1];
+      ref = this.preview_data.split(","), this.width = ref[0], this.height = ref[1], colors = ref[2], pixels = ref[3];
+      ref1 = this.getSize(target_width, target_height), width = ref1[0], height = ref1[1];
       colors = colors.match(/.{3}/g);
       pixels = pixels.split("");
       canvas = document.createElement("canvas");
@@ -1755,13 +2171,13 @@ function clone(obj) {
       ctx = canvas.getContext('2d');
       image_data = ctx.createImageData(width, height);
       color_codes = {};
-      for (i = _i = 0, _len = colors.length; _i < _len; i = ++_i) {
+      for (i = j = 0, len = colors.length; j < len; i = ++j) {
         color = colors[i];
         color_codes[this.pixel_chars[i]] = color;
       }
       di = 0;
-      for (_j = 0, _len1 = pixels.length; _j < _len1; _j++) {
-        pixel = pixels[_j];
+      for (k = 0, len1 = pixels.length; k < len1; k++) {
+        pixel = pixels[k];
         hex = color_codes[pixel];
         r = parseInt(hex[0], 16) * 17;
         g = parseInt(hex[1], 16) * 17;
@@ -1798,37 +2214,37 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/ItemList.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/ItemList.coffee ---- */
 
 
 (function() {
   var ItemList;
 
   ItemList = (function() {
-    function ItemList(_at_item_class, _at_key) {
-      this.item_class = _at_item_class;
-      this.key = _at_key;
+    function ItemList(item_class1, key1) {
+      this.item_class = item_class1;
+      this.key = key1;
       this.items = [];
       this.items_bykey = {};
     }
 
     ItemList.prototype.sync = function(rows, item_class, key) {
-      var current_obj, item, row, _i, _len, _results;
+      var current_obj, i, item, len, results, row;
       this.items.splice(0, this.items.length);
-      _results = [];
-      for (_i = 0, _len = rows.length; _i < _len; _i++) {
-        row = rows[_i];
+      results = [];
+      for (i = 0, len = rows.length; i < len; i++) {
+        row = rows[i];
         current_obj = this.items_bykey[row[this.key]];
         if (current_obj) {
           current_obj.row = row;
-          _results.push(this.items.push(current_obj));
+          results.push(this.items.push(current_obj));
         } else {
           item = new this.item_class(row, this);
           this.items_bykey[row[this.key]] = item;
-          _results.push(this.items.push(item));
+          results.push(this.items.push(item));
         }
       }
-      return _results;
+      return results;
     };
 
     ItemList.prototype.deleteItem = function(item) {
@@ -1851,7 +2267,18 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Maxheight.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/MarkdownStrip.coffee ---- */
+
+
+(function() {
+  window.stripMarkdown = function(str) {
+    return entities.decode(striptags(Text.renderMarked(str)));
+  };
+
+}).call(this);
+
+
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Maxheight.coffee ---- */
 
 
 (function() {
@@ -1887,31 +2314,31 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Menu.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Menu.coffee ---- */
 
 
 (function() {
   var Menu,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   Menu = (function() {
     function Menu() {
-      this.render = __bind(this.render, this);
-      this.renderItem = __bind(this.renderItem, this);
-      this.handleClick = __bind(this.handleClick, this);
-      this.storeNode = __bind(this.storeNode, this);
-      this.toggle = __bind(this.toggle, this);
-      this.hide = __bind(this.hide, this);
-      this.show = __bind(this.show, this);
+      this.render = bind(this.render, this);
+      this.renderItem = bind(this.renderItem, this);
+      this.handleClick = bind(this.handleClick, this);
+      this.storeNode = bind(this.storeNode, this);
+      this.toggle = bind(this.toggle, this);
+      this.hide = bind(this.hide, this);
+      this.show = bind(this.show, this);
       this.visible = false;
       this.items = [];
       this.node = null;
     }
 
     Menu.prototype.show = function() {
-      var _ref;
-      if ((_ref = window.visible_menu) != null) {
-        _ref.hide();
+      var ref;
+      if ((ref = window.visible_menu) != null) {
+        ref.hide();
       }
       this.visible = true;
       return window.visible_menu = this;
@@ -1948,11 +2375,11 @@ function clone(obj) {
     };
 
     Menu.prototype.handleClick = function(e) {
-      var cb, item, keep_menu, selected, title, _i, _len, _ref;
+      var cb, i, item, keep_menu, len, ref, selected, title;
       keep_menu = false;
-      _ref = this.items;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        item = _ref[_i];
+      ref = this.items;
+      for (i = 0, len = ref.length; i < len; i++) {
+        item = ref[i];
         title = item[0], cb = item[1], selected = item[2];
         if (title === e.target.textContent) {
           keep_menu = cb(item);
@@ -2024,22 +2451,22 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Overlay.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Overlay.coffee ---- */
 
 
 (function() {
   var Overlay,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  Overlay = (function(_super) {
-    __extends(Overlay, _super);
+  Overlay = (function(superClass) {
+    extend(Overlay, superClass);
 
     function Overlay() {
-      this.render = __bind(this.render, this);
-      this.handleClick = __bind(this.handleClick, this);
-      this.zoomImageTag = __bind(this.zoomImageTag, this);
+      this.render = bind(this.render, this);
+      this.handleClick = bind(this.handleClick, this);
+      this.zoomImageTag = bind(this.zoomImageTag, this);
       this.visible = false;
       this.called = false;
       this.height = 0;
@@ -2142,20 +2569,20 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Scrollwatcher.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Scrollwatcher.coffee ---- */
 
 
 (function() {
   var Scrollwatcher,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  Scrollwatcher = (function(_super) {
-    __extends(Scrollwatcher, _super);
+  Scrollwatcher = (function(superClass) {
+    extend(Scrollwatcher, superClass);
 
     function Scrollwatcher() {
-      this.checkScroll = __bind(this.checkScroll, this);
+      this.checkScroll = bind(this.checkScroll, this);
       this.log("Scrollwatcher");
       this.items = [];
       window.onscroll = (function(_this) {
@@ -2167,24 +2594,24 @@ function clone(obj) {
     }
 
     Scrollwatcher.prototype.checkScroll = function() {
-      var cb, i, item_top, tag, view_bottom, view_top, _i, _ref, _ref1, _results;
+      var cb, i, item_top, j, ref, ref1, results, tag, view_bottom, view_top;
       if (!this.items.length) {
         return;
       }
       view_top = window.scrollY;
       view_bottom = window.scrollY + window.innerHeight;
-      _ref = this.items;
-      _results = [];
-      for (i = _i = _ref.length - 1; _i >= 0; i = _i += -1) {
-        _ref1 = _ref[i], item_top = _ref1[0], tag = _ref1[1], cb = _ref1[2];
+      ref = this.items;
+      results = [];
+      for (i = j = ref.length - 1; j >= 0; i = j += -1) {
+        ref1 = ref[i], item_top = ref1[0], tag = ref1[1], cb = ref1[2];
         if (item_top + 900 > view_top && item_top - 400 < view_bottom) {
           this.items.splice(i, 1);
-          _results.push(cb(tag));
+          results.push(cb(tag));
         } else {
-          _results.push(void 0);
+          results.push(void 0);
         }
       }
-      return _results;
+      return results;
     };
 
     Scrollwatcher.prototype.add = function(tag, cb) {
@@ -2201,18 +2628,18 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Text.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Text.coffee ---- */
 
 
 (function() {
   var MarkedRenderer, Text,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty,
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  MarkedRenderer = (function(_super) {
-    __extends(MarkedRenderer, _super);
+  MarkedRenderer = (function(superClass) {
+    extend(MarkedRenderer, superClass);
 
     function MarkedRenderer() {
       return MarkedRenderer.__super__.constructor.apply(this, arguments);
@@ -2228,12 +2655,12 @@ function clone(obj) {
 
   Text = (function() {
     function Text() {
-      this.renderLinks = __bind(this.renderLinks, this);
-      this.renderMarked = __bind(this.renderMarked, this);
+      this.renderLinks = bind(this.renderLinks, this);
+      this.renderMarked = bind(this.renderMarked, this);
     }
 
     Text.prototype.toColor = function(text, saturation, lightness) {
-      var hash, i, _i, _ref;
+      var hash, i, j, ref;
       if (saturation == null) {
         saturation = 30;
       }
@@ -2241,7 +2668,7 @@ function clone(obj) {
         lightness = 50;
       }
       hash = 0;
-      for (i = _i = 0, _ref = text.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+      for (i = j = 0, ref = text.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
         hash += text.charCodeAt(i) * i;
         hash = hash % 1777;
       }
@@ -2288,6 +2715,7 @@ function clone(obj) {
       } else {
         text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="');
       }
+      text = text.replace(/href="\.\/\?/g, 'href="?');
       text = text.replace(/href="\?/g, 'onclick="return Page.handleLinkClick(window.event)" href="?');
       return text;
     };
@@ -2308,7 +2736,7 @@ function clone(obj) {
 
     Text.prototype.getSiteUrl = function(address) {
       if (window.is_proxy) {
-        if (__indexOf.call(address, ".") >= 0) {
+        if (indexOf.call(address, ".") >= 0) {
           return "http://" + address + "/";
         } else {
           return "http://zero/" + address + "/";
@@ -2351,15 +2779,15 @@ function clone(obj) {
     };
 
     Text.prototype.distance = function(s1, s2) {
-      var char, extra_parts, key, match, next_find, next_find_i, val, _i, _len;
+      var char, extra_parts, j, key, len, match, next_find, next_find_i, val;
       s1 = s1.toLocaleLowerCase();
       s2 = s2.toLocaleLowerCase();
       next_find_i = 0;
       next_find = s2[0];
       match = true;
       extra_parts = {};
-      for (_i = 0, _len = s1.length; _i < _len; _i++) {
-        char = s1[_i];
+      for (j = 0, len = s1.length; j < len; j++) {
+        char = s1[j];
         if (char !== next_find) {
           if (extra_parts[next_find_i]) {
             extra_parts[next_find_i] += char;
@@ -2375,13 +2803,13 @@ function clone(obj) {
         extra_parts[next_find_i] = "";
       }
       extra_parts = (function() {
-        var _results;
-        _results = [];
+        var results;
+        results = [];
         for (key in extra_parts) {
           val = extra_parts[key];
-          _results.push(val);
+          results.push(val);
         }
-        return _results;
+        return results;
       })();
       if (next_find_i >= s2.length) {
         return extra_parts.length + extra_parts.join("").length;
@@ -2391,12 +2819,12 @@ function clone(obj) {
     };
 
     Text.prototype.queryParse = function(query) {
-      var key, params, part, parts, val, _i, _len, _ref;
+      var j, key, len, params, part, parts, ref, val;
       params = {};
       parts = query.split('&');
-      for (_i = 0, _len = parts.length; _i < _len; _i++) {
-        part = parts[_i];
-        _ref = part.split("="), key = _ref[0], val = _ref[1];
+      for (j = 0, len = parts.length; j < len; j++) {
+        part = parts[j];
+        ref = part.split("="), key = ref[0], val = ref[1];
         if (val) {
           params[decodeURIComponent(key)] = decodeURIComponent(val);
         } else {
@@ -2424,10 +2852,10 @@ function clone(obj) {
     };
 
     Text.prototype.highlight = function(text, search) {
-      var back, i, part, parts, _i, _len;
+      var back, i, j, len, part, parts;
       parts = text.split(RegExp(search, "i"));
       back = [];
-      for (i = _i = 0, _len = parts.length; _i < _len; i = ++_i) {
+      for (i = j = 0, len = parts.length; j < len; i = ++j) {
         part = parts[i];
         back.push(part);
         if (i < parts.length - 1) {
@@ -2442,13 +2870,13 @@ function clone(obj) {
     Text.prototype.sqlIn = function(values) {
       var value;
       return "(" + ((function() {
-        var _i, _len, _results;
-        _results = [];
-        for (_i = 0, _len = values.length; _i < _len; _i++) {
-          value = values[_i];
-          _results.push("'" + value + "'");
+        var j, len, results;
+        results = [];
+        for (j = 0, len = values.length; j < len; j++) {
+          value = values[j];
+          results.push("'" + value + "'");
         }
-        return _results;
+        return results;
       })()).join(',') + ")";
     };
 
@@ -2479,7 +2907,7 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Time.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Time.coffee ---- */
 
 
 (function() {
@@ -2547,7 +2975,7 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Translate.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Translate.coffee ---- */
 
 
 (function() {
@@ -2558,25 +2986,25 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Uploadable.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/Uploadable.coffee ---- */
 
 
 (function() {
   var Uploadable,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  Uploadable = (function(_super) {
-    __extends(Uploadable, _super);
+  Uploadable = (function(superClass) {
+    extend(Uploadable, superClass);
 
-    function Uploadable(_at_handleSave) {
-      this.handleSave = _at_handleSave;
-      this.getPixelData = __bind(this.getPixelData, this);
-      this.render = __bind(this.render, this);
-      this.handleUploadClick = __bind(this.handleUploadClick, this);
-      this.resizeImage = __bind(this.resizeImage, this);
-      this.storeNode = __bind(this.storeNode, this);
+    function Uploadable(handleSave) {
+      this.handleSave = handleSave;
+      this.getPixelData = bind(this.getPixelData, this);
+      this.render = bind(this.render, this);
+      this.handleUploadClick = bind(this.handleUploadClick, this);
+      this.resizeImage = bind(this.resizeImage, this);
+      this.storeNode = bind(this.storeNode, this);
       this.node = null;
       this.resize_width = 50;
       this.resize_height = 50;
@@ -2607,11 +3035,11 @@ function clone(obj) {
       image = new Image();
       image.onload = (function(_this) {
         return function() {
-          var canvas, canvas_quant, ctx, image_base64uri, optimizer, quant, _ref;
+          var canvas, canvas_quant, ctx, image_base64uri, optimizer, quant, ref;
           _this.log("Resize image loaded");
           canvas = document.createElement("canvas");
           if (_this.preverse_ratio) {
-            _ref = _this.image_preview.calcSize(image.width, image.height, width, height), canvas.width = _ref[0], canvas.height = _ref[1];
+            ref = _this.image_preview.calcSize(image.width, image.height, width, height), canvas.width = ref[0], canvas.height = ref[1];
           } else {
             canvas.width = width;
             canvas.height = height;
@@ -2695,12 +3123,12 @@ function clone(obj) {
     };
 
     Uploadable.prototype.getPixelData = function(data) {
-      var b, color_db, colors, colors_next_id, g, hex, i, pixels, r, _i, _ref;
+      var b, color_db, colors, colors_next_id, g, hex, i, j, pixels, r, ref;
       color_db = {};
       colors = [];
       colors_next_id = 0;
       pixels = [];
-      for (i = _i = 0, _ref = data.length - 1; _i <= _ref; i = _i += 4) {
+      for (i = j = 0, ref = data.length - 1; j <= ref; i = j += 4) {
         r = data[i];
         g = data[i + 1];
         b = data[i + 2];
@@ -2727,11 +3155,11 @@ function clone(obj) {
       image.src = image_base64uri;
       return image.onload = (function(_this) {
         return function() {
-          var back, canvas, ctx, image_data, image_height, image_width, pixeldata, quant, _ref;
+          var back, canvas, ctx, image_data, image_height, image_width, pixeldata, quant, ref;
           image_width = image.width;
           image_height = image.height;
           canvas = document.createElement("canvas");
-          _ref = _this.image_preview.calcSize(image.width, image.height, target_width, target_height), canvas.width = _ref[0], canvas.height = _ref[1];
+          ref = _this.image_preview.calcSize(image.width, image.height, target_width, target_height), canvas.width = ref[0], canvas.height = ref[1];
           ctx = canvas.getContext("2d");
           ctx.fillStyle = "#FFF";
           ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -2765,23 +3193,23 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/ZeroFrame.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/utils/ZeroFrame.coffee ---- */
 
 
 (function() {
   var ZeroFrame,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ZeroFrame = (function(_super) {
-    __extends(ZeroFrame, _super);
+  ZeroFrame = (function(superClass) {
+    extend(ZeroFrame, superClass);
 
     function ZeroFrame(url) {
-      this.onCloseWebsocket = __bind(this.onCloseWebsocket, this);
-      this.onOpenWebsocket = __bind(this.onOpenWebsocket, this);
-      this.onRequest = __bind(this.onRequest, this);
-      this.onMessage = __bind(this.onMessage, this);
+      this.onCloseWebsocket = bind(this.onCloseWebsocket, this);
+      this.onOpenWebsocket = bind(this.onOpenWebsocket, this);
+      this.onRequest = bind(this.onRequest, this);
+      this.onMessage = bind(this.onMessage, this);
       this.url = url;
       this.waiting_cb = {};
       this.history_state = {};
@@ -2919,23 +3347,23 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ActivityList.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ActivityList.coffee ---- */
 
 
 (function() {
   var ActivityList,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty,
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  ActivityList = (function(_super) {
-    __extends(ActivityList, _super);
+  ActivityList = (function(superClass) {
+    extend(ActivityList, superClass);
 
     function ActivityList() {
-      this.update = __bind(this.update, this);
-      this.render = __bind(this.render, this);
-      this.handleMoreClick = __bind(this.handleMoreClick, this);
+      this.update = bind(this.update, this);
+      this.render = bind(this.render, this);
+      this.handleMoreClick = bind(this.handleMoreClick, this);
       this.activities = null;
       this.directories = [];
       this.need_update = true;
@@ -2964,27 +3392,27 @@ function clone(obj) {
         }
       ], (function(_this) {
         return function(rows) {
-          var directories, directory, row, subject_address, _i, _len;
+          var directories, directory, i, len, row, subject_address;
           directories = [];
           rows = (function() {
-            var _i, _len, _results;
-            _results = [];
-            for (_i = 0, _len = rows.length; _i < _len; _i++) {
-              row = rows[_i];
+            var i, len, results;
+            results = [];
+            for (i = 0, len = rows.length; i < len; i++) {
+              row = rows[i];
               if (row.subject) {
-                _results.push(row);
+                results.push(row);
               }
             }
-            return _results;
+            return results;
           })();
-          for (_i = 0, _len = rows.length; _i < _len; _i++) {
-            row = rows[_i];
+          for (i = 0, len = rows.length; i < len; i++) {
+            row = rows[i];
             row.auth_address = row.directory.replace("data/users/", "");
             subject_address = row.subject.replace(/_.*/, "").replace(/.*\//, "");
             row.post_id = row.subject.replace(/.*_/, "").replace(/.*\//, "");
             row.subject_address = subject_address;
             directory = "data/users/" + subject_address;
-            if (__indexOf.call(directories, directory) < 0) {
+            if (indexOf.call(directories, directory) < 0) {
               directories.push(directory);
             }
           }
@@ -2993,35 +3421,35 @@ function clone(obj) {
               directory: directories
             }
           ], function(subject_rows) {
-            var last_row, row_group, row_groups, subject_db, subject_row, _base, _base1, _base2, _j, _k, _l, _len1, _len2, _len3, _ref;
+            var base, base1, base2, j, k, l, last_row, len1, len2, len3, ref, row_group, row_groups, subject_db, subject_row;
             subject_db = {};
-            for (_j = 0, _len1 = subject_rows.length; _j < _len1; _j++) {
-              subject_row = subject_rows[_j];
+            for (j = 0, len1 = subject_rows.length; j < len1; j++) {
+              subject_row = subject_rows[j];
               subject_row.auth_address = subject_row.directory.replace("data/users/", "");
               subject_db[subject_row.auth_address] = subject_row;
             }
-            for (_k = 0, _len2 = rows.length; _k < _len2; _k++) {
-              row = rows[_k];
+            for (k = 0, len2 = rows.length; k < len2; k++) {
+              row = rows[k];
               row.subject = subject_db[row.subject_address];
               if (row.subject == null) {
                 row.subject = {};
               }
-              if ((_base = row.subject).auth_address == null) {
-                _base.auth_address = row.subject_auth_address;
+              if ((base = row.subject).auth_address == null) {
+                base.auth_address = row.subject_auth_address;
               }
-              if ((_base1 = row.subject).hub == null) {
-                _base1.hub = row.subject_hub;
+              if ((base1 = row.subject).hub == null) {
+                base1.hub = row.subject_hub;
               }
-              if ((_base2 = row.subject).user_name == null) {
-                _base2.user_name = row.subject_user_name;
+              if ((base2 = row.subject).user_name == null) {
+                base2.user_name = row.subject_user_name;
               }
             }
             last_row = null;
             row_group = [];
             row_groups = [];
-            for (_l = 0, _len3 = rows.length; _l < _len3; _l++) {
-              row = rows[_l];
-              if (!last_row || (row.auth_address === (last_row != null ? last_row.auth_address : void 0) && row.type === (last_row != null ? last_row.type : void 0) && ((_ref = row.type) === "post_like" || _ref === "follow"))) {
+            for (l = 0, len3 = rows.length; l < len3; l++) {
+              row = rows[l];
+              if (!last_row || (row.auth_address === (last_row != null ? last_row.auth_address : void 0) && row.type === (last_row != null ? last_row.type : void 0) && ((ref = row.type) === "post_like" || ref === "follow"))) {
                 row_group.push(row);
               } else {
                 row_groups.push(row_group);
@@ -3047,7 +3475,7 @@ function clone(obj) {
     };
 
     ActivityList.prototype.renderActivity = function(activity_group) {
-      var activity, activity_more, activity_user_link, back, body, now, subject_post_link, subject_user_link, title, _i, _j, _len, _len1, _ref, _ref1;
+      var activity, activity_more, activity_user_link, back, body, i, j, len, len1, now, ref, ref1, subject_post_link, subject_user_link, title;
       back = [];
       now = Time.timestamp();
       activity = activity_group[0];
@@ -3071,9 +3499,9 @@ function clone(obj) {
           }, _("post", "like post"))
         ];
         if (activity_group.length > 1) {
-          _ref = activity_group.slice(1, 11);
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            activity_more = _ref[_i];
+          ref = activity_group.slice(1, 11);
+          for (i = 0, len = ref.length; i < len; i++) {
+            activity_more = ref[i];
             subject_user_link = "?Profile/" + activity_more.subject.hub + "/" + activity_more.subject.auth_address + "/" + (activity_more.subject.cert_user_id || '');
             subject_post_link = "?Post/" + activity_more.subject.hub + "/" + activity_more.subject.auth_address + "/" + activity_more.post_id;
             body.push(", ");
@@ -3112,9 +3540,9 @@ function clone(obj) {
           }, activity.subject.user_name)
         ];
         if (activity_group.length > 1) {
-          _ref1 = activity_group.slice(1, 11);
-          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-            activity_more = _ref1[_j];
+          ref1 = activity_group.slice(1, 11);
+          for (j = 0, len1 = ref1.length; j < len1; j++) {
+            activity_more = ref1[j];
             subject_user_link = "?Profile/" + activity_more.subject.hub + "/" + activity_more.subject.auth_address + "/" + (activity_more.subject.cert_user_id || '');
             body.push(", ");
             body.push(h("a.link", {
@@ -3193,21 +3621,21 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/AnonUser.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/AnonUser.coffee ---- */
 
 
 (function() {
   var AnonUser,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  AnonUser = (function(_super) {
-    __extends(AnonUser, _super);
+  AnonUser = (function(superClass) {
+    extend(AnonUser, superClass);
 
     function AnonUser() {
-      this.save = __bind(this.save, this);
-      this.updateInfo = __bind(this.updateInfo, this);
+      this.save = bind(this.save, this);
+      this.updateInfo = bind(this.updateInfo, this);
       this.auth_address = null;
       this.hub = null;
       this.followed_users = {};
@@ -3285,27 +3713,77 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentCreateProfile.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ChangeBackground.coffee ---- */
+
+
+(function() {
+  window.bgString = function(color, image) {
+    if (!color) {
+      color = "#FFFFF";
+    }
+    if (image) {
+      return "background: url('" + image + "') no-repeat fixed center;background-size: cover;background-color: " + color;
+    } else {
+      return "background-color: " + color;
+    }
+  };
+
+  window.setBackground = function(color, image) {
+    if (Page.getSetting("disable_background")) {
+      return window.stripBackground();
+    }
+    console.log(("[Background] color=%c" + color + "%c") + (image ? ", image=" + image : ""), "color:" + color, "");
+    return document.body.style = window.bgString(color, image);
+  };
+
+  window.defaultBackground = function() {
+    return window.setBackground(window.defaultBackground.color, window.defaultBackground.image);
+  };
+
+  window.defaultBackground.color = "#D30C37";
+
+  window.defaultBackground.image = "img/default-bg.jpg";
+
+  window.stripBackground = function() {
+    return document.body.style = "";
+  };
+
+  window.otherPageBackground = function() {
+    if (Page.getSetting("hide_background_timeline" || Page.getSetting("disable_background"))) {
+      return window.stripBackground();
+    } else {
+      if (Page.user && Page.user.applyBackground) {
+        return Page.user.applyBackground();
+      } else {
+        return window.defaultBackground();
+      }
+    }
+  };
+
+}).call(this);
+
+
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentCreateProfile.coffee ---- */
 
 
 (function() {
   var ContentCreateProfile,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ContentCreateProfile = (function(_super) {
-    __extends(ContentCreateProfile, _super);
+  ContentCreateProfile = (function(superClass) {
+    extend(ContentCreateProfile, superClass);
 
     function ContentCreateProfile() {
-      this.update = __bind(this.update, this);
-      this.render = __bind(this.render, this);
-      this.renderDefaultHubs = __bind(this.renderDefaultHubs, this);
-      this.renderSeededHubs = __bind(this.renderSeededHubs, this);
-      this.renderHub = __bind(this.renderHub, this);
-      this.updateHubs = __bind(this.updateHubs, this);
-      this.handleJoinClick = __bind(this.handleJoinClick, this);
-      this.handleDownloadClick = __bind(this.handleDownloadClick, this);
+      this.update = bind(this.update, this);
+      this.render = bind(this.render, this);
+      this.renderDefaultHubs = bind(this.renderDefaultHubs, this);
+      this.renderSeededHubs = bind(this.renderSeededHubs, this);
+      this.renderHub = bind(this.renderHub, this);
+      this.updateHubs = bind(this.updateHubs, this);
+      this.handleJoinClick = bind(this.handleJoinClick, this);
+      this.handleDownloadClick = bind(this.handleDownloadClick, this);
       this.loaded = true;
       this.hubs = [];
       this.default_hubs = [];
@@ -3364,14 +3842,14 @@ function clone(obj) {
     ContentCreateProfile.prototype.updateHubs = function() {
       return Page.cmd("mergerSiteList", true, (function(_this) {
         return function(sites) {
-          var address, content, _ref, _results;
+          var address, content, ref, results;
           Page.cmd("dbQuery", "SELECT * FROM json", function(users) {
-            var address, hubs, site, site_users, user, _i, _len, _name;
+            var address, hubs, i, len, name, site, site_users, user;
             site_users = {};
-            for (_i = 0, _len = users.length; _i < _len; _i++) {
-              user = users[_i];
-              if (site_users[_name = user.hub] == null) {
-                site_users[_name] = [];
+            for (i = 0, len = users.length; i < len; i++) {
+              user = users[i];
+              if (site_users[name = user.hub] == null) {
+                site_users[name] = [];
               }
               site_users[user.hub].push(user);
             }
@@ -3388,22 +3866,22 @@ function clone(obj) {
             return Page.projector.scheduleRender();
           });
           _this.default_hubs = [];
-          _ref = Page.site_info.content.settings.default_hubs;
-          _results = [];
-          for (address in _ref) {
-            content = _ref[address];
+          ref = Page.site_info.content.settings.default_hubs;
+          results = [];
+          for (address in ref) {
+            content = ref[address];
             if (!sites[address] && !_this.downloading[address]) {
-              _results.push(_this.default_hubs.push({
+              results.push(_this.default_hubs.push({
                 users: [],
                 address: address,
                 content: content,
                 type: "available"
               }));
             } else {
-              _results.push(void 0);
+              results.push(void 0);
             }
           }
-          return _results;
+          return results;
         };
       })(this));
     };
@@ -3427,8 +3905,8 @@ function clone(obj) {
         }, "Join!"), h("div.avatars", [
           hub.users.map((function(_this) {
             return function(user) {
-              var avatar, _ref;
-              if (((_ref = user.avatar) !== "jpg" && _ref !== "png") || rendered >= 4) {
+              var avatar, ref;
+              if (((ref = user.avatar) !== "jpg" && ref !== "png") || rendered >= 4) {
                 return "";
               }
               avatar = "merged-ZeroMe/" + hub.address + "/" + user.directory + "/avatar." + user.avatar;
@@ -3461,19 +3939,20 @@ function clone(obj) {
     };
 
     ContentCreateProfile.prototype.render = function() {
-      var _ref;
+      var ref;
       if (this.loaded && !Page.on_loaded.resolved) {
         Page.on_loaded.resolve();
       }
       if (this.need_update) {
         this.updateHubs();
         this.need_update = false;
+        Page.changeTitle("Create Profile");
       }
       return h("div#Content.center.content-signup", [
         h("h1", "Create new profile"), h("a.button.button-submit.button-certselect.certselect", {
           href: "#Select+user",
           onclick: this.handleSelectUserClick
-        }, [h("div.icon.icon-profile"), ((_ref = Page.site_info) != null ? _ref.cert_user_id : void 0) ? "As: " + Page.site_info.cert_user_id : "Select ID..."]), this.creation_status.length > 0 ? h("div.creation-status", {
+        }, [h("div.icon.icon-profile"), ((ref = Page.site_info) != null ? ref.cert_user_id : void 0) ? "As: " + Page.site_info.cert_user_id : "Select ID..."]), this.creation_status.length > 0 ? h("div.creation-status", {
           enterAnimation: Animation.slideDown,
           exitAnimation: Animation.slideUp
         }, [
@@ -3515,22 +3994,22 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentFeed.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentFeed.coffee ---- */
 
 
 (function() {
   var ContentFeed,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ContentFeed = (function(_super) {
-    __extends(ContentFeed, _super);
+  ContentFeed = (function(superClass) {
+    extend(ContentFeed, superClass);
 
     function ContentFeed() {
-      this.update = __bind(this.update, this);
-      this.render = __bind(this.render, this);
-      this.handleListTypeClick = __bind(this.handleListTypeClick, this);
+      this.update = bind(this.update, this);
+      this.render = bind(this.render, this);
+      this.handleListTypeClick = bind(this.handleListTypeClick, this);
       this.post_create = new PostCreate();
       this.post_list = new PostList();
       this.activity_list = new ActivityList();
@@ -3550,25 +4029,27 @@ function clone(obj) {
     };
 
     ContentFeed.prototype.render = function() {
-      var followed, key, like, _;
+      var _, followed, key, like;
       if (this.post_list.loaded && !Page.on_loaded.resolved) {
         Page.on_loaded.resolve();
       }
       if (this.need_update) {
         this.log("Updating", this.type);
+        Page.changeTitle("Home");
+        window.otherPageBackground();
         this.need_update = false;
         this.new_user_list.need_update = true;
         this.suggested_user_list.need_update = true;
         if (this.type === "followed") {
           this.post_list.directories = (function() {
-            var _ref, _results;
-            _ref = Page.user.followed_users;
-            _results = [];
-            for (key in _ref) {
-              followed = _ref[key];
-              _results.push("data/users/" + (key.split('/')[1]));
+            var ref, results;
+            ref = Page.user.followed_users;
+            results = [];
+            for (key in ref) {
+              followed = ref[key];
+              results.push("data/users/" + (key.split('/')[1]));
             }
-            return _results;
+            return results;
           })();
           if (Page.user.hub) {
             this.post_list.directories.push("data/users/" + Page.user.auth_address);
@@ -3576,24 +4057,24 @@ function clone(obj) {
           this.post_list.filter_post_ids = null;
         } else if (this.type === "liked") {
           this.post_list.directories = (function() {
-            var _ref, _results;
-            _ref = Page.user.likes;
-            _results = [];
-            for (like in _ref) {
-              _ = _ref[like];
-              _results.push("data/users/" + (like.split('_')[0]));
+            var ref, results;
+            ref = Page.user.likes;
+            results = [];
+            for (like in ref) {
+              _ = ref[like];
+              results.push("data/users/" + (like.split('_')[0]));
             }
-            return _results;
+            return results;
           })();
           this.post_list.filter_post_ids = (function() {
-            var _ref, _results;
-            _ref = Page.user.likes;
-            _results = [];
-            for (like in _ref) {
-              _ = _ref[like];
-              _results.push(like.split('_')[1]);
+            var ref, results;
+            ref = Page.user.likes;
+            results = [];
+            for (like in ref) {
+              _ = ref[like];
+              results.push(like.split('_')[1]);
             }
-            return _results;
+            return results;
           })();
         } else {
           this.post_list.directories = "all";
@@ -3602,14 +4083,14 @@ function clone(obj) {
         this.post_list.need_update = true;
         if (this.type === "followed") {
           this.activity_list.directories = (function() {
-            var _ref, _results;
-            _ref = Page.user.followed_users;
-            _results = [];
-            for (key in _ref) {
-              followed = _ref[key];
-              _results.push("data/users/" + (key.split('/')[1]));
+            var ref, results;
+            ref = Page.user.followed_users;
+            results = [];
+            for (key in ref) {
+              followed = ref[key];
+              results.push("data/users/" + (key.split('/')[1]));
             }
-            return _results;
+            return results;
           })();
         } else {
           this.activity_list.directories = "all";
@@ -3625,28 +4106,30 @@ function clone(obj) {
             classes: {
               active: this.type === "everyone"
             }
-          }, "Everyone"), h("a.link", {
+          }, h("i.fa.fa-globe"), " Everyone"), h("a.link", {
             href: "#Liked",
             onclick: this.handleListTypeClick,
             type: "liked",
             classes: {
               active: this.type === "liked"
             }
-          }, "Liked"), h("a.link", {
+          }, h("i.fa.fa-heart"), " Liked"), h("a.link", {
             href: "#Followed+users",
             onclick: this.handleListTypeClick,
             type: "followed",
             classes: {
               active: this.type === "followed"
             }
-          }, "Followed users")), this.post_list.render()
+          }, h("i.fa.fa-user-plus"), " Followed users")), this.post_list.render()
         ]), h("div.col-right.noscrollfix", [
-          this.activity_list.render(), this.new_user_list.users.length > 0 ? h("h2.sep.new", [
-            "New users", h("a.link", {
-              href: "?Users",
-              onclick: Page.handleLinkClick
-            }, "Browse all \u203A")
-          ]) : void 0, this.new_user_list.render(".gray"), this.suggested_user_list.users.length > 0 ? h("h2.sep.suggested", ["Suggested users"]) : void 0, this.suggested_user_list.render(".gray")
+          h("div.light-bg", [
+            this.activity_list.render(), this.new_user_list.users.length > 0 ? h("h2.sep.new", [
+              "New users", h("a.link", {
+                href: "?Users",
+                onclick: Page.handleLinkClick
+              }, "Browse all \u203A")
+            ]) : void 0, this.new_user_list.render(".gray"), this.suggested_user_list.users.length > 0 ? h("h2.sep.suggested", ["Suggested users"]) : void 0, this.suggested_user_list.render(".gray")
+          ])
         ])
       ]);
     };
@@ -3665,29 +4148,33 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentProfile.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentProfile.coffee ---- */
 
 
 (function() {
   var ContentProfile,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ContentProfile = (function(_super) {
-    __extends(ContentProfile, _super);
+  ContentProfile = (function(superClass) {
+    extend(ContentProfile, superClass);
 
     function ContentProfile() {
-      this.update = __bind(this.update, this);
-      this.render = __bind(this.render, this);
-      this.handleOptionalHelpClick = __bind(this.handleOptionalHelpClick, this);
-      this.handleAvatarUpload = __bind(this.handleAvatarUpload, this);
-      this.handleUserNameSave = __bind(this.handleUserNameSave, this);
-      this.handleIntroSave = __bind(this.handleIntroSave, this);
-      this.filter = __bind(this.filter, this);
-      this.findUser = __bind(this.findUser, this);
-      this.setUser = __bind(this.setUser, this);
-      this.renderNotSeeded = __bind(this.renderNotSeeded, this);
+      this.update = bind(this.update, this);
+      this.render = bind(this.render, this);
+      this.handleOptionalHelpClick = bind(this.handleOptionalHelpClick, this);
+      this.settingsClick = bind(this.settingsClick, this);
+      this.handleEditClick = bind(this.handleEditClick, this);
+      this.handleBackgroundUpload = bind(this.handleBackgroundUpload, this);
+      this.handleAvatarUpload = bind(this.handleAvatarUpload, this);
+      this.handleUserNameSave = bind(this.handleUserNameSave, this);
+      this.handleIntroSave = bind(this.handleIntroSave, this);
+      this.handleBgColorSave = bind(this.handleBgColorSave, this);
+      this.filter = bind(this.filter, this);
+      this.findUser = bind(this.findUser, this);
+      this.setUser = bind(this.setUser, this);
+      this.renderNotSeeded = bind(this.renderNotSeeded, this);
       this.post_list = null;
       this.activity_list = null;
       this.user_list = null;
@@ -3699,9 +4186,11 @@ function clone(obj) {
       this.filter_post_id = null;
       this.loaded = false;
       this.help_distribute = false;
+      this.editing = false;
     }
 
     ContentProfile.prototype.renderNotSeeded = function() {
+      window.defaultBackground();
       return h("div#Content.center." + this.auth_address, [
         h("div.col-left", [
           h("div.users", [
@@ -3717,7 +4206,7 @@ function clone(obj) {
                   classes: {
                     loading: this.user.submitting_follow
                   }
-                }, h("span.icon-follow", "+"), this.user.isFollowed() ? "Unfollow" : "Follow")
+                }, h("span.icon-follow", "+"), !this.user.isFollowed() ? "Follow" : void 0)
               ])
             ])
           ])
@@ -3732,9 +4221,9 @@ function clone(obj) {
       ]);
     };
 
-    ContentProfile.prototype.setUser = function(_at_hub, _at_auth_address) {
-      this.hub = _at_hub;
-      this.auth_address = _at_auth_address;
+    ContentProfile.prototype.setUser = function(hub, auth_address) {
+      this.hub = hub;
+      this.auth_address = auth_address;
       this.loaded = false;
       this.log("setUser", this.hub, this.auth_address);
       if (!this.post_list || this.post_list.directories[0] !== "data/users/" + this.auth_address) {
@@ -3771,6 +4260,28 @@ function clone(obj) {
       this.log("Filter", post_id);
       this.filter_post_id = post_id;
       return this.need_update = true;
+    };
+
+    ContentProfile.prototype.handleBgColorSave = function(new_color, cb) {
+      var color;
+      color = new_color.match(/#([a-f0-9]{3}){1,2}\b/i);
+      if (!color) {
+        cb(false);
+      }
+      color = color[0];
+      if (!color) {
+        cb(false);
+      }
+      this.user.row.bgColor = color;
+      return this.user.getData(this.user.hub, (function(_this) {
+        return function(data) {
+          data.bgColor = color;
+          return _this.user.save(data, _this.user.hub, function(res) {
+            cb(res);
+            return _this.update();
+          });
+        };
+      })(this));
     };
 
     ContentProfile.prototype.handleIntroSave = function(intro, cb) {
@@ -3831,6 +4342,46 @@ function clone(obj) {
       })(this));
     };
 
+    ContentProfile.prototype.handleBackgroundUpload = function(image_base64uri) {
+      var ext, image_base64;
+      Page.cmd("fileDelete", this.user.getPath() + "/bg.jpg");
+      Page.cmd("fileDelete", this.user.getPath() + "/bg.png");
+      if (!image_base64uri) {
+        this.user.getData(this.user.hub, (function(_this) {
+          return function(data) {
+            delete data.bg;
+            return _this.user.save(data, _this.user.hub, function(res) {
+              return Page.cmd("wrapperReload");
+            });
+          };
+        })(this));
+        return false;
+      }
+      image_base64 = image_base64uri != null ? image_base64uri.replace(/.*?,/, "") : void 0;
+      ext = image_base64uri.match("image/([a-z]+)")[1];
+      if (ext === "jpeg") {
+        ext = "jpg";
+      }
+      return Page.cmd("fileWrite", [this.user.getPath() + "/bg." + ext, image_base64], (function(_this) {
+        return function(res) {
+          return _this.user.getData(_this.user.hub, function(data) {
+            data.bg = ext;
+            return _this.user.save(data, _this.user.hub, function(res) {
+              return Page.cmd("wrapperReload");
+            });
+          });
+        };
+      })(this));
+    };
+
+    ContentProfile.prototype.handleEditClick = function() {
+      return this.editing = !this.editing;
+    };
+
+    ContentProfile.prototype.settingsClick = function() {
+      return Page.setUrl("?Settings");
+    };
+
     ContentProfile.prototype.handleOptionalHelpClick = function() {
       if (Page.server_info.rev < 1700) {
         Page.cmd("wrapperNotification", ["info", "You need ZeroNet version 0.5.0 use this feature"]);
@@ -3854,35 +4405,46 @@ function clone(obj) {
     };
 
     ContentProfile.prototype.render = function() {
-      var _ref, _ref1, _ref2, _ref3, _ref4;
+      var ref, ref1, ref2, ref3, ref4;
       if (this.need_update) {
         this.log("Updating");
         this.need_update = false;
+        if (this.user && this.user.row) {
+          Page.changeTitle(this.user.row.user_name);
+        } else {
+          Page.changeTitle();
+          this.need_update = true;
+        }
         this.post_list.filter_post_ids = this.filter_post_id ? [this.filter_post_id] : null;
-        if ((_ref = this.post_list) != null) {
-          _ref.need_update = true;
+        if ((ref = this.post_list) != null) {
+          ref.need_update = true;
         }
-        if ((_ref1 = this.user_list) != null) {
-          _ref1.need_update = true;
+        if ((ref1 = this.user_list) != null) {
+          ref1.need_update = true;
         }
-        if ((_ref2 = this.activity_list) != null) {
-          _ref2.need_update = true;
+        if ((ref2 = this.activity_list) != null) {
+          ref2.need_update = true;
         }
         this.activity_list.directories = ["data/users/" + this.auth_address];
         this.user.auth_address = this.auth_address;
         this.user.hub = this.hub;
         this.user.get(this.hub, this.auth_address, (function(_this) {
           return function(res) {
-            var _ref3;
+            var ref3;
             if (res) {
-              _this.owned = _this.user.auth_address === ((_ref3 = Page.user) != null ? _ref3.auth_address : void 0);
+              _this.user.row = res;
+              _this.owned = _this.user.auth_address === ((ref3 = Page.user) != null ? ref3.auth_address : void 0);
               if (_this.owned && !_this.editable_intro) {
+                _this.editable_bgcolor = new Editable("div", _this.handleBgColorSave);
                 _this.editable_intro = new Editable("div", _this.handleIntroSave);
                 _this.editable_intro.render_function = Text.renderMarked;
                 _this.editable_user_name = new Editable("span", _this.handleUserNameSave);
                 _this.uploadable_avatar = new Uploadable(_this.handleAvatarUpload);
                 _this.uploadable_avatar.try_png = true;
                 _this.uploadable_avatar.preverse_ratio = false;
+                _this.uploadable_background = new Uploadable(_this.handleBackgroundUpload);
+                _this.uploadable_background.resize_width = 900;
+                _this.uploadable_background.resize_height = 700;
                 _this.post_create = new PostCreate();
               }
               Page.projector.scheduleRender();
@@ -3912,7 +4474,7 @@ function clone(obj) {
           };
         })(this));
       }
-      if (!((_ref3 = this.user) != null ? (_ref4 = _ref3.row) != null ? _ref4.user_name : void 0 : void 0)) {
+      if (!((ref3 = this.user) != null ? (ref4 = ref3.row) != null ? ref4.user_name : void 0 : void 0)) {
         if (this.loaded) {
           return h("div#Content.center." + this.auth_address, [h("div.user-notfound", "User not found or muted")]);
         } else {
@@ -3924,6 +4486,9 @@ function clone(obj) {
       }
       if (this.post_list.loaded && !Page.on_loaded.resolved) {
         Page.on_loaded.resolve();
+      }
+      if (this.loaded) {
+        this.user.applyBackground();
       }
       return h("div#Content.center." + this.auth_address, [
         h("div.col-left", {
@@ -3937,18 +4502,38 @@ function clone(obj) {
                 followed: this.user.isFollowed()
               }
             }, [
-              this.owned ? this.uploadable_avatar.render(this.user.renderAvatar) : this.user.renderAvatar(), h("span.name.link", {
+              this.editing ? this.uploadable_avatar.render(this.user.renderAvatar) : this.user.renderAvatar(), h("span.name.link", {
                 style: "color: " + (Text.toColor(this.user.row.auth_address))
-              }, this.owned ? this.editable_user_name.render(this.user.row.user_name) : h("a", {
+              }, this.editing ? this.editable_user_name.render(this.user.row.user_name) : h("a", {
                 href: this.user.getLink(),
-                onclick: Page.handleLinkClick
-              }, this.user.row.user_name)), h("div.cert_user_id", this.user.row.cert_user_id), this.owned ? h("div.intro-full", this.editable_intro.render(this.user.row.intro)) : h("div.intro-full", {
+                onclick: Page.handleLinkClick,
+                style: "color: inherit"
+              }, this.user.row.user_name)), h("div.cert_user_id", this.user.row.cert_user_id), this.editing ? h("div.intro-full", this.editable_intro.render(this.user.row.intro)) : h("div.intro-full", {
                 innerHTML: Text.renderMarked(this.user.row.intro)
               }), h("div.follow-container", [
                 h("a.button.button-follow-big", {
                   href: "#",
                   onclick: this.user.handleFollowClick
-                }, h("span.icon-follow", "+"), this.user.isFollowed() ? "Unfollow" : "Follow")
+                }, h("span.icon-follow", "+"), !this.user.isFollowed() ? "Follow" : void 0)
+              ]), h("div.follow-container.settings-container", [
+                this.owned ? h("div.button-tiny.button-mute", {
+                  classes: {
+                    "button-active": this.editing
+                  },
+                  href: "#Edit",
+                  style: "transition: all 0.5s;margin-right:10px",
+                  title: "Make your profile more personal",
+                  onclick: this.handleEditClick
+                }, [
+                  h("div.icon.icon-small.icon-edit", {
+                    style: "margin-right: 6px;"
+                  }), "Edit Profile"
+                ]) : void 0, !this.owned ? h("div.button-tiny.button-mute", {
+                  href: "#Mute",
+                  onclick: this.user.handleMuteClick
+                }, [h("div.icon.icon-mute"), "Mute"]) : h("div.button-tiny.button-mute", {
+                  onclick: this.settingsClick
+                }, [h("div.icon.icon-small.fa.fa-gear"), "Settings"])
               ]), h("div.help.checkbox", {
                 classes: {
                   checked: this.optional_helping
@@ -3956,12 +4541,11 @@ function clone(obj) {
                 onclick: this.handleOptionalHelpClick
               }, h("div.checkbox-skin"), h("div.title", "Help distribute this user's images"))
             ])
-          ]), h("a.user-mute", {
-            href: "#Mute",
-            onclick: this.user.handleMuteClick
-          }, h("div.icon.icon-mute"), "Mute " + this.user.row.cert_user_id), this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
-            afterCreate: Animation.show
-          }, ["Following"]) : void 0, this.user_list.render(".gray")
+          ]), this.editing && this.loaded && (this.user.row.bgColor || this.user.row.bgUnset) ? h("div.user.card.profile.no-left-padding", [h("div.bg-settings", [h("h2", h("b.intro-full", "Theme Settings")), h("div", "Background"), this.uploadable_background.render(this.user.renderBackground), h("div.bg-preview", this.editable_bgcolor.render("Theme Color: " + this.user.getBackground()))])]) : void 0, h("div.light-bg", [
+            this.activity_list.render(), this.user_list.users.length > 0 ? h("h2.sep", {
+              afterCreate: Animation.show
+            }, ["Following"]) : void 0, this.user_list.render(".gray")
+          ])
         ]), h("div.col-center", [
           this.owned && !this.filter_post_id ? h("div.post-create-container", {
             enterAnimation: Animation.slideDown,
@@ -3988,25 +4572,174 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentUsers.coffee ---- */
+
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentSettings.coffee ---- */
+
+
+(function() {
+  var ContentSettings,
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  ContentSettings = (function(superClass) {
+    extend(ContentSettings, superClass);
+
+    function ContentSettings() {
+      this.update = bind(this.update, this);
+      this.render = bind(this.render, this);
+      this.handleSearchInput = bind(this.handleSearchInput, this);
+      this.renderCheck = bind(this.renderCheck, this);
+      this.section = bind(this.section, this);
+      this.loaded = true;
+      this.need_update = false;
+    }
+
+    ContentSettings.prototype.fncs = {};
+
+    ContentSettings.prototype.section = function(name, ar) {
+      var e;
+      if (ar.filter(((function(_this) {
+        return function(e) {
+          return !e.properties.classes.invisible;
+        };
+      })(this))).length) {
+        return h("div.setting" + name, [
+          h("h2.sep", name), (function() {
+            var i, len, results;
+            results = [];
+            for (i = 0, len = ar.length; i < len; i++) {
+              e = ar[i];
+              results.push(e);
+            }
+            return results;
+          })(), h("br", name)
+        ]);
+      }
+    };
+
+    ContentSettings.prototype.renderCheck = function(key, name, desc, attrs) {
+      var base;
+      if (desc == null) {
+        desc = "";
+      }
+      if (attrs == null) {
+        attrs = {};
+      }
+      if ((base = this.fncs)[key] == null) {
+        base[key] = (function(_this) {
+          return function(item) {
+            if (attrs.disabled_by && Page.local_storage.settings[attrs.disabled_by]) {
+              return false;
+            }
+            Page.local_storage.settings[key] = !Page.local_storage.settings[key];
+            if (attrs.postRun) {
+              attrs.postRun(Page.local_storage.settings[key]);
+            }
+            document.body.className = "loaded" + Page.otherClasses();
+            Page.projector.scheduleRender();
+            Page.saveLocalStorage();
+            Page.content.need_update = true;
+            return false;
+          };
+        })(this);
+      }
+      return h("div.checkbox.setting", {
+        classes: {
+          invisible: (!this.search || (name.toLowerCase().indexOf(this.search.toLowerCase()) !== -1) ? false : true),
+          checked: Page.local_storage.settings[key],
+          disabled: attrs.disabled_by && Page.local_storage.settings[attrs.disabled_by]
+        },
+        onclick: this.fncs[key]
+      }, h("div.checkbox-skin"), h("div.title", name), desc ? (!Array.isArray(desc) ? desc = [desc] : void 0, desc.map((function(_this) {
+        return function(d) {
+          if (d.startsWith("!WARN")) {
+            return h("div.desc.red", d.replace("!WARN", "WARNING:"));
+          } else {
+            return h("div.desc", d);
+          }
+        };
+      })(this))) : void 0, h("br", key));
+    };
+
+    ContentSettings.prototype.handleSearchInput = function(e) {
+      if (e == null) {
+        e = null;
+      }
+      this.search = e.target.value;
+      Page.projector.scheduleRender();
+      Page.content.need_update = true;
+      return false;
+    };
+
+    ContentSettings.prototype.render = function() {
+      window.otherPageBackground();
+      if (this.loaded && !Page.on_loaded.resolved) {
+        Page.on_loaded.resolve();
+      }
+      if (this.need_update) {
+        this.log("Updating");
+        this.need_update = false;
+        Page.changeTitle("Settings");
+      }
+      return h("div#Content.center", [
+        Page.local_storage_loaded ? h("div.post.settings", {
+          style: "border-radius: 16px"
+        }, [
+          h("br", "top"), h("div", {
+            style: "display:flex;"
+          }, [
+            h("h1", {
+              style: "margin:6px;"
+            }, "Settings"), h("input.text.search", {
+              value: this.search,
+              placeholder: "Search in settings...",
+              oninput: this.handleSearchInput
+            })
+          ]), this.section("", [this.renderCheck("autoload_media", "Autoload images", ["This will automatically load images in posts", "!WARN This might also autoload images you don't want to see or seed!"]), this.renderCheck("gimme_stars", "I want my stars back", "Replace the heart with a star"), this.renderCheck("transparent", "Enable transparency")]), this.section("Background", [
+            this.renderCheck("disable_background", "Disable the background feature entierly"), this.renderCheck("load_others_background_disabled", "Don't load other users backgrounds", "", {
+              disabled_by: "disable_background"
+            }), this.renderCheck("hide_background_timeline", "Don't show background on the feed/timeline and other pages", "", {
+              disabled_by: "disable_background"
+            })
+          ]), this.section("Header", [this.renderCheck("not_sticky_header", "Disable Sticky Header"), this.renderCheck("logo_left", "Move logo to the left")]), this.section("Feed", [this.renderCheck("hide_hello_zerome", "Hide \"Hello ZeroMe!\" messages", "This actually just hides a user's first post"), this.renderCheck("two_column", "Show two columns instead of one")]), h("br", "bottom")
+        ]) : (h("h1", "Loading Settings..."), this.need_update = true)
+      ]);
+    };
+
+    ContentSettings.prototype.update = function() {
+      this.need_update = true;
+      return Page.projector.scheduleRender();
+    };
+
+    return ContentSettings;
+
+  })(Class);
+
+  window.ContentSettings = ContentSettings;
+
+}).call(this);
+
+
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ContentUsers.coffee ---- */
 
 
 (function() {
   var ContentUsers,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ContentUsers = (function(_super) {
-    __extends(ContentUsers, _super);
+  ContentUsers = (function(superClass) {
+    extend(ContentUsers, superClass);
 
     function ContentUsers() {
-      this.update = __bind(this.update, this);
-      this.render = __bind(this.render, this);
-      this.handleSearchInput = __bind(this.handleSearchInput, this);
-      this.handleRecentMoreClick = __bind(this.handleRecentMoreClick, this);
-      this.handleActiveMoreClick = __bind(this.handleActiveMoreClick, this);
-      this.handleSuggestedMoreClick = __bind(this.handleSuggestedMoreClick, this);
+      this.update = bind(this.update, this);
+      this.render = bind(this.render, this);
+      this.handleSearchInput = bind(this.handleSearchInput, this);
+      this.handleRecentMoreClick = bind(this.handleRecentMoreClick, this);
+      this.handleActiveMoreClick = bind(this.handleActiveMoreClick, this);
+      this.handleSuggestedMoreClick = bind(this.handleSuggestedMoreClick, this);
       this.user_list_suggested = new UserList("suggested");
       this.user_list_suggested.limit = 9;
       this.user_list_active = new UserList("active");
@@ -4069,7 +4802,8 @@ function clone(obj) {
     };
 
     ContentUsers.prototype.render = function() {
-      var _ref, _ref1, _ref2;
+      var ref, ref1, ref2;
+      window.otherPageBackground();
       if (this.loaded && !Page.on_loaded.resolved) {
         Page.on_loaded.resolve();
       }
@@ -4084,15 +4818,16 @@ function clone(obj) {
       if (this.need_update) {
         this.log("Updating");
         this.need_update = false;
-        if ((_ref = this.user_list_recent) != null) {
-          _ref.need_update = true;
+        Page.changeTitle("Users");
+        if ((ref = this.user_list_recent) != null) {
+          ref.need_update = true;
         }
-        if ((_ref1 = this.user_list_active) != null) {
-          _ref1.need_update = true;
+        if ((ref1 = this.user_list_active) != null) {
+          ref1.need_update = true;
         }
         if (Page.user.auth_address) {
-          if ((_ref2 = this.user_list_suggested) != null) {
-            _ref2.need_update = true;
+          if ((ref2 = this.user_list_suggested) != null) {
+            ref2.need_update = true;
           }
         }
       }
@@ -4141,30 +4876,30 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Head.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/Head.coffee ---- */
 
 
 (function() {
   var Head,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty,
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  Head = (function(_super) {
-    __extends(Head, _super);
+  Head = (function(superClass) {
+    extend(Head, superClass);
 
     function Head() {
-      this.render = __bind(this.render, this);
-      this.saveFollows = __bind(this.saveFollows, this);
-      this.handleMenuClick = __bind(this.handleMenuClick, this);
-      this.handleFollowMenuItemClick = __bind(this.handleFollowMenuItemClick, this);
+      this.render = bind(this.render, this);
+      this.saveFollows = bind(this.saveFollows, this);
+      this.handleMenuClick = bind(this.handleMenuClick, this);
+      this.handleFollowMenuItemClick = bind(this.handleFollowMenuItemClick, this);
       this.menu = new Menu();
       this.follows = [];
     }
 
     Head.prototype.handleSelectUserClick = function() {
-      if (__indexOf.call(Page.site_info.settings.permissions, "Merger:ZeroMe") < 0) {
+      if (indexOf.call(Page.site_info.settings.permissions, "Merger:ZeroMe") < 0) {
         Page.cmd("wrapperPermissionAdd", "Merger:ZeroMe", (function(_this) {
           return function() {
             return Page.updateSiteInfo(function() {
@@ -4192,13 +4927,13 @@ function clone(obj) {
     };
 
     Head.prototype.handleMenuClick = function() {
-      var _ref;
-      if (!((_ref = Page.site_info) != null ? _ref.cert_user_id : void 0)) {
+      var ref;
+      if (!((ref = Page.site_info) != null ? ref.cert_user_id : void 0)) {
         return this.handleSelectUserClick();
       }
       Page.cmd("feedListFollow", [], (function(_this) {
-        return function(_at_follows) {
-          _this.follows = _at_follows;
+        return function(follows) {
+          _this.follows = follows;
           _this.menu.items = [];
           _this.menu.items.push([
             "Follow username mentions", (function(item) {
@@ -4214,16 +4949,6 @@ function clone(obj) {
             "Follow new followers", (function(item) {
               return _this.handleFollowMenuItemClick("New followers", item);
             }), _this.follows["New followers"]
-          ]);
-          _this.menu.items.push([
-            "Hide \"Hello ZeroMe!\" messages", (function(item) {
-              Page.local_storage.settings.hide_hello_zerome = !Page.local_storage.settings.hide_hello_zerome;
-              item[2] = Page.local_storage.settings.hide_hello_zerome;
-              Page.projector.scheduleRender();
-              Page.saveLocalStorage();
-              Page.content.need_update = true;
-              return false;
-            }), Page.local_storage.settings.hide_hello_zerome
           ]);
           _this.menu.toggle();
           return Page.projector.scheduleRender();
@@ -4248,16 +4973,33 @@ function clone(obj) {
     };
 
     Head.prototype.render = function() {
-      var _ref, _ref1, _ref2, _ref3;
+      var el, ref, ref1, ref2, ref3;
       return h("div.head.center", [
-        h("a.logo", {
-          href: "?Home",
-          onclick: Page.handleLinkClick
-        }, h("img", {
+        Page.getSetting("logo_left") ? h("div.logo", h("img", {
           src: "img/logo.svg",
           height: 40,
+          title: "ZeroMe",
           onerror: "this.src='img/logo.png'; this.onerror=null;"
-        })), ((_ref = Page.user) != null ? _ref.hub : void 0) ? h("div.right.authenticated", [
+        })) : void 0, h("ul", [
+          (function() {
+            var i, len, ref, results;
+            ref = [["Home", 'Home', "home"], ["Users", 'Users', "users"], ["Settings", 'Settings', "gear"]];
+            results = [];
+            for (i = 0, len = ref.length; i < len; i++) {
+              el = ref[i];
+              results.push(h("li", h("a", {
+                href: "?" + el[1],
+                onclick: Page.handleLinkClick
+              }, [h("i.fa.fa-margin.fa-" + el[2]), el[0]])));
+            }
+            return results;
+          })()
+        ]), !Page.getSetting("logo_left") ? h("div.logo", h("img", {
+          src: "img/logo.svg",
+          height: 40,
+          title: "ZeroMe",
+          onerror: "this.src='img/logo.png'; this.onerror=null;"
+        })) : void 0, ((ref = Page.user) != null ? ref.hub : void 0) ? h("div.right.authenticated", [
           h("div.user", h("a.name.link", {
             href: Page.user.getLink(),
             onclick: Page.handleLinkClick
@@ -4269,7 +5011,7 @@ function clone(obj) {
             onclick: Page.returnFalse,
             onmousedown: this.handleMenuClick
           }, "\u22EE"), this.menu.render()
-        ]) : !((_ref1 = Page.user) != null ? _ref1.hub : void 0) && ((_ref2 = Page.site_info) != null ? _ref2.cert_user_id : void 0) ? h("div.right.selected", [
+        ]) : !((ref1 = Page.user) != null ? ref1.hub : void 0) && ((ref2 = Page.site_info) != null ? ref2.cert_user_id : void 0) ? h("div.right.selected", [
           h("div.user", h("a.name.link", {
             href: "?Create+profile",
             onclick: Page.handleLinkClick
@@ -4281,7 +5023,7 @@ function clone(obj) {
             onclick: Page.returnFalse,
             onmousedown: this.handleMenuClick
           }, "\u22EE")
-        ]) : !((_ref3 = Page.user) != null ? _ref3.hub : void 0) && Page.site_info ? h("div.right.unknown", [
+        ]) : !((ref3 = Page.user) != null ? ref3.hub : void 0) && Page.site_info ? h("div.right.unknown", [
           h("div.user", h("a.name.link", {
             href: "#Select+user",
             onclick: this.handleSelectUserClick
@@ -4306,36 +5048,37 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Post.coffee ---- */
+
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/Post.coffee ---- */
 
 
 (function() {
   var Post,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty,
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  Post = (function(_super) {
-    __extends(Post, _super);
+  Post = (function(superClass) {
+    extend(Post, superClass);
 
-    function Post(row, _at_item_list) {
-      this.item_list = _at_item_list;
-      this.render = __bind(this.render, this);
-      this.renderComments = __bind(this.renderComments, this);
-      this.follow = __bind(this.follow, this);
-      this.unfollow = __bind(this.unfollow, this);
-      this.handleSettingsClick = __bind(this.handleSettingsClick, this);
-      this.getPostUri = __bind(this.getPostUri, this);
-      this.handleReplyClick = __bind(this.handleReplyClick, this);
-      this.handleMoreCommentsClick = __bind(this.handleMoreCommentsClick, this);
-      this.handleCommentDelete = __bind(this.handleCommentDelete, this);
-      this.handleCommentSave = __bind(this.handleCommentSave, this);
-      this.handleCommentSubmit = __bind(this.handleCommentSubmit, this);
-      this.handleCommentClick = __bind(this.handleCommentClick, this);
-      this.handleLikeClick = __bind(this.handleLikeClick, this);
-      this.handlePostDelete = __bind(this.handlePostDelete, this);
-      this.handlePostSave = __bind(this.handlePostSave, this);
+    function Post(row, item_list) {
+      this.item_list = item_list;
+      this.render = bind(this.render, this);
+      this.renderComments = bind(this.renderComments, this);
+      this.follow = bind(this.follow, this);
+      this.unfollow = bind(this.unfollow, this);
+      this.handleSettingsClick = bind(this.handleSettingsClick, this);
+      this.getPostUri = bind(this.getPostUri, this);
+      this.handleReplyClick = bind(this.handleReplyClick, this);
+      this.handleMoreCommentsClick = bind(this.handleMoreCommentsClick, this);
+      this.handleCommentDelete = bind(this.handleCommentDelete, this);
+      this.handleCommentSave = bind(this.handleCommentSave, this);
+      this.handleCommentSubmit = bind(this.handleCommentSubmit, this);
+      this.handleCommentClick = bind(this.handleCommentClick, this);
+      this.handleLikeClick = bind(this.handleLikeClick, this);
+      this.handlePostDelete = bind(this.handlePostDelete, this);
+      this.handlePostSave = bind(this.handlePostSave, this);
       this.liked = false;
       this.commenting = false;
       this.submitting_like = false;
@@ -4353,7 +5096,7 @@ function clone(obj) {
     }
 
     Post.prototype.setRow = function(row) {
-      var _ref;
+      var ref;
       this.row = row;
       if (this.row.meta) {
         this.meta = new PostMeta(this, JSON.parse(this.row.meta));
@@ -4366,7 +5109,7 @@ function clone(obj) {
         auth_address: row.directory.replace("data/users/", "")
       });
       this.user.row = row;
-      this.owned = this.user.auth_address === ((_ref = Page.user) != null ? _ref.auth_address : void 0);
+      this.owned = this.user.auth_address === ((ref = Page.user) != null ? ref.auth_address : void 0);
       if (this.owned) {
         this.editable_body = new Editable("div.body", this.handlePostSave, this.handlePostDelete);
         this.editable_body.render_function = Text.renderMarked;
@@ -4381,10 +5124,10 @@ function clone(obj) {
     Post.prototype.handlePostSave = function(body, cb) {
       return Page.user.getData(Page.user.hub, (function(_this) {
         return function(data) {
-          var i, post, post_index, _i, _len, _ref;
-          _ref = data.post;
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            post = _ref[i];
+          var i, j, len, post, post_index, ref;
+          ref = data.post;
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            post = ref[i];
             if (post.post_id === _this.row.post_id) {
               post_index = i;
             }
@@ -4400,16 +5143,16 @@ function clone(obj) {
     Post.prototype.handlePostDelete = function(cb) {
       return Page.user.getData(Page.user.hub, (function(_this) {
         return function(data) {
-          var i, post, post_index, _i, _len, _ref, _ref1, _ref2;
-          _ref = data.post;
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            post = _ref[i];
+          var i, j, len, post, post_index, ref, ref1, ref2;
+          ref = data.post;
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            post = ref[i];
             if (post.post_id === _this.row.post_id) {
               post_index = i;
             }
           }
           data.post.splice(post_index, 1);
-          if ((_ref1 = _this.meta) != null ? (_ref2 = _ref1.meta) != null ? _ref2.img : void 0 : void 0) {
+          if ((ref1 = _this.meta) != null ? (ref2 = ref1.meta) != null ? ref2.img : void 0 : void 0) {
             return Page.cmd("fileDelete", (_this.user.getPath()) + "/" + _this.row.post_id + ".jpg", function() {
               return Page.user.save(data, Page.user.hub, function(res) {
                 return cb(res);
@@ -4425,9 +5168,9 @@ function clone(obj) {
     };
 
     Post.prototype.handleLikeClick = function(e) {
-      var post_uri, site, _ref;
+      var post_uri, ref, site;
       this.submitting_like = true;
-      _ref = this.row.key.split("-"), site = _ref[0], post_uri = _ref[1];
+      ref = this.row.key.split("-"), site = ref[0], post_uri = ref[1];
       if (Page.user.likes[post_uri]) {
         Animation.flashOut(e.currentTarget.firstChild);
         Page.user.dislike(site, post_uri, (function(_this) {
@@ -4463,13 +5206,13 @@ function clone(obj) {
     };
 
     Post.prototype.handleCommentSubmit = function() {
-      var post_uri, site, timer_loading, _ref;
+      var post_uri, ref, site, timer_loading;
       timer_loading = setTimeout(((function(_this) {
         return function() {
           return _this.field_comment.loading = true;
         };
       })(this)), 100);
-      _ref = this.row.key.split("-"), site = _ref[0], post_uri = _ref[1];
+      ref = this.row.key.split("-"), site = ref[0], post_uri = ref[1];
       return Page.user.comment(site, post_uri, this.field_comment.attrs.value, (function(_this) {
         return function(res) {
           clearInterval(timer_loading);
@@ -4485,10 +5228,10 @@ function clone(obj) {
     Post.prototype.handleCommentSave = function(comment_id, body, cb) {
       return Page.user.getData(this.row.site, (function(_this) {
         return function(data) {
-          var comment, comment_index, i, _i, _len, _ref;
-          _ref = data.comment;
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            comment = _ref[i];
+          var comment, comment_index, i, j, len, ref;
+          ref = data.comment;
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            comment = ref[i];
             if (comment.comment_id === comment_id) {
               comment_index = i;
             }
@@ -4504,10 +5247,10 @@ function clone(obj) {
     Post.prototype.handleCommentDelete = function(comment_id, cb) {
       return Page.user.getData(this.row.site, (function(_this) {
         return function(data) {
-          var comment, comment_index, i, _i, _len, _ref;
-          _ref = data.comment;
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            comment = _ref[i];
+          var comment, comment_index, i, j, len, ref;
+          ref = data.comment;
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            comment = ref[i];
             if (comment.comment_id === comment_id) {
               comment_index = i;
             }
@@ -4539,9 +5282,9 @@ function clone(obj) {
     };
 
     Post.prototype.getEditableComment = function(comment_uri) {
-      var comment_id, handleCommentDelete, handleCommentSave, user_address, _ref;
+      var comment_id, handleCommentDelete, handleCommentSave, ref, user_address;
       if (!this.editable_comments[comment_uri]) {
-        _ref = comment_uri.split("_"), user_address = _ref[0], comment_id = _ref[1];
+        ref = comment_uri.split("_"), user_address = ref[0], comment_id = ref[1];
         handleCommentSave = (function(_this) {
           return function(body, cb) {
             return _this.handleCommentSave(parseInt(comment_id), body, cb);
@@ -4566,14 +5309,14 @@ function clone(obj) {
       this.css_style = "z-index: " + this.row.date_added + "; position: relative";
       Page.cmd("feedListFollow", [], (function(_this) {
         return function(follows) {
-          var followed, _ref;
+          var followed, ref;
           if (!_this.menu) {
             _this.menu = new Menu();
           }
-          followed = follows["Post follow"] && (_ref = _this.getPostUri(), __indexOf.call(follows["Post follow"][1], _ref) >= 0);
+          followed = follows["Post follow"] && (ref = _this.getPostUri(), indexOf.call(follows["Post follow"][1], ref) >= 0);
           _this.menu.items = [];
           _this.menu.items.push([
-            "Follow in newsfeed", (function() {
+            (followed ? "Unfollow" : "Follow") + " post in newsfeed", (function() {
               if (followed) {
                 return _this.unfollow();
               } else {
@@ -4581,7 +5324,9 @@ function clone(obj) {
               }
             }), followed
           ]);
-          _this.menu.items.push(["Mute user", _this.user.handleMuteClick]);
+          if (!_this.owned) {
+            _this.menu.items.push(["Mute user", _this.user.handleMuteClick]);
+          }
           _this.menu.items.push(["Permalink", _this.getLink()]);
           return _this.menu.toggle();
         };
@@ -4626,7 +5371,7 @@ function clone(obj) {
     };
 
     Post.prototype.renderComments = function() {
-      var comment_limit, _ref, _ref1;
+      var comment_limit, ref, ref1;
       if (!this.row.comments && !this.commenting) {
         return [];
       }
@@ -4643,12 +5388,12 @@ function clone(obj) {
       }, [
         this.commenting ? h("div.comment-create", {
           enterAnimation: Animation.slideDown
-        }, this.field_comment.render()) : void 0, (_ref = this.row.comments) != null ? _ref.slice(0, +(comment_limit - 1) + 1 || 9e9).map((function(_this) {
+        }, this.field_comment.render()) : void 0, (ref = this.row.comments) != null ? ref.slice(0, +(comment_limit - 1) + 1 || 9e9).map((function(_this) {
           return function(comment) {
-            var comment_uri, owned, user_address, user_link, _ref1, _ref2;
+            var comment_uri, owned, ref1, ref2, user_address, user_link;
             user_address = comment.directory.replace("data/users/", "");
             comment_uri = user_address + "_" + comment.comment_id;
-            owned = user_address === ((_ref1 = Page.user) != null ? _ref1.auth_address : void 0);
+            owned = user_address === ((ref1 = Page.user) != null ? ref1.auth_address : void 0);
             user_link = "?Profile/" + comment.hub + "/" + user_address + "/" + comment.cert_user_id;
             return h("div.comment", {
               id: comment_uri,
@@ -4665,14 +5410,14 @@ function clone(obj) {
                 }, comment.user_name), h("span.sep", " \u00B7 "), h("span.address", {
                   title: user_address
                 }, comment.cert_user_id), h("span.sep", " \u2015 "), h("a.added.link", {
-                  href: "#",
+                  href: _this.getLink(),
                   title: Time.date(comment.date_added, "long")
                 }, Time.since(comment.date_added)), h("a.icon.icon-reply", {
                   href: "#Reply",
                   onclick: _this.handleReplyClick,
                   user_name: comment.user_name
                 }, "Reply")
-              ]), owned ? _this.getEditableComment(comment_uri).render(comment.body) : ((_ref2 = comment.body) != null ? _ref2.length : void 0) > 5000 ? h("div.body.maxheight", {
+              ]), owned ? _this.getEditableComment(comment_uri).render(comment.body) : ((ref2 = comment.body) != null ? ref2.length : void 0) > 5000 ? h("div.body.maxheight", {
                 innerHTML: Text.renderMarked(comment.body),
                 afterCreate: Maxheight.apply
               }) : h("div.body", {
@@ -4680,7 +5425,7 @@ function clone(obj) {
               })
             ]);
           };
-        })(this)) : void 0, ((_ref1 = this.row.comments) != null ? _ref1.length : void 0) > comment_limit ? h("a.more", {
+        })(this)) : void 0, ((ref1 = this.row.comments) != null ? ref1.length : void 0) > comment_limit ? h("a.more", {
           href: "#More",
           onclick: this.handleMoreCommentsClick,
           enterAnimation: Animation.slideDown,
@@ -4690,8 +5435,8 @@ function clone(obj) {
     };
 
     Post.prototype.render = function() {
-      var post_uri, site, _ref, _ref1, _ref2, _ref3;
-      _ref = this.row.key.split("-"), site = _ref[0], post_uri = _ref[1];
+      var post_uri, ref, ref1, ref2, ref3, site;
+      ref = this.row.key.split("-"), site = ref[0], post_uri = ref[1];
       return h("div.post", {
         key: this.row.key,
         enterAnimation: Animation.slideDown,
@@ -4718,31 +5463,34 @@ function clone(obj) {
             onclick: Page.handleLinkClick
           }, Time.since(this.row.date_added)), this.menu ? this.menu.render(".menu-right") : void 0, h("a.settings", {
             href: "#Settings",
+            title: "Options for this post",
             onclick: Page.returnFalse,
             onmousedown: this.handleSettingsClick
           }, "\u22EE")
         ]), this.owned ? this.editable_body.render(this.row.body) : h("div.body", {
           classes: {
-            maxheight: !this.row.selected && ((_ref1 = this.row.body) != null ? _ref1.length : void 0) > 3000
+            maxheight: !this.row.selected && ((ref1 = this.row.body) != null ? ref1.length : void 0) > 3000
           },
           innerHTML: Text.renderMarked(this.row.body),
           afterCreate: Maxheight.apply,
           afterUpdate: Maxheight.apply
         }), this.meta ? this.meta.render() : void 0, h("div.actions", [
-          h("a.icon.icon-comment.link", {
+          h("a.icon.link", {
             href: "#Comment",
+            title: "What do you think?",
             onclick: this.handleCommentClick
-          }, "Comment"), h("a.like.link", {
+          }, h("i.fa.fa-comment.icon-comment"), "Comment"), h("a.icon.link", {
             classes: {
-              active: (_ref2 = Page.user) != null ? _ref2.likes[post_uri] : void 0,
+              active: (ref2 = Page.user) != null ? ref2.likes[post_uri] : void 0,
               loading: this.submitting_like,
               "like-zero": this.row.likes === 0
             },
             href: "#Like",
+            title: "Like",
             onclick: this.handleLikeClick
-          }, h("div.icon.icon-heart", {
+          }, h("div" + (Page.getSetting("gimme_stars") ? ".fa.fa-star.icon-star" : ".fa.fa-heart.icon-heart"), {
             classes: {
-              active: (_ref3 = Page.user) != null ? _ref3.likes[post_uri] : void 0
+              active: (ref3 = Page.user) != null ? ref3.likes[post_uri] : void 0
             }
           }), this.row.likes ? this.row.likes : void 0)
         ]), this.renderComments()
@@ -4759,25 +5507,25 @@ function clone(obj) {
 
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostCreate.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostCreate.coffee ---- */
 
 
 (function() {
   var PostCreate,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  PostCreate = (function(_super) {
-    __extends(PostCreate, _super);
+  PostCreate = (function(superClass) {
+    extend(PostCreate, superClass);
 
     function PostCreate() {
-      this.render = __bind(this.render, this);
-      this.handleUploadClick = __bind(this.handleUploadClick, this);
-      this.handlePostSubmit = __bind(this.handlePostSubmit, this);
-      this.handleImageClose = __bind(this.handleImageClose, this);
-      this.handleUpload = __bind(this.handleUpload, this);
-      this.startEdit = __bind(this.startEdit, this);
+      this.render = bind(this.render, this);
+      this.handleUploadClick = bind(this.handleUploadClick, this);
+      this.handlePostSubmit = bind(this.handlePostSubmit, this);
+      this.handleImageClose = bind(this.handleImageClose, this);
+      this.handleUpload = bind(this.handleUpload, this);
+      this.startEdit = bind(this.startEdit, this);
       this.field_post = new Autosize({
         placeholder: "Write something...",
         "class": "postfield",
@@ -4816,7 +5564,7 @@ function clone(obj) {
     };
 
     PostCreate.prototype.handlePostSubmit = function() {
-      var meta, _ref;
+      var meta, ref;
       this.field_post.loading = true;
       if (this.image.height) {
         meta = {};
@@ -4824,7 +5572,7 @@ function clone(obj) {
       } else {
         meta = null;
       }
-      Page.user.post(this.field_post.attrs.value, meta, (_ref = this.image.base64uri) != null ? _ref.replace(/.*base64,/, "") : void 0, (function(_this) {
+      Page.user.post(this.field_post.attrs.value, meta, (ref = this.image.base64uri) != null ? ref.replace(/.*base64,/, "") : void 0, (function(_this) {
         return function(res) {
           _this.field_post.loading = false;
           if (res) {
@@ -4858,10 +5606,7 @@ function clone(obj) {
           classes: {
             editing: this.is_editing
           }
-        }, h("div.user", user.renderAvatar()), h("a.icon-image.link", {
-          href: "#",
-          onclick: this.handleUploadClick
-        }), this.field_post.render(), this.image.base64uri ? h("div.image", {
+        }, h("div.user", user.renderAvatar()), this.field_post.render(), this.image.base64uri ? h("div.image", {
           style: "background-image: url(" + this.image.base64uri + "); height: " + (this.image.getSize(530, 600)[1]) + "px",
           classes: {
             empty: false
@@ -4876,7 +5621,11 @@ function clone(obj) {
           classes: {
             empty: true
           }
-        }), h("div.postbuttons", h("a.button.button-submit", {
+        }), h("div.postbuttons", h("a.icon-add.link", {
+          href: "#",
+          title: "Add a photo",
+          onclick: this.handleUploadClick
+        }, h("i.fa.fa-picture-o")), h("a.button.button-submit", {
           href: "#Submit",
           onclick: this.handlePostSubmit
         }, "Submit new post")), h("div", {
@@ -4914,26 +5663,27 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostList.coffee ---- */
+
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostList.coffee ---- */
 
 
 (function() {
   var PostList,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  PostList = (function(_super) {
-    __extends(PostList, _super);
+  PostList = (function(superClass) {
+    extend(PostList, superClass);
 
     function PostList() {
-      this.render = __bind(this.render, this);
-      this.storeMoreTag = __bind(this.storeMoreTag, this);
-      this.addScrollwatcher = __bind(this.addScrollwatcher, this);
-      this.handleMoreClick = __bind(this.handleMoreClick, this);
-      this.update = __bind(this.update, this);
-      this.queryLikes = __bind(this.queryLikes, this);
-      this.queryComments = __bind(this.queryComments, this);
+      this.render = bind(this.render, this);
+      this.storeMoreTag = bind(this.storeMoreTag, this);
+      this.addScrollwatcher = bind(this.addScrollwatcher, this);
+      this.handleMoreClick = bind(this.handleMoreClick, this);
+      this.update = bind(this.update, this);
+      this.queryLikes = bind(this.queryLikes, this);
+      this.queryComments = bind(this.queryComments, this);
       this.item_list = new ItemList(Post, "key");
       this.posts = this.item_list.items;
       this.need_update = true;
@@ -4975,36 +5725,40 @@ function clone(obj) {
       if (this.filter_post_ids) {
         where += "AND post_id IN " + (Text.sqlIn(this.filter_post_ids)) + " ";
       }
-      if (Page.local_storage.settings.hide_hello_zerome) {
-        where += "AND post_id > 1 ";
+      if (Page.local_storage_loaded) {
+        if (Page.local_storage.settings.hide_hello_zerome) {
+          where += "AND post_id > 1 ";
+        }
+      } else {
+        this.need_update = true;
       }
       query = "SELECT * FROM post LEFT JOIN json ON (post.json_id = json.json_id) " + where + " ORDER BY date_added DESC LIMIT " + (this.limit + 1);
       this.logStart("Update");
       return Page.cmd("dbQuery", [query, param], (function(_this) {
         return function(rows) {
-          var items, post_uris, row, _i, _len;
+          var items, j, len, post_uris, row;
           items = [];
           post_uris = [];
-          for (_i = 0, _len = rows.length; _i < _len; _i++) {
-            row = rows[_i];
+          for (j = 0, len = rows.length; j < len; j++) {
+            row = rows[j];
             row["key"] = row["site"] + "-" + row["directory"].replace("data/users/", "") + "_" + row["post_id"];
             row["post_uri"] = row["directory"].replace("data/users/", "") + "_" + row["post_id"];
             post_uris.push(row["post_uri"]);
           }
           _this.queryComments(post_uris, function(comment_rows) {
-            var comment_db, comment_row, _j, _k, _len1, _len2, _name, _ref;
+            var comment_db, comment_row, k, l, len1, len2, name, ref;
             comment_db = {};
-            for (_j = 0, _len1 = comment_rows.length; _j < _len1; _j++) {
-              comment_row = comment_rows[_j];
-              if (comment_db[_name = comment_row.site + "/" + comment_row.post_uri] == null) {
-                comment_db[_name] = [];
+            for (k = 0, len1 = comment_rows.length; k < len1; k++) {
+              comment_row = comment_rows[k];
+              if (comment_db[name = comment_row.site + "/" + comment_row.post_uri] == null) {
+                comment_db[name] = [];
               }
               comment_db[comment_row.site + "/" + comment_row.post_uri].push(comment_row);
             }
-            for (_k = 0, _len2 = rows.length; _k < _len2; _k++) {
-              row = rows[_k];
+            for (l = 0, len2 = rows.length; l < len2; l++) {
+              row = rows[l];
               row["comments"] = comment_db[row.site + "/" + row.post_uri];
-              if (((_ref = _this.filter_post_ids) != null ? _ref.length : void 0) === 1 && row.post_id === parseInt(_this.filter_post_ids[0])) {
+              if (((ref = _this.filter_post_ids) != null ? ref.length : void 0) === 1 && row.post_id === parseInt(_this.filter_post_ids[0])) {
                 row.selected = true;
               }
             }
@@ -5017,14 +5771,14 @@ function clone(obj) {
             }
           });
           return _this.queryLikes(post_uris, function(like_rows) {
-            var like_db, like_row, _j, _k, _len1, _len2;
+            var k, l, len1, len2, like_db, like_row;
             like_db = {};
-            for (_j = 0, _len1 = like_rows.length; _j < _len1; _j++) {
-              like_row = like_rows[_j];
+            for (k = 0, len1 = like_rows.length; k < len1; k++) {
+              like_row = like_rows[k];
               like_db[like_row["post_uri"]] = like_row["likes"];
             }
-            for (_k = 0, _len2 = rows.length; _k < _len2; _k++) {
-              row = rows[_k];
+            for (l = 0, len2 = rows.length; l < len2; l++) {
+              row = rows[l];
               row["likes"] = like_db[row["post_uri"]];
             }
             _this.item_list.sync(rows);
@@ -5043,10 +5797,10 @@ function clone(obj) {
     PostList.prototype.addScrollwatcher = function() {
       return setTimeout(((function(_this) {
         return function() {
-          var i, item, _i, _len, _ref;
-          _ref = Page.scrollwatcher.items;
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            item = _ref[i];
+          var i, item, j, len, ref;
+          ref = Page.scrollwatcher.items;
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            item = ref[i];
             if (item[1] === _this.tag_more) {
               Page.scrollwatcher.items.splice(i, 1);
               break;
@@ -5069,6 +5823,7 @@ function clone(obj) {
     };
 
     PostList.prototype.render = function() {
+      var f, l1, l2;
       if (this.need_update) {
         this.update();
       }
@@ -5089,26 +5844,75 @@ function clone(obj) {
           ]);
         }
       }
-      return [
-        h("div.post-list", this.posts.slice(0, +this.limit + 1 || 9e9).map((function(_this) {
+      if (Page.getSetting("two_column")) {
+        f = false;
+        l1 = [];
+        l2 = [];
+        this.posts.slice(0, this.limit).map((function(_this) {
           return function(post) {
-            var err;
-            try {
-              return post.render();
-            } catch (_error) {
-              err = _error;
-              h("div.error", ["Post render error:", err.message]);
-              return Debug.formatException(err);
+            f = !f;
+            if (f) {
+              return l1.push(post);
+            } else {
+              return l2.push(post);
             }
           };
-        })(this))), this.posts.length > this.limit ? h("a.more.small", {
-          href: "#More",
-          onclick: this.handleMoreClick,
-          enterAnimation: Animation.slideDown,
-          exitAnimation: Animation.slideUp,
-          afterCreate: this.storeMoreTag
-        }, "Show more posts...") : void 0
-      ];
+        })(this));
+        return [
+          h("div.post-2-column", [
+            h("div.post-list", l1.map((function(_this) {
+              return function(post) {
+                var err;
+                try {
+                  return post.render();
+                } catch (error) {
+                  err = error;
+                  h("div.error", ["Post render error:", err.message]);
+                  return Debug.formatException(err);
+                }
+              };
+            })(this))), h("div.post-list", l2.map((function(_this) {
+              return function(post) {
+                var err;
+                try {
+                  return post.render();
+                } catch (error) {
+                  err = error;
+                  h("div.error", ["Post render error:", err.message]);
+                  return Debug.formatException(err);
+                }
+              };
+            })(this)))
+          ]), this.posts.length > this.limit ? h("a.more.small", {
+            href: "#More",
+            onclick: this.handleMoreClick,
+            enterAnimation: Animation.slideDown,
+            exitAnimation: Animation.slideUp,
+            afterCreate: this.storeMoreTag
+          }, "Show more posts...") : void 0
+        ];
+      } else {
+        return [
+          h("div.post-list", this.posts.slice(0, +this.limit + 1 || 9e9).map((function(_this) {
+            return function(post) {
+              var err;
+              try {
+                return post.render();
+              } catch (error) {
+                err = error;
+                h("div.error", ["Post render error:", err.message]);
+                return Debug.formatException(err);
+              }
+            };
+          })(this))), this.posts.length > this.limit ? h("a.more.small", {
+            href: "#More",
+            onclick: this.handleMoreClick,
+            enterAnimation: Animation.slideDown,
+            exitAnimation: Animation.slideUp,
+            afterCreate: this.storeMoreTag
+          }, "Show more posts...") : void 0
+        ];
+      }
     };
 
     return PostList;
@@ -5120,27 +5924,27 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostMeta.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/PostMeta.coffee ---- */
 
 
 (function() {
   var PostMeta,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  PostMeta = (function(_super) {
-    __extends(PostMeta, _super);
+  PostMeta = (function(superClass) {
+    extend(PostMeta, superClass);
 
-    function PostMeta(_at_post, _at_meta) {
-      this.post = _at_post;
-      this.meta = _at_meta;
-      this.render = __bind(this.render, this);
-      this.handleImageSettingsClick = __bind(this.handleImageSettingsClick, this);
-      this.handleImageDeleteClick = __bind(this.handleImageDeleteClick, this);
-      this.handleOptionalHelpClick = __bind(this.handleOptionalHelpClick, this);
-      this.handleImageClick = __bind(this.handleImageClick, this);
-      this.afterCreateImage = __bind(this.afterCreateImage, this);
+    function PostMeta(post, meta) {
+      this.post = post;
+      this.meta = meta;
+      this.render = bind(this.render, this);
+      this.handleImageSettingsClick = bind(this.handleImageSettingsClick, this);
+      this.handleImageDeleteClick = bind(this.handleImageDeleteClick, this);
+      this.handleOptionalHelpClick = bind(this.handleOptionalHelpClick, this);
+      this.handleImageClick = bind(this.handleImageClick, this);
+      this.afterCreateImage = bind(this.afterCreateImage, this);
       this;
     }
 
@@ -5154,8 +5958,8 @@ function clone(obj) {
               _this.image_preview.optional_info = res;
               return Page.projector.scheduleRender();
             });
-          } catch (_error) {
-            e = _error;
+          } catch (error) {
+            e = error;
             _this.log("Image preview error: " + e);
           }
           return Page.projector.scheduleRender();
@@ -5164,8 +5968,8 @@ function clone(obj) {
     };
 
     PostMeta.prototype.handleImageClick = function(e) {
-      var image, _ref;
-      if (this.image_preview.load_fullsize || ((_ref = this.image_preview.optional_info) != null ? _ref.is_downloaded : void 0)) {
+      var image, ref;
+      if (this.image_preview.load_fullsize || ((ref = this.image_preview.optional_info) != null ? ref.is_downloaded : void 0)) {
         Page.overlay.zoomImageTag(e.currentTarget, this.image_preview.width, this.image_preview.height);
       } else {
         this.image_preview.load_fullsize = true;
@@ -5221,7 +6025,7 @@ function clone(obj) {
       }
       this.post.user.hasHelp((function(_this) {
         return function(helping) {
-          var _ref;
+          var ref;
           if (!_this.menu_image) {
             _this.menu_image = new Menu();
           }
@@ -5233,7 +6037,7 @@ function clone(obj) {
             })
           ]);
           _this.menu_image.items.push(["---"]);
-          if ((_ref = _this.image_preview.optional_info) != null ? _ref.is_downloaded : void 0) {
+          if ((ref = _this.image_preview.optional_info) != null ? ref.is_downloaded : void 0) {
             _this.menu_image.items.push(["Delete image", _this.handleImageDeleteClick]);
           } else {
             _this.menu_image.items.push(["Show image", _this.handleImageClick, false]);
@@ -5245,19 +6049,19 @@ function clone(obj) {
     };
 
     PostMeta.prototype.render = function() {
-      var height, style_fullsize, style_preview, width, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8;
+      var height, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, style_fullsize, style_preview, width;
       if (this.meta.img) {
         if (!this.image_preview) {
           this.image_preview = new ImagePreview();
           this.image_preview.setPreviewData(this.meta.img);
         }
-        _ref = this.image_preview.getSize(530, 600), width = _ref[0], height = _ref[1];
-        if ((_ref1 = this.image_preview) != null ? _ref1.preview_uri : void 0) {
+        ref = this.image_preview.getSize(530, 600), width = ref[0], height = ref[1];
+        if ((ref1 = this.image_preview) != null ? ref1.preview_uri : void 0) {
           style_preview = "background-image: url(" + this.image_preview.preview_uri + ")";
         } else {
           style_preview = "";
         }
-        if (this.image_preview.load_fullsize || ((_ref2 = this.image_preview.optional_info) != null ? _ref2.is_downloaded : void 0)) {
+        if (this.image_preview.load_fullsize || ((ref2 = this.image_preview.optional_info) != null ? ref2.is_downloaded : void 0)) {
           style_fullsize = "background-image: url(" + (this.post.user.getPath()) + "/" + this.post.row.post_id + ".jpg)";
         } else {
           style_fullsize = "";
@@ -5266,22 +6070,22 @@ function clone(obj) {
           afterCreate: this.afterCreateImage,
           style: "width: " + width + "px; height: " + height + "px; " + style_preview,
           classes: {
-            downloaded: (_ref3 = this.image_preview.optional_info) != null ? _ref3.is_downloaded : void 0,
-            hasinfo: ((_ref4 = this.image_preview.optional_info) != null ? _ref4.peer : void 0) !== null,
+            downloaded: (ref3 = this.image_preview.optional_info) != null ? ref3.is_downloaded : void 0,
+            hasinfo: ((ref4 = this.image_preview.optional_info) != null ? ref4.peer : void 0) !== null,
             loading: this.image_preview.loading
           }
         }, h("a.fullsize", {
           href: "#",
           onclick: this.handleImageClick,
           style: style_fullsize
-        }), Page.server_info.rev < 1700 ? h("small.oldversion", "You need ZeroNet 0.5.0 to view this image") : void 0, ((_ref5 = this.image_preview) != null ? _ref5.optional_info : void 0) ? h("a.show", {
+        }), Page.server_info.rev < 1700 ? h("small.oldversion", "You need ZeroNet 0.5.0 to view this image") : void 0, ((ref5 = this.image_preview) != null ? ref5.optional_info : void 0) ? (h("a.show", {
           href: "#",
           onclick: this.handleImageClick
-        }, h("div.title", "Loading...\nShow image")) : void 0, ((_ref6 = this.image_preview) != null ? _ref6.optional_info : void 0) ? h("a.details", {
+        }, h("div.title", "Loading...\nShow image")), Page.getSetting("autoload_media") && !((ref6 = this.image_preview.optional_info) != null ? ref6.is_downloaded : void 0) ? setTimeout(this.handleImageClick, 0) : void 0) : void 0, ((ref7 = this.image_preview) != null ? ref7.optional_info : void 0) ? h("a.details", {
           href: "#Settings",
           onclick: Page.returnFalse,
           onmousedown: this.handleImageSettingsClick
-        }, [h("div.size", Text.formatSize((_ref7 = this.image_preview.optional_info) != null ? _ref7.size : void 0)), h("div.peers.icon-profile"), (_ref8 = this.image_preview.optional_info) != null ? _ref8.peer : void 0, h("a.image-settings", "\u22EE"), this.menu_image ? this.menu_image.render(".menu-right") : void 0]) : void 0);
+        }, [h("div.size", Text.formatSize((ref8 = this.image_preview.optional_info) != null ? ref8.size : void 0)), h("div.peers.icon-profile"), (ref9 = this.image_preview.optional_info) != null ? ref9.peer : void 0, h("a.image-settings", "\u22EE"), this.menu_image ? this.menu_image.render(".menu-right") : void 0]) : void 0);
       }
     };
 
@@ -5294,28 +6098,31 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/User.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/User.coffee ---- */
 
 
 (function() {
   var User,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  User = (function(_super) {
-    __extends(User, _super);
+  User = (function(superClass) {
+    extend(User, superClass);
 
-    function User(row, _at_item_list) {
-      this.item_list = _at_item_list;
-      this.renderList = __bind(this.renderList, this);
-      this.handleMuteClick = __bind(this.handleMuteClick, this);
-      this.handleDownloadClick = __bind(this.handleDownloadClick, this);
-      this.download = __bind(this.download, this);
-      this.handleFollowClick = __bind(this.handleFollowClick, this);
-      this.renderAvatar = __bind(this.renderAvatar, this);
-      this.hasHelp = __bind(this.hasHelp, this);
-      this.updateInfo = __bind(this.updateInfo, this);
+    function User(row, item_list) {
+      this.item_list = item_list;
+      this.renderList = bind(this.renderList, this);
+      this.handleMuteClick = bind(this.handleMuteClick, this);
+      this.handleDownloadClick = bind(this.handleDownloadClick, this);
+      this.download = bind(this.download, this);
+      this.handleFollowClick = bind(this.handleFollowClick, this);
+      this.saveUserdb = bind(this.saveUserdb, this);
+      this.applyBackground = bind(this.applyBackground, this);
+      this.renderBackground = bind(this.renderBackground, this);
+      this.renderAvatar = bind(this.renderAvatar, this);
+      this.hasHelp = bind(this.hasHelp, this);
+      this.updateInfo = bind(this.updateInfo, this);
       if (row) {
         this.setRow(row);
       }
@@ -5364,10 +6171,10 @@ function clone(obj) {
       p_followed_users = new Promise();
       Page.cmd("dbQuery", ["SELECT * FROM follow WHERE json_id = " + this.row.json_id], (function(_this) {
         return function(res) {
-          var row, _i, _len;
+          var j, len, row;
           _this.followed_users = {};
-          for (_i = 0, _len = res.length; _i < _len; _i++) {
-            row = res[_i];
+          for (j = 0, len = res.length; j < len; j++) {
+            row = res[j];
             _this.followed_users[row.hub + "/" + row.auth_address] = row;
           }
           return p_followed_users.resolve();
@@ -5375,10 +6182,10 @@ function clone(obj) {
       })(this));
       Page.cmd("dbQuery", ["SELECT post_like.* FROM json LEFT JOIN post_like USING (json_id) WHERE directory = 'data/users/" + this.auth_address + "' AND post_uri IS NOT NULL"], (function(_this) {
         return function(res) {
-          var row, _i, _len;
+          var j, len, row;
           _this.likes = {};
-          for (_i = 0, _len = res.length; _i < _len; _i++) {
-            row = res[_i];
+          for (j = 0, len = res.length; j < len; j++) {
+            row = res[j];
             _this.likes[row.post_uri] = true;
           }
           return p_likes.resolve();
@@ -5424,22 +6231,41 @@ function clone(obj) {
     };
 
     User.prototype.getAvatarLink = function() {
-      var cache_invalidation, _ref;
+      var cache_invalidation, ref;
       cache_invalidation = "";
-      if (this.auth_address === ((_ref = Page.user) != null ? _ref.auth_address : void 0)) {
+      if (this.auth_address === ((ref = Page.user) != null ? ref.auth_address : void 0)) {
         cache_invalidation = "?" + Page.cache_time;
       }
       return "merged-ZeroMe/" + this.hub + "/data/users/" + this.auth_address + "/avatar." + this.row.avatar + cache_invalidation;
     };
 
+    User.prototype.getBackgroundLink = function() {
+      var cache_invalidation, ref;
+      cache_invalidation = "";
+      if (this.auth_address === ((ref = Page.user) != null ? ref.auth_address : void 0)) {
+        cache_invalidation = "?" + Page.cache_time;
+      }
+      return "merged-ZeroMe/" + this.hub + "/data/users/" + this.auth_address + "/bg." + this.row.bg + cache_invalidation;
+    };
+
+    User.prototype.getBackground = function() {
+      if (this.row && this.row.bgColor) {
+        return this.row.bgColor;
+      } else if (this.row && this.row.bgUnset) {
+        return window.defaultBackground.color;
+      } else {
+        throw new Error("ROW ERROR");
+      }
+    };
+
     User.prototype.getDefaultData = function() {
-      var _ref;
+      var ref;
       return {
         "next_post_id": 2,
         "next_comment_id": 1,
         "next_follow_id": 1,
         "avatar": "generate",
-        "user_name": (_ref = this.row) != null ? _ref.user_name : void 0,
+        "user_name": (ref = this.row) != null ? ref.user_name : void 0,
         "hub": this.hub,
         "intro": "Random ZeroNet user",
         "post": [
@@ -5449,6 +6275,7 @@ function clone(obj) {
             "body": "Hello ZeroMe!"
           }
         ],
+        "bgColor": window.defaultBackground.color = "#D30C37",
         "post_like": {},
         "comment": [],
         "follow": []
@@ -5458,12 +6285,12 @@ function clone(obj) {
     User.prototype.getData = function(site, cb) {
       return Page.cmd("fileGet", [this.getPath(site) + "/data.json", false], (function(_this) {
         return function(data) {
-          var _ref;
+          var ref;
           data = JSON.parse(data);
           if (data == null) {
             data = {
               "next_comment_id": 1,
-              "user_name": (_ref = _this.row) != null ? _ref.user_name : void 0,
+              "user_name": (ref = _this.row) != null ? ref.user_name : void 0,
               "hub": _this.hub,
               "post_like": {},
               "comment": []
@@ -5480,10 +6307,63 @@ function clone(obj) {
       }
       if (this.isSeeding() && (this.row.avatar === "png" || this.row.avatar === "jpg")) {
         attrs.style = "background-image: url('" + (this.getAvatarLink()) + "')";
+        return h("a.avatar", attrs);
       } else {
         attrs.style = "background: linear-gradient(" + Text.toColor(this.auth_address) + "," + Text.toColor(this.auth_address.slice(-5)) + ")";
+        attrs.src = "img/user-shape.png";
+        return h("img.avatar", attrs);
       }
-      return h("a.avatar", attrs);
+    };
+
+    User.prototype.renderBackground = function(attrs) {
+      if (attrs == null) {
+        attrs = {};
+      }
+      if (this.isSeeding() && (this.row.bg === "png" || this.row.bg === "jpg")) {
+        attrs.src = "" + (this.getBackgroundLink());
+      }
+      attrs.style = "background: #AFAFAF;width:160px;min-height:75px;";
+      return h("img.bg-preview", attrs);
+    };
+
+    User.prototype.applyBackground = function(cb) {
+      var ref;
+      if (Page.getSetting("disable_background")) {
+        return window.stripBackground();
+      } else if ((Page.user && Page.user.getLink ? (typeof Page !== "undefined" && Page !== null ? (ref = Page.user) != null ? ref.getLink() : void 0 : void 0) !== this.getLink() : false) && Page.getSetting("load_others_background_disabled")) {
+        return window.defaultBackground();
+      } else {
+        if (this.row.bg && !this.row.bgColor) {
+          this.row.bgUnset = true;
+        }
+        if (this.row.bgColor || this.row.bgUnset) {
+          if (this.isSeeding() && (this.row.bg === "png" || this.row.bg === "jpg")) {
+            window.setBackground(this.getBackground(), this.getBackgroundLink());
+          } else if (this.row.bgColor) {
+            window.setBackground(this.getBackground());
+          } else if (this.row.bgUnset) {
+            window.defaultBackground();
+          }
+          if (cb) {
+            return cb();
+          }
+        } else {
+          console.trace("Loading background async, should not happen");
+          return this.getData(this.hub, (function(_this) {
+            return function(row) {
+              if (_this.row == null) {
+                _this.row = {};
+              }
+              _this.row.bg = row.bg;
+              _this.row.bgColor = row.bgColor;
+              if (!row.bgColor) {
+                _this.row.bgUnset = true;
+              }
+              return _this.applyBackground(cb);
+            };
+          })(this));
+        }
+      }
     };
 
     User.prototype.save = function(data, site, cb) {
@@ -5523,7 +6403,7 @@ function clone(obj) {
       }
       return Page.cmd("fileGet", [this.getPath(Page.userdb) + "/content.json", false], (function(_this) {
         return function(userdb_data) {
-          var changed, field, _i, _len, _ref;
+          var changed, field, j, len, ref;
           userdb_data = JSON.parse(userdb_data);
           changed = false;
           if (!(userdb_data != null ? userdb_data.user : void 0)) {
@@ -5536,9 +6416,9 @@ function clone(obj) {
             };
             changed = true;
           }
-          _ref = ["avatar", "hub", "intro", "user_name"];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            field = _ref[_i];
+          ref = ["avatar", "hub", "intro", "user_name", "bg", "bgColor"];
+          for (j = 0, len = ref.length; j < len; j++) {
+            field = ref[j];
             if (userdb_data.user[0][field] !== data[field]) {
               changed = true;
               _this.log("Changed in profile:", field, userdb_data.user[0][field], "!=", data[field]);
@@ -5723,10 +6603,10 @@ function clone(obj) {
       delete this.followed_users[hub + "/" + auth_address];
       return this.getData(this.hub, (function(_this) {
         return function(data) {
-          var follow, follow_index, i, _i, _len, _ref;
-          _ref = data.follow;
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            follow = _ref[i];
+          var follow, follow_index, i, j, len, ref;
+          ref = data.follow;
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            follow = ref[i];
             if (follow.hub === hub && follow.auth_address === auth_address) {
               follow_index = i;
             }
@@ -5787,6 +6667,21 @@ function clone(obj) {
       return false;
     };
 
+    User.prototype.renderCleanIntro = function() {
+      var text;
+      text = window.stripMarkdown(this.row.intro);
+      text = text.split("\n");
+      text = text.filter((function(_this) {
+        return function(a) {
+          return !!a.trim();
+        };
+      })(this));
+      if (!text.length) {
+        return '…';
+      }
+      return text[0];
+    };
+
     User.prototype.renderList = function(type) {
       var classname, enterAnimation, exitAnimation, followed, link, seeding, title;
       if (type == null) {
@@ -5840,7 +6735,7 @@ function clone(obj) {
             href: "?ProfileName/" + this.row.followed_by,
             onclick: Page.handleLinkClick
           }, this.row.followed_by)
-        ]) : h("div.intro", this.row.intro)
+        ]) : h("div.intro", this.renderCleanIntro())
       ]);
     };
 
@@ -5853,21 +6748,21 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/UserList.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/UserList.coffee ---- */
 
 
 (function() {
   var UserList,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  UserList = (function(_super) {
-    __extends(UserList, _super);
+  UserList = (function(superClass) {
+    extend(UserList, superClass);
 
-    function UserList(_at_type) {
-      this.type = _at_type != null ? _at_type : "new";
-      this.render = __bind(this.render, this);
+    function UserList(type1) {
+      this.type = type1 != null ? type1 : "new";
+      this.render = bind(this.render, this);
       this.item_list = new ItemList(User, "key");
       this.users = this.item_list.items;
       this.need_update = true;
@@ -5890,23 +6785,23 @@ function clone(obj) {
         query = "SELECT user.user_name, follow.*, user.*\nFROM follow\nLEFT JOIN user USING (auth_address, hub)\nWHERE\n follow.json_id = " + this.followed_by.row.json_id + "  AND user.json_id IS NOT NULL\n\nUNION\n\nSELECT user.user_name, follow.*, user.*\nFROM follow\nLEFT JOIN json ON (json.directory = 'data/userdb/' || follow.auth_address)\nLEFT JOIN user ON (user.json_id = json.json_id)\nWHERE\n follow.json_id = " + this.followed_by.row.json_id + "  AND user.json_id IS NOT NULL AND\n follow.date_added < " + (Time.timestamp() + 120) + "\nORDER BY date_added DESC\nLIMIT " + this.limit;
       } else if (this.type === "suggested") {
         followed_user_addresses = (function() {
-          var _ref, _results;
-          _ref = Page.user.followed_users;
-          _results = [];
-          for (key in _ref) {
-            val = _ref[key];
-            _results.push(key.replace(/.*\//, ""));
+          var ref, results;
+          ref = Page.user.followed_users;
+          results = [];
+          for (key in ref) {
+            val = ref[key];
+            results.push(key.replace(/.*\//, ""));
           }
-          return _results;
+          return results;
         })();
         followed_user_directories = (function() {
-          var _i, _len, _results;
-          _results = [];
-          for (_i = 0, _len = followed_user_addresses.length; _i < _len; _i++) {
-            key = followed_user_addresses[_i];
-            _results.push("data/users/" + key);
+          var i, len, results;
+          results = [];
+          for (i = 0, len = followed_user_addresses.length; i < len; i++) {
+            key = followed_user_addresses[i];
+            results.push("data/users/" + key);
           }
-          return _results;
+          return results;
         })();
         if (!followed_user_addresses.length) {
           return;
@@ -5919,11 +6814,11 @@ function clone(obj) {
       }
       return Page.cmd("dbQuery", [query, params], (function(_this) {
         return function(rows) {
-          var followed_by_displayed, row, rows_by_user, user_rows, username, _i, _len;
+          var followed_by_displayed, i, len, row, rows_by_user, user_rows, username;
           rows_by_user = {};
           followed_by_displayed = {};
-          for (_i = 0, _len = rows.length; _i < _len; _i++) {
-            row = rows[_i];
+          for (i = 0, len = rows.length; i < len; i++) {
+            row = rows[i];
             if (row.json_cert_user_id) {
               row.cert_user_id = row.json_cert_user_id;
               row.auth_address = row.json_directory.replace("data/userdb/", "").replace("data/users/", "");
@@ -5933,16 +6828,16 @@ function clone(obj) {
             }
             if (row.followed_by) {
               row.followed_by = ((function() {
-                var _j, _len1, _ref, _results;
-                _ref = row.followed_by.split(",");
-                _results = [];
-                for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-                  username = _ref[_j];
+                var j, len1, ref, results;
+                ref = row.followed_by.split(",");
+                results = [];
+                for (j = 0, len1 = ref.length; j < len1; j++) {
+                  username = ref[j];
                   if (!followed_by_displayed[username]) {
-                    _results.push(username);
+                    results.push(username);
                   }
                 }
-                return _results;
+                return results;
               })())[0];
               followed_by_displayed[row.followed_by] = true;
             }
@@ -5952,13 +6847,13 @@ function clone(obj) {
             }
           }
           user_rows = (function() {
-            var _results;
-            _results = [];
+            var results;
+            results = [];
             for (key in rows_by_user) {
               val = rows_by_user[key];
-              _results.push(val);
+              results.push(val);
             }
-            return _results;
+            return results;
           })();
           _this.item_list.sync(user_rows);
           _this.loading = false;
@@ -6000,30 +6895,31 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ZeroMe.coffee ---- */
+/* ---- /19ndUQE2x3NbhGhGZsstuWz2sy9f7uVT6G/js/ZeroMe.coffee ---- */
 
 
 (function() {
   var ZeroMe,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty,
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   window.h = maquette.h;
 
-  ZeroMe = (function(_super) {
-    __extends(ZeroMe, _super);
+  ZeroMe = (function(superClass) {
+    extend(ZeroMe, superClass);
 
     function ZeroMe() {
-      this.queryUserdb = __bind(this.queryUserdb, this);
-      this.checkUser = __bind(this.checkUser, this);
-      this.needSite = __bind(this.needSite, this);
-      this.updateServerInfo = __bind(this.updateServerInfo, this);
-      this.updateSiteInfo = __bind(this.updateSiteInfo, this);
-      this.onOpenWebsocket = __bind(this.onOpenWebsocket, this);
-      this.handleLinkClick = __bind(this.handleLinkClick, this);
-      this.renderContent = __bind(this.renderContent, this);
+      this.queryUserdb = bind(this.queryUserdb, this);
+      this.checkUser = bind(this.checkUser, this);
+      this.needSite = bind(this.needSite, this);
+      this.updateServerInfo = bind(this.updateServerInfo, this);
+      this.updateSiteInfo = bind(this.updateSiteInfo, this);
+      this.otherClasses = bind(this.otherClasses, this);
+      this.onOpenWebsocket = bind(this.onOpenWebsocket, this);
+      this.handleLinkClick = bind(this.handleLinkClick, this);
+      this.renderContent = bind(this.renderContent, this);
       return ZeroMe.__super__.constructor.apply(this, arguments);
     }
 
@@ -6042,12 +6938,14 @@ function clone(obj) {
       this.on_user_info = new Promise();
       this.on_loaded = new Promise();
       this.local_storage = null;
+      this.local_storage_loaded = false;
+      this.loadLocalStorage();
       return this.on_site_info.then((function(_this) {
         return function() {
           _this.checkUser(function() {
             return _this.on_user_info.resolve();
           });
-          if (__indexOf.call(_this.site_info.settings.permissions, "Merger:ZeroMe") < 0) {
+          if (indexOf.call(_this.site_info.settings.permissions, "Merger:ZeroMe") < 0) {
             return _this.cmd("wrapperPermissionAdd", "Merger:ZeroMe", function() {
               return _this.updateSiteInfo(function() {
                 return _this.content.update();
@@ -6058,6 +6956,16 @@ function clone(obj) {
       })(this));
     };
 
+    ZeroMe.prototype.changeTitle = function(title) {
+      var ref, ref1, suffix;
+      suffix = ((ref = this.site_info) != null ? (ref1 = ref.content) != null ? ref1.title : void 0 : void 0) || "ZeroMe";
+      if (title) {
+        return Page.cmd("wrapperSetTitle", title + " | " + suffix);
+      } else {
+        return Page.cmd("wrapperSetTitle", "" + suffix);
+      }
+    };
+
     ZeroMe.prototype.createProjector = function() {
       var url;
       this.projector = maquette.createProjector();
@@ -6065,6 +6973,7 @@ function clone(obj) {
       this.overlay = new Overlay();
       this.content_feed = new ContentFeed();
       this.content_users = new ContentUsers();
+      this.content_settings = new ContentSettings();
       this.content_profile = new ContentProfile();
       this.content_create_profile = new ContentCreateProfile();
       this.scrollwatcher = new Scrollwatcher();
@@ -6079,13 +6988,12 @@ function clone(obj) {
         return function() {
           _this.log("onloaded");
           return window.requestAnimationFrame(function() {
-            return document.body.className = "loaded";
+            return document.body.className = "loaded" + _this.otherClasses();
           });
         };
       })(this));
       this.projector.replace($("#Head"), this.head.render);
       this.projector.replace($("#Overlay"), this.overlay.render);
-      this.loadLocalStorage();
       return setInterval((function() {
         return Page.projector.scheduleRender();
       }), 60 * 1000);
@@ -6103,10 +7011,22 @@ function clone(obj) {
       var changed, content;
       this.params = Text.queryParse(query);
       this.log("Route", this.params);
-      if (this.params.urls[0] === "Create+profile") {
+      if (!this.params.urls) {
+        content = {
+          update: function() {
+            return false;
+          },
+          render: function() {
+            return false;
+          }
+        };
+        return this.setUrl("?Home");
+      } else if (this.params.urls[0] === "Create+profile") {
         content = this.content_create_profile;
-      } else if (this.params.urls[0] === "Users" && (content = this.content_users)) {
+      } else if (this.params.urls[0] === 'Users' && (content = this.content_users)) {
 
+      } else if (this.params.urls[0] === 'Settings') {
+        content = this.content_settings;
       } else if (this.params.urls[0] === "ProfileName") {
         this.content_profile.findUser(this.params.urls[1], (function(_this) {
           return function(user) {
@@ -6172,7 +7092,7 @@ function clone(obj) {
         window.scroll(window.pageXOffset, 0);
         this.history_state["scrollTop"] = 0;
         this.on_loaded.resolved = false;
-        document.body.className = "";
+        document.body.className = "" + this.otherClasses();
         this.setUrl(e.currentTarget.search);
         return false;
       }
@@ -6197,18 +7117,19 @@ function clone(obj) {
       return this.on_site_info.then((function(_this) {
         return function() {
           _this.logStart("Loaded localstorage");
-          return _this.cmd("wrapperGetLocalStorage", [], function(_at_local_storage) {
-            var _base, _base1;
-            _this.local_storage = _at_local_storage;
+          return _this.cmd("wrapperGetLocalStorage", [], function(local_storage) {
+            var base1, base2;
+            _this.local_storage = local_storage;
             _this.logEnd("Loaded localstorage");
+            _this.local_storage_loaded = true;
             if (_this.local_storage == null) {
               _this.local_storage = {};
             }
-            if ((_base = _this.local_storage).followed_users == null) {
-              _base.followed_users = {};
+            if ((base1 = _this.local_storage).followed_users == null) {
+              base1.followed_users = {};
             }
-            if ((_base1 = _this.local_storage).settings == null) {
-              _base1.settings = {};
+            if ((base2 = _this.local_storage).settings == null) {
+              base2.settings = {};
             }
             return _this.on_local_storage.resolve(_this.local_storage);
           });
@@ -6236,6 +7157,25 @@ function clone(obj) {
       return this.updateServerInfo();
     };
 
+    ZeroMe.prototype.otherClasses = function() {
+      var res;
+      res = [];
+      if (!this.getSetting("transparent")) {
+        res.push("no-transparent");
+      }
+      if (this.getSetting("logo_left")) {
+        res.push("logo-left");
+      }
+      if (!this.getSetting("not_sticky_header")) {
+        res.push("sticky-header");
+      }
+      if (res.length) {
+        return " " + res.join(" ");
+      } else {
+        return "";
+      }
+    };
+
     ZeroMe.prototype.updateSiteInfo = function(cb) {
       var on_site_info;
       if (cb == null) {
@@ -6246,7 +7186,7 @@ function clone(obj) {
         return function(merged_sites) {
           _this.merged_sites = merged_sites;
           return on_site_info.then(function() {
-            if (__indexOf.call(_this.site_info.settings.permissions, "Merger:ZeroMe") >= 0 && !_this.merged_sites[_this.userdb]) {
+            if (indexOf.call(_this.site_info.settings.permissions, "Merger:ZeroMe") >= 0 && !_this.merged_sites[_this.userdb]) {
               _this.cmd("mergerSiteAdd", _this.userdb);
             }
             return typeof cb === "function" ? cb(true) : void 0;
@@ -6294,15 +7234,15 @@ function clone(obj) {
         }
       ], (function(_this) {
         return function(res) {
-          var row, _i, _len;
+          var i, len, row;
           if ((res != null ? res.length : void 0) > 0) {
             _this.user = new User({
               hub: res[0]["hub"],
               auth_address: _this.site_info.auth_address
             });
             _this.user.row = res[0];
-            for (_i = 0, _len = res.length; _i < _len; _i++) {
-              row = res[_i];
+            for (i = 0, len = res.length; i < len; i++) {
+              row = res[i];
               if (row.site === row.hub) {
                 _this.user.row = row;
               }
@@ -6351,6 +7291,17 @@ function clone(obj) {
       })(this));
     };
 
+    ZeroMe.prototype.getSetting = function(key) {
+      var ref, ref1;
+      if ((ref = this.local_storage) != null ? (ref1 = ref.settings) != null ? ref1[key] : void 0 : void 0) {
+        return true;
+      } else if (!this.local_storage_loaded) {
+        return this.log("WARN: Getting setting " + key + " but storage has not been loaded yet");
+      } else {
+        return false;
+      }
+    };
+
     ZeroMe.prototype.onRequest = function(cmd, params) {
       if (cmd === "setSiteInfo") {
         return this.setSiteInfo(params);
@@ -6360,7 +7311,7 @@ function clone(obj) {
             params.state.url = params.href.replace(/.*\?/, "");
           }
           this.on_loaded.resolved = false;
-          document.body.className = "";
+          document.body.className = "" + this.otherClasses();
           window.scroll(window.pageXOffset, params.state.scrollTop || 0);
           return this.route(params.state.url || "");
         }
@@ -6370,14 +7321,14 @@ function clone(obj) {
     };
 
     ZeroMe.prototype.setSiteInfo = function(site_info) {
-      var file_name, _ref, _ref1, _ref2;
+      var file_name, ref, ref1, ref2;
       if (site_info.address === this.address) {
         if (!this.site_info) {
           this.site_info = site_info;
           this.on_site_info.resolve();
         }
         this.site_info = site_info;
-        if (((_ref = site_info.event) != null ? _ref[0] : void 0) === "cert_changed") {
+        if (((ref = site_info.event) != null ? ref[0] : void 0) === "cert_changed") {
           this.checkUser((function(_this) {
             return function(found) {
               if (Page.site_info.cert_user_id && !found) {
@@ -6393,9 +7344,9 @@ function clone(obj) {
           })(this));
         }
       }
-      if (((_ref1 = site_info.event) != null ? _ref1[0] : void 0) === "file_done") {
+      if (((ref1 = site_info.event) != null ? ref1[0] : void 0) === "file_done") {
         file_name = site_info.event[1];
-        if (file_name.indexOf(site_info.auth_address) !== -1 && ((_ref2 = Page.user) != null ? _ref2.auth_address : void 0) !== site_info.auth_address) {
+        if (file_name.indexOf(site_info.auth_address) !== -1 && ((ref2 = Page.user) != null ? ref2.auth_address : void 0) !== site_info.auth_address) {
           return this.checkUser((function(_this) {
             return function() {
               return _this.content.update();

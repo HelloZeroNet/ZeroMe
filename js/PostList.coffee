@@ -37,8 +37,11 @@ class PostList extends Class
 		if @filter_post_ids
 			where += "AND post_id IN #{Text.sqlIn(@filter_post_ids)} "
 
-		if Page.local_storage.settings.hide_hello_zerome
-			where += "AND post_id > 1 "
+		if Page.local_storage_loaded
+			if Page.local_storage.settings.hide_hello_zerome
+				where += "AND post_id > 1 "
+		else
+			@need_update = true
 
 		query = "
 			SELECT
@@ -126,16 +129,47 @@ class PostList extends Class
 					])
 				])
 
-		return [
-			h("div.post-list", @posts[0..@limit].map (post) =>
-				try
-					post.render()
-				catch err
-					h("div.error", ["Post render error:", err.message])
-					Debug.formatException(err)
-			),
-			if @posts.length > @limit
-				h("a.more.small", {href: "#More", onclick: @handleMoreClick, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, afterCreate: @storeMoreTag}, "Show more posts...")
-		]
+		if Page.getSetting("two_column")
+			f=false
+			l1=[]
+			l2=[]
+			@posts[0...@limit].map (post) =>
+				f=!f
+				if f
+					l1.push post
+				else
+					l2.push post
+			return [
+				h("div.post-2-column",[
+					h("div.post-list", l1.map (post) =>
+						try
+							post.render()
+						catch err
+							h("div.error", ["Post render error:", err.message])
+							Debug.formatException(err)
+					),
+					h("div.post-list", l2.map (post) =>
+						try
+							post.render()
+						catch err
+							h("div.error", ["Post render error:", err.message])
+							Debug.formatException(err)
+					),
+				])
+				if @posts.length > @limit
+					h("a.more.small", {href: "#More", onclick: @handleMoreClick, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, afterCreate: @storeMoreTag}, "Show more posts...")
+			]
+		else
+			return [
+				h("div.post-list", @posts[0..@limit].map (post) =>
+					try
+						post.render()
+					catch err
+						h("div.error", ["Post render error:", err.message])
+						Debug.formatException(err)
+				),
+				if @posts.length > @limit
+					h("a.more.small", {href: "#More", onclick: @handleMoreClick, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, afterCreate: @storeMoreTag}, "Show more posts...")
+			]
 
 window.PostList = PostList

@@ -51,6 +51,8 @@ class ContentUsers extends Class
 			Page.projector.scheduleRender()
 
 	render: =>
+		window.otherPageBackground()
+
 		if @loaded and not Page.on_loaded.resolved then Page.on_loaded.resolve()
 		if @need_update or not @num_users_total
 			Page.cmd "dbQuery", "SELECT COUNT(*) AS num FROM user", (res) =>
@@ -59,6 +61,7 @@ class ContentUsers extends Class
 		if @need_update
 			@log "Updating"
 			@need_update = false
+			Page.changeTitle "Users"
 
 			# Update components
 			@user_list_recent?.need_update = true

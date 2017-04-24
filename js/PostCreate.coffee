@@ -63,7 +63,6 @@ class PostCreate extends Class
 			# Registered user
 			h("div.post-create.post", {classes: {editing: @is_editing}},
 				h("div.user", user.renderAvatar()),
-				h("a.icon-image.link", {href: "#", onclick: @handleUploadClick}),
 				@field_post.render(),
 				if @image.base64uri
 					h("div.image", {style: "background-image: url(#{@image.base64uri}); height: #{@image.getSize(530, 600)[1]}px", classes: {empty: false}}, [
@@ -72,6 +71,7 @@ class PostCreate extends Class
 				else
 					h("div.image", {style: "height: 0px", classes: {empty: true}})
 				h("div.postbuttons",
+				    h("a.icon-add.link", {href: "#", title: "Add a photo", onclick: @handleUploadClick}, h("i.fa.fa-picture-o")),
 					h("a.button.button-submit", {href: "#Submit", onclick: @handlePostSubmit}, "Submit new post"),
 				),
 				h("div", {style: "clear: both"})

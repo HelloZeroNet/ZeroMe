@@ -17,6 +17,8 @@ class ZeroMe extends ZeroFrame
 		@on_user_info = new Promise()
 		@on_loaded = new Promise()
 		@local_storage = null
+		@local_storage_loaded = false
+		@loadLocalStorage()
 
 		@on_site_info.then =>
 			# Load user data
@@ -29,6 +31,12 @@ class ZeroMe extends ZeroFrame
 					@updateSiteInfo =>
 						@content.update()
 
+	changeTitle: (title) ->
+		suffix=@site_info?.content?.title||"ZeroMe"
+		if title
+			Page.cmd "wrapperSetTitle", "#{title} | #{suffix}"
+		else
+			Page.cmd "wrapperSetTitle", "#{suffix}"
 
 	createProjector: ->
 		@projector = maquette.createProjector()
@@ -36,6 +44,7 @@ class ZeroMe extends ZeroFrame
 		@overlay = new Overlay()
 		@content_feed = new ContentFeed()
 		@content_users = new ContentUsers()
+		@content_settings = new ContentSettings()
 		@content_profile = new ContentProfile()
 		@content_create_profile = new ContentCreateProfile()
 		@scrollwatcher = new Scrollwatcher()
@@ -50,12 +59,11 @@ class ZeroMe extends ZeroFrame
 		# Remove fake long body
 		@on_loaded.then =>
 			@log "onloaded"
-			window.requestAnimationFrame ->
-				document.body.className = "loaded"
+			window.requestAnimationFrame =>
+				document.body.className = "loaded"+@otherClasses()
 
 		@projector.replace($("#Head"), @head.render)
 		@projector.replace($("#Overlay"), @overlay.render)
-		@loadLocalStorage()
 
 		# Update every minute to keep time since fields up-to date
 		setInterval ( ->
@@ -73,10 +81,19 @@ class ZeroMe extends ZeroFrame
 		@params = Text.queryParse(query)
 		@log "Route", @params
 
-		if @params.urls[0] == "Create+profile"
+		if not @params.urls
+			content =
+				update: ->
+					return false
+				render: ->
+					return false
+			return @setUrl("?Home")
+		else if @params.urls[0] == "Create+profile"
 			content = @content_create_profile
-		else if @params.urls[0] == "Users" and
+		else if @params.urls[0] == 'Users' and
 			content = @content_users
+		else if @params.urls[0] == 'Settings'
+			content = @content_settings
 		else if @params.urls[0] == "ProfileName"
 			@content_profile.findUser @params.urls[1], (user) =>
 				@setUrl user.getLink(), "replace"
@@ -127,7 +144,7 @@ class ZeroMe extends ZeroFrame
 			@history_state["scrollTop"] = 0
 
 			@on_loaded.resolved = false
-			document.body.className = ""
+			document.body.className = ""+@otherClasses()
 
 			@setUrl e.currentTarget.search
 			return false
@@ -150,6 +167,7 @@ class ZeroMe extends ZeroFrame
 			@logStart "Loaded localstorage"
 			@cmd "wrapperGetLocalStorage", [], (@local_storage) =>
 				@logEnd "Loaded localstorage"
+				@local_storage_loaded = true
 				@local_storage ?= {}
 				@local_storage.followed_users ?= {}
 				@local_storage.settings ?= {}
@@ -167,6 +185,13 @@ class ZeroMe extends ZeroFrame
 	onOpenWebsocket: (e) =>
 		@updateSiteInfo()
 		@updateServerInfo()
+
+	otherClasses: =>
+		res=[]
+		if not @getSetting("transparent") then res.push("no-transparent")
+		if @getSetting("logo_left") then res.push("logo-left")
+		if not @getSetting("not_sticky_header") then res.push("sticky-header")
+		if res.length then return " "+res.join(" ") else return ""
 
 
 	updateSiteInfo: (cb=null) =>
@@ -251,6 +276,13 @@ class ZeroMe extends ZeroFrame
 			else
 				cb?(false)
 
+	getSetting: (key) ->
+		if @local_storage?.settings?[key]
+			return true
+		else if not @local_storage_loaded
+			@log "WARN: Getting setting #{key} but storage has not been loaded yet"
+		else
+			return false
 
 	# Parse incoming requests from UiWebsocket server
 	onRequest: (cmd, params) ->
@@ -261,7 +293,7 @@ class ZeroMe extends ZeroFrame
 				if not params.state.url
 					params.state.url = params.href.replace /.*\?/, ""
 				@on_loaded.resolved = false
-				document.body.className = ""
+				document.body.className = ""+@otherClasses()
 				window.scroll(window.pageXOffset, params.state.scrollTop or 0)
 				@route(params.state.url or "")
 		else

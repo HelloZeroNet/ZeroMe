@@ -2,13 +2,21 @@
 .users .user .nameline { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 26px }
 .users .user .intro { font-weight: 100; font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; min-height: 18px; word-wrap: break-word; }
 .users .user .added { font-size: 11px; color: #999; margin-left: 6px; vertical-align: 3px; }
-.users .user .intro-full { margin-left: -57px; padding-top: 18px; font-weight: 100; line-height: 1.5em; overflow: hidden; max-height: 400px; word-wrap: break-word; }
+.users .user .intro-full { overflow-y: scroll; margin-left: -57px; padding-top: 18px; font-weight: 100; line-height: 1.5em; overflow: hidden; max-height: 400px; word-wrap: break-word; }
+.bg-settings { width: 150px; margin: 0 auto; }
+.bg-settings .uploadable .icon { margin: 0 auto; text-align: center; margin-left: 0px !important; }
+.no-left-padding { padding-left: 0px !important; text-align:center; }
+.users .user .bg-settings .uploadable .icon { margin-left: 67px; height: 67px; width: 75px; }
 .users .button-follow { float: right; margin-left: 5px; }
 .users .user.followed .button-follow, .users .user.followed .button-follow:hover {
 	background-color: #2ecc71 !important; border-color: #2ecc71 !important; color: #FFF; transform: rotate(45deg)
 }
 .users .user.followed .button-follow-big {
 	background-color: #2ecc71 !important; border-color: #2ecc71 !important; color: #FFF
+}
+.users .user.followed .button-follow-big:hover {
+    background: rgba(255, 0, 0, 0.5)!important;
+    border-color: rgba(255, 0, 0, 0.5)!important;
 }
 .users .user.followed .button-follow-big .icon-follow { transform: rotate(45deg); }
 
@@ -17,7 +25,10 @@
 .user .avatar { position: absolute; margin-left: -67px }
 
 .user.card { padding: 15px; padding-left: 75px; overflow: hidden }
-.user.card.profile { margin-bottom: 30px; }
+
+.user.card.profile { margin-bottom: 30px; background-color: rgba(255, 255, 255, 0.9); border: 1px solid #EEF0F1; }
+.no-transparent .user.card.profile { background-color: white; }
+
 .user.card .avatar { margin-top: -4px; position: absolute; margin-left: -60px; }
 .user.card .follow-container { margin-left: -57px; text-align: center; margin-top: 30px; margin-bottom: 20px; }
 
@@ -25,20 +36,15 @@
 .users.gray .button-follow:hover, .users.gray .button-follow:active { color: #2ecc71; }
 .users.gray .name { color: #333; }
 
-.user .uploadable .icon-upload { position: absolute; margin-left: -48px; z-index: 999; margin-top: 7px }
+.user .uploadable .icon-upload { position: absolute; margin-left: -60px; z-index: 1; margin-top: -4px; opacity: 1; background-color: rgba(0, 0, 0, 0.5); background-position: 11px 11px; width: 50px; height: 50px; border-radius: 50%; }
+.user .uploadable .icon-upload:hover { box-shadow: inset 0 0 0 5px rgb(211, 12, 55) !important }
+.bg-preview { border-radius: 5px }
+.bg-settings > .uploadable a.icon.icon-upload { border-radius: 0; margin-top: 0px; width: 160px; height: 86px; background-position: 65px 30px; border-radius: 5px }
+.bg-settings > .uploadable a.icon.icon-upload:hover { box-shadow: inset 0 0 0 5px rgb(211, 12, 55) !important }
 .user.notseeding .button-follow { border-color: #E0E0E0; }
 .user.card.notseeding .button-follow { border-color: #EFEFEF; }
 
 .user .help { margin-left: -57px; font-size: 14px; color: #AAA; }
 
-.checkbox-skin { background-color: #CCC; width: 35px; height: 18px; border-radius: 15px; transition: all 0.3s ease-in-out; display: inline-block; }
-.checkbox-skin:before {
-	content: ""; position: relative; width: 14px; background-color: white; height: 14px; display: block; border-radius: 100%; margin-top: 2px; margin-left: 2px;
-	transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
-}
-.checkbox .title { display: inline; line-height: 30px; vertical-align: 4px; margin-left: 11px; }
-.checkbox.checked .checkbox-skin:before { margin-left: 19px; }
-.checkbox.checked .checkbox-skin { background-color: #2ECC71; }
-
-.user-mute { text-align: center; display: block; margin-top: -22px; color: #999; font-size: 14px; margin-bottom: 30px; }
+.user-mute { display: block; margin-top: 16px; font-size: 14px; margin-bottom: 16px; color: #555; }
 .user-notfound { text-align: center; font-size: 22px; margin-top: 100px; font-weight: lighter; }

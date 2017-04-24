@@ -1,0 +1,18 @@
+.checkbox.setting .desc { color: #888; margin-left: 30px; }
+.checkbox.setting .title { color: #555; }
+.red { color: #FF0000 !important; font-weight: bold !important; }
+
+.settings .sep {
+  font-weight: lighter;
+  color: #222;
+  font-size: 24px;
+}
+
+.settings .text.search {
+    width: 28%;
+    margin-bottom: 0px;
+    height: 20px;
+    margin: 6px;
+    margin-top: 8px;
+    margin-left: 25px;
+}

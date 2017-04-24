@@ -71,6 +71,21 @@ class User extends Class
 			cache_invalidation = "?"+Page.cache_time
 		return "merged-ZeroMe/#{@hub}/data/users/#{@auth_address}/avatar.#{@row.avatar}#{cache_invalidation}"
 
+	getBackgroundLink: ->
+		cache_invalidation = ""
+		# Cache invalidation for local user
+		if @auth_address == Page.user?.auth_address
+			cache_invalidation = "?"+Page.cache_time
+		return "merged-ZeroMe/#{@hub}/data/users/#{@auth_address}/bg.#{@row.bg}#{cache_invalidation}"
+
+	getBackground: ->
+		if @row and @row.bgColor
+			return @row.bgColor
+		else if @row and @row.bgUnset
+			return window.defaultBackground.color
+		else
+			throw new Error("ROW ERROR")
+
 	getDefaultData: ->
 		return {
 			"next_post_id": 2,
@@ -85,6 +100,7 @@ class User extends Class
 				"date_added": Time.timestamp(),
 				"body": "Hello ZeroMe!"
 			}],
+			"bgColor": window.defaultBackground.color="#D30C37"
 			"post_like": {},
 			"comment": [],
 			"follow": []
@@ -105,9 +121,47 @@ class User extends Class
 	renderAvatar: (attrs={}) =>
 		if @isSeeding() and (@row.avatar == "png" or @row.avatar == "jpg")
 			attrs.style = "background-image: url('#{@getAvatarLink()}')"
+			h("a.avatar", attrs)
 		else
 			attrs.style = "background: linear-gradient("+Text.toColor(@auth_address)+","+Text.toColor(@auth_address.slice(-5))+")"
-		h("a.avatar", attrs)
+			attrs.src="img/user-shape.png"
+			h("img.avatar",attrs)
+
+	renderBackground: (attrs={}) =>
+		if @isSeeding() and (@row.bg == "png" or @row.bg == "jpg")
+			attrs.src="#{@getBackgroundLink()}"
+		attrs.style = "background: #AFAFAF;width:160px;min-height:75px;"
+
+		h("img.bg-preview", attrs)
+
+	applyBackground: (cb) =>
+		if Page.getSetting "disable_background"
+			window.stripBackground()
+		else if (if Page.user and Page.user.getLink then Page?.user?.getLink() != @getLink() else false) and Page.getSetting "load_others_background_disabled"
+			window.defaultBackground()
+		else
+			if @row.bg and not @row.bgColor
+				@row.bgUnset=true
+			if @row.bgColor or @row.bgUnset
+				if @isSeeding() and (@row.bg == "png" or @row.bg == "jpg")
+					window.setBackground @getBackground(),@getBackgroundLink()
+				else if @row.bgColor
+					window.setBackground @getBackground()
+				else if @row.bgUnset
+					window.defaultBackground()
+				if cb
+					cb()
+			else
+				console.trace "Loading background async, should not happen"
+				@getData @hub, (row) =>
+					@row?={}
+					@row.bg=row.bg
+					@row.bgColor=row.bgColor
+					if not row.bgColor
+						@row.bgUnset=true
+					@applyBackground(cb)
+
+
 
 	save: (data, site=@hub, cb=null) ->
 		Page.cmd "fileWrite", [@getPath(site)+"/data.json", Text.fileEncode(data)], (res_write) =>
@@ -120,7 +174,7 @@ class User extends Class
 				if site == @hub and res_write == "ok" and res_sign == "ok"
 					@saveUserdb(data)
 
-	saveUserdb: (data, cb) ->
+	saveUserdb: (data, cb) =>
 		cert_provider = Page.site_info.cert_user_id.replace(/.*@/, "")
 		if cert_provider not in ["zeroid.bit", "zeroverse.bit"]
 			@log "Cert provider #{cert_provider} not supported by userdb!"
@@ -134,7 +188,7 @@ class User extends Class
 					user: [{date_added: Time.timestamp()}]
 				}
 				changed = true
-			for field in ["avatar", "hub", "intro", "user_name"]
+			for field in ["avatar", "hub", "intro", "user_name", "bg", "bgColor"]
 				if userdb_data.user[0][field] != data[field]
 					changed = true
 					@log "Changed in profile:", field, userdb_data.user[0][field], "!=", data[field]
@@ -270,6 +324,14 @@ class User extends Class
 		Page.cmd "muteAdd", [@auth_address, @row.cert_user_id, "Muted from [page](http://127.0.0.1:43110/#{Page.address}/?#{Page.history_state.url})"]
 		return false
 
+	renderCleanIntro: ->
+		text=window.stripMarkdown @row.intro
+		text=text.split("\n")
+		text=text.filter (a) => !!a.trim() #clear empty lines
+		if not text.length
+			return '…' #TODO: put in a good placeholder
+		return text[0]
+
 	renderList: (type="normal") =>
 		classname = ""
 		if type == "card" then classname = ".card"
@@ -296,7 +358,7 @@ class User extends Class
 					h("a.name.link", {href: "?ProfileName/#{@row.followed_by}", onclick: Page.handleLinkClick}, @row.followed_by)
 				])
 			else
-				h("div.intro", @row.intro)
+				h("div.intro", @renderCleanIntro())
 		])
 
 
