@@ -93,7 +93,8 @@
  "signs_required": 1,
  "title": "ZeroMe",
  "translate": [
-  "js/all.js"
+  "js/all.js",
+  "css/all.css"
  ],
  "zeronet_version": "0.5.1"
 }
