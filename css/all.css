@@ -120,6 +120,11 @@
 .head .menu { -webkit-box-shadow: 0px 4px 8px rgba(0,0,0,0.1) ; -moz-box-shadow: 0px 4px 8px rgba(0,0,0,0.1) ; -o-box-shadow: 0px 4px 8px rgba(0,0,0,0.1) ; -ms-box-shadow: 0px 4px 8px rgba(0,0,0,0.1) ; box-shadow: 0px 4px 8px rgba(0,0,0,0.1)  }
 
 
+@media screen and (max-width: 1100px) {
+	.head .right { margin-right: 80px; }
+}
+
+
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Hub.css ---- */
 
 
@@ -604,4 +609,154 @@ h5 { font-weight: normal; color: rgba(0, 0, 0, 0.5) }
 @-moz-keyframes bounce {
 	  0% { -webkit-transform: translateY(0); -moz-transform: translateY(0); -o-transform: translateY(0); -ms-transform: translateY(0); transform: translateY(0) ; }
 	100% { -webkit-transform: translateY(-3px); -moz-transform: translateY(-3px); -o-transform: translateY(-3px); -ms-transform: translateY(-3px); transform: translateY(-3px) ; }
+}
+
+
+
+/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/mobile.css ---- */
+
+
+/* ZeroMe Mobile */
+#Trigger {
+display: none;
+}
+
+@media screen and (max-width: 750px) {
+html, body, p, th, td, li {
+font-size: medium !important;
+}
+
+.head-container {
+position: fixed;
+background-color: #fff;
+width: 100%;
+height: 50px;
+z-index: 30;
+}
+.head {
+width: 100%;
+background-color: #fff;
+}
+.head .logo {
+margin-left: 50px;
+position: absolute;
+z-index: 1;
+}
+.right {
+position: fixed;
+right: 0;
+top: 0;
+}
+#Content {
+width: 100%;
+margin-top: 60px;
+margin-bottom: 5px;
+}
+.col-center {
+background-color: #f6f7f8;
+width: 100%;
+overflow: auto;
+padding-left: 5px;
+padding-right: 5px;
+display: block;
+padding-top: 60px;
+margin-top: -60px;
+}
+.col-left, .col-right {
+position: fixed;
+top: 60px;
+left: -300px;
+background-color: #f6f7f8;
+height: 100%;
+margin-left: 0px;
+padding-top: 60px;
+padding-right: 15px;
+padding-left: 15px;
+margin-top: -60px;
+width: 300px;
+overflow-x: hidden;
+overflow-y: auto;
+z-index: 1;
+-webkit-transition: all 0.6s; -moz-transition: all 0.6s; -o-transition: all 0.6s; -ms-transition: all 0.6s; transition: all 0.6s ;
+}
+.trigger-on .col-left, .trigger-on .col-right {
+left: 0px;
+-webkit-box-shadow: 0px 0px 30px #999; -moz-box-shadow: 0px 0px 30px #999; -o-box-shadow: 0px 0px 30px #999; -ms-box-shadow: 0px 0px 30px #999; box-shadow: 0px 0px 30px #999 ;
+}
+
+#Trigger {
+display: block;
+position: fixed;
+left: 5px;
+top: 3px;
+width: 40px;
+height: 40px;
+z-index: 100;
+border: 1px solid #bbb;
+-webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; -ms-border-radius: 5px; border-radius: 5px ;
+}
+#Trigger .icon {
+background-image: url(../img/nav-icon.png);
+display: block;
+border: 12px solid #fff;
+height: 16px;
+outline: none;
+-webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; -ms-border-radius: 5px; border-radius: 5px ;
+}
+
+.user.card {
+background-color: #f6f7f8;
+-webkit-box-shadow: none; -moz-box-shadow: none; -o-box-shadow: none; -ms-box-shadow: none; box-shadow: none ;
+margin-top: 10px;
+margin-left: -15px;
+}
+.activity-list .items {
+margin-bottom: 0px;
+}
+.more.small {
+padding: 10px;
+margin-bottom: 5px;
+background-color: #fff;
+border: 1px solid #eef0f1;
+-webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; -ms-border-radius: 5px; border-radius: 5px ;
+}
+.post-create .icon-image {
+margin-left: unset;
+right: 40px;
+}
+.post {
+overflow: hidden;
+}
+#Overlay .img {
+width: 100% !important;
+margin-left: 0px !important;
+margin-top: -40px !important;
+left: 0px !important;
+}
+.post .img {
+width: 100% !important;
+max-height: 300px !important;
+min-height: 100px;
+background-size: cover !important;
+}
+.post .img .fullsize {
+background-size: cover !important;
+}
+.post .img .details {
+z-index: 50;
+}
+.post blockquote {
+padding-left: 10px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+}
+
+@media screen and (max-width: 500px) {
+.post .sep, .user .address {
+display: none;
+}
+.post .added {
+margin-left: 10px;
+}
 }

@@ -4758,7 +4758,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostCreate.coffee ---- */
 
 
@@ -5292,6 +5291,58 @@ function clone(obj) {
   window.PostMeta = PostMeta;
 
 }).call(this);
+
+
+/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Trigger.coffee ---- */
+
+
+(function() {
+  var Trigger,
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  Trigger = (function(superClass) {
+    extend(Trigger, superClass);
+
+    function Trigger() {
+      this.render = bind(this.render, this);
+      this.handleTitleClick = bind(this.handleTitleClick, this);
+      this.trigger_off = true;
+    }
+
+    Trigger.prototype.handleTitleClick = function() {
+      if (this.trigger_off) {
+        this.trigger_off = false;
+        document.body.classList.add("trigger-on");
+      } else {
+        document.body.classList.remove("trigger-on");
+        this.trigger_off = true;
+      }
+      return false;
+    };
+
+    Trigger.prototype.render = function() {
+      return h("div.Trigger", {
+        classes: {
+          "trigger-off": this.trigger_off
+        }
+      }, [
+        h("a.icon", {
+          "href": "#Trigger",
+          onclick: this.handleTitleClick
+        })
+      ]);
+    };
+
+    return Trigger;
+
+  })(Class);
+
+  window.Trigger = Trigger;
+
+}).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/User.coffee ---- */
@@ -6005,25 +6056,25 @@ function clone(obj) {
 
 (function() {
   var ZeroMe,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty,
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   window.h = maquette.h;
 
-  ZeroMe = (function(_super) {
-    __extends(ZeroMe, _super);
+  ZeroMe = (function(superClass) {
+    extend(ZeroMe, superClass);
 
     function ZeroMe() {
-      this.queryUserdb = __bind(this.queryUserdb, this);
-      this.checkUser = __bind(this.checkUser, this);
-      this.needSite = __bind(this.needSite, this);
-      this.updateServerInfo = __bind(this.updateServerInfo, this);
-      this.updateSiteInfo = __bind(this.updateSiteInfo, this);
-      this.onOpenWebsocket = __bind(this.onOpenWebsocket, this);
-      this.handleLinkClick = __bind(this.handleLinkClick, this);
-      this.renderContent = __bind(this.renderContent, this);
+      this.queryUserdb = bind(this.queryUserdb, this);
+      this.checkUser = bind(this.checkUser, this);
+      this.needSite = bind(this.needSite, this);
+      this.updateServerInfo = bind(this.updateServerInfo, this);
+      this.updateSiteInfo = bind(this.updateSiteInfo, this);
+      this.onOpenWebsocket = bind(this.onOpenWebsocket, this);
+      this.handleLinkClick = bind(this.handleLinkClick, this);
+      this.renderContent = bind(this.renderContent, this);
       return ZeroMe.__super__.constructor.apply(this, arguments);
     }
 
@@ -6047,7 +6098,7 @@ function clone(obj) {
           _this.checkUser(function() {
             return _this.on_user_info.resolve();
           });
-          if (__indexOf.call(_this.site_info.settings.permissions, "Merger:ZeroMe") < 0) {
+          if (indexOf.call(_this.site_info.settings.permissions, "Merger:ZeroMe") < 0) {
             return _this.cmd("wrapperPermissionAdd", "Merger:ZeroMe", function() {
               return _this.updateSiteInfo(function() {
                 return _this.content.update();
@@ -6068,6 +6119,7 @@ function clone(obj) {
       this.content_profile = new ContentProfile();
       this.content_create_profile = new ContentCreateProfile();
       this.scrollwatcher = new Scrollwatcher();
+      this.trigger = new Trigger();
       if (base.href.indexOf("?") === -1) {
         this.route("");
       } else {
@@ -6085,6 +6137,7 @@ function clone(obj) {
       })(this));
       this.projector.replace($("#Head"), this.head.render);
       this.projector.replace($("#Overlay"), this.overlay.render);
+      this.projector.merge($("#Trigger"), this.trigger.render);
       this.loadLocalStorage();
       return setInterval((function() {
         return Page.projector.scheduleRender();
@@ -6197,18 +6250,18 @@ function clone(obj) {
       return this.on_site_info.then((function(_this) {
         return function() {
           _this.logStart("Loaded localstorage");
-          return _this.cmd("wrapperGetLocalStorage", [], function(_at_local_storage) {
-            var _base, _base1;
-            _this.local_storage = _at_local_storage;
+          return _this.cmd("wrapperGetLocalStorage", [], function(local_storage) {
+            var base1, base2;
+            _this.local_storage = local_storage;
             _this.logEnd("Loaded localstorage");
             if (_this.local_storage == null) {
               _this.local_storage = {};
             }
-            if ((_base = _this.local_storage).followed_users == null) {
-              _base.followed_users = {};
+            if ((base1 = _this.local_storage).followed_users == null) {
+              base1.followed_users = {};
             }
-            if ((_base1 = _this.local_storage).settings == null) {
-              _base1.settings = {};
+            if ((base2 = _this.local_storage).settings == null) {
+              base2.settings = {};
             }
             return _this.on_local_storage.resolve(_this.local_storage);
           });
@@ -6246,7 +6299,7 @@ function clone(obj) {
         return function(merged_sites) {
           _this.merged_sites = merged_sites;
           return on_site_info.then(function() {
-            if (__indexOf.call(_this.site_info.settings.permissions, "Merger:ZeroMe") >= 0 && !_this.merged_sites[_this.userdb]) {
+            if (indexOf.call(_this.site_info.settings.permissions, "Merger:ZeroMe") >= 0 && !_this.merged_sites[_this.userdb]) {
               _this.cmd("mergerSiteAdd", _this.userdb);
             }
             return typeof cb === "function" ? cb(true) : void 0;
@@ -6294,15 +6347,15 @@ function clone(obj) {
         }
       ], (function(_this) {
         return function(res) {
-          var row, _i, _len;
+          var i, len, row;
           if ((res != null ? res.length : void 0) > 0) {
             _this.user = new User({
               hub: res[0]["hub"],
               auth_address: _this.site_info.auth_address
             });
             _this.user.row = res[0];
-            for (_i = 0, _len = res.length; _i < _len; _i++) {
-              row = res[_i];
+            for (i = 0, len = res.length; i < len; i++) {
+              row = res[i];
               if (row.site === row.hub) {
                 _this.user.row = row;
               }
@@ -6370,14 +6423,14 @@ function clone(obj) {
     };
 
     ZeroMe.prototype.setSiteInfo = function(site_info) {
-      var file_name, _ref, _ref1, _ref2;
+      var file_name, ref, ref1, ref2;
       if (site_info.address === this.address) {
         if (!this.site_info) {
           this.site_info = site_info;
           this.on_site_info.resolve();
         }
         this.site_info = site_info;
-        if (((_ref = site_info.event) != null ? _ref[0] : void 0) === "cert_changed") {
+        if (((ref = site_info.event) != null ? ref[0] : void 0) === "cert_changed") {
           this.checkUser((function(_this) {
             return function(found) {
               if (Page.site_info.cert_user_id && !found) {
@@ -6393,9 +6446,9 @@ function clone(obj) {
           })(this));
         }
       }
-      if (((_ref1 = site_info.event) != null ? _ref1[0] : void 0) === "file_done") {
+      if (((ref1 = site_info.event) != null ? ref1[0] : void 0) === "file_done") {
         file_name = site_info.event[1];
-        if (file_name.indexOf(site_info.auth_address) !== -1 && ((_ref2 = Page.user) != null ? _ref2.auth_address : void 0) !== site_info.auth_address) {
+        if (file_name.indexOf(site_info.auth_address) !== -1 && ((ref2 = Page.user) != null ? ref2.auth_address : void 0) !== site_info.auth_address) {
           return this.checkUser((function(_this) {
             return function() {
               return _this.content.update();

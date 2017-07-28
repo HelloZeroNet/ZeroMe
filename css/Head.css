@@ -16,3 +16,8 @@
 .head .settings:hover { color: #5d68ff; background-color: #FAFAFA; transition: none }
 .head .settings:active { background-color: #F5F5F5; transition: none }
 .head .menu { box-shadow: 0px 4px 8px rgba(0,0,0,0.1) }
+
+
+@media screen and (max-width: 1100px) {
+	.head .right { margin-right: 80px; }
+}
