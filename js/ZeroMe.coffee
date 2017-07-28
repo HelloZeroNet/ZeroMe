@@ -39,6 +39,7 @@ class ZeroMe extends ZeroFrame
 		@content_profile = new ContentProfile()
 		@content_create_profile = new ContentCreateProfile()
 		@scrollwatcher = new Scrollwatcher()
+		@trigger = new Trigger()
 
 		if base.href.indexOf("?") == -1
 			@route("")
@@ -55,6 +56,7 @@ class ZeroMe extends ZeroFrame
 
 		@projector.replace($("#Head"), @head.render)
 		@projector.replace($("#Overlay"), @overlay.render)
+		@projector.merge($("#Trigger"), @trigger.render)
 		@loadLocalStorage()
 
 		# Update every minute to keep time since fields up-to date
