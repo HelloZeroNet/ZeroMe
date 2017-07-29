@@ -335,6 +335,7 @@
 .user-notfound { text-align: center; font-size: 22px; margin-top: 100px; font-weight: lighter; }
 
 
+
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/ZeroMe.css ---- */
 
 
@@ -677,7 +678,7 @@ width: 300px;
 overflow-x: hidden;
 overflow-y: auto;
 z-index: 1;
--webkit-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); -moz-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); -o-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); -ms-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1);
+-webkit-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); -moz-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); -o-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); -ms-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1) ;
 }
 .trigger-on .col-left, .trigger-on .col-right {
 left: 0px;

@@ -3670,24 +3670,24 @@ function clone(obj) {
 
 (function() {
   var ContentProfile,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ContentProfile = (function(_super) {
-    __extends(ContentProfile, _super);
+  ContentProfile = (function(superClass) {
+    extend(ContentProfile, superClass);
 
     function ContentProfile() {
-      this.update = __bind(this.update, this);
-      this.render = __bind(this.render, this);
-      this.handleOptionalHelpClick = __bind(this.handleOptionalHelpClick, this);
-      this.handleAvatarUpload = __bind(this.handleAvatarUpload, this);
-      this.handleUserNameSave = __bind(this.handleUserNameSave, this);
-      this.handleIntroSave = __bind(this.handleIntroSave, this);
-      this.filter = __bind(this.filter, this);
-      this.findUser = __bind(this.findUser, this);
-      this.setUser = __bind(this.setUser, this);
-      this.renderNotSeeded = __bind(this.renderNotSeeded, this);
+      this.update = bind(this.update, this);
+      this.render = bind(this.render, this);
+      this.handleOptionalHelpClick = bind(this.handleOptionalHelpClick, this);
+      this.handleAvatarUpload = bind(this.handleAvatarUpload, this);
+      this.handleUserNameSave = bind(this.handleUserNameSave, this);
+      this.handleIntroSave = bind(this.handleIntroSave, this);
+      this.filter = bind(this.filter, this);
+      this.findUser = bind(this.findUser, this);
+      this.setUser = bind(this.setUser, this);
+      this.renderNotSeeded = bind(this.renderNotSeeded, this);
       this.post_list = null;
       this.activity_list = null;
       this.user_list = null;
@@ -3732,9 +3732,9 @@ function clone(obj) {
       ]);
     };
 
-    ContentProfile.prototype.setUser = function(_at_hub, _at_auth_address) {
-      this.hub = _at_hub;
-      this.auth_address = _at_auth_address;
+    ContentProfile.prototype.setUser = function(hub, auth_address) {
+      this.hub = hub;
+      this.auth_address = auth_address;
       this.loaded = false;
       this.log("setUser", this.hub, this.auth_address);
       if (!this.post_list || this.post_list.directories[0] !== "data/users/" + this.auth_address) {
@@ -3854,28 +3854,28 @@ function clone(obj) {
     };
 
     ContentProfile.prototype.render = function() {
-      var _ref, _ref1, _ref2, _ref3, _ref4;
+      var ref, ref1, ref2, ref3, ref4;
       if (this.need_update) {
         this.log("Updating");
         this.need_update = false;
         this.post_list.filter_post_ids = this.filter_post_id ? [this.filter_post_id] : null;
-        if ((_ref = this.post_list) != null) {
-          _ref.need_update = true;
+        if ((ref = this.post_list) != null) {
+          ref.need_update = true;
         }
-        if ((_ref1 = this.user_list) != null) {
-          _ref1.need_update = true;
+        if ((ref1 = this.user_list) != null) {
+          ref1.need_update = true;
         }
-        if ((_ref2 = this.activity_list) != null) {
-          _ref2.need_update = true;
+        if ((ref2 = this.activity_list) != null) {
+          ref2.need_update = true;
         }
         this.activity_list.directories = ["data/users/" + this.auth_address];
         this.user.auth_address = this.auth_address;
         this.user.hub = this.hub;
         this.user.get(this.hub, this.auth_address, (function(_this) {
           return function(res) {
-            var _ref3;
+            var ref3;
             if (res) {
-              _this.owned = _this.user.auth_address === ((_ref3 = Page.user) != null ? _ref3.auth_address : void 0);
+              _this.owned = _this.user.auth_address === ((ref3 = Page.user) != null ? ref3.auth_address : void 0);
               if (_this.owned && !_this.editable_intro) {
                 _this.editable_intro = new Editable("div", _this.handleIntroSave);
                 _this.editable_intro.render_function = Text.renderMarked;
@@ -3912,7 +3912,7 @@ function clone(obj) {
           };
         })(this));
       }
-      if (!((_ref3 = this.user) != null ? (_ref4 = _ref3.row) != null ? _ref4.user_name : void 0 : void 0)) {
+      if (!((ref3 = this.user) != null ? (ref4 = ref3.row) != null ? ref4.cert_user_id : void 0 : void 0)) {
         if (this.loaded) {
           return h("div#Content.center." + this.auth_address, [h("div.user-notfound", "User not found or muted")]);
         } else {
@@ -5344,29 +5344,28 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/User.coffee ---- */
 
 
 (function() {
   var User,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  User = (function(_super) {
-    __extends(User, _super);
+  User = (function(superClass) {
+    extend(User, superClass);
 
-    function User(row, _at_item_list) {
-      this.item_list = _at_item_list;
-      this.renderList = __bind(this.renderList, this);
-      this.handleMuteClick = __bind(this.handleMuteClick, this);
-      this.handleDownloadClick = __bind(this.handleDownloadClick, this);
-      this.download = __bind(this.download, this);
-      this.handleFollowClick = __bind(this.handleFollowClick, this);
-      this.renderAvatar = __bind(this.renderAvatar, this);
-      this.hasHelp = __bind(this.hasHelp, this);
-      this.updateInfo = __bind(this.updateInfo, this);
+    function User(row, item_list) {
+      this.item_list = item_list;
+      this.renderList = bind(this.renderList, this);
+      this.handleMuteClick = bind(this.handleMuteClick, this);
+      this.handleDownloadClick = bind(this.handleDownloadClick, this);
+      this.download = bind(this.download, this);
+      this.handleFollowClick = bind(this.handleFollowClick, this);
+      this.renderAvatar = bind(this.renderAvatar, this);
+      this.hasHelp = bind(this.hasHelp, this);
+      this.updateInfo = bind(this.updateInfo, this);
       if (row) {
         this.setRow(row);
       }
@@ -5395,6 +5394,9 @@ function clone(obj) {
           var row;
           row = res[0];
           if (row) {
+            if (row.user_name === "") {
+              row.user_name = row.cert_user_id;
+            }
             row.auth_address = row.directory.replace("data/users/", "");
             _this.setRow(row);
             return typeof cb === "function" ? cb(row) : void 0;
@@ -5415,10 +5417,10 @@ function clone(obj) {
       p_followed_users = new Promise();
       Page.cmd("dbQuery", ["SELECT * FROM follow WHERE json_id = " + this.row.json_id], (function(_this) {
         return function(res) {
-          var row, _i, _len;
+          var j, len, row;
           _this.followed_users = {};
-          for (_i = 0, _len = res.length; _i < _len; _i++) {
-            row = res[_i];
+          for (j = 0, len = res.length; j < len; j++) {
+            row = res[j];
             _this.followed_users[row.hub + "/" + row.auth_address] = row;
           }
           return p_followed_users.resolve();
@@ -5426,10 +5428,10 @@ function clone(obj) {
       })(this));
       Page.cmd("dbQuery", ["SELECT post_like.* FROM json LEFT JOIN post_like USING (json_id) WHERE directory = 'data/users/" + this.auth_address + "' AND post_uri IS NOT NULL"], (function(_this) {
         return function(res) {
-          var row, _i, _len;
+          var j, len, row;
           _this.likes = {};
-          for (_i = 0, _len = res.length; _i < _len; _i++) {
-            row = res[_i];
+          for (j = 0, len = res.length; j < len; j++) {
+            row = res[j];
             _this.likes[row.post_uri] = true;
           }
           return p_likes.resolve();
@@ -5475,22 +5477,22 @@ function clone(obj) {
     };
 
     User.prototype.getAvatarLink = function() {
-      var cache_invalidation, _ref;
+      var cache_invalidation, ref;
       cache_invalidation = "";
-      if (this.auth_address === ((_ref = Page.user) != null ? _ref.auth_address : void 0)) {
+      if (this.auth_address === ((ref = Page.user) != null ? ref.auth_address : void 0)) {
         cache_invalidation = "?" + Page.cache_time;
       }
       return "merged-ZeroMe/" + this.hub + "/data/users/" + this.auth_address + "/avatar." + this.row.avatar + cache_invalidation;
     };
 
     User.prototype.getDefaultData = function() {
-      var _ref;
+      var ref;
       return {
         "next_post_id": 2,
         "next_comment_id": 1,
         "next_follow_id": 1,
         "avatar": "generate",
-        "user_name": (_ref = this.row) != null ? _ref.user_name : void 0,
+        "user_name": (ref = this.row) != null ? ref.user_name : void 0,
         "hub": this.hub,
         "intro": "Random ZeroNet user",
         "post": [
@@ -5509,12 +5511,12 @@ function clone(obj) {
     User.prototype.getData = function(site, cb) {
       return Page.cmd("fileGet", [this.getPath(site) + "/data.json", false], (function(_this) {
         return function(data) {
-          var _ref;
+          var ref;
           data = JSON.parse(data);
           if (data == null) {
             data = {
               "next_comment_id": 1,
-              "user_name": (_ref = _this.row) != null ? _ref.user_name : void 0,
+              "user_name": (ref = _this.row) != null ? ref.user_name : void 0,
               "hub": _this.hub,
               "post_like": {},
               "comment": []
@@ -5574,7 +5576,7 @@ function clone(obj) {
       }
       return Page.cmd("fileGet", [this.getPath(Page.userdb) + "/content.json", false], (function(_this) {
         return function(userdb_data) {
-          var changed, field, _i, _len, _ref;
+          var changed, field, j, len, ref;
           userdb_data = JSON.parse(userdb_data);
           changed = false;
           if (!(userdb_data != null ? userdb_data.user : void 0)) {
@@ -5587,9 +5589,9 @@ function clone(obj) {
             };
             changed = true;
           }
-          _ref = ["avatar", "hub", "intro", "user_name"];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            field = _ref[_i];
+          ref = ["avatar", "hub", "intro", "user_name"];
+          for (j = 0, len = ref.length; j < len; j++) {
+            field = ref[j];
             if (userdb_data.user[0][field] !== data[field]) {
               changed = true;
               _this.log("Changed in profile:", field, userdb_data.user[0][field], "!=", data[field]);
@@ -5774,10 +5776,10 @@ function clone(obj) {
       delete this.followed_users[hub + "/" + auth_address];
       return this.getData(this.hub, (function(_this) {
         return function(data) {
-          var follow, follow_index, i, _i, _len, _ref;
-          _ref = data.follow;
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            follow = _ref[i];
+          var follow, follow_index, i, j, len, ref;
+          ref = data.follow;
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            follow = ref[i];
             if (follow.hub === hub && follow.auth_address === auth_address) {
               follow_index = i;
             }
@@ -5902,6 +5904,7 @@ function clone(obj) {
   window.User = User;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/UserList.coffee ---- */
