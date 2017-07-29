@@ -185,7 +185,7 @@ class ContentProfile extends Class
 			@user.hasHelp (res) =>
 				@optional_helping = res
 
-		if not @user?.row?.user_name
+		if not @user?.row?.cert_user_id
 			if @loaded
 				return h("div#Content.center.#{@auth_address}", [h("div.user-notfound", "User not found or muted")])
 			else
