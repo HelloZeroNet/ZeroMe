@@ -16,6 +16,8 @@ class User extends Class
 		Page.cmd "dbQuery", ["SELECT * FROM json WHERE site = :site AND directory = :directory LIMIT 1", params], (res) =>
 			row = res[0]
 			if row
+				if row.user_name == ""
+					row.user_name = row.cert_user_id
 				row.auth_address = row.directory.replace("data/users/", "")
 				@setRow(row)
 				cb?(row)
