@@ -16,10 +16,14 @@
 	font-weight: bold; position: absolute; margin-left: -14px; font-size: 12px; margin-top: 2px;
 }
 
+.post-list-type .hub-menu {
+  position: relative;
+  top: -7px;
+  left: 590px;
+  float: left;
+}
 .post-list-type .menu {
   width: 280px;
-  margin-top: 220px;
-  margin-left: 230px;
   text-align: left;
 }
 .post-list-type .menu .menu-item {

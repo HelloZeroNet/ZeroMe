@@ -76,7 +76,9 @@ class ContentFeed extends Class
 				@post_create.render(),
 				h("div.post-list-type",
 					h("a.link", {href: "#Hubs", onclick: @handleHubsClick}, "Hubs")
-					@hubs.render()
+					h("div.hub-menu",
+						@hubs.render()
+					)
 					h("a.link", {href: "#Everyone", onclick: @handleListTypeClick, type: "everyone", classes: {active: @type == "everyone"}}, "Everyone")
 					h("a.link", {href: "#Liked", onclick: @handleListTypeClick, type: "liked", classes: {active: @type == "liked"}}, "Liked")
 					h("a.link", {href: "#Followed+users", onclick: @handleListTypeClick, type: "followed", classes: {active: @type == "followed"}}, "Followed users")
