@@ -20,6 +20,8 @@
   position: relative;
   top: -37px;
   left: 235px;
+  pointer-events: all;
+  z-index: 999;
 }
 .post-list-type .menu {
   width: 280px;
