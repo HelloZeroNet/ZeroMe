@@ -18,14 +18,16 @@
 
 .post-list-type .hub-menu {
   position: relative;
-  top: -37px;
-  left: 235px;
-  pointer-events: all;
   z-index: 999;
+  display: inline-block;
 }
 .post-list-type .menu {
   width: 280px;
   text-align: left;
+  margin-left: -55px;
+  margin-top: 43px;
+  transform: none;
+  transition: max-height 0.3s ease-out;
 }
 .post-list-type .menu .menu-item {
   padding: 0;
