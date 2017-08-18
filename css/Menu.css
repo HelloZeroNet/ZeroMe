@@ -15,3 +15,20 @@
 	content: "L"; display: inline-block; transform: rotateZ(45deg) scaleX(-1); line-height: 15px;
 	font-weight: bold; position: absolute; margin-left: -14px; font-size: 12px; margin-top: 2px;
 }
+
+.post-list-type .menu {
+  width: 280px;
+  margin-top: 220px;
+  margin-left: 230px;
+  text-align: left;
+}
+.post-list-type .menu .menu-item {
+  padding: 0;
+  margin: 0px;
+  border-bottom: none !important;
+}
+.post-list-type .menu .menu-item a {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 240px;
+}

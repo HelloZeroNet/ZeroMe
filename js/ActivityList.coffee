@@ -7,10 +7,13 @@ class ActivityList extends Class
 		@found = 0
 		@loading = true
 		@update_timer = null
+		@filter_hub = null
 
 	queryActivities: (cb) ->
 		if @directories == "all"
 			where = "WHERE date_added > #{Time.timestamp()-60*60*24*2} AND date_added < #{Time.timestamp()+120} "
+		else if @directories == "hub"
+			where = "WHERE json.hub = '#{@filter_hub}' AND date_added < #{Time.timestamp()+120} "
 		else
 			where = "WHERE json.directory IN #{Text.sqlIn(@directories)} AND date_added < #{Time.timestamp()+120} "
 
