@@ -162,12 +162,6 @@ class ContentFeed extends Class
 				@activity_list.directories = "hub"
 				@activity_list.filter_hub = @type.slice(4)
 			else if @type == "lang"
-				lang_list = {"on": [], "off": []}
-				for lang in Object.keys(@filter_lang_list)
-					if lang.slice(0,7) == "lang-on"
-						lang_list["on"].push(lang.slice(8))
-					else
-						lang_list["off"].push(lang.slice(9))
 				query = "SELECT comment_id AS item_id, comment.json_id, comment.body FROM comment"
 				@queryLanguageIds query, lang_list, (language_ids) =>
 					@activity_list.filter_language_ids = "(VALUES "+("(#{id_pair[0]},#{id_pair[1]})" for id_pair in language_ids).join(',')+")"
