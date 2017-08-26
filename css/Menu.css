@@ -90,10 +90,11 @@ padding-left: 15px;
 .post-list-type .hub-menu .menu .menu-item {
 width: 90px;
 overflow: hidden;
-text-overflow: ellipsis;
 }
 .post-list-type .hub-menu .menu .menu-item a {
-  width: 90%;
+width: 90%;
+overflow: hidden;
+text-overflow: ellipsis;
 }
 .post-list-type .menu .menu-item, .post-list-type .menu .menu-radio a {
 padding: 0;
