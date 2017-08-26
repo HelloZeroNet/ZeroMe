@@ -11,10 +11,10 @@ class ActivityList extends Class
 		@filter_language_ids = null
 
 	queryActivities: (cb) ->
-		if @directories == "all"
+		if @filter_language_ids
+			where = "WHERE (comment_id, json_id) IN #{@filter_language_ids} AND date_added < #{Time.timestamp()+120} "
+		else if @directories == "all"
 			where = "WHERE date_added > #{Time.timestamp()-60*60*24*2} AND date_added < #{Time.timestamp()+120} "
-			if @filter_language_ids
-				where += "AND (comment_id, json_id) IN #{@filter_language_ids} "
 
 		else if @directories == "hub"
 			where = "WHERE json.hub = '#{@filter_hub}' AND date_added < #{Time.timestamp()+120} "
@@ -24,7 +24,7 @@ class ActivityList extends Class
 		query = """
 			SELECT
 			 'comment' AS type, json.*,
-			 json.site || "/" || post_uri AS subject, body, date_added, comment_id,
+			 json.site || "/" || post_uri AS subject, body, date_added,
 			 NULL AS subject_auth_address, NULL AS subject_hub, NULL AS subject_user_name
 			FROM
 			 comment
@@ -38,7 +38,7 @@ class ActivityList extends Class
 
 				SELECT
 				 'post_like' AS type, json.*,
-				 json.site || "/" || post_uri AS subject, '' AS body, date_added, NULL AS comment_id,
+				 json.site || "/" || post_uri AS subject, '' AS body, date_added,
 				 NULL AS subject_auth_address, NULL AS subject_hub, NULL AS subject_user_name
 				FROM
 				 json
@@ -53,7 +53,7 @@ class ActivityList extends Class
 
 				SELECT
 				 'follow' AS type, json.*,
-				 follow.hub || "/" || follow.auth_address AS subject, '' AS body, date_added, NULL AS comment_id,
+				 follow.hub || "/" || follow.auth_address AS subject, '' AS body, date_added,
 				 follow.auth_address AS subject_auth_address, follow.hub AS subject_hub, follow.user_name AS subject_user_name
 				FROM
 				 json

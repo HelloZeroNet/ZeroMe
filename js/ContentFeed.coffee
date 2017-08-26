@@ -108,8 +108,9 @@ class ContentFeed extends Class
 					if row["body"].match(@language_dict[lang_off])
 						not_match = true
 						break
-					if lang_list["on"].length == 0
-						language_ids.push([row["item_id"], row["json_id"]])
+					if lang_off == lang_list["off"][-1]
+					  if lang_list["on"].length == 0
+						  language_ids.push([row["item_id"], row["json_id"]])
 				if !not_match
 					for lang_on in lang_list["on"]
 						if row["body"].match(@language_dict[lang_on])
