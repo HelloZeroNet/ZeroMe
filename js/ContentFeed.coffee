@@ -102,15 +102,19 @@ class ContentFeed extends Class
 						start_point = ~~(row["body"].length/10)*i
 						body_tmp += row["body"].slice(start_point, start_point+9)
 					row["body"] = body_tmp
+
+				not_match = false
 				for lang_off in lang_list["off"]
 					if row["body"].match(@language_dict[lang_off])
+						not_match = true
 						break
 					if lang_list["on"].length == 0
 						language_ids.push([row["item_id"], row["json_id"]])
-				for lang_on in lang_list["on"]
-					if row["body"].match(@language_dict[lang_on])
-						language_ids.push([row["item_id"], row["json_id"]])
-						break
+				if !not_match
+					for lang_on in lang_list["on"]
+						if row["body"].match(@language_dict[lang_on])
+							language_ids.push([row["item_id"], row["json_id"]])
+							break
 			cb(language_ids)
 
 	render: =>
