@@ -40,7 +40,7 @@ class Menu
 			if title == e.target.textContent
 				keep_menu = cb(item)
 		# Keep Language Filter opened when selecting language
-		if e.target.type == "everyone" or e.target.type == "lang"
+		if e.target.type == "everyone" or e.target.type == "lang" or e.target.type.slice(0,3) == "hub"
 			@hide()
 		else if e.target.value or e.target.title == ""
 			@show()
