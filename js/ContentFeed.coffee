@@ -19,7 +19,7 @@ class ContentFeed extends Class
 			"Armenian": /[\u0531-\u0586]/,
 			"Hebrew": /[\u05D0-\u05EA]/,
 			"Arabic": /[\u0620-\u06D5]/,
-			"Devanagari": /[\u0904-\u097F]/
+			"Devanagari": /[\u0904-\u097F]/,
 			"Kana": /[\u3041-\u30FA]/,
 			"ZH-JA-KO": /[\u4E00-\u9FEA]/,
 			"Hangul": /[\uAC00-\uD7A3]/,
