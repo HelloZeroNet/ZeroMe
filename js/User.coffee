@@ -94,14 +94,16 @@ class User extends Class
 
 	getData: (site, cb) ->
 		Page.cmd "fileGet", [@getPath(site)+"/data.json", false], (data) =>
-			data = JSON.parse(data)
-			data ?= {
-				"next_comment_id": 1,
-				"user_name": @row?.user_name,
-				"hub": @hub,
-				"post_like": {},
-				"comment": []
-			}
+			if data
+				data = JSON.parse(data)
+			else
+				data = {
+					"next_comment_id": 1,
+					"user_name": @row?.user_name,
+					"hub": @hub,
+					"post_like": {},
+					"comment": []
+				}
 			cb(data)
 
 	renderAvatar: (attrs={}) =>
