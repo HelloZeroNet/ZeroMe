@@ -1700,15 +1700,15 @@ function clone(obj) {
 
 (function() {
   var ImagePreview,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ImagePreview = (function(_super) {
-    __extends(ImagePreview, _super);
+  ImagePreview = (function(superClass) {
+    extend(ImagePreview, superClass);
 
     function ImagePreview() {
-      this.setPreviewData = __bind(this.setPreviewData, this);
+      this.setPreviewData = bind(this.setPreviewData, this);
       this.width = 0;
       this.height = 0;
       this.preview_data = "";
@@ -1730,14 +1730,14 @@ function clone(obj) {
       return [Math.round(width), Math.round(height)];
     };
 
-    ImagePreview.prototype.setPreviewData = function(_at_preview_data) {
-      var colors, pixels, _ref;
-      this.preview_data = _at_preview_data;
-      return _ref = this.preview_data.split(","), this.width = _ref[0], this.height = _ref[1], colors = _ref[2], pixels = _ref[3], _ref;
+    ImagePreview.prototype.setPreviewData = function(preview_data) {
+      var colors, pixels, ref;
+      this.preview_data = preview_data;
+      return ref = this.preview_data.split(","), this.width = ref[0], this.height = ref[1], colors = ref[2], pixels = ref[3], ref;
     };
 
     ImagePreview.prototype.getPreviewUri = function(target_width, target_height) {
-      var b, back, canvas, color, color_codes, colors, ctx, di, g, height, hex, i, image_data, pixel, pixels, r, width, _i, _j, _len, _len1, _ref, _ref1;
+      var b, back, canvas, canvas2, color, color_codes, colors, ctx, di, g, height, hex, i, image_data, j, k, len, len1, pixel, pixels, r, ref, ref1, width;
       if (target_width == null) {
         target_width = 10;
       }
@@ -1745,8 +1745,8 @@ function clone(obj) {
         target_height = 10;
       }
       this.logStart("Render");
-      _ref = this.preview_data.split(","), this.width = _ref[0], this.height = _ref[1], colors = _ref[2], pixels = _ref[3];
-      _ref1 = this.getSize(target_width, target_height), width = _ref1[0], height = _ref1[1];
+      ref = this.preview_data.split(","), this.width = ref[0], this.height = ref[1], colors = ref[2], pixels = ref[3];
+      ref1 = this.getSize(target_width, target_height), width = ref1[0], height = ref1[1];
       colors = colors.match(/.{3}/g);
       pixels = pixels.split("");
       canvas = document.createElement("canvas");
@@ -1755,13 +1755,13 @@ function clone(obj) {
       ctx = canvas.getContext('2d');
       image_data = ctx.createImageData(width, height);
       color_codes = {};
-      for (i = _i = 0, _len = colors.length; _i < _len; i = ++_i) {
+      for (i = j = 0, len = colors.length; j < len; i = ++j) {
         color = colors[i];
         color_codes[this.pixel_chars[i]] = color;
       }
       di = 0;
-      for (_j = 0, _len1 = pixels.length; _j < _len1; _j++) {
-        pixel = pixels[_j];
+      for (k = 0, len1 = pixels.length; k < len1; k++) {
+        pixel = pixels[k];
         hex = color_codes[pixel];
         r = parseInt(hex[0], 16) * 17;
         g = parseInt(hex[1], 16) * 17;
@@ -1773,18 +1773,14 @@ function clone(obj) {
         di += 4;
       }
       ctx.putImageData(image_data, 0, 0);
-
-      /*
-      		canvas2 = document.createElement("canvas")
-      		canvas2.width = width*3
-      		canvas2.height = height*3
-      		ctx = canvas2.getContext('2d')
-      		ctx.filter = "blur(1px)"
-      		ctx.drawImage(canvas, 1, 0, canvas.width*3, canvas.height*3)
-      		ctx.drawImage(canvas, 0, 1, canvas.width*3, canvas.height*3)
-      		ctx.drawImage(canvas, 0, 0, canvas.width*3, canvas.height*3)
-       */
-      back = canvas.toDataURL("image/png");
+      canvas2 = document.createElement("canvas");
+      canvas2.width = width * 3;
+      canvas2.height = height * 3;
+      ctx = canvas2.getContext('2d');
+      ctx.filter = "blur(1px)";
+      ctx.drawImage(canvas, -5, -5, canvas.width * 3 + 10, canvas.height * 3 + 10);
+      ctx.drawImage(canvas, 0, 0, canvas.width * 3, canvas.height * 3);
+      back = canvas2.toDataURL("image/png");
       this.logEnd("Render");
       return back;
     };
@@ -1796,6 +1792,7 @@ function clone(obj) {
   window.ImagePreview = ImagePreview;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/ItemList.coffee ---- */
@@ -2206,13 +2203,13 @@ function clone(obj) {
 
 (function() {
   var MarkedRenderer, Text,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty,
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  MarkedRenderer = (function(_super) {
-    __extends(MarkedRenderer, _super);
+  MarkedRenderer = (function(superClass) {
+    extend(MarkedRenderer, superClass);
 
     function MarkedRenderer() {
       return MarkedRenderer.__super__.constructor.apply(this, arguments);
@@ -2228,12 +2225,12 @@ function clone(obj) {
 
   Text = (function() {
     function Text() {
-      this.renderLinks = __bind(this.renderLinks, this);
-      this.renderMarked = __bind(this.renderMarked, this);
+      this.renderLinks = bind(this.renderLinks, this);
+      this.renderMarked = bind(this.renderMarked, this);
     }
 
     Text.prototype.toColor = function(text, saturation, lightness) {
-      var hash, i, _i, _ref;
+      var hash, i, j, ref;
       if (saturation == null) {
         saturation = 30;
       }
@@ -2241,7 +2238,7 @@ function clone(obj) {
         lightness = 50;
       }
       hash = 0;
-      for (i = _i = 0, _ref = text.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+      for (i = j = 0, ref = text.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
         hash += text.charCodeAt(i) * i;
         hash = hash % 1777;
       }
@@ -2285,6 +2282,7 @@ function clone(obj) {
       if (window.is_proxy) {
         text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/gi, 'href="http://zero');
         text = text.replace(/http:\/\/zero\/([^\/]+\.bit)/, "http://$1");
+        text = text.replace(/href="\/([A-Za-z0-9]{26,35})/g, 'href="http://zero/$1');
       } else {
         text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="');
       }
@@ -2296,7 +2294,9 @@ function clone(obj) {
       var back;
       if (window.is_proxy) {
         back = link.replace(/http:\/\/(127.0.0.1|localhost):43110/, 'http://zero');
-        return back.replace(/http:\/\/zero\/([^\/]+\.bit)/, "http://$1");
+        back = back.replace(/http:\/\/zero\/([^\/]+\.bit)/, "http://$1");
+        back = back.replace(/\/([A-Za-z0-9]{26,35})/, "http://zero/$1");
+        return back;
       } else {
         return link.replace(/http:\/\/(127.0.0.1|localhost):43110/, '');
       }
@@ -2308,7 +2308,7 @@ function clone(obj) {
 
     Text.prototype.getSiteUrl = function(address) {
       if (window.is_proxy) {
-        if (__indexOf.call(address, ".") >= 0) {
+        if (indexOf.call(address, ".") >= 0) {
           return "http://" + address + "/";
         } else {
           return "http://zero/" + address + "/";
@@ -2351,15 +2351,15 @@ function clone(obj) {
     };
 
     Text.prototype.distance = function(s1, s2) {
-      var char, extra_parts, key, match, next_find, next_find_i, val, _i, _len;
+      var char, extra_parts, j, key, len, match, next_find, next_find_i, val;
       s1 = s1.toLocaleLowerCase();
       s2 = s2.toLocaleLowerCase();
       next_find_i = 0;
       next_find = s2[0];
       match = true;
       extra_parts = {};
-      for (_i = 0, _len = s1.length; _i < _len; _i++) {
-        char = s1[_i];
+      for (j = 0, len = s1.length; j < len; j++) {
+        char = s1[j];
         if (char !== next_find) {
           if (extra_parts[next_find_i]) {
             extra_parts[next_find_i] += char;
@@ -2375,13 +2375,13 @@ function clone(obj) {
         extra_parts[next_find_i] = "";
       }
       extra_parts = (function() {
-        var _results;
-        _results = [];
+        var results;
+        results = [];
         for (key in extra_parts) {
           val = extra_parts[key];
-          _results.push(val);
+          results.push(val);
         }
-        return _results;
+        return results;
       })();
       if (next_find_i >= s2.length) {
         return extra_parts.length + extra_parts.join("").length;
@@ -2391,12 +2391,12 @@ function clone(obj) {
     };
 
     Text.prototype.queryParse = function(query) {
-      var key, params, part, parts, val, _i, _len, _ref;
+      var j, key, len, params, part, parts, ref, val;
       params = {};
       parts = query.split('&');
-      for (_i = 0, _len = parts.length; _i < _len; _i++) {
-        part = parts[_i];
-        _ref = part.split("="), key = _ref[0], val = _ref[1];
+      for (j = 0, len = parts.length; j < len; j++) {
+        part = parts[j];
+        ref = part.split("="), key = ref[0], val = ref[1];
         if (val) {
           params[decodeURIComponent(key)] = decodeURIComponent(val);
         } else {
@@ -2424,10 +2424,10 @@ function clone(obj) {
     };
 
     Text.prototype.highlight = function(text, search) {
-      var back, i, part, parts, _i, _len;
+      var back, i, j, len, part, parts;
       parts = text.split(RegExp(search, "i"));
       back = [];
-      for (i = _i = 0, _len = parts.length; _i < _len; i = ++_i) {
+      for (i = j = 0, len = parts.length; j < len; i = ++j) {
         part = parts[i];
         back.push(part);
         if (i < parts.length - 1) {
@@ -2442,13 +2442,13 @@ function clone(obj) {
     Text.prototype.sqlIn = function(values) {
       var value;
       return "(" + ((function() {
-        var _i, _len, _results;
-        _results = [];
-        for (_i = 0, _len = values.length; _i < _len; _i++) {
-          value = values[_i];
-          _results.push("'" + value + "'");
+        var j, len, results;
+        results = [];
+        for (j = 0, len = values.length; j < len; j++) {
+          value = values[j];
+          results.push("'" + value + "'");
         }
-        return _results;
+        return results;
       })()).join(',') + ")";
     };
 
@@ -5904,7 +5904,6 @@ function clone(obj) {
   window.User = User;
 
 }).call(this);
-
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/UserList.coffee ---- */
