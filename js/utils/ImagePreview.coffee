@@ -52,17 +52,17 @@ class ImagePreview extends Class
 		#ctx.putImageData(image_data, 1, 0)
 		#ctx.putImageData(image_data, 0, 1)
 		ctx.putImageData(image_data, 0, 0)
-		###
+
+		# Add some blur for more smooth image
 		canvas2 = document.createElement("canvas")
 		canvas2.width = width*3
 		canvas2.height = height*3
 		ctx = canvas2.getContext('2d')
 		ctx.filter = "blur(1px)"
-		ctx.drawImage(canvas, 1, 0, canvas.width*3, canvas.height*3)
-		ctx.drawImage(canvas, 0, 1, canvas.width*3, canvas.height*3)
+		ctx.drawImage(canvas, -5, -5, canvas.width*3 + 10, canvas.height*3 + 10)
 		ctx.drawImage(canvas, 0, 0, canvas.width*3, canvas.height*3)
-		###
-		back = canvas.toDataURL("image/png")
+
+		back = canvas2.toDataURL("image/png")
 		@logEnd "Render"
 		return back
 
