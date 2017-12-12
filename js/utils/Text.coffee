@@ -43,6 +43,7 @@ class Text
 		if window.is_proxy
 			text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/gi, 'href="http://zero')
 			text = text.replace(/http:\/\/zero\/([^\/]+\.bit)/, "http://$1")
+			text = text.replace(/href="\/([A-Za-z0-9]{26,35})/g, 'href="http://zero/$1')  # Links without 127.0.0.1
 		else
 			text = text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="')
 		# Add no-refresh linking to local links
@@ -54,7 +55,9 @@ class Text
 	fixLink: (link) ->
 		if window.is_proxy
 			back = link.replace(/http:\/\/(127.0.0.1|localhost):43110/, 'http://zero')
-			return back.replace(/http:\/\/zero\/([^\/]+\.bit)/, "http://$1")  # Domain links
+			back = back.replace(/http:\/\/zero\/([^\/]+\.bit)/, "http://$1")  # Domain links
+			back = back.replace(/\/([A-Za-z0-9]{26,35})/, "http://zero/$1")  # Links without 127.0.0.1
+			return back
 		else
 			return link.replace(/http:\/\/(127.0.0.1|localhost):43110/, '')
 
