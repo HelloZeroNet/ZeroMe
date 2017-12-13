@@ -1794,7 +1794,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/ItemList.coffee ---- */
 
 
@@ -3290,22 +3289,23 @@ function clone(obj) {
 
 (function() {
   var ContentCreateProfile,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ContentCreateProfile = (function(_super) {
-    __extends(ContentCreateProfile, _super);
+  ContentCreateProfile = (function(superClass) {
+    extend(ContentCreateProfile, superClass);
 
     function ContentCreateProfile() {
-      this.update = __bind(this.update, this);
-      this.render = __bind(this.render, this);
-      this.renderDefaultHubs = __bind(this.renderDefaultHubs, this);
-      this.renderSeededHubs = __bind(this.renderSeededHubs, this);
-      this.renderHub = __bind(this.renderHub, this);
-      this.updateHubs = __bind(this.updateHubs, this);
-      this.handleJoinClick = __bind(this.handleJoinClick, this);
-      this.handleDownloadClick = __bind(this.handleDownloadClick, this);
+      this.update = bind(this.update, this);
+      this.render = bind(this.render, this);
+      this.renderDefaultHubs = bind(this.renderDefaultHubs, this);
+      this.renderSeededHubs = bind(this.renderSeededHubs, this);
+      this.renderHub = bind(this.renderHub, this);
+      this.updateHubs = bind(this.updateHubs, this);
+      this.joinHub = bind(this.joinHub, this);
+      this.handleJoinClick = bind(this.handleJoinClick, this);
+      this.handleDownloadClick = bind(this.handleDownloadClick, this);
       this.loaded = true;
       this.hubs = [];
       this.default_hubs = [];
@@ -3327,8 +3327,36 @@ function clone(obj) {
     };
 
     ContentCreateProfile.prototype.handleJoinClick = function(e) {
-      var hub, user;
-      hub = e.target.attributes.address.value;
+      var hub, hub_address, hub_name, ref, ref1;
+      hub_address = e.target.attributes.address.value;
+      if ((ref = Page.user) != null ? ref.hub : void 0) {
+        hub_name = (ref1 = (function() {
+          var i, len, ref2, results;
+          ref2 = this.hubs;
+          results = [];
+          for (i = 0, len = ref2.length; i < len; i++) {
+            hub = ref2[i];
+            if (hub.address === Page.user.hub) {
+              results.push(hub.content.title);
+            }
+          }
+          return results;
+        }).call(this)) != null ? ref1[0] : void 0;
+        if (hub_name == null) {
+          hub_name = Page.user.hub;
+        }
+        return Page.cmd("wrapperConfirm", ["You already have profile on hub <b>" + hub_name + "</b>,<br>are you sure you want to create a new one?", "Create new profile"], (function(_this) {
+          return function() {
+            return _this.joinHub(hub_address);
+          };
+        })(this));
+      } else {
+        return this.joinHub(hub_address);
+      }
+    };
+
+    ContentCreateProfile.prototype.joinHub = function(hub) {
+      var user;
       user = new User({
         hub: hub,
         auth_address: Page.site_info.auth_address
@@ -3364,14 +3392,14 @@ function clone(obj) {
     ContentCreateProfile.prototype.updateHubs = function() {
       return Page.cmd("mergerSiteList", true, (function(_this) {
         return function(sites) {
-          var address, content, _ref, _results;
+          var address, content, ref, results;
           Page.cmd("dbQuery", "SELECT * FROM json", function(users) {
-            var address, hubs, site, site_users, user, _i, _len, _name;
+            var address, hubs, i, len, name, site, site_users, user;
             site_users = {};
-            for (_i = 0, _len = users.length; _i < _len; _i++) {
-              user = users[_i];
-              if (site_users[_name = user.hub] == null) {
-                site_users[_name] = [];
+            for (i = 0, len = users.length; i < len; i++) {
+              user = users[i];
+              if (site_users[name = user.hub] == null) {
+                site_users[name] = [];
               }
               site_users[user.hub].push(user);
             }
@@ -3388,22 +3416,22 @@ function clone(obj) {
             return Page.projector.scheduleRender();
           });
           _this.default_hubs = [];
-          _ref = Page.site_info.content.settings.default_hubs;
-          _results = [];
-          for (address in _ref) {
-            content = _ref[address];
+          ref = Page.site_info.content.settings.default_hubs;
+          results = [];
+          for (address in ref) {
+            content = ref[address];
             if (!sites[address] && !_this.downloading[address]) {
-              _results.push(_this.default_hubs.push({
+              results.push(_this.default_hubs.push({
                 users: [],
                 address: address,
                 content: content,
                 type: "available"
               }));
             } else {
-              _results.push(void 0);
+              results.push(void 0);
             }
           }
-          return _results;
+          return results;
         };
       })(this));
     };
@@ -3427,8 +3455,8 @@ function clone(obj) {
         }, "Join!"), h("div.avatars", [
           hub.users.map((function(_this) {
             return function(user) {
-              var avatar, _ref;
-              if (((_ref = user.avatar) !== "jpg" && _ref !== "png") || rendered >= 4) {
+              var avatar, ref;
+              if (((ref = user.avatar) !== "jpg" && ref !== "png") || rendered >= 4) {
                 return "";
               }
               avatar = "merged-ZeroMe/" + hub.address + "/" + user.directory + "/avatar." + user.avatar;
@@ -3461,7 +3489,7 @@ function clone(obj) {
     };
 
     ContentCreateProfile.prototype.render = function() {
-      var _ref;
+      var ref;
       if (this.loaded && !Page.on_loaded.resolved) {
         Page.on_loaded.resolve();
       }
@@ -3473,7 +3501,7 @@ function clone(obj) {
         h("h1", "Create new profile"), h("a.button.button-submit.button-certselect.certselect", {
           href: "#Select+user",
           onclick: this.handleSelectUserClick
-        }, [h("div.icon.icon-profile"), ((_ref = Page.site_info) != null ? _ref.cert_user_id : void 0) ? "As: " + Page.site_info.cert_user_id : "Select ID..."]), this.creation_status.length > 0 ? h("div.creation-status", {
+        }, [h("div.icon.icon-profile"), ((ref = Page.site_info) != null ? ref.cert_user_id : void 0) ? "As: " + Page.site_info.cert_user_id : "Select ID..."]), this.creation_status.length > 0 ? h("div.creation-status", {
           enterAnimation: Animation.slideDown,
           exitAnimation: Animation.slideUp
         }, [
@@ -3513,6 +3541,7 @@ function clone(obj) {
   window.ContentCreateProfile = ContentCreateProfile;
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentFeed.coffee ---- */
@@ -4146,25 +4175,25 @@ function clone(obj) {
 
 (function() {
   var Head,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty,
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  Head = (function(_super) {
-    __extends(Head, _super);
+  Head = (function(superClass) {
+    extend(Head, superClass);
 
     function Head() {
-      this.render = __bind(this.render, this);
-      this.saveFollows = __bind(this.saveFollows, this);
-      this.handleMenuClick = __bind(this.handleMenuClick, this);
-      this.handleFollowMenuItemClick = __bind(this.handleFollowMenuItemClick, this);
+      this.render = bind(this.render, this);
+      this.saveFollows = bind(this.saveFollows, this);
+      this.handleMenuClick = bind(this.handleMenuClick, this);
+      this.handleFollowMenuItemClick = bind(this.handleFollowMenuItemClick, this);
       this.menu = new Menu();
       this.follows = [];
     }
 
     Head.prototype.handleSelectUserClick = function() {
-      if (__indexOf.call(Page.site_info.settings.permissions, "Merger:ZeroMe") < 0) {
+      if (indexOf.call(Page.site_info.settings.permissions, "Merger:ZeroMe") < 0) {
         Page.cmd("wrapperPermissionAdd", "Merger:ZeroMe", (function(_this) {
           return function() {
             return Page.updateSiteInfo(function() {
@@ -4192,13 +4221,14 @@ function clone(obj) {
     };
 
     Head.prototype.handleMenuClick = function() {
-      var _ref;
-      if (!((_ref = Page.site_info) != null ? _ref.cert_user_id : void 0)) {
+      var ref;
+      if (!((ref = Page.site_info) != null ? ref.cert_user_id : void 0)) {
         return this.handleSelectUserClick();
       }
       Page.cmd("feedListFollow", [], (function(_this) {
-        return function(_at_follows) {
-          _this.follows = _at_follows;
+        return function(follows) {
+          var fn, key, ref1, val;
+          _this.follows = follows;
           _this.menu.items = [];
           _this.menu.items.push([
             "Follow username mentions", (function(item) {
@@ -4225,6 +4255,30 @@ function clone(obj) {
               return false;
             }), Page.local_storage.settings.hide_hello_zerome
           ]);
+          if (((function() {
+            var results;
+            results = [];
+            for (key in Page.user_hubs) {
+              results.push(key);
+            }
+            return results;
+          })()).length > 1) {
+            _this.menu.items.push(["---"]);
+            ref1 = Page.user_hubs;
+            fn = function(key) {
+              return _this.menu.items.push([
+                "Use hub " + key, (function(item) {
+                  Page.local_storage.settings.hub = key;
+                  Page.saveLocalStorage();
+                  return Page.checkUser();
+                }), Page.user.row.site === key
+              ]);
+            };
+            for (key in ref1) {
+              val = ref1[key];
+              fn(key);
+            }
+          }
           _this.menu.toggle();
           return Page.projector.scheduleRender();
         };
@@ -4248,7 +4302,7 @@ function clone(obj) {
     };
 
     Head.prototype.render = function() {
-      var _ref, _ref1, _ref2, _ref3;
+      var ref, ref1, ref2, ref3;
       return h("div.head.center", [
         h("a.logo", {
           href: "?Home",
@@ -4257,7 +4311,7 @@ function clone(obj) {
           src: "img/logo.svg",
           height: 40,
           onerror: "this.src='img/logo.png'; this.onerror=null;"
-        })), ((_ref = Page.user) != null ? _ref.hub : void 0) ? h("div.right.authenticated", [
+        })), ((ref = Page.user) != null ? ref.hub : void 0) ? h("div.right.authenticated", [
           h("div.user", h("a.name.link", {
             href: Page.user.getLink(),
             onclick: Page.handleLinkClick
@@ -4269,7 +4323,7 @@ function clone(obj) {
             onclick: Page.returnFalse,
             onmousedown: this.handleMenuClick
           }, "\u22EE"), this.menu.render()
-        ]) : !((_ref1 = Page.user) != null ? _ref1.hub : void 0) && ((_ref2 = Page.site_info) != null ? _ref2.cert_user_id : void 0) ? h("div.right.selected", [
+        ]) : !((ref1 = Page.user) != null ? ref1.hub : void 0) && ((ref2 = Page.site_info) != null ? ref2.cert_user_id : void 0) ? h("div.right.selected", [
           h("div.user", h("a.name.link", {
             href: "?Create+profile",
             onclick: Page.handleLinkClick
@@ -4281,7 +4335,7 @@ function clone(obj) {
             onclick: Page.returnFalse,
             onmousedown: this.handleMenuClick
           }, "\u22EE")
-        ]) : !((_ref3 = Page.user) != null ? _ref3.hub : void 0) && Page.site_info ? h("div.right.unknown", [
+        ]) : !((ref3 = Page.user) != null ? ref3.hub : void 0) && Page.site_info ? h("div.right.unknown", [
           h("div.user", h("a.name.link", {
             href: "#Select+user",
             onclick: this.handleSelectUserClick
@@ -6087,6 +6141,7 @@ function clone(obj) {
       this.server_info = null;
       this.address = null;
       this.user = false;
+      this.user_hubs = {};
       this.user_loaded = false;
       this.userdb = "1UDbADib99KE9d3qZ87NqJF2QLTHmMkoV";
       this.cache_time = Time.timestamp();
@@ -6349,20 +6404,29 @@ function clone(obj) {
         }
       ], (function(_this) {
         return function(res) {
-          var i, len, row;
+          var i, len, row, user_row;
           if ((res != null ? res.length : void 0) > 0) {
-            _this.user = new User({
-              hub: res[0]["hub"],
-              auth_address: _this.site_info.auth_address
-            });
-            _this.user.row = res[0];
+            _this.user_hubs = {};
             for (i = 0, len = res.length; i < len; i++) {
               row = res[i];
+              _this.log("Possible site for user", row.site);
+              _this.user_hubs[row.site] = row;
               if (row.site === row.hub) {
-                _this.user.row = row;
+                user_row = row;
               }
             }
-            _this.log("Choosen site for user", _this.user.row.site, _this.user.row);
+            if (_this.user_hubs[_this.local_storage.settings.hub]) {
+              row = _this.user_hubs[_this.local_storage.settings.hub];
+              _this.log("Force hub", row.site);
+              user_row = row;
+              user_row.hub = row.site;
+            }
+            _this.log("Choosen site for user", user_row.site, user_row);
+            _this.user = new User({
+              hub: user_row.hub,
+              auth_address: _this.site_info.auth_address
+            });
+            _this.user.row = user_row;
             _this.user.updateInfo(cb);
           } else {
             _this.user = new AnonUser();

@@ -153,7 +153,7 @@
 .menu {
 	background-color: white; padding: 10px 0px; position: absolute; top: 0px; max-height: 0px; overflow: hidden; -webkit-transform: translate(-100%, -30px); -moz-transform: translate(-100%, -30px); -o-transform: translate(-100%, -30px); -ms-transform: translate(-100%, -30px); transform: translate(-100%, -30px) ; pointer-events: none;
 	-webkit-box-shadow: 0px 2px 8px rgba(0,0,0,0.1); -moz-box-shadow: 0px 2px 8px rgba(0,0,0,0.1); -o-box-shadow: 0px 2px 8px rgba(0,0,0,0.1); -ms-box-shadow: 0px 2px 8px rgba(0,0,0,0.1); box-shadow: 0px 2px 8px rgba(0,0,0,0.1) ; -webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px ; opacity: 0; -webkit-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; -moz-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; -o-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; -ms-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out ; z-index: 99;
-	display: inline-block; z-index: 999; margin-top: 50px;
+	display: inline-block; z-index: 99999999999999999; margin-top: 50px;
 }
 .menu-right { left: 100% }
 .menu.visible { opacity: 1; max-height: 350px; -webkit-transform: translate(-100%, 0px); -moz-transform: translate(-100%, 0px); -o-transform: translate(-100%, 0px); -ms-transform: translate(-100%, 0px); transform: translate(-100%, 0px) ; -webkit-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; -moz-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; -o-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; -ms-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out ; pointer-events: all }
@@ -704,7 +704,10 @@ height: 16px;
 outline: none;
 -webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; -ms-border-radius: 5px; border-radius: 5px ;
 }
-
+.col-left.faded {
+opacity: 1;
+-webkit-filter: none; -moz-filter: none; -o-filter: none; -ms-filter: none; filter: none ;
+}
 .user.card {
 background-color: #f6f7f8;
 -webkit-box-shadow: none; -moz-box-shadow: none; -o-box-shadow: none; -ms-box-shadow: none; box-shadow: none ;
