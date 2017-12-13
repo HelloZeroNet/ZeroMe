@@ -47,6 +47,17 @@ class Head extends Class
 				return false
 			), Page.local_storage.settings.hide_hello_zerome]
 
+			if (key for key of Page.user_hubs).length > 1
+				@menu.items.push ["---"]
+				for key, val of Page.user_hubs
+					((key) =>
+						@menu.items.push ["Use hub #{key}", ( (item) =>
+							Page.local_storage.settings.hub = key
+							Page.saveLocalStorage()
+							Page.checkUser()
+						), Page.user.row.site == key]
+					)(key)
+
 			@menu.toggle()
 			Page.projector.scheduleRender()
 		return false
