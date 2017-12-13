@@ -16,7 +16,16 @@ class ContentCreateProfile extends Class
 
 
 	handleJoinClick: (e) =>
-		hub = e.target.attributes.address.value
+		hub_address = e.target.attributes.address.value
+		if Page.user?.hub
+			hub_name = (hub.content.title for hub in @hubs when hub.address == Page.user.hub)?[0]
+			hub_name ?= Page.user.hub
+			Page.cmd "wrapperConfirm", ["You already have profile on hub <b>#{hub_name}</b>,<br>are you sure you want to create a new one?", "Create new profile"], =>
+				@joinHub(hub_address)
+		else
+			@joinHub(hub_address)
+
+	joinHub: (hub) =>
 		user = new User({hub: hub, auth_address: Page.site_info.auth_address})
 		@creation_status.push "Checking user on selected hub..."
 		Page.cmd "fileGet", {"inner_path": user.getPath()+"/content.json", "required": false}, (found) =>
