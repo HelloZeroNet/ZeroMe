@@ -81,7 +81,7 @@
 				["date_added", "INTEGER"],
 				["json_id", "INTEGER REFERENCES json (json_id)"]
 			],
-			"indexes": ["CREATE UNIQUE INDEX follow_key ON follow(json_id, follow_id)"],
+			"indexes": ["CREATE UNIQUE INDEX follow_key ON follow(json_id, follow_id)", "CREATE INDEX follow_date_added ON follow(date_added)"],
 			"schema_changed": 2
 		},
 		"user": {
