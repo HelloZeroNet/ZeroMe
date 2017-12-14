@@ -3543,7 +3543,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentFeed.coffee ---- */
 
 
@@ -6150,11 +6149,15 @@ function clone(obj) {
       this.on_user_info = new Promise();
       this.on_loaded = new Promise();
       this.local_storage = null;
-      return this.on_site_info.then((function(_this) {
+      this.on_local_storage.then((function(_this) {
         return function() {
-          _this.checkUser(function() {
+          return _this.checkUser(function() {
             return _this.on_user_info.resolve();
           });
+        };
+      })(this));
+      return this.on_site_info.then((function(_this) {
+        return function() {
           if (indexOf.call(_this.site_info.settings.permissions, "Merger:ZeroMe") < 0) {
             return _this.cmd("wrapperPermissionAdd", "Merger:ZeroMe", function() {
               return _this.updateSiteInfo(function() {

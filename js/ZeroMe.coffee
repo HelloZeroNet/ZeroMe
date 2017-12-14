@@ -19,10 +19,12 @@ class ZeroMe extends ZeroFrame
 		@on_loaded = new Promise()
 		@local_storage = null
 
-		@on_site_info.then =>
-			# Load user data
+		@on_local_storage.then =>
 			@checkUser =>
 				@on_user_info.resolve()
+
+		@on_site_info.then =>
+			# Load user data
 
 			# Check merger permissions
 			if "Merger:ZeroMe" not in @site_info.settings.permissions
