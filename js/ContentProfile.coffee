@@ -206,7 +206,7 @@ class ContentProfile extends Class
 							if @owned
 								@editable_user_name.render(@user.row.user_name)
 							else
-								h("a", {href: @user.getLink(), onclick: Page.handleLinkClick}, @user.row.user_name)
+								h("a", {href: @user.getLink(), style: "color: #{Text.toColor(@user.row.auth_address)}", onclick: Page.handleLinkClick}, @user.row.user_name)
 						),
 						h("div.cert_user_id", @user.row.cert_user_id)
 						if @owned
