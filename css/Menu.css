@@ -10,8 +10,98 @@
 .menu-item-separator { margin-top: 3px; margin-bottom: 3px; border-top: 1px solid #eee }
 
 .menu-item:hover { background-color: #F6F6F6; transition: none; color: inherit; cursor: pointer; color: black; text-decoration: none }
-.menu-item:active, .menu-item:focus { background-color: #AF3BFF; color: white; transition: none }
+.menu-item:active, .menu-item:focus {
+background-color: transparent;
+color: white; transition: none;
+-webkit-tap-highlight-color: transparent;
+}
 .menu-item.selected:before {
 	content: "L"; display: inline-block; transform: rotateZ(45deg) scaleX(-1); line-height: 15px;
 	font-weight: bold; position: absolute; margin-left: -14px; font-size: 12px; margin-top: 2px;
+}
+
+.menu-radio { white-space: normal; line-height: 26px }
+.menu-item:hover, .menu-radio:hover {background-color: transparent}
+.menu-radio span, .menu-radio a.all, .menu-radio a.filter {
+	background-color: #EEE; width: 18.5%; text-align: center; margin-top: 2px; margin-bottom: 2px; color: #333; font-weight: bold;
+	text-decoration: none; font-size: 13px; transition: all 0.3s; text-transform: uppercase; display: inline-block;
+}
+.post-list-type .menu-radio a:hover {color: #333}
+.menu-item .menu-radio .lang-on:hover,
+.menu-radio .lang-on.selected {
+background-color: rgba(130,255,137,0.2);
+}
+.menu-item .menu-radio .lang-off:hover,
+.menu-radio .lang-off.selected {
+background-color: rgba(255,138,140,0.2);
+}
+.menu-radio a:hover, .menu-radio a.all.active { transition: none; background-color: #d8f1d9;}
+.menu-radio a.long { font-size: 11px }
+
+.menu-radio span {
+text-align: center;
+width: 46%;
+margin-top: 2px;
+margin-right: 4px;
+display: inline-block;
+white-space: pre;
+outline: 4px solid transparent;
+}
+.menu-radio a {
+position: absolute;
+white-space: pre;
+display: block !important;
+width: 59px !important;
+}
+.menu-radio a.all, .menu-radio a.filter {
+position: relative;
+width: 46% !important;
+float: left;
+margin-right: 4px !important;
+}
+.menu-radio .lang-on {
+text-align: left;
+color: #333;
+}
+.menu-radio .lang-off {
+color: #333;
+text-align: right;
+margin-left: 59px !important;
+}
+
+.post-list-type .menu {
+width: 280px;
+text-align: left;
+margin-left: -55px;
+margin-top: 43px;
+transform: none;
+transition: max-height 0.3s ease-out;
+}
+.post-list-type .hub-menu, .post-list-type .filters-menu {
+position: relative;
+z-index: 1;
+display: inline-block;
+}
+.post-list-type .filters-menu .menu {
+margin-left: -85px;
+width: 257px;
+padding-left: 15px;
+}
+.post-list-type .hub-menu .menu .menu-item {
+width: 90px;
+overflow: hidden;
+}
+.post-list-type .hub-menu .menu .menu-item a {
+width: 90%;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+.post-list-type .menu .menu-item, .post-list-type .menu .menu-radio a {
+padding: 0;
+margin: 0px;
+border-bottom: none !important;
+}
+.post-list-type .menu .menu-radio .all, .post-list-type .menu .menu-radio .filter {
+margin-bottom: 2px;
+margin-top: 2px;
 }

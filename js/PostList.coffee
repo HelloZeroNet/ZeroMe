@@ -6,6 +6,8 @@ class PostList extends Class
 		@directories = []
 		@loaded = false
 		@filter_post_ids = null
+		@filter_hub = null
+		@filter_language_ids = null
 		@limit = 10
 
 	queryComments: (post_uris, cb) =>
@@ -36,6 +38,12 @@ class PostList extends Class
 
 		if @filter_post_ids
 			where += "AND post_id IN #{Text.sqlIn(@filter_post_ids)} "
+
+		if @filter_hub
+			where += "AND json.hub = '#{@filter_hub}' "
+
+		if @filter_language_ids
+			where += "AND (post_id, post.json_id) IN #{@filter_language_ids} "
 
 		if Page.local_storage.settings.hide_hello_zerome
 			where += "AND post_id > 1 "
