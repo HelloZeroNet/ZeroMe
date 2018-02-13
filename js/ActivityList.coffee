@@ -9,7 +9,7 @@ class ActivityList extends Class
 		@update_timer = null
 		@filter_hub = null
 		@filter_language_ids = null
-		@show_after_date = 1471946844
+		@show_after_date = 0
 
 	queryActivities: (cb) ->
 		if @filter_language_ids

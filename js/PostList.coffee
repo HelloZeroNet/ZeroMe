@@ -9,7 +9,7 @@ class PostList extends Class
 		@filter_hub = null
 		@filter_language_ids = null
 		@limit = 10
-		@show_after_date = 1471946844
+		@show_after_date = 0
 
 	queryComments: (post_uris, cb) =>
 		if Page.local_storage.settings.show_one_month_ago || \

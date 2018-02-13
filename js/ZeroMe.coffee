@@ -156,7 +156,7 @@ class ZeroMe extends ZeroFrame
 					@local_storage = res
 					@local_storage.followed_users ?= {}
 					@local_storage.settings ?= {}
-					@local_storage.settings.show_after ?= 1471946844
+					@local_storage.settings.show_after ?= ""
 					@on_local_storage.resolve(@local_storage)
 
 	loadLocalStorage: ->
@@ -167,7 +167,7 @@ class ZeroMe extends ZeroFrame
 				@local_storage ?= {}
 				@local_storage.followed_users ?= {}
 				@local_storage.settings ?= {}
-				@local_storage.show_after ?= 1471946844
+				@local_storage.settings.show_after ?= ""
 				@on_local_storage.resolve(@local_storage)
 
 
