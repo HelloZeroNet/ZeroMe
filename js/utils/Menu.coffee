@@ -64,9 +64,9 @@ class Menu
 			if title == "Show posts after"
 				h("div.show-after",
 					h("a.menu-item", {
-						href: href, onclick: onclick, key: title, classes: {"selected": selected}}, [title]),
+						href: href, onclick: onclick, key: title}, [title]),
 				h("input#show-after-date", {
-					placeholder: "unix time"
+					placeholder: "unix time", value: selected
 				}))
 			else
 				h("a.menu-item", {href: href, onclick: onclick, key: title, classes: {"selected": selected}}, [title])

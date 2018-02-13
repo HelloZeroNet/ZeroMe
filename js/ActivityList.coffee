@@ -15,8 +15,7 @@ class ActivityList extends Class
 		if @filter_language_ids
 			where = "WHERE (comment_id, json_id) IN #{@filter_language_ids} AND date_added < #{Time.timestamp()+120} "
 		else if @directories == "all"
-			if Page.local_storage.settings.sort_chronologically || \
-					Page.local_storage.settings.show_one_month_ago || \
+			if Page.local_storage.settings.show_one_month_ago || \
 					Page.local_storage.settings.show_one_day_ago || \
 					Page.local_storage.settings.show_after
 				where = "WHERE date_added < #{Time.timestamp()+120} "
@@ -32,9 +31,9 @@ class ActivityList extends Class
 			if document.getElementById("show-after-date")
 				this.show_after_date = document.getElementById("show-after-date").value - 121
 			where += "AND date_added > " + String(this.show_after_date) + " "
-		if Page.local_storage.settings.show_one_day_ago
+		else if Page.local_storage.settings.show_one_day_ago
 			where += "AND date_added > strftime('%s', 'now') - 3600*24 "
-		if Page.local_storage.settings.show_one_month_ago
+		else if Page.local_storage.settings.show_one_month_ago
 			where += "AND date_added > strftime('%s', 'now') - 3600*24*30 "
 
 		query = """
@@ -76,8 +75,7 @@ class ActivityList extends Class
 				LEFT JOIN follow USING (json_id)
 				 #{where}
 			"""
-		if Page.local_storage.settings.sort_chronologically || \
-				Page.local_storage.settings.show_one_month_ago || \
+		if Page.local_storage.settings.show_one_month_ago || \
 				Page.local_storage.settings.show_one_day_ago || \
 				Page.local_storage.settings.show_after
 			query += """

@@ -1984,12 +1984,10 @@ function clone(obj) {
           return h("div.show-after", h("a.menu-item", {
             href: href,
             onclick: onclick,
-            key: title,
-            classes: {
-              "selected": selected
-            }
+            key: title
           }, [title]), h("input#show-after-date", {
-            placeholder: "unix time"
+            placeholder: "unix time",
+            value: selected
           }));
         } else {
           return h("a.menu-item", {
@@ -2035,6 +2033,7 @@ function clone(obj) {
   });
 
 }).call(this);
+
 
 
 /* ---- /1FZWQJgwcgeK5mUFsKA3JnxuQyjdZ5ErP2/js/utils/Overlay.coffee ---- */
@@ -2969,7 +2968,7 @@ function clone(obj) {
       if (this.filter_language_ids) {
         where = "WHERE (comment_id, json_id) IN " + this.filter_language_ids + " AND date_added < " + (Time.timestamp() + 120) + " ";
       } else if (this.directories === "all") {
-        if (Page.local_storage.settings.sort_chronologically || Page.local_storage.settings.show_one_month_ago || Page.local_storage.settings.show_one_day_ago || Page.local_storage.settings.show_after) {
+        if (Page.local_storage.settings.show_one_month_ago || Page.local_storage.settings.show_one_day_ago || Page.local_storage.settings.show_after) {
           where = "WHERE date_added < " + (Time.timestamp() + 120) + " ";
         } else {
           where = "WHERE date_added > " + (Time.timestamp() - 60 * 60 * 24 * 2) + " AND date_added < " + (Time.timestamp() + 120) + " ";
@@ -2984,11 +2983,9 @@ function clone(obj) {
           this.show_after_date = document.getElementById("show-after-date").value - 121;
         }
         where += "AND date_added > " + String(this.show_after_date) + " ";
-      }
-      if (Page.local_storage.settings.show_one_day_ago) {
+      } else if (Page.local_storage.settings.show_one_day_ago) {
         where += "AND date_added > strftime('%s', 'now') - 3600*24 ";
-      }
-      if (Page.local_storage.settings.show_one_month_ago) {
+      } else if (Page.local_storage.settings.show_one_month_ago) {
         where += "AND date_added > strftime('%s', 'now') - 3600*24*30 ";
       }
       query = "SELECT\n 'comment' AS type, json.*,\n json.site || \"/\" || post_uri AS subject, body, date_added,\n NULL AS subject_auth_address, NULL AS subject_hub, NULL AS subject_user_name\nFROM\n comment\nLEFT JOIN json USING (json_id)\n " + where;
@@ -2998,7 +2995,7 @@ function clone(obj) {
       if (this.directories !== "all") {
         query += "\nUNION ALL\n\nSELECT\n 'follow' AS type, json.*,\n follow.hub || \"/\" || follow.auth_address AS subject, '' AS body, date_added,\n follow.auth_address AS subject_auth_address, follow.hub AS subject_hub, follow.user_name AS subject_user_name\nFROM\n json\nLEFT JOIN follow USING (json_id)\n " + where;
       }
-      if (Page.local_storage.settings.sort_chronologically || Page.local_storage.settings.show_one_month_ago || Page.local_storage.settings.show_one_day_ago || Page.local_storage.settings.show_after) {
+      if (Page.local_storage.settings.show_one_month_ago || Page.local_storage.settings.show_one_day_ago || Page.local_storage.settings.show_after) {
         query += "\nORDER BY date_added ASC\nLIMIT " + (this.limit + 1);
       } else {
         query += "\nORDER BY date_added DESC\nLIMIT " + (this.limit + 1);
@@ -3237,7 +3234,6 @@ function clone(obj) {
   window.ActivityList = ActivityList;
 
 }).call(this);
-
 
 
 /* ---- /1FZWQJgwcgeK5mUFsKA3JnxuQyjdZ5ErP2/js/AnonUser.coffee ---- */
@@ -4540,23 +4536,13 @@ function clone(obj) {
           _this.menu.items.push(["---"]);
           _this.menu.items.push([
             "Show posts after", (function(item) {
-              Page.local_storage.settings.show_after = !Page.local_storage.settings.show_after;
+              Page.local_storage.settings.show_after = document.getElementById("show-after-date").value;
               item[2] = Page.local_storage.settings.show_after;
               Page.projector.scheduleRender();
               Page.saveLocalStorage();
               Page.content.need_update = true;
               return false;
             }), Page.local_storage.settings.show_after
-          ]);
-          _this.menu.items.push([
-            "Show posts chronologically", (function(item) {
-              Page.local_storage.settings.sort_chronologically = !Page.local_storage.settings.sort_chronologically;
-              item[2] = Page.local_storage.settings.sort_chronologically;
-              Page.projector.scheduleRender();
-              Page.saveLocalStorage();
-              Page.content.need_update = true;
-              return false;
-            }), Page.local_storage.settings.sort_chronologically
           ]);
           _this.menu.items.push([
             "Show posts since one day ago", (function(item) {
@@ -5324,7 +5310,7 @@ function clone(obj) {
 
     PostList.prototype.queryComments = function(post_uris, cb) {
       var query;
-      if (Page.local_storage.settings.sort_chronologically || Page.local_storage.settings.show_one_month_ago || Page.local_storage.settings.show_one_day_ago || Page.local_storage.settings.show_after) {
+      if (Page.local_storage.settings.show_one_month_ago || Page.local_storage.settings.show_one_day_ago || Page.local_storage.settings.show_after) {
         query = "SELECT post_uri, comment.body, comment.date_added, comment.comment_id, json.cert_auth_type, json.cert_user_id, json.user_name, json.hub, json.directory, json.site FROM comment LEFT JOIN json USING (json_id) WHERE ? AND date_added < " + (Time.timestamp() + 120) + " ORDER BY date_added ASC";
       } else {
         query = "SELECT post_uri, comment.body, comment.date_added, comment.comment_id, json.cert_auth_type, json.cert_user_id, json.user_name, json.hub, json.directory, json.site FROM comment LEFT JOIN json USING (json_id) WHERE ? AND date_added < " + (Time.timestamp() + 120) + " ORDER BY date_added DESC";
@@ -5372,14 +5358,12 @@ function clone(obj) {
           this.show_after_date = document.getElementById("show-after-date").value - 121;
         }
         where += "AND date_added > " + String(this.show_after_date) + " ";
-      }
-      if (Page.local_storage.settings.show_one_day_ago) {
+      } else if (Page.local_storage.settings.show_one_day_ago) {
         where += "AND date_added > strftime('%s', 'now') - 3600*24 ";
-      }
-      if (Page.local_storage.settings.show_one_month_ago) {
+      } else if (Page.local_storage.settings.show_one_month_ago) {
         where += "AND date_added > strftime('%s', 'now') - 3600*24*30 ";
       }
-      if (Page.local_storage.settings.sort_chronologically || Page.local_storage.settings.show_one_month_ago || Page.local_storage.settings.show_one_day_ago || Page.local_storage.settings.show_after) {
+      if (Page.local_storage.settings.show_one_month_ago || Page.local_storage.settings.show_one_day_ago || Page.local_storage.settings.show_after) {
         query = "SELECT * FROM post LEFT JOIN json ON (post.json_id = json.json_id) " + where + " ORDER BY date_added ASC LIMIT " + (this.limit + 1);
       } else {
         query = "SELECT * FROM post LEFT JOIN json ON (post.json_id = json.json_id) " + where + " ORDER BY date_added DESC LIMIT " + (this.limit + 1);
@@ -6547,7 +6531,7 @@ function clone(obj) {
       this.projector.replace($("#Head"), this.head.render);
       this.projector.replace($("#Overlay"), this.overlay.render);
       this.projector.merge($("#Trigger"), this.trigger.render);
-      this.loadLocalStorage();
+      this.loadSettings();
       return setInterval((function() {
         return Page.projector.scheduleRender();
       }), 60 * 1000);
@@ -6655,12 +6639,37 @@ function clone(obj) {
       return "?" + Text.queryEncode(params);
     };
 
+    ZeroMe.prototype.loadSettings = function() {
+      return this.on_site_info.then((function(_this) {
+        return function() {
+          return _this.cmd("userGetSettings", [], function(res) {
+            var base1, base2, base3;
+            if (!res || res.error) {
+              return _this.loadLocalStorage();
+            } else {
+              _this.local_storage = res;
+              if ((base1 = _this.local_storage).followed_users == null) {
+                base1.followed_users = {};
+              }
+              if ((base2 = _this.local_storage).settings == null) {
+                base2.settings = {};
+              }
+              if ((base3 = _this.local_storage.settings).show_after == null) {
+                base3.show_after = 1471946844;
+              }
+              return _this.on_local_storage.resolve(_this.local_storage);
+            }
+          });
+        };
+      })(this));
+    };
+
     ZeroMe.prototype.loadLocalStorage = function() {
       return this.on_site_info.then((function(_this) {
         return function() {
           _this.logStart("Loaded localstorage");
           return _this.cmd("wrapperGetLocalStorage", [], function(local_storage) {
-            var base1, base2;
+            var base1, base2, base3;
             _this.local_storage = local_storage;
             _this.logEnd("Loaded localstorage");
             if (_this.local_storage == null) {
@@ -6672,6 +6681,9 @@ function clone(obj) {
             if ((base2 = _this.local_storage).settings == null) {
               base2.settings = {};
             }
+            if ((base3 = _this.local_storage).show_after == null) {
+              base3.show_after = 1471946844;
+            }
             return _this.on_local_storage.resolve(_this.local_storage);
           });
         };
@@ -6679,17 +6691,24 @@ function clone(obj) {
     };
 
     ZeroMe.prototype.saveLocalStorage = function(cb) {
-      if (cb == null) {
-        cb = null;
-      }
-      this.logStart("Saved localstorage");
       if (this.local_storage) {
-        return this.cmd("wrapperSetLocalStorage", this.local_storage, (function(_this) {
-          return function(res) {
-            _this.logEnd("Saved localstorage");
-            return typeof cb === "function" ? cb(res) : void 0;
-          };
-        })(this));
+        if (Page.server_info.rev > 2140) {
+          this.logStart("Saved local settings");
+          return this.cmd("userSetSettings", [this.local_storage], (function(_this) {
+            return function(res) {
+              _this.logEnd("Saved local settings");
+              return typeof cb === "function" ? cb(res) : void 0;
+            };
+          })(this));
+        } else {
+          this.logStart("Saved localstorage");
+          return this.cmd("wrapperSetLocalStorage", this.local_storage, (function(_this) {
+            return function(res) {
+              _this.logEnd("Saved localstorage");
+              return typeof cb === "function" ? cb(res) : void 0;
+            };
+          })(this));
+        }
       }
     };
 
@@ -6767,7 +6786,7 @@ function clone(obj) {
                 user_row = row;
               }
             }
-            if (_this.user_hubs[_this.local_storage.settings.hub]) {
+            if (_this.user_hubs[_this.local_storage] && _this.user_hubs[_this.local_storage.settings.hub]) {
               row = _this.user_hubs[_this.local_storage.settings.hub];
               _this.log("Force hub", row.site);
               user_row = row;

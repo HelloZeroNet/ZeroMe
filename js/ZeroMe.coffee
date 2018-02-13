@@ -58,7 +58,7 @@ class ZeroMe extends ZeroFrame
 		@projector.replace($("#Head"), @head.render)
 		@projector.replace($("#Overlay"), @overlay.render)
 		@projector.merge($("#Trigger"), @trigger.render)
-		@loadLocalStorage()
+		@loadSettings()
 
 		# Update every minute to keep time since fields up-to date
 		setInterval ( ->
@@ -147,6 +147,17 @@ class ZeroMe extends ZeroFrame
 			params[key] = val
 		return "?"+Text.queryEncode(params)
 
+	loadSettings: ->
+		@on_site_info.then =>
+			@cmd "userGetSettings", [], (res) =>
+				if not res or res.error
+					@loadLocalStorage()
+				else
+					@local_storage = res
+					@local_storage.followed_users ?= {}
+					@local_storage.settings ?= {}
+					@local_storage.settings.show_after ?= 1471946844
+					@on_local_storage.resolve(@local_storage)
 
 	loadLocalStorage: ->
 		@on_site_info.then =>
@@ -156,15 +167,22 @@ class ZeroMe extends ZeroFrame
 				@local_storage ?= {}
 				@local_storage.followed_users ?= {}
 				@local_storage.settings ?= {}
+				@local_storage.show_after ?= 1471946844
 				@on_local_storage.resolve(@local_storage)
 
 
-	saveLocalStorage: (cb=null) ->
-		@logStart "Saved localstorage"
+	saveLocalStorage: (cb) ->
 		if @local_storage
-			@cmd "wrapperSetLocalStorage", @local_storage, (res) =>
-				@logEnd "Saved localstorage"
-				cb?(res)
+			if Page.server_info.rev > 2140
+				@logStart "Saved local settings"
+				@cmd "userSetSettings", [@local_storage], (res) =>
+					@logEnd "Saved local settings"
+					cb?(res)
+			else
+				@logStart "Saved localstorage"
+				@cmd "wrapperSetLocalStorage", @local_storage, (res) =>
+					@logEnd "Saved localstorage"
+					cb?(res)
 
 
 	onOpenWebsocket: (e) =>
@@ -213,7 +231,7 @@ class ZeroMe extends ZeroFrame
 					if row.site == row.hub
 						user_row = row
 
-				if @user_hubs[@local_storage.settings.hub]
+				if @user_hubs[@local_storage] and @user_hubs[@local_storage.settings.hub]
 					row = @user_hubs[@local_storage.settings.hub]
 					@log "Force hub", row.site
 					user_row = row

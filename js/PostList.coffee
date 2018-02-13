@@ -12,8 +12,7 @@ class PostList extends Class
 		@show_after_date = 1471946844
 
 	queryComments: (post_uris, cb) =>
-		if Page.local_storage.settings.sort_chronologically || \
-				Page.local_storage.settings.show_one_month_ago || \
+		if Page.local_storage.settings.show_one_month_ago || \
 				Page.local_storage.settings.show_one_day_ago || \
 				Page.local_storage.settings.show_after
 			query = "
@@ -68,12 +67,11 @@ class PostList extends Class
 			if document.getElementById("show-after-date")
 				this.show_after_date = document.getElementById("show-after-date").value - 121
 			where += "AND date_added > " + String(this.show_after_date) + " "
-		if Page.local_storage.settings.show_one_day_ago
+		else if Page.local_storage.settings.show_one_day_ago
 			where += "AND date_added > strftime('%s', 'now') - 3600*24 "
-		if Page.local_storage.settings.show_one_month_ago
+		else if Page.local_storage.settings.show_one_month_ago
 			where += "AND date_added > strftime('%s', 'now') - 3600*24*30 "
-		if Page.local_storage.settings.sort_chronologically || \
-				Page.local_storage.settings.show_one_month_ago || \
+		if Page.local_storage.settings.show_one_month_ago || \
 				Page.local_storage.settings.show_one_day_ago || \
 				Page.local_storage.settings.show_after
 			query = "
