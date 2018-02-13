@@ -69,7 +69,7 @@
 				["date_added", "INTEGER"],
 				["json_id", "INTEGER REFERENCES json (json_id)"]
 			],
-			"indexes": ["CREATE UNIQUE INDEX comment_key ON comment(json_id, comment_id)", "CREATE INDEX comment_post_uri ON comment(post_uri)"],
+			"indexes": ["CREATE UNIQUE INDEX comment_key ON comment(json_id, comment_id)", "CREATE INDEX comment_post_uri ON comment(post_uri)", "CREATE INDEX comment_date_added ON comment(date_added)"],
 			"schema_changed": 2
 		},
 		"follow": {
@@ -81,7 +81,7 @@
 				["date_added", "INTEGER"],
 				["json_id", "INTEGER REFERENCES json (json_id)"]
 			],
-			"indexes": ["CREATE UNIQUE INDEX follow_key ON follow(json_id, follow_id)"],
+			"indexes": ["CREATE UNIQUE INDEX follow_key ON follow(json_id, follow_id)", "CREATE INDEX follow_date_added ON follow(date_added)"],
 			"schema_changed": 2
 		},
 		"user": {

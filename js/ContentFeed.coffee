@@ -180,7 +180,7 @@ class ContentFeed extends Class
 				@post_create.render(),
 				h("div.post-list-type",
 					h("div.hub-menu",
-						h("a.link", {href: "#Hubs", onmousedown: @handleFiltersClick, onclick: Page.returnFalse}, "Hubs")
+						h("a.link", {href: "#Hubs", onmousedown: @handleHubsClick, onclick: Page.returnFalse}, "Hubs")
 						@hubs.render()
 					)
 					h("div.filters-menu",

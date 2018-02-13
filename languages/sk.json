@@ -1,0 +1,81 @@
+{
+	"Visitor": "Návštevník",
+	"Select your account": "Zvoľte svoj účet",
+	"You need a profile for this feature": "Pre túto funkciu potrebujete profil",
+
+	"Follow username mentions": "Sledovať spomenutia používateľského mena",
+	"Follow comments on your posts": "Sledovať komentáre na vaších príspevkoch",
+	"Follow new followers": "Sledovať nových sledovateľov",
+
+	"Follow": "Sledovať",
+	"Unfollow": "Prestať sledovať",
+	"Help distribute this user's images": "Pomôcť s distribúciou obrázkov tohto používateľa",
+	"Following": "Sledované",
+	"Activity feed": "Prehľad aktivít",
+	"Show more...": "Viac...",
+
+	" started following ": " začal sledovať ",
+	" commented on ": " komentoval na ",
+	" liked ": " like-ol ",
+	"'s ": "",
+	"_(post, like post)": "_(post, like-núť post)",
+	"_(post, comment post)": "_(post, komentovať post)",
+
+	"Cancel": "Zrušiť",
+	"Save": "Uložiť",
+	"Delete": "Vymazať",
+
+	"User's profile site not loaded to your client yet.": "Stránka používateľského účtu ešte nebola načítaná do vašeho klinta.",
+	"Download user's site": "Stiahnuť stránku používateľa",
+
+	"Browse all \\u203A": "Prezrieť všetko \\u203A",
+	"New users": "Nový používatelia",
+	"Suggested users": "Doporučený používatelia",
+
+	"Create new profile": "Vytvoriť nový profil",
+	"Creating new profile...": "Vytvára sa nový profil...",
+	"Checking user on selected hub...": "Kontroluje sa používateľ na zvolenom hub-e...",
+	"User \" + Page.site_info.cert_user_id + \" already exists on this hub": "Používateľ \" + Page.site_info.cert_user_id + \" už na tomto hub-e existuje",
+	"Select ID...": "Zvoliť ID...",
+	"Seeded HUBs": "Seed-ovaných Hub-ov",
+	"Available HUBs": "Dostupných Hub-ov",
+	"(With this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)":
+	"(S týmto si zvolíš kde bude tvoj profil uložený. Žiadny rozdiel medzi obsahom nieje a budeš vidieť všetkých používateľov z ostatných hub-ov)",
+
+	"Random ZeroNet user": "Náhodný ZeroNetpoužívateľ",
+	"Hello ZeroMe!": "Ahoj ZeroMe!",
+
+	"Loading...\\nShow image": "Načítava sa...\\nKép mutatása",
+	"Help distribute this user's new images": "Pomôcť s distribúciou obrázkov tohto používateľa",
+	"Delete image": "Vymazať obrázok",
+	"Show image": "Ukázať obrázok",
+	"'s new images": " nových obrázkov",
+
+	"Comment": "Komentovať",
+	"Add your comment": "Pridaj svoj komentár",
+	"Reply": "Odpovedať",
+
+	"Everyone": "Všetci",
+	"Followed users": "Sledovaný používatelia",
+	"Show more posts...": "Ukázať viac postov...",
+	"Show more comments...": "Ukázať viac komentárov...",
+	"No posts yet": "Zatiaľ žiadne príspevky",
+	"Let's follow some users!": "Začnite sledovať nejakých používateľov!",
+
+	"Select user to post new content": "Zvoľte používateľa za ktorého chcete uverejniť obsah",
+	"Write something...": "Napíšte niečo...",
+	"Submit new post": "Zaslať nový príspevok",
+	"Invalid image, only jpg format supported": "Neplatný obrázok, podporovaný iba jpg formát",
+
+	"Follow in newsfeed": "Sledovať v novinkách",
+
+	"New users in ZeroMe": "Nový používatelia na ZeroMe",
+	"Total: ": "Ceľkom: ",
+	" registered users": " registrovaných používateľov",
+
+	" minutes ago": " minút dozadu",
+	" hours ago": " hodín dozadu",
+	" days ago": " dní dozadu",
+	"on ": "",
+	"Just now": "Teraz"
+}

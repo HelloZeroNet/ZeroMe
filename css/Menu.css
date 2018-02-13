@@ -1,7 +1,7 @@
 .menu {
 	background-color: white; padding: 10px 0px; position: absolute; top: 0px; max-height: 0px; overflow: hidden; transform: translate(-100%, -30px); pointer-events: none;
 	box-shadow: 0px 2px 8px rgba(0,0,0,0.1); border-radius: 2px; opacity: 0; transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; z-index: 99;
-	display: inline-block; z-index: 999; margin-top: 50px;
+	display: inline-block; z-index: 99999999999999999; margin-top: 50px;
 }
 .menu-right { left: 100% }
 .menu.visible { opacity: 1; max-height: 350px; transform: translate(-100%, 0px); transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; pointer-events: all }
