@@ -46,6 +46,40 @@ class Head extends Class
 				Page.content.need_update = true
 				return false
 			), Page.local_storage.settings.hide_hello_zerome]
+			@menu.items.push ["---"]
+			@menu.items.push ["Show posts after", ( (item) =>
+				Page.local_storage.settings.show_after = not Page.local_storage.settings.show_after
+				item[2] = Page.local_storage.settings.show_after
+				Page.projector.scheduleRender()
+				Page.saveLocalStorage()
+				Page.content.need_update = true
+				return false
+			), Page.local_storage.settings.show_after]
+			@menu.items.push ["Show posts chronologically", ( (item) =>
+				Page.local_storage.settings.sort_chronologically = not Page.local_storage.settings.sort_chronologically
+				item[2] = Page.local_storage.settings.sort_chronologically
+				Page.projector.scheduleRender()
+				Page.saveLocalStorage()
+				Page.content.need_update = true
+				return false
+			), Page.local_storage.settings.sort_chronologically]
+			@menu.items.push ["Show posts since one day ago", ( (item) =>
+				Page.local_storage.settings.show_one_day_ago = not Page.local_storage.settings.show_one_day_ago
+				item[2] = Page.local_storage.settings.show_one_day_ago
+				Page.projector.scheduleRender()
+				Page.saveLocalStorage()
+				Page.content.need_update = true
+				return false
+			), Page.local_storage.settings.show_one_day_ago]
+			@menu.items.push ["Show posts since one month ago", ( (item) =>
+				Page.local_storage.settings.show_one_month_ago = not Page.local_storage.settings.show_month_day_ago
+				item[2] = Page.local_storage.settings.show_one_month_ago
+				Page.projector.scheduleRender()
+				Page.saveLocalStorage()
+				Page.content.need_update = true
+				return false
+			), Page.local_storage.settings.show_one_month_ago]
+
 
 			if (key for key of Page.user_hubs).length > 1
 				@menu.items.push ["---"]

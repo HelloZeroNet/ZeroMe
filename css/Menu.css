@@ -105,3 +105,19 @@ border-bottom: none !important;
 margin-bottom: 2px;
 margin-top: 2px;
 }
+
+/* Drop menu show after */
+
+.show-after {
+padding: 3px 0;
+}
+.show-after .menu-item {
+display: inline;
+padding-right: 5px;
+}
+.show-after #show-after-date {
+width: 100px;
+border: 1px solid transparent;
+border-bottom: 1px solid #333;
+padding: 1px 5px;
+}

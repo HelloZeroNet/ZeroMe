@@ -9,17 +9,33 @@ class ActivityList extends Class
 		@update_timer = null
 		@filter_hub = null
 		@filter_language_ids = null
+		@show_after_date = 1471946844
 
 	queryActivities: (cb) ->
 		if @filter_language_ids
 			where = "WHERE (comment_id, json_id) IN #{@filter_language_ids} AND date_added < #{Time.timestamp()+120} "
 		else if @directories == "all"
-			where = "WHERE date_added > #{Time.timestamp()-60*60*24*2} AND date_added < #{Time.timestamp()+120} "
+			if Page.local_storage.settings.sort_chronologically || \
+					Page.local_storage.settings.show_one_month_ago || \
+					Page.local_storage.settings.show_one_day_ago || \
+					Page.local_storage.settings.show_after
+				where = "WHERE date_added < #{Time.timestamp()+120} "
+			else
+				where = "WHERE date_added > #{Time.timestamp()-60*60*24*2} AND date_added < #{Time.timestamp()+120} "
 
 		else if @directories == "hub"
 			where = "WHERE json.hub = '#{@filter_hub}' AND date_added < #{Time.timestamp()+120} "
 		else
 			where = "WHERE json.directory IN #{Text.sqlIn(@directories)} AND date_added < #{Time.timestamp()+120} "
+
+		if Page.local_storage.settings.show_after
+			if document.getElementById("show-after-date")
+				this.show_after_date = document.getElementById("show-after-date").value - 121
+			where += "AND date_added > " + String(this.show_after_date) + " "
+		if Page.local_storage.settings.show_one_day_ago
+			where += "AND date_added > strftime('%s', 'now') - 3600*24 "
+		if Page.local_storage.settings.show_one_month_ago
+			where += "AND date_added > strftime('%s', 'now') - 3600*24*30 "
 
 		query = """
 			SELECT
@@ -60,12 +76,21 @@ class ActivityList extends Class
 				LEFT JOIN follow USING (json_id)
 				 #{where}
 			"""
+		if Page.local_storage.settings.sort_chronologically || \
+				Page.local_storage.settings.show_one_month_ago || \
+				Page.local_storage.settings.show_one_day_ago || \
+				Page.local_storage.settings.show_after
+			query += """
 
-		query += """
+				ORDER BY date_added ASC
+				LIMIT #{@limit+1}
+			"""
+		else
+			query += """
 
-			ORDER BY date_added DESC
-			LIMIT #{@limit+1}
-		"""
+				ORDER BY date_added DESC
+				LIMIT #{@limit+1}
+			"""
 		@logStart("Update")
 
 		Page.cmd "dbQuery", [query, {directories: @directories}], (rows) =>

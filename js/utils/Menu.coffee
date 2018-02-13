@@ -61,7 +61,15 @@ class Menu
 			else  # Callback
 				href = "#"+title
 				onclick = @handleClick
-			h("a.menu-item", {href: href, onclick: onclick, key: title, classes: {"selected": selected}}, [title])
+			if title == "Show posts after"
+				h("div.show-after",
+					h("a.menu-item", {
+						href: href, onclick: onclick, key: title, classes: {"selected": selected}}, [title]),
+				h("input#show-after-date", {
+					placeholder: "unix time"
+				}))
+			else
+				h("a.menu-item", {href: href, onclick: onclick, key: title, classes: {"selected": selected}}, [title])
 
 	render: (class_name="") =>
 		if @visible or @node
@@ -73,6 +81,11 @@ window.Menu = Menu
 document.body.addEventListener "mouseup", (e) ->
 	if not window.visible_menu or not window.visible_menu.node
 		return false
-	if e.target != window.visible_menu.node.parentNode and e.target.parentNode != window.visible_menu.node and e.target.parentNode != window.visible_menu.node.parentNode and e.target.parentNode != window.visible_menu.node and e.target.parentNode.parentNode != window.visible_menu.node.parentNode
+	if e.target != window.visible_menu.node.parentNode and \
+		  e.target.parentNode != window.visible_menu.node and \
+			e.target.parentNode != window.visible_menu.node.parentNode and \
+			e.target.parentNode != window.visible_menu.node and \
+		  e.target.parentNode.parentNode != window.visible_menu.node and \
+			e.target.parentNode.parentNode != window.visible_menu.node.parentNode
 		window.visible_menu.hide()
 		Page.projector.scheduleRender()

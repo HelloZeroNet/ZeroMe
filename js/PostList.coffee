@@ -9,18 +9,34 @@ class PostList extends Class
 		@filter_hub = null
 		@filter_language_ids = null
 		@limit = 10
+		@show_after_date = 1471946844
 
 	queryComments: (post_uris, cb) =>
-		query = "
-			SELECT
-			 post_uri, comment.body, comment.date_added, comment.comment_id, json.cert_auth_type, json.cert_user_id, json.user_name, json.hub, json.directory, json.site
-			FROM
-			 comment
-			LEFT JOIN json USING (json_id)
-			WHERE
-			 ? AND date_added < #{Time.timestamp()+120}
-			ORDER BY date_added DESC
-		"
+		if Page.local_storage.settings.sort_chronologically || \
+				Page.local_storage.settings.show_one_month_ago || \
+				Page.local_storage.settings.show_one_day_ago || \
+				Page.local_storage.settings.show_after
+			query = "
+				SELECT
+				 post_uri, comment.body, comment.date_added, comment.comment_id, json.cert_auth_type, json.cert_user_id, json.user_name, json.hub, json.directory, json.site
+				FROM
+				 comment
+				LEFT JOIN json USING (json_id)
+				WHERE
+				 ? AND date_added < #{Time.timestamp()+120}
+				ORDER BY date_added ASC
+			"
+		else
+			query = "
+				SELECT
+				 post_uri, comment.body, comment.date_added, comment.comment_id, json.cert_auth_type, json.cert_user_id, json.user_name, json.hub, json.directory, json.site
+				FROM
+				 comment
+				LEFT JOIN json USING (json_id)
+				WHERE
+				 ? AND date_added < #{Time.timestamp()+120}
+				ORDER BY date_added DESC
+			"
 		return Page.cmd "dbQuery", [query, {post_uri: post_uris}], cb
 
 	queryLikes: (post_uris, cb) =>
@@ -48,16 +64,39 @@ class PostList extends Class
 		if Page.local_storage.settings.hide_hello_zerome
 			where += "AND post_id > 1 "
 
-		query = "
-			SELECT
-			 *
-			FROM
-			 post
-			LEFT JOIN json ON (post.json_id = json.json_id)
-			#{where}
-			ORDER BY date_added DESC
-			LIMIT #{@limit+1}
-		"
+		if Page.local_storage.settings.show_after
+			if document.getElementById("show-after-date")
+				this.show_after_date = document.getElementById("show-after-date").value - 121
+			where += "AND date_added > " + String(this.show_after_date) + " "
+		if Page.local_storage.settings.show_one_day_ago
+			where += "AND date_added > strftime('%s', 'now') - 3600*24 "
+		if Page.local_storage.settings.show_one_month_ago
+			where += "AND date_added > strftime('%s', 'now') - 3600*24*30 "
+		if Page.local_storage.settings.sort_chronologically || \
+				Page.local_storage.settings.show_one_month_ago || \
+				Page.local_storage.settings.show_one_day_ago || \
+				Page.local_storage.settings.show_after
+			query = "
+				SELECT
+				 *
+				FROM
+				 post
+				LEFT JOIN json ON (post.json_id = json.json_id)
+				#{where}
+				ORDER BY date_added ASC
+				LIMIT #{@limit+1}
+			"
+		else
+			query = "
+				SELECT
+				 *
+				FROM
+				 post
+				LEFT JOIN json ON (post.json_id = json.json_id)
+				#{where}
+				ORDER BY date_added DESC
+				LIMIT #{@limit+1}
+			"
 		@logStart "Update"
 		Page.cmd "dbQuery", [query, param], (rows) =>
 			items = []
