@@ -30,6 +30,9 @@ class ContentFeed extends Class
 		@type = e.currentTarget.attributes.type.value
 		if @type == "everyone"
 			@filter_lang_list = {}
+		else if @type == "lang"
+			Page.local_storage.settings.filter_lang_list = @filter_lang_list
+			Page.saveLocalStorage()
 		@post_list.limit = 10
 		@activity_list.limit = 10
 		@update()
@@ -65,6 +68,7 @@ class ContentFeed extends Class
 		return false
 
 	renderFilterLanguage: =>
+		@filter_lang_list = Page.local_storage.settings.filter_lang_list
 		langs = Object.keys(@language_dict)
 
 		h("div.menu-radio",

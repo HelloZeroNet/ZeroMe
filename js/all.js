@@ -3242,7 +3242,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1FZWQJgwcgeK5mUFsKA3JnxuQyjdZ5ErP2/js/AnonUser.coffee ---- */
 
 
@@ -3647,6 +3646,9 @@ function clone(obj) {
       this.type = e.currentTarget.attributes.type.value;
       if (this.type === "everyone") {
         this.filter_lang_list = {};
+      } else if (this.type === "lang") {
+        Page.local_storage.settings.filter_lang_list = this.filter_lang_list;
+        Page.saveLocalStorage();
       }
       this.post_list.limit = 10;
       this.activity_list.limit = 10;
@@ -3703,6 +3705,7 @@ function clone(obj) {
 
     ContentFeed.prototype.renderFilterLanguage = function() {
       var lang, langs;
+      this.filter_lang_list = Page.local_storage.settings.filter_lang_list;
       langs = Object.keys(this.language_dict);
       return h("div.menu-radio", h("a.all", {
         href: "#all",
@@ -5504,7 +5507,6 @@ function clone(obj) {
 }).call(this);
 
 
-
 /* ---- /1FZWQJgwcgeK5mUFsKA3JnxuQyjdZ5ErP2/js/PostMeta.coffee ---- */
 
 
@@ -6639,7 +6641,7 @@ function clone(obj) {
       return this.on_site_info.then((function(_this) {
         return function() {
           return _this.cmd("userGetSettings", [], function(res) {
-            var base1, base2, base3, base4;
+            var base1, base2, base3, base4, base5;
             if (!res || res.error) {
               return _this.loadLocalStorage();
             } else {
@@ -6656,6 +6658,9 @@ function clone(obj) {
               if ((base4 = _this.local_storage.settings).show_since == null) {
                 base4.show_since = "";
               }
+              if ((base5 = _this.local_storage.settings).filter_lang_list == null) {
+                base5.filter_lang_list = {};
+              }
               return _this.on_local_storage.resolve(_this.local_storage);
             }
           });
@@ -6668,7 +6673,7 @@ function clone(obj) {
         return function() {
           _this.logStart("Loaded localstorage");
           return _this.cmd("wrapperGetLocalStorage", [], function(local_storage) {
-            var base1, base2, base3, base4;
+            var base1, base2, base3, base4, base5;
             _this.local_storage = local_storage;
             _this.logEnd("Loaded localstorage");
             if (_this.local_storage == null) {
@@ -6685,6 +6690,9 @@ function clone(obj) {
             }
             if ((base4 = _this.local_storage.settings).show_since == null) {
               base4.show_since = "";
+            }
+            if ((base5 = _this.local_storage.settings).filter_lang_list == null) {
+              base5.filter_lang_list = {};
             }
             return _this.on_local_storage.resolve(_this.local_storage);
           });
