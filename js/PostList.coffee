@@ -64,8 +64,7 @@ class PostList extends Class
 			where += "AND post_id > 1 "
 
 		if Page.local_storage.settings.show_after
-			if document.getElementById("show-after-date")
-				this.show_after_date = document.getElementById("show-after-date").value - 1
+			this.show_after_date = Page.local_storage.settings.show_after - 1
 			where += "AND date_added > " + String(this.show_after_date) + " "
 		else if Page.local_storage.settings.show_one_day_ago
 			where += "AND date_added > strftime('%s', 'now') - 3600*24 "
