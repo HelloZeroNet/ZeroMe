@@ -10,10 +10,10 @@ class PostList extends Class
 		@filter_language_ids = null
 		@limit = 10
 		@show_after_date = 0
+		@show_since_day = 0
 
 	queryComments: (post_uris, cb) =>
-		if Page.local_storage.settings.show_one_month_ago || \
-				Page.local_storage.settings.show_one_day_ago || \
+		if Page.local_storage.settings.show_since || \
 				Page.local_storage.settings.show_after
 			query = "
 				SELECT
@@ -66,12 +66,10 @@ class PostList extends Class
 		if Page.local_storage.settings.show_after
 			this.show_after_date = Page.local_storage.settings.show_after - 1
 			where += "AND date_added > " + String(this.show_after_date) + " "
-		else if Page.local_storage.settings.show_one_day_ago
-			where += "AND date_added > strftime('%s', 'now') - 3600*24 "
-		else if Page.local_storage.settings.show_one_month_ago
-			where += "AND date_added > strftime('%s', 'now') - 3600*24*30 "
-		if Page.local_storage.settings.show_one_month_ago || \
-				Page.local_storage.settings.show_one_day_ago || \
+		else if Page.local_storage.settings.show_since
+			this.show_since_day = Page.local_storage.settings.show_since
+			where += "AND date_added > strftime('%s', 'now') - 3600*24*" + String(this.show_since_day) + " "
+		if Page.local_storage.settings.show_since || \
 				Page.local_storage.settings.show_after
 			query = "
 				SELECT

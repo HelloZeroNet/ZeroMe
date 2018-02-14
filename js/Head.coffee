@@ -55,22 +55,14 @@ class Head extends Class
 				Page.content.need_update = true
 				return false
 			), Page.local_storage.settings.show_after]
-			@menu.items.push ["Show posts since one day ago", ( (item) =>
-				Page.local_storage.settings.show_one_day_ago = not Page.local_storage.settings.show_one_day_ago
-				item[2] = Page.local_storage.settings.show_one_day_ago
+			@menu.items.push ["Show posts since", ( (item) =>
+				Page.local_storage.settings.show_since = document.getElementById("show-since-day").value
+				item[2] = Page.local_storage.settings.show_since
 				Page.projector.scheduleRender()
 				Page.saveLocalStorage()
 				Page.content.need_update = true
 				return false
-			), Page.local_storage.settings.show_one_day_ago]
-			@menu.items.push ["Show posts since one month ago", ( (item) =>
-				Page.local_storage.settings.show_one_month_ago = not Page.local_storage.settings.show_month_day_ago
-				item[2] = Page.local_storage.settings.show_one_month_ago
-				Page.projector.scheduleRender()
-				Page.saveLocalStorage()
-				Page.content.need_update = true
-				return false
-			), Page.local_storage.settings.show_one_month_ago]
+			), Page.local_storage.settings.show_since]
 
 
 			if (key for key of Page.user_hubs).length > 1

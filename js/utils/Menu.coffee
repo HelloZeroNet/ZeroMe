@@ -68,6 +68,13 @@ class Menu
 				h("input#show-after-date", {
 					placeholder: "unix time", value: selected
 				}))
+			else if title == "Show posts since"
+				h("div.show-since",
+					h("a.menu-item", {
+						href: href, onclick: onclick, key: title}, [title]),
+				h("input#show-since-day", {
+					placeholder: " n ", value: selected
+				},)," days ago")
 			else
 				h("a.menu-item", {href: href, onclick: onclick, key: title, classes: {"selected": selected}}, [title])
 

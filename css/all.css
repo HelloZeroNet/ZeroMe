@@ -260,15 +260,21 @@ margin-top: 2px;
 
 /* Drop menu show after */
 
-.show-after {
+.show-after, .show-since {
 padding: 3px 0;
 }
-.show-after .menu-item {
+.show-after .menu-item, .show-since .menu-item {
 display: inline;
 padding-right: 5px;
 }
 .show-after #show-after-date {
 width: 100px;
+border: 1px solid transparent;
+border-bottom: 1px solid #333;
+padding: 1px 5px;
+}
+.show-since #show-since-day {
+width: 17px;
 border: 1px solid transparent;
 border-bottom: 1px solid #333;
 padding: 1px 5px;

@@ -10,13 +10,13 @@ class ActivityList extends Class
 		@filter_hub = null
 		@filter_language_ids = null
 		@show_after_date = 0
+		@show_since_day = 0
 
 	queryActivities: (cb) ->
 		if @filter_language_ids
 			where = "WHERE (comment_id, json_id) IN #{@filter_language_ids} AND date_added < #{Time.timestamp()+120} "
 		else if @directories == "all"
-			if Page.local_storage.settings.show_one_month_ago || \
-					Page.local_storage.settings.show_one_day_ago || \
+			if Page.local_storage.settings.show_since || \
 					Page.local_storage.settings.show_after
 				where = "WHERE date_added < #{Time.timestamp()+120} "
 			else
@@ -30,10 +30,9 @@ class ActivityList extends Class
 		if Page.local_storage.settings.show_after
 			this.show_after_date = Page.local_storage.settings.show_after - 1
 			where += "AND date_added > " + String(this.show_after_date) + " "
-		else if Page.local_storage.settings.show_one_day_ago
-			where += "AND date_added > strftime('%s', 'now') - 3600*24 "
-		else if Page.local_storage.settings.show_one_month_ago
-			where += "AND date_added > strftime('%s', 'now') - 3600*24*30 "
+		else if Page.local_storage.settings.show_since
+			this.show_since_day = Page.local_storage.settings.show_since
+			where += "AND date_added > strftime('%s', 'now') - 3600*24*" + String(this.show_since_day) + " "
 
 		query = """
 			SELECT
@@ -74,8 +73,7 @@ class ActivityList extends Class
 				LEFT JOIN follow USING (json_id)
 				 #{where}
 			"""
-		if Page.local_storage.settings.show_one_month_ago || \
-				Page.local_storage.settings.show_one_day_ago || \
+		if Page.local_storage.settings.show_since || \
 				Page.local_storage.settings.show_after
 			query += """
 
