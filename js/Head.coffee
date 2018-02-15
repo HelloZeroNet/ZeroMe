@@ -47,14 +47,6 @@ class Head extends Class
 				return false
 			), Page.local_storage.settings.hide_hello_zerome]
 			@menu.items.push ["---"]
-			@menu.items.push ["Show posts after", ( (item) =>
-				Page.local_storage.settings.show_after = document.getElementById("show-after-date").value
-				item[2] = Page.local_storage.settings.show_after
-				Page.projector.scheduleRender()
-				Page.saveLocalStorage()
-				Page.content.need_update = true
-				return false
-			), Page.local_storage.settings.show_after]
 			@menu.items.push ["Show posts since", ( (item) =>
 				Page.local_storage.settings.show_since = document.getElementById("show-since-day").value
 				item[2] = Page.local_storage.settings.show_since
@@ -63,6 +55,14 @@ class Head extends Class
 				Page.content.need_update = true
 				return false
 			), Page.local_storage.settings.show_since]
+			@menu.items.push ["Show posts after", ( (item) =>
+				Page.local_storage.settings.show_after = document.getElementById("show-after-date").value
+				item[2] = Page.local_storage.settings.show_after
+				Page.projector.scheduleRender()
+				Page.saveLocalStorage()
+				Page.content.need_update = true
+				return false
+			), Page.local_storage.settings.show_after]
 
 
 			if (key for key of Page.user_hubs).length > 1

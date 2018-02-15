@@ -2968,8 +2968,8 @@ function clone(obj) {
       this.update_timer = null;
       this.filter_hub = null;
       this.filter_language_ids = null;
-      this.show_after_date = 0;
-      this.show_since_day = 0;
+      this.show_after_date = "0";
+      this.show_since_day = "0";
     }
 
     ActivityList.prototype.queryActivities = function(cb) {
@@ -2977,7 +2977,7 @@ function clone(obj) {
       if (this.filter_language_ids) {
         where = "WHERE (comment_id, json_id) IN " + this.filter_language_ids + " AND date_added < " + (Time.timestamp() + 120) + " ";
       } else if (this.directories === "all") {
-        if (Page.local_storage.settings.show_since || Page.local_storage.settings.show_after) {
+        if ((Page.local_storage.settings.show_since || Page.local_storage.settings.show_after) && Page.local_storage.settings.show_since !== "0") {
           where = "WHERE date_added < " + (Time.timestamp() + 120) + " ";
         } else {
           where = "WHERE date_added > " + (Time.timestamp() - 60 * 60 * 24 * 2) + " AND date_added < " + (Time.timestamp() + 120) + " ";
@@ -2987,12 +2987,14 @@ function clone(obj) {
       } else {
         where = "WHERE json.directory IN " + (Text.sqlIn(this.directories)) + " AND date_added < " + (Time.timestamp() + 120) + " ";
       }
-      if (Page.local_storage.settings.show_after) {
+      if (Page.local_storage.settings.show_since) {
+        if (Page.local_storage.settings.show_since !== "0") {
+          this.show_since_day = Page.local_storage.settings.show_since;
+          where += "AND date_added > strftime('%s', 'now') - 3600*24*" + String(this.show_since_day) + " ";
+        }
+      } else if (Page.local_storage.settings.show_after) {
         this.show_after_date = Page.local_storage.settings.show_after - 1;
         where += "AND date_added > " + String(this.show_after_date) + " ";
-      } else if (Page.local_storage.settings.show_since) {
-        this.show_since_day = Page.local_storage.settings.show_since;
-        where += "AND date_added > strftime('%s', 'now') - 3600*24*" + String(this.show_since_day) + " ";
       }
       query = "SELECT\n 'comment' AS type, json.*,\n json.site || \"/\" || post_uri AS subject, body, date_added,\n NULL AS subject_auth_address, NULL AS subject_hub, NULL AS subject_user_name\nFROM\n comment\nLEFT JOIN json USING (json_id)\n " + where;
       if (!this.filter_language_ids) {
@@ -3001,7 +3003,7 @@ function clone(obj) {
       if (this.directories !== "all") {
         query += "\nUNION ALL\n\nSELECT\n 'follow' AS type, json.*,\n follow.hub || \"/\" || follow.auth_address AS subject, '' AS body, date_added,\n follow.auth_address AS subject_auth_address, follow.hub AS subject_hub, follow.user_name AS subject_user_name\nFROM\n json\nLEFT JOIN follow USING (json_id)\n " + where;
       }
-      if (Page.local_storage.settings.show_since || Page.local_storage.settings.show_after) {
+      if ((Page.local_storage.settings.show_since || Page.local_storage.settings.show_after) && Page.local_storage.settings.show_since !== "0") {
         query += "\nORDER BY date_added ASC\nLIMIT " + (this.limit + 1);
       } else {
         query += "\nORDER BY date_added DESC\nLIMIT " + (this.limit + 1);
@@ -3240,6 +3242,7 @@ function clone(obj) {
   window.ActivityList = ActivityList;
 
 }).call(this);
+
 
 
 /* ---- /1FZWQJgwcgeK5mUFsKA3JnxuQyjdZ5ErP2/js/AnonUser.coffee ---- */
@@ -3982,6 +3985,7 @@ function clone(obj) {
 }).call(this);
 
 
+
 /* ---- /1FZWQJgwcgeK5mUFsKA3JnxuQyjdZ5ErP2/js/ContentProfile.coffee ---- */
 
 
@@ -4545,16 +4549,6 @@ function clone(obj) {
           ]);
           _this.menu.items.push(["---"]);
           _this.menu.items.push([
-            "Show posts after", (function(item) {
-              Page.local_storage.settings.show_after = document.getElementById("show-after-date").value;
-              item[2] = Page.local_storage.settings.show_after;
-              Page.projector.scheduleRender();
-              Page.saveLocalStorage();
-              Page.content.need_update = true;
-              return false;
-            }), Page.local_storage.settings.show_after
-          ]);
-          _this.menu.items.push([
             "Show posts since", (function(item) {
               Page.local_storage.settings.show_since = document.getElementById("show-since-day").value;
               item[2] = Page.local_storage.settings.show_since;
@@ -4563,6 +4557,16 @@ function clone(obj) {
               Page.content.need_update = true;
               return false;
             }), Page.local_storage.settings.show_since
+          ]);
+          _this.menu.items.push([
+            "Show posts after", (function(item) {
+              Page.local_storage.settings.show_after = document.getElementById("show-after-date").value;
+              item[2] = Page.local_storage.settings.show_after;
+              Page.projector.scheduleRender();
+              Page.saveLocalStorage();
+              Page.content.need_update = true;
+              return false;
+            }), Page.local_storage.settings.show_after
           ]);
           if (((function() {
             var results;
@@ -4667,6 +4671,7 @@ function clone(obj) {
   window.Head = Head;
 
 }).call(this);
+
 
 
 /* ---- /1FZWQJgwcgeK5mUFsKA3JnxuQyjdZ5ErP2/js/Post.coffee ---- */
@@ -5305,13 +5310,13 @@ function clone(obj) {
       this.filter_hub = null;
       this.filter_language_ids = null;
       this.limit = 10;
-      this.show_after_date = 0;
-      this.show_since_day = 0;
+      this.show_after_date = "0";
+      this.show_since_day = "0";
     }
 
     PostList.prototype.queryComments = function(post_uris, cb) {
       var query;
-      if (Page.local_storage.settings.show_since || Page.local_storage.settings.show_after) {
+      if ((Page.local_storage.settings.show_since || Page.local_storage.settings.show_after) && Page.local_storage.settings.show_since !== "0") {
         query = "SELECT post_uri, comment.body, comment.date_added, comment.comment_id, json.cert_auth_type, json.cert_user_id, json.user_name, json.hub, json.directory, json.site FROM comment LEFT JOIN json USING (json_id) WHERE ? AND date_added < " + (Time.timestamp() + 120) + " ORDER BY date_added ASC";
       } else {
         query = "SELECT post_uri, comment.body, comment.date_added, comment.comment_id, json.cert_auth_type, json.cert_user_id, json.user_name, json.hub, json.directory, json.site FROM comment LEFT JOIN json USING (json_id) WHERE ? AND date_added < " + (Time.timestamp() + 120) + " ORDER BY date_added DESC";
@@ -5354,14 +5359,16 @@ function clone(obj) {
       if (Page.local_storage.settings.hide_hello_zerome) {
         where += "AND post_id > 1 ";
       }
-      if (Page.local_storage.settings.show_after) {
+      if (Page.local_storage.settings.show_since) {
+        if (Page.local_storage.settings.show_since !== "0") {
+          this.show_since_day = Page.local_storage.settings.show_since;
+          where += "AND date_added > strftime('%s', 'now') - 3600*24*" + String(this.show_since_day) + " ";
+        }
+      } else if (Page.local_storage.settings.show_after) {
         this.show_after_date = Page.local_storage.settings.show_after - 1;
         where += "AND date_added > " + String(this.show_after_date) + " ";
-      } else if (Page.local_storage.settings.show_since) {
-        this.show_since_day = Page.local_storage.settings.show_since;
-        where += "AND date_added > strftime('%s', 'now') - 3600*24*" + String(this.show_since_day) + " ";
       }
-      if (Page.local_storage.settings.show_since || Page.local_storage.settings.show_after) {
+      if ((Page.local_storage.settings.show_since || Page.local_storage.settings.show_after) && Page.local_storage.settings.show_since !== "0") {
         query = "SELECT * FROM post LEFT JOIN json ON (post.json_id = json.json_id) " + where + " ORDER BY date_added ASC LIMIT " + (this.limit + 1);
       } else {
         query = "SELECT * FROM post LEFT JOIN json ON (post.json_id = json.json_id) " + where + " ORDER BY date_added DESC LIMIT " + (this.limit + 1);
@@ -5505,6 +5512,7 @@ function clone(obj) {
   window.PostList = PostList;
 
 }).call(this);
+
 
 
 /* ---- /1FZWQJgwcgeK5mUFsKA3JnxuQyjdZ5ErP2/js/PostMeta.coffee ---- */
