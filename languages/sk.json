@@ -42,10 +42,10 @@
 	"(With this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)":
 	"(S týmto si zvolíš kde bude tvoj profil uložený. Žiadny rozdiel medzi obsahom nieje a budeš vidieť všetkých používateľov z ostatných hub-ov)",
 
-	"Random ZeroNet user": "Náhodný ZeroNetpoužívateľ",
+	"Random ZeroNet user": "Náhodný ZeroNet používateľ",
 	"Hello ZeroMe!": "Ahoj ZeroMe!",
 
-	"Loading...\\nShow image": "Načítava sa...\\nKép mutatása",
+	"Loading...\\nShow image": "Načítava sa...\\nUkázať Obrázok",
 	"Help distribute this user's new images": "Pomôcť s distribúciou obrázkov tohto používateľa",
 	"Delete image": "Vymazať obrázok",
 	"Show image": "Ukázať obrázok",
@@ -77,5 +77,6 @@
 	" hours ago": " hodín dozadu",
 	" days ago": " dní dozadu",
 	"on ": "",
-	"Just now": "Teraz"
+	"Just now": "Teraz",
+	"Liked": "Like-nuté"
 }
