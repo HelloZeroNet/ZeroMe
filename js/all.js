@@ -2257,7 +2257,7 @@ function clone(obj) {
       options["renderer"] = marked_renderer;
       text = this.fixReply(text);
       text = marked(text, options);
-      text = text.replace(/(@[^\x00-\x1f^\x21-\x2f^\x3a-\x40^\x5b-\x60^\x7b-\x7f]{1,16}):/g, '<b class="reply-name">$1</b>:');
+      text = text.replace(/(?<=\s)(@[^\s]{1,16}):/g, '<b class="reply-name">$1</b>:');
       return this.fixHtmlLinks(text);
     };
 
@@ -2267,7 +2267,7 @@ function clone(obj) {
         return "<a href=\"" + (match.replace(/&amp;/g, '&')) + "\">" + match + "</a>";
       });
       text = text.replace(/\n/g, '<br>');
-      text = text.replace(/(@[^\x00-\x1f^\x21-\x2f^\x3a-\x40^\x5b-\x60^\x7b-\x7f]{1,16}):/g, '<b class="reply-name">$1</b>:');
+      text = text.replace(/(?<=\s)(@[^\s]{1,16}):/g, '<b class="reply-name">$1</b>:');
       text = this.fixHtmlLinks(text);
       return text;
     };
@@ -2476,6 +2476,7 @@ function clone(obj) {
   window.Text = new Text();
 
 }).call(this);
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Time.coffee ---- */
