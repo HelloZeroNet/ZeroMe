@@ -2257,7 +2257,7 @@ function clone(obj) {
       options["renderer"] = marked_renderer;
       text = this.fixReply(text);
       text = marked(text, options);
-      text = text.replace(/(?<=\s)(@[^\s]{1,16}):/g, '<b class="reply-name">$1</b>:');
+      text = text.replace(/(\s|>|^)(@[^\s]{1,25}):/g, '$1<b class="reply-name">$2</b>:');
       return this.fixHtmlLinks(text);
     };
 
@@ -2267,7 +2267,7 @@ function clone(obj) {
         return "<a href=\"" + (match.replace(/&amp;/g, '&')) + "\">" + match + "</a>";
       });
       text = text.replace(/\n/g, '<br>');
-      text = text.replace(/(?<=\s)(@[^\s]{1,16}):/g, '<b class="reply-name">$1</b>:');
+      text = text.replace(/(\s|>|^)(@[^\s]{1,25}):/g, '$1<b class="reply-name">$2</b>:');
       text = this.fixHtmlLinks(text);
       return text;
     };
