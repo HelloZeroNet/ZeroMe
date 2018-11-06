@@ -2229,7 +2229,7 @@ function clone(obj) {
     }
 
     Text.prototype.toColor = function(text, saturation, lightness) {
-      var hash, i, j, ref;
+      var hash, i, j, ref, ref1, ref2;
       if (saturation == null) {
         saturation = 30;
       }
@@ -2241,7 +2241,11 @@ function clone(obj) {
         hash += text.charCodeAt(i) * i;
         hash = hash % 1777;
       }
-      return "hsl(" + (hash % 360) + ("," + saturation + "%," + lightness + "%)");
+      if (((ref1 = Page.server_info) != null ? (ref2 = ref1.user_settings) != null ? ref2.theme : void 0 : void 0) === "dark") {
+        return "hsl(" + (hash % 360) + ("," + (saturation + 5) + "%," + (lightness + 15) + "%)");
+      } else {
+        return "hsl(" + (hash % 360) + ("," + saturation + "%," + lightness + "%)");
+      }
     };
 
     Text.prototype.renderMarked = function(text, options) {
@@ -6192,7 +6196,7 @@ function clone(obj) {
         return function() {
           _this.log("onloaded");
           return window.requestAnimationFrame(function() {
-            return document.body.className = "loaded";
+            return document.body.classList.add("loaded");
           });
         };
       })(this));
@@ -6286,7 +6290,7 @@ function clone(obj) {
         window.scroll(window.pageXOffset, 0);
         this.history_state["scrollTop"] = 0;
         this.on_loaded.resolved = false;
-        document.body.className = "";
+        document.body.classList.remove("loaded");
         this.setUrl(e.currentTarget.search);
         return false;
       }
@@ -6483,7 +6487,7 @@ function clone(obj) {
             params.state.url = params.href.replace(/.*\?/, "");
           }
           this.on_loaded.resolved = false;
-          document.body.className = "";
+          document.body.classList.remove("loaded");
           window.scroll(window.pageXOffset, params.state.scrollTop || 0);
           return this.route(params.state.url || "");
         }

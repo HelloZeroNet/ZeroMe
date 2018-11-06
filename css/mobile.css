@@ -10,14 +10,12 @@ font-size: medium !important;
 
 .head-container {
 position: fixed;
-background-color: #fff;
 width: 100%;
 height: 50px;
 z-index: 30;
 }
 .head {
 width: 100%;
-background-color: #fff;
 }
 .head .logo {
 margin-left: 50px;
@@ -35,7 +33,6 @@ margin-top: 60px;
 margin-bottom: 5px;
 }
 .col-center {
-background-color: #f6f7f8;
 width: 100%;
 overflow: auto;
 padding-left: 5px;
@@ -47,9 +44,9 @@ margin-top: -60px;
 .col-left, .col-right {
 position: fixed;
 top: 60px;
-left: -300px;
-background-color: #f6f7f8;
+left: -305px;
 height: 100%;
+background-color: #f6f7f8;
 margin-left: 0px;
 padding-top: 60px;
 padding-right: 15px;
@@ -60,6 +57,9 @@ overflow-x: hidden;
 overflow-y: auto;
 z-index: 1;
 transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1);
+}
+.theme-dark .col-left, .theme-dark .col-right {
+background-color: #26242e;
 }
 .trigger-on .col-left, .trigger-on .col-right {
 left: 0px;
@@ -74,13 +74,13 @@ top: 3px;
 width: 40px;
 height: 40px;
 z-index: 100;
-border: 1px solid #bbb;
+border: 1px solid rgba(187, 187, 187, 0.32);
 border-radius: 5px;
 }
 #Trigger .icon {
 background-image: url(../img/nav-icon.png);
 display: block;
-border: 12px solid #fff;
+border: 12px solid transparent;
 height: 16px;
 outline: none;
 border-radius: 5px;
@@ -90,7 +90,6 @@ opacity: 1;
 filter: none;
 }
 .user.card {
-background-color: #f6f7f8;
 box-shadow: none;
 margin-top: 10px;
 margin-left: -15px;
@@ -101,8 +100,6 @@ margin-bottom: 0px;
 .more.small {
 padding: 10px;
 margin-bottom: 5px;
-background-color: #fff;
-border: 1px solid #eef0f1;
 border-radius: 5px;
 }
 .post-create .icon-image {

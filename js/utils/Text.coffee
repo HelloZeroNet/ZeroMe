@@ -8,8 +8,10 @@ class Text
 		for i in [0..text.length-1]
 			hash += text.charCodeAt(i)*i
 			hash = hash % 1777
-		return "hsl(" + (hash % 360) + ",#{saturation}%,#{lightness}%)";
-
+		if Page.server_info?.user_settings?.theme == "dark"
+			return "hsl(" + (hash % 360) + ",#{saturation + 5}%,#{lightness + 15}%)";
+		else
+			return "hsl(" + (hash % 360) + ",#{saturation}%,#{lightness}%)";
 
 	renderMarked: (text, options={}) =>
 		if not text
