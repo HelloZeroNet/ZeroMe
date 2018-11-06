@@ -1,6 +1,7 @@
 {
  "address": "1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH",
  "background-color": "#F2F4F6",
+ "background-color-dark": "#26242E",
  "cloneable": true,
  "description": "Social site",
  "domain": "Me.ZeroNetwork.bit",
