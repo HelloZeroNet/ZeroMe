@@ -105,9 +105,9 @@
  "postmessage_nonce_security": true,
  "settings": {
   "default_hubs": {
-   "1SunAWK2VUT9GQK32MpwRfFPVgcBSJN9a": {
+   "1MoonP8t4rk9QamBUPh5Aspkwa1Xhf5ux2": {
     "description": "Hub for ZeroMe users. Runner: Nofish",
-    "title": "Sun hub"
+    "title": "Moon hub"
    }
   }
  },
