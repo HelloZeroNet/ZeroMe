@@ -501,6 +501,7 @@ h5 { font-weight: normal; color: rgba(0, 0, 0, 0.5) }
 .theme-dark .post-create.editing { -webkit-box-shadow: 0px 1px 13px 1px #111213 ; -moz-box-shadow: 0px 1px 13px 1px #111213 ; -o-box-shadow: 0px 1px 13px 1px #111213 ; -ms-box-shadow: 0px 1px 13px 1px #111213 ; box-shadow: 0px 1px 13px 1px #111213  }
 
 .theme-dark .button-submit { color: #FFF }
+.theme-dark .button-outline { color: #5e5a6d; }
 
 .theme-dark .post .body { color: #dcd9e5; }
 .theme-dark .post { background-color: #302c3f; border: none; -webkit-border-radius: 0px; -moz-border-radius: 0px; -o-border-radius: 0px; -ms-border-radius: 0px; border-radius: 0px ; }
@@ -509,6 +510,7 @@ h5 { font-weight: normal; color: rgba(0, 0, 0, 0.5) }
 .theme-dark .post .reply-name { color: white }
 .theme-dark .post .user .address, .theme-dark .post .added, .theme-dark .post .sep { color: #bdb5da }
 .theme-dark .post .body a { color: #58dbec }
+.theme-dark .post blockquote { border-left: 3px solid #47dbec; }
 
 .theme-dark .activity-list .items a { color: #a398c4 }
 .theme-dark .activity { color: #8e899c }
@@ -529,6 +531,7 @@ h5 { font-weight: normal; color: rgba(0, 0, 0, 0.5) }
 .theme-dark .post .actions .link.active { color: #58dbec; }
 
 .theme-dark .button-follow-big:hover { background-color: #3b374a; }
+.theme-dark .maxheight-limited:before { background: -webkit-linear-gradient(rgba(38, 36, 46, 0), #302c3f 70%);background: -moz-linear-gradient(rgba(38, 36, 46, 0), #302c3f 70%);background: -o-linear-gradient(rgba(38, 36, 46, 0), #302c3f 70%);background: -ms-linear-gradient(rgba(38, 36, 46, 0), #302c3f 70%);background: linear-gradient(rgba(38, 36, 46, 0), #302c3f 70%); }
 
 
 
