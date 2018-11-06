@@ -7,7 +7,7 @@
 			"to_json_table": [ "cert_auth_type", "cert_user_id" ],
 			"to_table": ["user"]
 		},
-		".+/data/userdb/users.json": {
+		".+/data/userdb/users.*json": {
 			"to_table": ["user"]
 		},
 		".+/data/users/.+/content.json": {
