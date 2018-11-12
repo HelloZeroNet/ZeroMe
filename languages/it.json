@@ -11,44 +11,44 @@
 	"Unfollow": "Smetti di seguire",
 	"Help distribute this user's images": "Aiuta a distribuire le immagini di questo utente",
 	"Following": "Seguendo",
-	"Activity feed": "Feed di attività",
+	"Activity feed": "Note dell'attività",
 	"Show more...": "Mostra ancora...",
-	"Mute ": "Silenzia questo utente",
+	"Mute ": "Silenzia ",
 
 	" started following ": " iniziato a seguire: ",
 	" commented on ": " commentato su ",
 	" liked ": " approva ",
 	"'s ": " ",
 	"_(post, like post)": "_(messaggio, approva messaggio)",
-	"_(post, comment post)": "_(messaggio, messaggio commento)",
+	"_(post, comment post)": "_(messaggio, commenta messaggio)",
 
 	"Cancel": "Annulla",
 	"Save": "Salva",
 	"Delete": "Cancella",
 
-	"User's profile site not loaded to your client yet.": "Il sito del profilo dell'utente non è ancora stato caricato sul tuo client.",
+	"User's profile site not loaded to your client yet.": "Il sito dell'utente non è ancora stato caricato sul tuo client.",
 	"Download user's site": "Scarica il sito dell'utente",
 
 	"Browse all \\u203A": "Naviga tutti \\u203A",
 	"New users": "Nuovi utenti",
-	"Suggested users": "Usenti suggeriti",
+	"Suggested users": "Utenti suggeriti",
 
 	"Create new profile": "Crea nuovo profilo",
 	"Creating new profile...": "Creazione nuovo profilo...",
 	"Checking user on selected hub...": "Controllo utente sull'hub selezionato...",
-	"User \" + Page.site_info.cert_user_id + \" already exists on this hub": "Utente \" + Page.site_info.cert_user_id + \" esiste già su questo hub",
+	"User \" + Page.site_info.cert_user_id + \" already exists on this hub": "L'utente \" + Page.site_info.cert_user_id + \" esiste già su questo hub",
 	"Select ID...": "Seleziona ID ...",
 	"Seeded HUBs": "HUB mantenuti",
 	"Available HUBs": "HUB disponibili",
 	"(With this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)":
-	"(Con questo tu scegli dove il tuo profilo è salvato. Non c'è differenza sul contenuto, e sarai in grado di raggiungere tutti gli utenti in ogni hub)",
+	"(Con questo si sceglie dove salvare il profilo. Non c'è differenza sul contenuto e sarai in grado di raggiungere tutti gli utenti da ogni hub)",
 
 	"Random ZeroNet user": "Utente ZeroNet casuale",
 	"Hello ZeroMe!": "Ciao ZeroMe!",
 
 	"Loading...\\nShow image": "Caricamento...\\nMostra immagine",
 	"Help distribute this user's new images": "Aiuta a distribuire le nuove immagini di questo utente",
-	"Delete image": "Cancella immagina",
+	"Delete image": "Cancella immagine",
 	"Show image": "Mostra immagine",
 	"'s new images": " nuove immagini",
 
@@ -59,14 +59,14 @@
 	"Everyone": "Tutti",
 	"Followed users": "Utenti seguiti",
 	"Show more posts...": "Mostra altri messaggi...",
-	"Show more comments...": "Mostra altri contenuti...",
+	"Show more comments...": "Mostra altri commenti...",
 	"No posts yet": "Ancora nessun messaggio",
 	"Let's follow some users!": "Inizia a seguire alcuni utenti!",
 
-	"Select user to post new content": "Seleziona utente per mettere nuovo contenuto",
+	"Select user to post new content": "Seleziona un utente per inserire nuovo contenuto",
 	"Write something...": "Scrivi qualcosa...",
 	"Submit new post": "Invia nuovo messaggio",
-	"Invalid image, only jpg format supported": "Immagine non valida, supportato solo formato jpg",
+	"Invalid image, only jpg format supported": "Immagine non valida, supportato solo il formato jpg",
 
 	"Follow in newsfeed": "Segui il feed delle novità",
 
@@ -77,6 +77,6 @@
 	" minutes ago": " minuti fa",
 	" hours ago": " ore fa",
 	" days ago": " giorni fa",
-	"on ": "a",
-	"Just now": "Proprio ora"
+	"on ": "a ",
+	"Just now": "Adesso"
 }
