@@ -3570,7 +3570,7 @@ function clone(obj) {
       this.new_user_list = new UserList("new");
       this.suggested_user_list = new UserList("suggested");
       this.need_update = true;
-      this.type = "followed";
+      this.type = "everyone";
       this.update();
     }
 
