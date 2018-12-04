@@ -6,7 +6,7 @@ class ContentFeed extends Class
 		@new_user_list = new UserList("new")
 		@suggested_user_list = new UserList("suggested")
 		@need_update = true
-		@type = "followed"
+		@type = "everyone"
 		@update()
 
 	handleListTypeClick: (e) =>
