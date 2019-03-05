@@ -2654,7 +2654,7 @@ function clone(obj) {
       image.onerror = (function(_this) {
         return function(e) {
           _this.log("Image upload error", e);
-          Page.cmd("wrapperNotification", ["error", "Invalid image, only jpg format supported"]);
+          Page.cmd("wrapperNotification", ["error", "Invalid image, only png/jpg formats supported"]);
           return cb(null);
         };
       })(this);
