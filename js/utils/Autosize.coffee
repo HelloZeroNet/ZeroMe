@@ -3,12 +3,14 @@ class Autosize extends Class
 		@node = null
 
 		@attrs.classes ?= {}
-		@attrs.classes.loading = false
-		@attrs.oninput = @handleInput
-		@attrs.onkeydown = @handleKeydown
-		@attrs.afterCreate = @storeNode
-		@attrs.rows = 1
-		@attrs.disabled = false
+		@attrs.classes.loading ?= false
+		@attrs.oninput ?= @handleInput
+		@attrs.onkeydown ?= @handleKeydown
+		@attrs.afterCreate ?= @storeNode
+		@attrs.rows ?= 1
+		@attrs.disabled ?= false
+		@attrs.value ?= ""
+		@attrs.title_submit ?= null
 
 	@property 'loading',
 		get: -> @attrs.classes.loading
@@ -49,22 +51,35 @@ class Autosize extends Class
 		RateLimit 300, @autoHeight
 
 	handleKeydown: (e=null) =>
-		if e.which == 13 and not e.shiftKey and @attrs.onsubmit and @attrs.value.trim()
-			@attrs.onsubmit()
-			setTimeout ( =>
-				@autoHeight()
-			), 100
-			return false
+		if e.which == 13 and e.ctrlKey and @attrs.onsubmit and @attrs.value.trim()
+			@submit()
+
+	submit: =>
+		@attrs.onsubmit()
+		setTimeout ( =>
+			@autoHeight()
+		), 100
+		return false
 
 	render: (body=null) =>
-		if body and @attrs.value == undefined
+		if body and !@attrs.value
 			@setValue(body)
 		if @loading
 			attrs = clone(@attrs)
 			#attrs.value = "Submitting..."
 			attrs.disabled = true
-			h("textarea.autosize", attrs)
+			tag_textarea = h("textarea.autosize", attrs)
 		else
-			h("textarea.autosize", @attrs)
+			tag_textarea = h("textarea.autosize", @attrs)
+
+		return [
+			tag_textarea,
+			if @attrs.title_submit
+				h(
+					"a.button.button.button-submit.button-small",
+					{href: "#Submit", onclick: @submit, classes: @attrs.classes},
+					@attrs.title_submit
+				)
+		]
 
 window.Autosize = Autosize
