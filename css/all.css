@@ -36,7 +36,7 @@
 .button:active { -webkit-transform: translateY(1px); -moz-transform: translateY(1px); -o-transform: translateY(1px); -ms-transform: translateY(1px); transform: translateY(1px) ; -webkit-transition: all 0.3s, transform none; -moz-transition: all 0.3s, transform none; -o-transition: all 0.3s, transform none; -ms-transition: all 0.3s, transform none; transition: all 0.3s, transform none ; -webkit-box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); -moz-box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); -o-box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); -ms-box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41) ; outline: none; -webkit-transition: none ; -moz-transition: none ; -o-transition: none ; -ms-transition: none ; transition: none  }
 
 .button.loading {
-	color: rgba(0,0,0,0) !important; background: url(../img/loading.gif) no-repeat center center !important; border-color: rgba(0,0,0,0) !important;
+	color: rgba(0,0,0,0) !important; background: rgba(128, 128, 128, 0.5) url(../img/loading.gif) no-repeat center center !important; border-color: rgba(0,0,0,0) !important;
 	-webkit-transition: all 0.5s ease-out; -moz-transition: all 0.5s ease-out; -o-transition: all 0.5s ease-out; -ms-transition: all 0.5s ease-out; transition: all 0.5s ease-out ; pointer-events: none; transition-delay: 0.5s
 }
 
@@ -52,7 +52,7 @@
 	padding: 12px 30px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; -ms-border-radius: 3px; border-radius: 3px ; margin-top: 11px; background-color: #5d68ff; /*box-shadow: 0px 1px 4px rgba(93, 104, 255, 0.41);*/
 	border: none; border-bottom: 2px solid #4952c7; font-weight: bold;  color: #ffffff; font-size: 12px; text-transform: uppercase; margin-left: 10px;
 }
-.button-submit:hover { color: white; background-color: #6d78ff }
+.button-submit:hover, .button-submit:focus { color: white; background-color: #6d78ff }
 
 .button-small { padding: 7px 20px; margin-left: 10px }
 .button-outline { background-color: white; border: 1px solid #EEE; border-bottom: 2px solid #EEE; color: #AAA; }
@@ -70,7 +70,9 @@
 .comment-list .body { padding-top: 0px }
 .comment-list .body p { padding: 0px }
 
-.comment-create textarea { width: 100%; margin-bottom: 11px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; }
+.comment-create { position: relative; }
+.comment-create textarea { width: 100%; margin-bottom: 11px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; padding-right: 90px; }
+.comment-create .button-submit { right: 13px; position: absolute; bottom: 23px; }
 .comment { padding-top: 10px }
 .comment-list .comment .user { padding-bottom: 0px; white-space: nowrap; line-height: 15px; }
 .comment .body { padding-top: 4px; padding-bottom: 10px; }
@@ -81,6 +83,7 @@
 .comment .user .name { line-height: 16px; }
 
 .comment h1, .comment h2, .comment h3, .comment h4, .comment h5, .comment h6 { font-size: inherit; font-weight: bold }
+
 
 
 /* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/css/Editable.css ---- */
