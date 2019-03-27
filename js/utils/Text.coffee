@@ -1,6 +1,6 @@
 class MarkedRenderer extends marked.Renderer
 	image: (href, title, text) ->
-		return ("<code>![#{text}](#{href})</code>")
+		return "<code>![#{text}](#{href})</code>"
 
 class Text
 	toColor: (text, saturation=30, lightness=50) ->
@@ -22,7 +22,8 @@ class Text
 		options["renderer"] = marked_renderer
 		text = @fixReply(text)
 		text = marked(text, options)
-		text = text.replace(/(\s|>|^)(@[^\s]{1,25}):/g, '$1<b class="reply-name">$2</b>:')  # Highlight usernames
+		text = text.replace(/<a href="mailto:[^\"]+\">(.*?)<\/a>/g, '$1')  # Disable email auto-convert
+		text = text.replace(/(\s|>|^)(@[^\s]{1,50}):/g, '$1<b class="reply-name">$2</b>:')  # Highlight usernames
 		return @fixHtmlLinks text
 
 	renderLinks: (text) =>
@@ -30,7 +31,7 @@ class Text
 		text = text.replace /(https?:\/\/[^\s)]+)/g, (match) ->
 			return "<a href=\"#{match.replace(/&amp;/g, '&')}\">#{match}</a>"  # UnSanitize &amp; -> & in links
 		text = text.replace(/\n/g, '<br>')
-		text = text.replace(/(\s|>|^)(@[^\s]{1,25}):/g, '$1<b class="reply-name">$2</b>:')
+		text = text.replace(/(\s|>|^)(@[^\s]{1,50}):/g, '$1<b class="reply-name">$2</b>:')
 		text = @fixHtmlLinks(text)
 
 		return text
