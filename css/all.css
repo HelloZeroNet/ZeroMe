@@ -36,7 +36,7 @@
 .button:active { -webkit-transform: translateY(1px); -moz-transform: translateY(1px); -o-transform: translateY(1px); -ms-transform: translateY(1px); transform: translateY(1px) ; -webkit-transition: all 0.3s, transform none; -moz-transition: all 0.3s, transform none; -o-transition: all 0.3s, transform none; -ms-transition: all 0.3s, transform none; transition: all 0.3s, transform none ; -webkit-box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); -moz-box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); -o-box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); -ms-box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41); box-shadow: inset 0px 5px 7px -3px rgba(212, 212, 212, 0.41) ; outline: none; -webkit-transition: none ; -moz-transition: none ; -o-transition: none ; -ms-transition: none ; transition: none  }
 
 .button.loading {
-	color: rgba(0,0,0,0) !important; background: url(../img/loading.gif) no-repeat center center !important; border-color: rgba(0,0,0,0) !important;
+	color: rgba(0,0,0,0) !important; background: rgba(128, 128, 128, 0.5) url(../img/loading.gif) no-repeat center center !important; border-color: rgba(0,0,0,0) !important;
 	-webkit-transition: all 0.5s ease-out; -moz-transition: all 0.5s ease-out; -o-transition: all 0.5s ease-out; -ms-transition: all 0.5s ease-out; transition: all 0.5s ease-out ; pointer-events: none; transition-delay: 0.5s
 }
 
@@ -52,7 +52,7 @@
 	padding: 12px 30px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; -ms-border-radius: 3px; border-radius: 3px ; margin-top: 11px; background-color: #5d68ff; /*box-shadow: 0px 1px 4px rgba(93, 104, 255, 0.41);*/
 	border: none; border-bottom: 2px solid #4952c7; font-weight: bold;  color: #ffffff; font-size: 12px; text-transform: uppercase; margin-left: 10px;
 }
-.button-submit:hover { color: white; background-color: #6d78ff }
+.button-submit:hover, .button-submit:focus { color: white; background-color: #6d78ff }
 
 .button-small { padding: 7px 20px; margin-left: 10px }
 .button-outline { background-color: white; border: 1px solid #EEE; border-bottom: 2px solid #EEE; color: #AAA; }
@@ -70,7 +70,9 @@
 .comment-list .body { padding-top: 0px }
 .comment-list .body p { padding: 0px }
 
-.comment-create textarea { width: 100%; margin-bottom: 11px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; }
+.comment-create { position: relative; }
+.comment-create textarea { width: 100%; margin-bottom: 11px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; padding-right: 90px; }
+.comment-create .button-submit { right: 13px; position: absolute; bottom: 23px; }
 .comment { padding-top: 10px }
 .comment-list .comment .user { padding-bottom: 0px; white-space: nowrap; line-height: 15px; }
 .comment .body { padding-top: 4px; padding-bottom: 10px; }
@@ -81,6 +83,7 @@
 .comment .user .name { line-height: 16px; }
 
 .comment h1, .comment h2, .comment h3, .comment h4, .comment h5, .comment h6 { font-size: inherit; font-weight: bold }
+
 
 
 /* ---- /1FZWQJgwcgeK5mUFsKA3JnxuQyjdZ5ErP2/css/Editable.css ---- */
@@ -113,7 +116,7 @@
 .head .user .address { display: block }
 .head .settings {
 	display: inline-block; height: 50px; width: 50px; text-align: center; vertical-align: middle; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ;
-	border-left: 1px solid #EEE; line-height: 50px; font-size: 20px; color: #AAA; font-weight: normal; text-decoration: none;
+	border-left: 1px solid rgba(0, 0, 0, 0.05); line-height: 50px; font-size: 20px; color: #AAA; font-weight: normal; text-decoration: none;
 }
 .head .settings:hover { color: #5d68ff; background-color: #FAFAFA; -webkit-transition: none ; -moz-transition: none ; -o-transition: none ; -ms-transition: none ; transition: none  }
 .head .settings:active { background-color: #F5F5F5; -webkit-transition: none ; -moz-transition: none ; -o-transition: none ; -ms-transition: none ; transition: none  }
@@ -123,6 +126,7 @@
 @media screen and (max-width: 1100px) {
 	.head .right { margin-right: 80px; }
 }
+
 
 
 /* ---- /1FZWQJgwcgeK5mUFsKA3JnxuQyjdZ5ErP2/css/Hub.css ---- */
@@ -591,6 +595,63 @@ h5 { font-weight: normal; color: rgba(0, 0, 0, 0.5) }
 
 
 
+/* ---- /1FZWQJgwcgeK5mUFsKA3JnxuQyjdZ5ErP2/css/dark.css ---- */
+
+
+.theme-dark { background-color: #1b1b1b; color: #ccc; }
+.theme-dark .head-container { background-color: #242424; }
+
+.theme-dark #Overlay.visible { background-color: rgba(53, 52, 60, 0.89); }
+
+.theme-dark a { color: #a69988 }
+.theme-dark .menu-item { color: #000 }
+.theme-dark .post .user .settings:hover { color: #ccc }
+
+.theme-dark .head .user .name { color: #a69988 }
+.theme-dark .user .name { color: #a69988 }
+.theme-dark .post-list-type a { color: #adadad; }
+.theme-dark .post-list-type a:hover { color: #a69988; border-bottom-color: #a69988 }
+.theme-dark .post-list-type .active { color: #a69988; border-bottom-color: #a69988 }
+
+.theme-dark .post-create .postfield { border-color: #333;  }
+.theme-dark .post-create.editing { -webkit-box-shadow: 0px 1px 13px 1px #111213 ; -moz-box-shadow: 0px 1px 13px 1px #111213 ; -o-box-shadow: 0px 1px 13px 1px #111213 ; -ms-box-shadow: 0px 1px 13px 1px #111213 ; box-shadow: 0px 1px 13px 1px #111213  }
+
+.theme-dark .button-submit { color: #ccc }
+.theme-dark .button-outline { color: #333; }
+
+.theme-dark .post .body { color: #dcd9e5; }
+.theme-dark .post { background-color: #242424; border: none; -webkit-border-radius: 0px; -moz-border-radius: 0px; -o-border-radius: 0px; -ms-border-radius: 0px; border-radius: 0px ; }
+.theme-dark .comment-list { background-color: #242424; border-top-color: #333 }
+.theme-dark .post .img .fullsize { background-color: #333 }
+.theme-dark .post .reply-name { color: #ccc }
+.theme-dark .post .user .address { color: #ccc }
+.theme-dark .post .added, .theme-dark .post .sep { color: #a69988 }
+.theme-dark .post .body a { color: #a69988 }
+.theme-dark .post blockquote { border-left: 3px solid #444; }
+
+.theme-dark .activity-list .items a { color: #a69988 }
+.theme-dark .activity { color: #ccc }
+.theme-dark .activity-list .bg-line { background-color: #444 }
+.theme-dark .activity-list .circle { border-color: #333; background-color: #1b1b1b }
+.theme-dark .activity:last-child { background-color: #1b1b1b; }
+
+.theme-dark input.text, .theme-dark textarea { background-color: #1b1b1b; border-color: #333; color: #ccc; }
+.theme-dark .card { -webkit-box-shadow: 0px 1px 11px #1b1b1b; -moz-box-shadow: 0px 1px 11px #1b1b1b; -o-box-shadow: 0px 1px 11px #1b1b1b; -ms-box-shadow: 0px 1px 11px #1b1b1b; box-shadow: 0px 1px 11px #1b1b1b ; background-color: #242424; }
+
+.theme-dark .button-follow:hover { background-color: rgba(74, 160, 177, 0.1) !important; border-color: #444 !important; color: #55cedf !important }
+.theme-dark .users.gray .button-follow { border: 1px solid #3b8297 }
+.theme-dark .user.notseeding .button-follow { border-color: #393251 }
+.theme-dark h2.sep { border-top: 1px solid #333; }
+
+.theme-dark .post code { background-color: #232323; border-color: #0A0A0A; color: #d3d3d3; }
+.theme-dark .icon-heart.active { color: #a69988; -webkit-filter: sepia(1) hue-rotate(504deg) brightness(0.75) saturate(5); -moz-filter: sepia(1) hue-rotate(504deg) brightness(0.75) saturate(5); -o-filter: sepia(1) hue-rotate(504deg) brightness(0.75) saturate(5); -ms-filter: sepia(1) hue-rotate(504deg) brightness(0.75) saturate(5); filter: sepia(1) hue-rotate(504deg) brightness(0.75) saturate(5) ; }
+.theme-dark .post .actions .link.active { color: #a69988; }
+
+.theme-dark .button-follow-big:hover { background-color: #444; }
+.theme-dark .maxheight-limited:before { background: -webkit-linear-gradient(rgba(38, 36, 46, 0), #242424 70%);background: -moz-linear-gradient(rgba(38, 36, 46, 0), #242424 70%);background: -o-linear-gradient(rgba(38, 36, 46, 0), #242424 70%);background: -ms-linear-gradient(rgba(38, 36, 46, 0), #242424 70%);background: linear-gradient(rgba(38, 36, 46, 0), #242424 70%); }
+
+
+
 /* ---- /1FZWQJgwcgeK5mUFsKA3JnxuQyjdZ5ErP2/css/fonts.css ---- */
 
 
@@ -742,21 +803,20 @@ font-size: medium !important;
 
 .head-container {
 position: fixed;
-background-color: #fff;
 width: 100%;
 height: 50px;
 z-index: 30;
 }
 .head {
 width: 100%;
-background-color: #fff;
 }
 .head .logo {
-margin-left: 50px;
+margin-left: 5px;
 position: absolute;
 z-index: 1;
 }
 .right {
+margin-right: 0px !important;
 position: fixed;
 right: 0;
 top: 0;
@@ -767,7 +827,6 @@ margin-top: 60px;
 margin-bottom: 5px;
 }
 .col-center {
-background-color: #f6f7f8;
 width: 100%;
 overflow: auto;
 padding-left: 5px;
@@ -793,6 +852,9 @@ overflow-y: auto;
 z-index: 1;
 -webkit-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); -moz-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); -o-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); -ms-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1) ;
 }
+.theme-dark .col-left, .theme-dark .col-right {
+background-color: #242424;
+}
 .trigger-on .col-left, .trigger-on .col-right {
 left: 0px;
 -webkit-box-shadow: 0px 0px 30px #999; -moz-box-shadow: 0px 0px 30px #999; -o-box-shadow: 0px 0px 30px #999; -ms-box-shadow: 0px 0px 30px #999; box-shadow: 0px 0px 30px #999 ;
@@ -801,18 +863,18 @@ left: 0px;
 #Trigger {
 display: block;
 position: fixed;
-left: 5px;
+left: 2px;
 top: 3px;
-width: 40px;
+width: 33px;
 height: 40px;
 z-index: 100;
-border: 1px solid #bbb;
+border: 1px solid transparent;
 -webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; -ms-border-radius: 5px; border-radius: 5px ;
 }
 #Trigger .icon {
 background-image: url(../img/nav-icon.png);
 display: block;
-border: 12px solid #fff;
+border: 12px solid transparent;
 height: 16px;
 outline: none;
 -webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; -ms-border-radius: 5px; border-radius: 5px ;
@@ -822,7 +884,6 @@ opacity: 1;
 -webkit-filter: none; -moz-filter: none; -o-filter: none; -ms-filter: none; filter: none ;
 }
 .user.card {
-background-color: #f6f7f8;
 -webkit-box-shadow: none; -moz-box-shadow: none; -o-box-shadow: none; -ms-box-shadow: none; box-shadow: none ;
 margin-top: 10px;
 margin-left: -15px;
@@ -833,8 +894,6 @@ margin-bottom: 0px;
 .more.small {
 padding: 10px;
 margin-bottom: 5px;
-background-color: #fff;
-border: 1px solid #eef0f1;
 -webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; -ms-border-radius: 5px; border-radius: 5px ;
 }
 .post-create .icon-image {

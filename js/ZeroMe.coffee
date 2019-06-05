@@ -53,7 +53,7 @@ class ZeroMe extends ZeroFrame
 		@on_loaded.then =>
 			@log "onloaded"
 			window.requestAnimationFrame ->
-				document.body.className = "loaded"
+				document.body.classList.add("loaded")
 
 		@projector.replace($("#Head"), @head.render)
 		@projector.replace($("#Overlay"), @overlay.render)
@@ -130,7 +130,7 @@ class ZeroMe extends ZeroFrame
 			@history_state["scrollTop"] = 0
 
 			@on_loaded.resolved = false
-			document.body.className = ""
+			document.body.classList.remove("loaded")
 
 			@setUrl e.currentTarget.search
 			return false
@@ -296,7 +296,7 @@ class ZeroMe extends ZeroFrame
 				if not params.state.url
 					params.state.url = params.href.replace /.*\?/, ""
 				@on_loaded.resolved = false
-				document.body.className = ""
+				document.body.classList.remove("loaded")
 				window.scroll(window.pageXOffset, params.state.scrollTop or 0)
 				@route(params.state.url or "")
 		else
