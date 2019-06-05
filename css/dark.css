@@ -1,0 +1,50 @@
+.theme-dark { background-color: #26242E; color: white; }
+.theme-dark .head-container { background-color: #2b293e; }
+
+.theme-dark #Overlay.visible { background-color: rgba(53, 52, 60, 0.89); }
+
+.theme-dark a { color: #58dbec }
+.theme-dark .menu-item { color: #000 }
+.theme-dark .post .user .settings:hover { color: #FFF }
+
+.theme-dark .head .user .name { color: #58dbec }
+.theme-dark .user .name { color: #58dbec }
+.theme-dark .post-list-type a { color: #adadad; }
+.theme-dark .post-list-type a:hover { color: #58dbec; border-bottom-color: #58dbec }
+.theme-dark .post-list-type .active { color: #58dbec; border-bottom-color: #58dbec }
+
+.theme-dark .post-create .postfield { border-color: #4e5a5c;  }
+.theme-dark .post-create.editing { box-shadow: 0px 1px 13px 1px #111213 }
+
+.theme-dark .button-submit { color: #FFF }
+.theme-dark .button-outline { color: #5e5a6d; }
+
+.theme-dark .post .body { color: #dcd9e5; }
+.theme-dark .post { background-color: #302c3f; border: none; border-radius: 0px; }
+.theme-dark .comment-list { background-color: #2c2939; border-top-color: #423d53 }
+.theme-dark .post .img .fullsize { background-color: #33313c }
+.theme-dark .post .reply-name { color: white }
+.theme-dark .post .user .address, .theme-dark .post .added, .theme-dark .post .sep { color: #bdb5da }
+.theme-dark .post .body a { color: #58dbec }
+.theme-dark .post blockquote { border-left: 3px solid #47dbec; }
+
+.theme-dark .activity-list .items a { color: #a398c4 }
+.theme-dark .activity { color: #8e899c }
+.theme-dark .activity-list .bg-line { background-color: #38334b }
+.theme-dark .activity-list .circle { border-color: #4b465a; background-color: #26242e }
+.theme-dark .activity:last-child { background-color: #26242e; }
+
+.theme-dark input.text, .theme-dark textarea { background-color: #26242e; border-color: #4e5a5c; color: white; }
+.theme-dark .card { box-shadow: 0px 1px 11px #26242e; background-color: #302c3f; }
+
+.theme-dark .button-follow:hover { background-color: rgba(74, 160, 177, 0.1) !important; border-color: #55cedf !important; color: #55cedf !important }
+.theme-dark .users.gray .button-follow { border: 1px solid #3b8297 }
+.theme-dark .user.notseeding .button-follow { border-color: #393251 }
+.theme-dark h2.sep { border-top: 1px solid #495355; }
+
+.theme-dark .post code { background-color: #232323; border-color: #0A0A0A; color: #d3d3d3; }
+.theme-dark .icon-heart.active { color: #58dbec; filter: sepia(1) hue-rotate(504deg) brightness(0.75) saturate(5); }
+.theme-dark .post .actions .link.active { color: #58dbec; }
+
+.theme-dark .button-follow-big:hover { background-color: #3b374a; }
+.theme-dark .maxheight-limited:before { background: linear-gradient(rgba(38, 36, 46, 0), #302c3f 70%); }

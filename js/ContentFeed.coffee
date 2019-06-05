@@ -145,6 +145,7 @@ class ContentFeed extends Class
 				@post_list.directories = ("data/users/#{key.split('/')[1]}" for key, followed of Page.user.followed_users)
 				if Page.user.hub  # Also show my posts
 					@post_list.directories.push("data/users/"+Page.user.auth_address)
+				@post_list.filter_post_ids = null
 			else if @type == "liked"
 				@post_list.directories = ("data/users/#{like.split('_')[0]}" for like, _ of Page.user.likes)
 				@post_list.filter_post_ids = (like.split('_')[1] for like, _ of Page.user.likes)
@@ -193,7 +194,6 @@ class ContentFeed extends Class
 					)
 					h("a.link", {href: "#Liked", onclick: @handleListTypeClick, type: "liked", classes: {active: @type == "liked"}}, "Liked")
 					h("a.link", {href: "#Followed+users", onclick: @handleListTypeClick, type: "followed", classes: {active: @type == "followed"}}, "Followed users")
-
 				),
 				@post_list.render()
 			]),

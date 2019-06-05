@@ -5,7 +5,7 @@ class Post extends Class
 		@submitting_like = false
 		@owned = false
 		@editable_comments = {}
-		@field_comment = new Autosize({placeholder: "Add your comment", onsubmit: @handleCommentSubmit})
+		@field_comment = new Autosize({placeholder: "Add your comment", onsubmit: @handleCommentSubmit, title_submit: "Send"})
 		@comment_limit = 3
 		@menu = null
 		@meta = null
@@ -74,6 +74,7 @@ class Post extends Class
 		return false
 
 	handleCommentSubmit: =>
+		if not @field_comment.attrs.value then return
 		timer_loading = setTimeout ( => @field_comment.loading = true ), 100  # Only add loading message if takes more than 100ms
 		[site, post_uri] = @row.key.split("-")
 		Page.user.comment site, post_uri, @field_comment.attrs.value, (res) =>

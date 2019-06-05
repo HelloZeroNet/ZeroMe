@@ -11,7 +11,7 @@
 .head .user .address { display: block }
 .head .settings {
 	display: inline-block; height: 50px; width: 50px; text-align: center; vertical-align: middle; transition: all 0.3s;
-	border-left: 1px solid #EEE; line-height: 50px; font-size: 20px; color: #AAA; font-weight: normal; text-decoration: none;
+	border-left: 1px solid rgba(0, 0, 0, 0.05); line-height: 50px; font-size: 20px; color: #AAA; font-weight: normal; text-decoration: none;
 }
 .head .settings:hover { color: #5d68ff; background-color: #FAFAFA; transition: none }
 .head .settings:active { background-color: #F5F5F5; transition: none }

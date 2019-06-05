@@ -1,6 +1,7 @@
 {
  "address": "1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH",
  "background-color": "#F2F4F6",
+ "background-color-dark": "#242424",
  "cloneable": true,
  "description": "Social site",
  "domain": "Me.ZeroNetwork.bit",
@@ -78,6 +79,10 @@
    "sha512": "dfd554eca364f1fb86ecedc98866638dee8c2118bedbf9b32fee797ec6b60fe4",
    "size": 3491
   },
+  "languages/sk.json": {
+   "sha512": "779e69b2a6750847438458971431b0406047784314c1c30a66f6b03091d378c1",
+   "size": 3518
+  },
   "languages/tr.json": {
    "sha512": "d9df6b218bcf359766ee3416a0cf4b4a3e9181601a7106957f674b22a79aa07a",
    "size": 3428
@@ -101,9 +106,9 @@
  "postmessage_nonce_security": true,
  "settings": {
   "default_hubs": {
-   "1White24UrrwQrD86o6Vrc1apgZ1x1o51": {
+   "1MoonP8t4rk9QamBUPh5Aspkwa1Xhf5ux2": {
     "description": "Hub for ZeroMe users. Runner: Nofish",
-    "title": "White hub"
+    "title": "Moon hub"
    }
   }
  },
@@ -115,5 +120,5 @@
  "title": "ZeroMe",
  "translate": ["js/all.js"],
  "viewport": "width=device-width, initial-scale=0.8",
- "zeronet_version": "0.5.7"
+ "zeronet_version": "0.6.0"
 }
