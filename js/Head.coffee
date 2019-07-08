@@ -83,7 +83,7 @@ class Head extends Class
 				 'mention' AS type,
 				 post.date_added AS date_added,
 				 'In ' || json.user_name || \"'s post\" AS title,
-				 post.body AS body,
+				 '@' || json.user_name || ': ' || post.body AS body,
 				 '?Post/' || json.site || '/' || REPLACE(json.directory, 'data/users/', '') || '/' || post_id AS url
 				FROM post
 				LEFT JOIN json USING (json_id)
