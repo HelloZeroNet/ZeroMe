@@ -1,11 +1,10 @@
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Class.coffee ---- */
+/* ---- lib/Class.coffee ---- */
 
 
 (function() {
   var Class,
-    __slice = [].slice;
+    slice = [].slice;
 
   Class = (function() {
     function Class() {}
@@ -14,7 +13,7 @@
 
     Class.prototype.log = function() {
       var args;
-      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
       if (!this.trace) {
         return;
       }
@@ -28,23 +27,23 @@
 
     Class.prototype.logStart = function() {
       var args, name;
-      name = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
       if (!this.trace) {
         return;
       }
       this.logtimers || (this.logtimers = {});
       this.logtimers[name] = +(new Date);
       if (args.length > 0) {
-        this.log.apply(this, ["" + name].concat(__slice.call(args), ["(started)"]));
+        this.log.apply(this, ["" + name].concat(slice.call(args), ["(started)"]));
       }
       return this;
     };
 
     Class.prototype.logEnd = function() {
       var args, ms, name;
-      name = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
       ms = +(new Date) - this.logtimers[name];
-      this.log.apply(this, ["" + name].concat(__slice.call(args), ["(Done in " + ms + "ms)"]));
+      this.log.apply(this, ["" + name].concat(slice.call(args), ["(Done in " + ms + "ms)"]));
       return this;
     };
 
@@ -56,8 +55,7 @@
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Dollar.coffee ---- */
+/* ---- lib/Dollar.coffee ---- */
 
 
 (function() {
@@ -69,40 +67,39 @@
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Promise.coffee ---- */
+/* ---- lib/Promise.coffee ---- */
 
 
 (function() {
   var Promise,
-    __slice = [].slice;
+    slice = [].slice;
 
   Promise = (function() {
     Promise.join = function() {
-      var args, num_uncompleted, promise, task, task_id, tasks, _fn, _i, _len;
-      tasks = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      var args, fn, i, len, num_uncompleted, promise, task, task_id, tasks;
+      tasks = 1 <= arguments.length ? slice.call(arguments, 0) : [];
       num_uncompleted = tasks.length;
       args = new Array(num_uncompleted);
       promise = new Promise();
-      _fn = function(task_id) {
+      fn = function(task_id) {
         return task.then(function() {
-          var callback, _j, _len1, _ref, _results;
+          var callback, j, len1, ref, results;
           args[task_id] = Array.prototype.slice.call(arguments);
           num_uncompleted--;
           if (num_uncompleted === 0) {
-            _ref = promise.callbacks;
-            _results = [];
-            for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-              callback = _ref[_j];
-              _results.push(callback.apply(promise, args));
+            ref = promise.callbacks;
+            results = [];
+            for (j = 0, len1 = ref.length; j < len1; j++) {
+              callback = ref[j];
+              results.push(callback.apply(promise, args));
             }
-            return _results;
+            return results;
           }
         });
       };
-      for (task_id = _i = 0, _len = tasks.length; _i < _len; task_id = ++_i) {
+      for (task_id = i = 0, len = tasks.length; i < len; task_id = ++i) {
         task = tasks[task_id];
-        _fn(task_id);
+        fn(task_id);
       }
       return promise;
     };
@@ -115,7 +112,7 @@
     }
 
     Promise.prototype.resolve = function() {
-      var back, callback, _i, _len, _ref;
+      var back, callback, i, len, ref;
       if (this.resolved) {
         return false;
       }
@@ -125,9 +122,9 @@
         this.data = [true];
       }
       this.result = this.data[0];
-      _ref = this.callbacks;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        callback = _ref[_i];
+      ref = this.callbacks;
+      for (i = 0, len = ref.length; i < len; i++) {
+        callback = ref[i];
         back = callback.apply(callback, this.data);
       }
       if (this.end_promise && back && back.then) {
@@ -199,8 +196,7 @@
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Property.coffee ---- */
+/* ---- lib/Property.coffee ---- */
 
 
 (function() {
@@ -210,8 +206,7 @@
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/Prototypes.coffee ---- */
+/* ---- lib/Prototypes.coffee ---- */
 
 
 (function() {
@@ -237,13 +232,12 @@
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/RateLimitCb.coffee ---- */
+/* ---- lib/RateLimitCb.coffee ---- */
 
 
 (function() {
   var call_after_interval, calling, last_time,
-    __slice = [].slice;
+    slice = [].slice;
 
   last_time = {};
 
@@ -279,7 +273,7 @@
       return calling[fn] = args;
     } else {
       last_time[fn] = Date.now();
-      return fn.apply(this, [cb].concat(__slice.call(args)));
+      return fn.apply(this, [cb].concat(slice.call(args)));
     }
   };
 
@@ -317,8 +311,7 @@
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/anime.min.js ---- */
+/* ---- lib/anime.min.js ---- */
 
 
 /*
@@ -349,8 +342,7 @@ a.loop--,c.raf=requestAnimationFrame(c.tick)):(b.ended=!0,a.complete&&a.complete
 c.raf=requestAnimationFrame(c.tick)};b.restart=function(){b.reversed&&y(b);b.pause();b.seek(0);b.play()};b.settings.autoplay&&b.play();return b};l.speed=1;l.list=m;l.remove=function(a){a=v(e.array(a)?a.map(p):p(a));for(var b=m.length-1;0<=b;b--)for(var c=m[b],d=c.tweens.length-1;0<=d;d--)for(var f=c.tweens[d],h=f.animatables.length-1;0<=h;h--)C(a,f.animatables[h].target)&&(f.animatables.splice(h,1),f.animatables.length||c.tweens.splice(d,1),c.tweens.length||c.pause())};l.easings=z;l.getValue=G;l.path=
 function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.random=function(a,b){return Math.floor(Math.random()*(b-a+1))+a};return l});
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/clone.js ---- */
+/* ---- lib/clone.js ---- */
 
 
 function clone(obj) {
@@ -362,8 +354,7 @@ function clone(obj) {
     return copy;
 }
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/maquette.js ---- */
+/* ---- lib/maquette.js ---- */
 
 
 (function (root, factory) {
@@ -1141,8 +1132,7 @@ function clone(obj) {
 }));
 
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/lib/marked.min.js ---- */
+/* ---- lib/marked.min.js ---- */
 
 
 /**
@@ -1153,8 +1143,7 @@ function clone(obj) {
 !function(e){"use strict";var k={newline:/^\n+/,code:/^( {4}[^\n]+\n*)+/,fences:f,hr:/^ {0,3}((?:- *){3,}|(?:_ *){3,}|(?:\* *){3,})(?:\n+|$)/,heading:/^ *(#{1,6}) *([^\n]+?) *(?:#+ *)?(?:\n+|$)/,nptable:f,blockquote:/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/,list:/^( {0,3})(bull) [\s\S]+?(?:hr|def|\n{2,}(?! )(?!\1bull )\n*|\s*$)/,html:"^ {0,3}(?:<(script|pre|style)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)|comment[^\\n]*(\\n+|$)|<\\?[\\s\\S]*?\\?>\\n*|<![A-Z][\\s\\S]*?>\\n*|<!\\[CDATA\\[[\\s\\S]*?\\]\\]>\\n*|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:\\n{2,}|$)|<(?!script|pre|style)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:\\n{2,}|$)|</(?!script|pre|style)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:\\n{2,}|$))",def:/^ {0,3}\[(label)\]: *\n? *<?([^\s>]+)>?(?:(?: +\n? *| *\n *)(title))? *(?:\n+|$)/,table:f,lheading:/^([^\n]+)\n *(=|-){2,} *(?:\n+|$)/,paragraph:/^([^\n]+(?:\n(?!hr|heading|lheading| {0,3}>|<\/?(?:tag)(?: +|\n|\/?>)|<(?:script|pre|style|!--))[^\n]+)*)/,text:/^[^\n]+/};function a(e){this.tokens=[],this.tokens.links=Object.create(null),this.options=e||b.defaults,this.rules=k.normal,this.options.pedantic?this.rules=k.pedantic:this.options.gfm&&(this.options.tables?this.rules=k.tables:this.rules=k.gfm)}k._label=/(?!\s*\])(?:\\[\[\]]|[^\[\]])+/,k._title=/(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/,k.def=i(k.def).replace("label",k._label).replace("title",k._title).getRegex(),k.bullet=/(?:[*+-]|\d{1,9}\.)/,k.item=/^( *)(bull) ?[^\n]*(?:\n(?!\1bull ?)[^\n]*)*/,k.item=i(k.item,"gm").replace(/bull/g,k.bullet).getRegex(),k.list=i(k.list).replace(/bull/g,k.bullet).replace("hr","\\n+(?=\\1?(?:(?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$))").replace("def","\\n+(?="+k.def.source+")").getRegex(),k._tag="address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|section|source|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul",k._comment=/<!--(?!-?>)[\s\S]*?-->/,k.html=i(k.html,"i").replace("comment",k._comment).replace("tag",k._tag).replace("attribute",/ +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex(),k.paragraph=i(k.paragraph).replace("hr",k.hr).replace("heading",k.heading).replace("lheading",k.lheading).replace("tag",k._tag).getRegex(),k.blockquote=i(k.blockquote).replace("paragraph",k.paragraph).getRegex(),k.normal=d({},k),k.gfm=d({},k.normal,{fences:/^ {0,3}(`{3,}|~{3,})([^`\n]*)\n(?:|([\s\S]*?)\n)(?: {0,3}\1[~`]* *(?:\n+|$)|$)/,paragraph:/^/,heading:/^ *(#{1,6}) +([^\n]+?) *#* *(?:\n+|$)/}),k.gfm.paragraph=i(k.paragraph).replace("(?!","(?!"+k.gfm.fences.source.replace("\\1","\\2")+"|"+k.list.source.replace("\\1","\\3")+"|").getRegex(),k.tables=d({},k.gfm,{nptable:/^ *([^|\n ].*\|.*)\n *([-:]+ *\|[-| :]*)(?:\n((?:.*[^>\n ].*(?:\n|$))*)\n*|$)/,table:/^ *\|(.+)\n *\|?( *[-:]+[-| :]*)(?:\n((?: *[^>\n ].*(?:\n|$))*)\n*|$)/}),k.pedantic=d({},k.normal,{html:i("^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:\"[^\"]*\"|'[^']*'|\\s[^'\"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))").replace("comment",k._comment).replace(/tag/g,"(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(),def:/^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/}),a.rules=k,a.lex=function(e,t){return new a(t).lex(e)},a.prototype.lex=function(e){return e=e.replace(/\r\n|\r/g,"\n").replace(/\t/g,"    ").replace(/\u00a0/g," ").replace(/\u2424/g,"\n"),this.token(e,!0)},a.prototype.token=function(e,t){var n,r,s,i,l,o,a,h,p,u,c,g,f,d,m,b;for(e=e.replace(/^ +$/gm,"");e;)if((s=this.rules.newline.exec(e))&&(e=e.substring(s[0].length),1<s[0].length&&this.tokens.push({type:"space"})),s=this.rules.code.exec(e))e=e.substring(s[0].length),s=s[0].replace(/^ {4}/gm,""),this.tokens.push({type:"code",text:this.options.pedantic?s:y(s,"\n")});else if(s=this.rules.fences.exec(e))e=e.substring(s[0].length),this.tokens.push({type:"code",lang:s[2]?s[2].trim():s[2],text:s[3]||""});else if(s=this.rules.heading.exec(e))e=e.substring(s[0].length),this.tokens.push({type:"heading",depth:s[1].length,text:s[2]});else if((s=this.rules.nptable.exec(e))&&(o={type:"table",header:x(s[1].replace(/^ *| *\| *$/g,"")),align:s[2].replace(/^ *|\| *$/g,"").split(/ *\| */),cells:s[3]?s[3].replace(/\n$/,"").split("\n"):[]}).header.length===o.align.length){for(e=e.substring(s[0].length),c=0;c<o.align.length;c++)/^ *-+: *$/.test(o.align[c])?o.align[c]="right":/^ *:-+: *$/.test(o.align[c])?o.align[c]="center":/^ *:-+ *$/.test(o.align[c])?o.align[c]="left":o.align[c]=null;for(c=0;c<o.cells.length;c++)o.cells[c]=x(o.cells[c],o.header.length);this.tokens.push(o)}else if(s=this.rules.hr.exec(e))e=e.substring(s[0].length),this.tokens.push({type:"hr"});else if(s=this.rules.blockquote.exec(e))e=e.substring(s[0].length),this.tokens.push({type:"blockquote_start"}),s=s[0].replace(/^ *> ?/gm,""),this.token(s,t),this.tokens.push({type:"blockquote_end"});else if(s=this.rules.list.exec(e)){for(e=e.substring(s[0].length),a={type:"list_start",ordered:d=1<(i=s[2]).length,start:d?+i:"",loose:!1},this.tokens.push(a),n=!(h=[]),f=(s=s[0].match(this.rules.item)).length,c=0;c<f;c++)u=(o=s[c]).length,~(o=o.replace(/^ *([*+-]|\d+\.) */,"")).indexOf("\n ")&&(u-=o.length,o=this.options.pedantic?o.replace(/^ {1,4}/gm,""):o.replace(new RegExp("^ {1,"+u+"}","gm"),"")),c!==f-1&&(l=k.bullet.exec(s[c+1])[0],(1<i.length?1===l.length:1<l.length||this.options.smartLists&&l!==i)&&(e=s.slice(c+1).join("\n")+e,c=f-1)),r=n||/\n\n(?!\s*$)/.test(o),c!==f-1&&(n="\n"===o.charAt(o.length-1),r||(r=n)),r&&(a.loose=!0),b=void 0,(m=/^\[[ xX]\] /.test(o))&&(b=" "!==o[1],o=o.replace(/^\[[ xX]\] +/,"")),p={type:"list_item_start",task:m,checked:b,loose:r},h.push(p),this.tokens.push(p),this.token(o,!1),this.tokens.push({type:"list_item_end"});if(a.loose)for(f=h.length,c=0;c<f;c++)h[c].loose=!0;this.tokens.push({type:"list_end"})}else if(s=this.rules.html.exec(e))e=e.substring(s[0].length),this.tokens.push({type:this.options.sanitize?"paragraph":"html",pre:!this.options.sanitizer&&("pre"===s[1]||"script"===s[1]||"style"===s[1]),text:s[0]});else if(t&&(s=this.rules.def.exec(e)))e=e.substring(s[0].length),s[3]&&(s[3]=s[3].substring(1,s[3].length-1)),g=s[1].toLowerCase().replace(/\s+/g," "),this.tokens.links[g]||(this.tokens.links[g]={href:s[2],title:s[3]});else if((s=this.rules.table.exec(e))&&(o={type:"table",header:x(s[1].replace(/^ *| *\| *$/g,"")),align:s[2].replace(/^ *|\| *$/g,"").split(/ *\| */),cells:s[3]?s[3].replace(/\n$/,"").split("\n"):[]}).header.length===o.align.length){for(e=e.substring(s[0].length),c=0;c<o.align.length;c++)/^ *-+: *$/.test(o.align[c])?o.align[c]="right":/^ *:-+: *$/.test(o.align[c])?o.align[c]="center":/^ *:-+ *$/.test(o.align[c])?o.align[c]="left":o.align[c]=null;for(c=0;c<o.cells.length;c++)o.cells[c]=x(o.cells[c].replace(/^ *\| *| *\| *$/g,""),o.header.length);this.tokens.push(o)}else if(s=this.rules.lheading.exec(e))e=e.substring(s[0].length),this.tokens.push({type:"heading",depth:"="===s[2]?1:2,text:s[1]});else if(t&&(s=this.rules.paragraph.exec(e)))e=e.substring(s[0].length),this.tokens.push({type:"paragraph",text:"\n"===s[1].charAt(s[1].length-1)?s[1].slice(0,-1):s[1]});else if(s=this.rules.text.exec(e))e=e.substring(s[0].length),this.tokens.push({type:"text",text:s[0]});else if(e)throw new Error("Infinite loop on byte: "+e.charCodeAt(0));return this.tokens};var n={escape:/^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/,autolink:/^<(scheme:[^\s\x00-\x1f<>]*|email)>/,url:f,tag:"^comment|^</[a-zA-Z][\\w:-]*\\s*>|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>|^<\\?[\\s\\S]*?\\?>|^<![a-zA-Z]+\\s[\\s\\S]*?>|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>",link:/^!?\[(label)\]\(href(?:\s+(title))?\s*\)/,reflink:/^!?\[(label)\]\[(?!\s*\])((?:\\[\[\]]?|[^\[\]\\])+)\]/,nolink:/^!?\[(?!\s*\])((?:\[[^\[\]]*\]|\\[\[\]]|[^\[\]])*)\](?:\[\])?/,strong:/^__([^\s_])__(?!_)|^\*\*([^\s*])\*\*(?!\*)|^__([^\s][\s\S]*?[^\s])__(?!_)|^\*\*([^\s][\s\S]*?[^\s])\*\*(?!\*)/,em:/^_([^\s_])_(?!_)|^\*([^\s*"<\[])\*(?!\*)|^_([^\s][\s\S]*?[^\s_])_(?!_|[^\spunctuation])|^_([^\s_][\s\S]*?[^\s])_(?!_|[^\spunctuation])|^\*([^\s"<\[][\s\S]*?[^\s*])\*(?!\*)|^\*([^\s*"<\[][\s\S]*?[^\s])\*(?!\*)/,code:/^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/,br:/^( {2,}|\\)\n(?!\s*$)/,del:f,text:/^(`+|[^`])[\s\S]*?(?=[\\<!\[`*]|\b_| {2,}\n|$)/};function p(e,t){if(this.options=t||b.defaults,this.links=e,this.rules=n.normal,this.renderer=this.options.renderer||new r,this.renderer.options=this.options,!this.links)throw new Error("Tokens array requires a `links` property.");this.options.pedantic?this.rules=n.pedantic:this.options.gfm&&(this.options.breaks?this.rules=n.breaks:this.rules=n.gfm)}function r(e){this.options=e||b.defaults}function s(){}function h(e){this.tokens=[],this.token=null,this.options=e||b.defaults,this.options.renderer=this.options.renderer||new r,this.renderer=this.options.renderer,this.renderer.options=this.options,this.slugger=new t}function t(){this.seen={}}function u(e,t){if(t){if(u.escapeTest.test(e))return e.replace(u.escapeReplace,function(e){return u.replacements[e]})}else if(u.escapeTestNoEncode.test(e))return e.replace(u.escapeReplaceNoEncode,function(e){return u.replacements[e]});return e}function c(e){return e.replace(/&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/gi,function(e,t){return"colon"===(t=t.toLowerCase())?":":"#"===t.charAt(0)?"x"===t.charAt(1)?String.fromCharCode(parseInt(t.substring(2),16)):String.fromCharCode(+t.substring(1)):""})}function i(n,e){return n=n.source||n,e=e||"",{replace:function(e,t){return t=(t=t.source||t).replace(/(^|[^\[])\^/g,"$1"),n=n.replace(e,t),this},getRegex:function(){return new RegExp(n,e)}}}function l(e,t,n){if(e){try{var r=decodeURIComponent(c(n)).replace(/[^\w:]/g,"").toLowerCase()}catch(e){return null}if(0===r.indexOf("javascript:")||0===r.indexOf("vbscript:")||0===r.indexOf("data:"))return null}t&&!g.test(n)&&(n=function(e,t){o[" "+e]||(/^[^:]+:\/*[^/]*$/.test(e)?o[" "+e]=e+"/":o[" "+e]=y(e,"/",!0));return e=o[" "+e],"//"===t.slice(0,2)?e.replace(/:[\s\S]*/,":")+t:"/"===t.charAt(0)?e.replace(/(:\/*[^/]*)[\s\S]*/,"$1")+t:e+t}(t,n));try{n=encodeURI(n).replace(/%25/g,"%")}catch(e){return null}return n}n._punctuation="!\"#$%&'()*+,\\-./:;<=>?@\\[^_{|}~",n.em=i(n.em).replace(/punctuation/g,n._punctuation).getRegex(),n._escapes=/\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/g,n._scheme=/[a-zA-Z][a-zA-Z0-9+.-]{1,31}/,n._email=/[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/,n.autolink=i(n.autolink).replace("scheme",n._scheme).replace("email",n._email).getRegex(),n._attribute=/\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/,n.tag=i(n.tag).replace("comment",k._comment).replace("attribute",n._attribute).getRegex(),n._label=/(?:\[[^\[\]]*\]|\\[\[\]]?|`[^`]*`|`(?!`)|[^\[\]\\`])*?/,n._href=/\s*(<(?:\\[<>]?|[^\s<>\\])*>|[^\s\x00-\x1f]*)/,n._title=/"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/,n.link=i(n.link).replace("label",n._label).replace("href",n._href).replace("title",n._title).getRegex(),n.reflink=i(n.reflink).replace("label",n._label).getRegex(),n.normal=d({},n),n.pedantic=d({},n.normal,{strong:/^__(?=\S)([\s\S]*?\S)__(?!_)|^\*\*(?=\S)([\s\S]*?\S)\*\*(?!\*)/,em:/^_(?=\S)([\s\S]*?\S)_(?!_)|^\*(?=\S)([\s\S]*?\S)\*(?!\*)/,link:i(/^!?\[(label)\]\((.*?)\)/).replace("label",n._label).getRegex(),reflink:i(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label",n._label).getRegex()}),n.gfm=d({},n.normal,{escape:i(n.escape).replace("])","~|])").getRegex(),_extended_email:/[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/,url:/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/,_backpedal:/(?:[^?!.,:;*_~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_~)]+(?!$))+/,del:/^~+(?=\S)([\s\S]*?\S)~+/,text:i(n.text).replace("]|","~]|").replace("|$","|https?://|ftp://|www\\.|[a-zA-Z0-9.!#$%&'*+/=?^_`{\\|}~-]+@|$").getRegex()}),n.gfm.url=i(n.gfm.url,"i").replace("email",n.gfm._extended_email).getRegex(),n.breaks=d({},n.gfm,{br:i(n.br).replace("{2,}","*").getRegex(),text:i(n.gfm.text).replace("{2,}","*").getRegex()}),p.rules=n,p.output=function(e,t,n){return new p(t,n).output(e)},p.prototype.output=function(e){for(var t,n,r,s,i,l,o="";e;)if(i=this.rules.escape.exec(e))e=e.substring(i[0].length),o+=u(i[1]);else if(i=this.rules.tag.exec(e))!this.inLink&&/^<a /i.test(i[0])?this.inLink=!0:this.inLink&&/^<\/a>/i.test(i[0])&&(this.inLink=!1),!this.inRawBlock&&/^<(pre|code|kbd|script)(\s|>)/i.test(i[0])?this.inRawBlock=!0:this.inRawBlock&&/^<\/(pre|code|kbd|script)(\s|>)/i.test(i[0])&&(this.inRawBlock=!1),e=e.substring(i[0].length),o+=this.options.sanitize?this.options.sanitizer?this.options.sanitizer(i[0]):u(i[0]):i[0];else if(i=this.rules.link.exec(e)){var a=m(i[2],"()");if(-1<a){var h=i[0].length-(i[2].length-a)-(i[3]||"").length;i[2]=i[2].substring(0,a),i[0]=i[0].substring(0,h).trim(),i[3]=""}e=e.substring(i[0].length),this.inLink=!0,r=i[2],s=this.options.pedantic?(t=/^([^'"]*[^\s])\s+(['"])(.*)\2/.exec(r))?(r=t[1],t[3]):"":i[3]?i[3].slice(1,-1):"",r=r.trim().replace(/^<([\s\S]*)>$/,"$1"),o+=this.outputLink(i,{href:p.escapes(r),title:p.escapes(s)}),this.inLink=!1}else if((i=this.rules.reflink.exec(e))||(i=this.rules.nolink.exec(e))){if(e=e.substring(i[0].length),t=(i[2]||i[1]).replace(/\s+/g," "),!(t=this.links[t.toLowerCase()])||!t.href){o+=i[0].charAt(0),e=i[0].substring(1)+e;continue}this.inLink=!0,o+=this.outputLink(i,t),this.inLink=!1}else if(i=this.rules.strong.exec(e))e=e.substring(i[0].length),o+=this.renderer.strong(this.output(i[4]||i[3]||i[2]||i[1]));else if(i=this.rules.em.exec(e))e=e.substring(i[0].length),o+=this.renderer.em(this.output(i[6]||i[5]||i[4]||i[3]||i[2]||i[1]));else if(i=this.rules.code.exec(e))e=e.substring(i[0].length),o+=this.renderer.codespan(u(i[2].trim(),!0));else if(i=this.rules.br.exec(e))e=e.substring(i[0].length),o+=this.renderer.br();else if(i=this.rules.del.exec(e))e=e.substring(i[0].length),o+=this.renderer.del(this.output(i[1]));else if(i=this.rules.autolink.exec(e))e=e.substring(i[0].length),r="@"===i[2]?"mailto:"+(n=u(this.mangle(i[1]))):n=u(i[1]),o+=this.renderer.link(r,null,n);else if(this.inLink||!(i=this.rules.url.exec(e))){if(i=this.rules.text.exec(e))e=e.substring(i[0].length),this.inRawBlock?o+=this.renderer.text(i[0]):o+=this.renderer.text(u(this.smartypants(i[0])));else if(e)throw new Error("Infinite loop on byte: "+e.charCodeAt(0))}else{if("@"===i[2])r="mailto:"+(n=u(i[0]));else{for(;l=i[0],i[0]=this.rules._backpedal.exec(i[0])[0],l!==i[0];);n=u(i[0]),r="www."===i[1]?"http://"+n:n}e=e.substring(i[0].length),o+=this.renderer.link(r,null,n)}return o},p.escapes=function(e){return e?e.replace(p.rules._escapes,"$1"):e},p.prototype.outputLink=function(e,t){var n=t.href,r=t.title?u(t.title):null;return"!"!==e[0].charAt(0)?this.renderer.link(n,r,this.output(e[1])):this.renderer.image(n,r,u(e[1]))},p.prototype.smartypants=function(e){return this.options.smartypants?e.replace(/---/g,"—").replace(/--/g,"–").replace(/(^|[-\u2014/(\[{"\s])'/g,"$1‘").replace(/'/g,"’").replace(/(^|[-\u2014/(\[{\u2018\s])"/g,"$1“").replace(/"/g,"”").replace(/\.{3}/g,"…"):e},p.prototype.mangle=function(e){if(!this.options.mangle)return e;for(var t,n="",r=e.length,s=0;s<r;s++)t=e.charCodeAt(s),.5<Math.random()&&(t="x"+t.toString(16)),n+="&#"+t+";";return n},r.prototype.code=function(e,t,n){var r=(t||"").match(/\S*/)[0];if(this.options.highlight){var s=this.options.highlight(e,r);null!=s&&s!==e&&(n=!0,e=s)}return r?'<pre><code class="'+this.options.langPrefix+u(r,!0)+'">'+(n?e:u(e,!0))+"</code></pre>\n":"<pre><code>"+(n?e:u(e,!0))+"</code></pre>"},r.prototype.blockquote=function(e){return"<blockquote>\n"+e+"</blockquote>\n"},r.prototype.html=function(e){return e},r.prototype.heading=function(e,t,n,r){return this.options.headerIds?"<h"+t+' id="'+this.options.headerPrefix+r.slug(n)+'">'+e+"</h"+t+">\n":"<h"+t+">"+e+"</h"+t+">\n"},r.prototype.hr=function(){return this.options.xhtml?"<hr/>\n":"<hr>\n"},r.prototype.list=function(e,t,n){var r=t?"ol":"ul";return"<"+r+(t&&1!==n?' start="'+n+'"':"")+">\n"+e+"</"+r+">\n"},r.prototype.listitem=function(e){return"<li>"+e+"</li>\n"},r.prototype.checkbox=function(e){return"<input "+(e?'checked="" ':"")+'disabled="" type="checkbox"'+(this.options.xhtml?" /":"")+"> "},r.prototype.paragraph=function(e){return"<p>"+e+"</p>\n"},r.prototype.table=function(e,t){return t&&(t="<tbody>"+t+"</tbody>"),"<table>\n<thead>\n"+e+"</thead>\n"+t+"</table>\n"},r.prototype.tablerow=function(e){return"<tr>\n"+e+"</tr>\n"},r.prototype.tablecell=function(e,t){var n=t.header?"th":"td";return(t.align?"<"+n+' align="'+t.align+'">':"<"+n+">")+e+"</"+n+">\n"},r.prototype.strong=function(e){return"<strong>"+e+"</strong>"},r.prototype.em=function(e){return"<em>"+e+"</em>"},r.prototype.codespan=function(e){return"<code>"+e+"</code>"},r.prototype.br=function(){return this.options.xhtml?"<br/>":"<br>"},r.prototype.del=function(e){return"<del>"+e+"</del>"},r.prototype.link=function(e,t,n){if(null===(e=l(this.options.sanitize,this.options.baseUrl,e)))return n;var r='<a href="'+u(e)+'"';return t&&(r+=' title="'+t+'"'),r+=">"+n+"</a>"},r.prototype.image=function(e,t,n){if(null===(e=l(this.options.sanitize,this.options.baseUrl,e)))return n;var r='<img src="'+e+'" alt="'+n+'"';return t&&(r+=' title="'+t+'"'),r+=this.options.xhtml?"/>":">"},r.prototype.text=function(e){return e},s.prototype.strong=s.prototype.em=s.prototype.codespan=s.prototype.del=s.prototype.text=function(e){return e},s.prototype.link=s.prototype.image=function(e,t,n){return""+n},s.prototype.br=function(){return""},h.parse=function(e,t){return new h(t).parse(e)},h.prototype.parse=function(e){this.inline=new p(e.links,this.options),this.inlineText=new p(e.links,d({},this.options,{renderer:new s})),this.tokens=e.reverse();for(var t="";this.next();)t+=this.tok();return t},h.prototype.next=function(){return this.token=this.tokens.pop()},h.prototype.peek=function(){return this.tokens[this.tokens.length-1]||0},h.prototype.parseText=function(){for(var e=this.token.text;"text"===this.peek().type;)e+="\n"+this.next().text;return this.inline.output(e)},h.prototype.tok=function(){switch(this.token.type){case"space":return"";case"hr":return this.renderer.hr();case"heading":return this.renderer.heading(this.inline.output(this.token.text),this.token.depth,c(this.inlineText.output(this.token.text)),this.slugger);case"code":return this.renderer.code(this.token.text,this.token.lang,this.token.escaped);case"table":var e,t,n,r,s="",i="";for(n="",e=0;e<this.token.header.length;e++)n+=this.renderer.tablecell(this.inline.output(this.token.header[e]),{header:!0,align:this.token.align[e]});for(s+=this.renderer.tablerow(n),e=0;e<this.token.cells.length;e++){for(t=this.token.cells[e],n="",r=0;r<t.length;r++)n+=this.renderer.tablecell(this.inline.output(t[r]),{header:!1,align:this.token.align[r]});i+=this.renderer.tablerow(n)}return this.renderer.table(s,i);case"blockquote_start":for(i="";"blockquote_end"!==this.next().type;)i+=this.tok();return this.renderer.blockquote(i);case"list_start":i="";for(var l=this.token.ordered,o=this.token.start;"list_end"!==this.next().type;)i+=this.tok();return this.renderer.list(i,l,o);case"list_item_start":i="";var a=this.token.loose,h=this.token.checked,p=this.token.task;for(this.token.task&&(i+=this.renderer.checkbox(h));"list_item_end"!==this.next().type;)i+=a||"text"!==this.token.type?this.tok():this.parseText();return this.renderer.listitem(i,p,h);case"html":return this.renderer.html(this.token.text);case"paragraph":return this.renderer.paragraph(this.inline.output(this.token.text));case"text":return this.renderer.paragraph(this.parseText());default:var u='Token with "'+this.token.type+'" type was not found.';if(!this.options.silent)throw new Error(u);console.log(u)}},t.prototype.slug=function(e){var t=e.toLowerCase().trim().replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g,"").replace(/\s/g,"-");if(this.seen.hasOwnProperty(t))for(var n=t;this.seen[n]++,t=n+"-"+this.seen[n],this.seen.hasOwnProperty(t););return this.seen[t]=0,t},u.escapeTest=/[&<>"']/,u.escapeReplace=/[&<>"']/g,u.replacements={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"},u.escapeTestNoEncode=/[<>"']|&(?!#?\w+;)/,u.escapeReplaceNoEncode=/[<>"']|&(?!#?\w+;)/g;var o={},g=/^$|^[a-z][a-z0-9+.-]*:|^[?#]/i;function f(){}function d(e){for(var t,n,r=1;r<arguments.length;r++)for(n in t=arguments[r])Object.prototype.hasOwnProperty.call(t,n)&&(e[n]=t[n]);return e}function x(e,t){var n=e.replace(/\|/g,function(e,t,n){for(var r=!1,s=t;0<=--s&&"\\"===n[s];)r=!r;return r?"|":" |"}).split(/ \|/),r=0;if(n.length>t)n.splice(t);else for(;n.length<t;)n.push("");for(;r<n.length;r++)n[r]=n[r].trim().replace(/\\\|/g,"|");return n}function y(e,t,n){if(0===e.length)return"";for(var r=0;r<e.length;){var s=e.charAt(e.length-r-1);if(s!==t||n){if(s===t||!n)break;r++}else r++}return e.substr(0,e.length-r)}function m(e,t){if(-1===e.indexOf(t[1]))return-1;for(var n=0,r=0;r<e.length;r++)if("\\"===e[r])r++;else if(e[r]===t[0])n++;else if(e[r]===t[1]&&--n<0)return r;return-1}function b(e,n,r){if(null==e)throw new Error("marked(): input parameter is undefined or null");if("string"!=typeof e)throw new Error("marked(): input parameter is of type "+Object.prototype.toString.call(e)+", string expected");if(r||"function"==typeof n){r||(r=n,n=null);var s,i,l=(n=d({},b.defaults,n||{})).highlight,t=0;try{s=a.lex(e,n)}catch(e){return r(e)}i=s.length;var o=function(t){if(t)return n.highlight=l,r(t);var e;try{e=h.parse(s,n)}catch(e){t=e}return n.highlight=l,t?r(t):r(null,e)};if(!l||l.length<3)return o();if(delete n.highlight,!i)return o();for(;t<s.length;t++)!function(n){"code"!==n.type?--i||o():l(n.text,n.lang,function(e,t){return e?o(e):null==t||t===n.text?--i||o():(n.text=t,n.escaped=!0,void(--i||o()))})}(s[t])}else try{return n&&(n=d({},b.defaults,n)),h.parse(a.lex(e,n),n)}catch(e){if(e.message+="\nPlease report this to https://github.com/markedjs/marked.",(n||b.defaults).silent)return"<p>An error occurred:</p><pre>"+u(e.message+"",!0)+"</pre>";throw e}}f.exec=f,b.options=b.setOptions=function(e){return d(b.defaults,e),b},b.getDefaults=function(){return{baseUrl:null,breaks:!1,gfm:!0,headerIds:!0,headerPrefix:"",highlight:null,langPrefix:"language-",mangle:!0,pedantic:!1,renderer:new r,sanitize:!1,sanitizer:null,silent:!1,smartLists:!1,smartypants:!1,tables:!0,xhtml:!1}},b.defaults=b.getDefaults(),b.Parser=h,b.parser=h.parse,b.Renderer=r,b.TextRenderer=s,b.Lexer=a,b.lexer=a.lex,b.InlineLexer=p,b.inlineLexer=p.output,b.Slugger=t,b.parse=b,"undefined"!=typeof module&&"object"==typeof exports?module.exports=b:"function"==typeof define&&define.amd?define(function(){return b}):e.marked=b}(this||("undefined"!=typeof window?window:global));
 
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Animation.coffee ---- */
+/* ---- utils/Animation.coffee ---- */
 
 
 (function() {
@@ -1325,8 +1314,8 @@ function clone(obj) {
     };
 
     Animation.prototype.show = function(elem, props) {
-      var delay, _ref;
-      delay = ((_ref = arguments[arguments.length - 2]) != null ? _ref.delay : void 0) * 1000 || 1;
+      var delay, ref;
+      delay = ((ref = arguments[arguments.length - 2]) != null ? ref.delay : void 0) * 1000 || 1;
       elem.className += " animate";
       elem.style.opacity = 0;
       setTimeout((function() {
@@ -1340,8 +1329,8 @@ function clone(obj) {
     };
 
     Animation.prototype.hide = function(elem, remove_func, props) {
-      var delay, _ref;
-      delay = ((_ref = arguments[arguments.length - 2]) != null ? _ref.delay : void 0) * 1000 || 1;
+      var delay, ref;
+      delay = ((ref = arguments[arguments.length - 2]) != null ? ref.delay : void 0) * 1000 || 1;
       elem.className += " animate";
       setTimeout((function() {
         return elem.style.opacity = 0;
@@ -1413,8 +1402,7 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Autosize.coffee ---- */
+/* ---- utils/Autosize.coffee ---- */
 
 
 (function() {
@@ -1581,8 +1569,7 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Debug.coffee ---- */
+/* ---- utils/Debug.coffee ---- */
 
 
 (function() {
@@ -1614,29 +1601,28 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Editable.coffee ---- */
+/* ---- utils/Editable.coffee ---- */
 
 
 (function() {
   var Editable,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  Editable = (function(_super) {
-    __extends(Editable, _super);
+  Editable = (function(superClass) {
+    extend(Editable, superClass);
 
-    function Editable(_at_type, _at_handleSave, _at_handleDelete) {
-      this.type = _at_type;
-      this.handleSave = _at_handleSave;
-      this.handleDelete = _at_handleDelete;
-      this.render = __bind(this.render, this);
-      this.handleSaveClick = __bind(this.handleSaveClick, this);
-      this.handleDeleteClick = __bind(this.handleDeleteClick, this);
-      this.handleCancelClick = __bind(this.handleCancelClick, this);
-      this.handleEditClick = __bind(this.handleEditClick, this);
-      this.storeNode = __bind(this.storeNode, this);
+    function Editable(type, handleSave, handleDelete) {
+      this.type = type;
+      this.handleSave = handleSave;
+      this.handleDelete = handleDelete;
+      this.render = bind(this.render, this);
+      this.handleSaveClick = bind(this.handleSaveClick, this);
+      this.handleDeleteClick = bind(this.handleDeleteClick, this);
+      this.handleCancelClick = bind(this.handleCancelClick, this);
+      this.handleEditClick = bind(this.handleEditClick, this);
+      this.storeNode = bind(this.storeNode, this);
       this.node = null;
       this.editing = false;
       this.render_function = null;
@@ -1725,8 +1711,7 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/ImagePreview.coffee ---- */
+/* ---- utils/ImagePreview.coffee ---- */
 
 
 (function() {
@@ -1824,38 +1809,37 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/ItemList.coffee ---- */
+/* ---- utils/ItemList.coffee ---- */
 
 
 (function() {
   var ItemList;
 
   ItemList = (function() {
-    function ItemList(_at_item_class, _at_key) {
-      this.item_class = _at_item_class;
-      this.key = _at_key;
+    function ItemList(item_class1, key1) {
+      this.item_class = item_class1;
+      this.key = key1;
       this.items = [];
       this.items_bykey = {};
     }
 
     ItemList.prototype.sync = function(rows, item_class, key) {
-      var current_obj, item, row, _i, _len, _results;
+      var current_obj, i, item, len, results, row;
       this.items.splice(0, this.items.length);
-      _results = [];
-      for (_i = 0, _len = rows.length; _i < _len; _i++) {
-        row = rows[_i];
+      results = [];
+      for (i = 0, len = rows.length; i < len; i++) {
+        row = rows[i];
         current_obj = this.items_bykey[row[this.key]];
         if (current_obj) {
           current_obj.row = row;
-          _results.push(this.items.push(current_obj));
+          results.push(this.items.push(current_obj));
         } else {
           item = new this.item_class(row, this);
           this.items_bykey[row[this.key]] = item;
-          _results.push(this.items.push(item));
+          results.push(this.items.push(item));
         }
       }
-      return _results;
+      return results;
     };
 
     ItemList.prototype.deleteItem = function(item) {
@@ -1877,8 +1861,7 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Maxheight.coffee ---- */
+/* ---- utils/Maxheight.coffee ---- */
 
 
 (function() {
@@ -1913,32 +1896,31 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Menu.coffee ---- */
+/* ---- utils/Menu.coffee ---- */
 
 
 (function() {
   var Menu,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   Menu = (function() {
     function Menu() {
-      this.render = __bind(this.render, this);
-      this.renderItem = __bind(this.renderItem, this);
-      this.handleClick = __bind(this.handleClick, this);
-      this.storeNode = __bind(this.storeNode, this);
-      this.toggle = __bind(this.toggle, this);
-      this.hide = __bind(this.hide, this);
-      this.show = __bind(this.show, this);
+      this.render = bind(this.render, this);
+      this.renderItem = bind(this.renderItem, this);
+      this.handleClick = bind(this.handleClick, this);
+      this.storeNode = bind(this.storeNode, this);
+      this.toggle = bind(this.toggle, this);
+      this.hide = bind(this.hide, this);
+      this.show = bind(this.show, this);
       this.visible = false;
       this.items = [];
       this.node = null;
     }
 
     Menu.prototype.show = function() {
-      var _ref;
-      if ((_ref = window.visible_menu) != null) {
-        _ref.hide();
+      var ref;
+      if ((ref = window.visible_menu) != null) {
+        ref.hide();
       }
       this.visible = true;
       return window.visible_menu = this;
@@ -1975,11 +1957,11 @@ function clone(obj) {
     };
 
     Menu.prototype.handleClick = function(e) {
-      var cb, item, keep_menu, selected, title, _i, _len, _ref;
+      var cb, i, item, keep_menu, len, ref, selected, title;
       keep_menu = false;
-      _ref = this.items;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        item = _ref[_i];
+      ref = this.items;
+      for (i = 0, len = ref.length; i < len; i++) {
+        item = ref[i];
         title = item[0], cb = item[1], selected = item[2];
         if (title === e.target.textContent) {
           keep_menu = cb(item);
@@ -2050,23 +2032,22 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Overlay.coffee ---- */
+/* ---- utils/Overlay.coffee ---- */
 
 
 (function() {
   var Overlay,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  Overlay = (function(_super) {
-    __extends(Overlay, _super);
+  Overlay = (function(superClass) {
+    extend(Overlay, superClass);
 
     function Overlay() {
-      this.render = __bind(this.render, this);
-      this.handleClick = __bind(this.handleClick, this);
-      this.zoomImageTag = __bind(this.zoomImageTag, this);
+      this.render = bind(this.render, this);
+      this.handleClick = bind(this.handleClick, this);
+      this.zoomImageTag = bind(this.zoomImageTag, this);
       this.visible = false;
       this.called = false;
       this.height = 0;
@@ -2168,21 +2149,20 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Scrollwatcher.coffee ---- */
+/* ---- utils/Scrollwatcher.coffee ---- */
 
 
 (function() {
   var Scrollwatcher,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  Scrollwatcher = (function(_super) {
-    __extends(Scrollwatcher, _super);
+  Scrollwatcher = (function(superClass) {
+    extend(Scrollwatcher, superClass);
 
     function Scrollwatcher() {
-      this.checkScroll = __bind(this.checkScroll, this);
+      this.checkScroll = bind(this.checkScroll, this);
       this.log("Scrollwatcher");
       this.items = [];
       window.onscroll = (function(_this) {
@@ -2194,24 +2174,24 @@ function clone(obj) {
     }
 
     Scrollwatcher.prototype.checkScroll = function() {
-      var cb, i, item_top, tag, view_bottom, view_top, _i, _ref, _ref1, _results;
+      var cb, i, item_top, j, ref, ref1, results, tag, view_bottom, view_top;
       if (!this.items.length) {
         return;
       }
       view_top = window.scrollY;
       view_bottom = window.scrollY + window.innerHeight;
-      _ref = this.items;
-      _results = [];
-      for (i = _i = _ref.length - 1; _i >= 0; i = _i += -1) {
-        _ref1 = _ref[i], item_top = _ref1[0], tag = _ref1[1], cb = _ref1[2];
+      ref = this.items;
+      results = [];
+      for (i = j = ref.length - 1; j >= 0; i = j += -1) {
+        ref1 = ref[i], item_top = ref1[0], tag = ref1[1], cb = ref1[2];
         if (item_top + 900 > view_top && item_top - 400 < view_bottom) {
           this.items.splice(i, 1);
-          _results.push(cb(tag));
+          results.push(cb(tag));
         } else {
-          _results.push(void 0);
+          results.push(void 0);
         }
       }
-      return _results;
+      return results;
     };
 
     Scrollwatcher.prototype.add = function(tag, cb) {
@@ -2227,8 +2207,7 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Text.coffee ---- */
+/* ---- utils/Text.coffee ---- */
 
 
 (function() {
@@ -2513,8 +2492,7 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Time.coffee ---- */
+/* ---- utils/Time.coffee ---- */
 
 
 (function() {
@@ -2581,8 +2559,7 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Translate.coffee ---- */
+/* ---- utils/Translate.coffee ---- */
 
 
 (function() {
@@ -2592,26 +2569,25 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/Uploadable.coffee ---- */
+/* ---- utils/Uploadable.coffee ---- */
 
 
 (function() {
   var Uploadable,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  Uploadable = (function(_super) {
-    __extends(Uploadable, _super);
+  Uploadable = (function(superClass) {
+    extend(Uploadable, superClass);
 
-    function Uploadable(_at_handleSave) {
-      this.handleSave = _at_handleSave;
-      this.getPixelData = __bind(this.getPixelData, this);
-      this.render = __bind(this.render, this);
-      this.handleUploadClick = __bind(this.handleUploadClick, this);
-      this.resizeImage = __bind(this.resizeImage, this);
-      this.storeNode = __bind(this.storeNode, this);
+    function Uploadable(handleSave) {
+      this.handleSave = handleSave;
+      this.getPixelData = bind(this.getPixelData, this);
+      this.render = bind(this.render, this);
+      this.handleUploadClick = bind(this.handleUploadClick, this);
+      this.resizeImage = bind(this.resizeImage, this);
+      this.storeNode = bind(this.storeNode, this);
       this.node = null;
       this.resize_width = 50;
       this.resize_height = 50;
@@ -2642,11 +2618,11 @@ function clone(obj) {
       image = new Image();
       image.onload = (function(_this) {
         return function() {
-          var canvas, canvas_quant, ctx, image_base64uri, optimizer, quant, _ref;
+          var canvas, canvas_quant, ctx, image_base64uri, optimizer, quant, ref;
           _this.log("Resize image loaded");
           canvas = document.createElement("canvas");
           if (_this.preverse_ratio) {
-            _ref = _this.image_preview.calcSize(image.width, image.height, width, height), canvas.width = _ref[0], canvas.height = _ref[1];
+            ref = _this.image_preview.calcSize(image.width, image.height, width, height), canvas.width = ref[0], canvas.height = ref[1];
           } else {
             canvas.width = width;
             canvas.height = height;
@@ -2730,12 +2706,12 @@ function clone(obj) {
     };
 
     Uploadable.prototype.getPixelData = function(data) {
-      var b, color_db, colors, colors_next_id, g, hex, i, pixels, r, _i, _ref;
+      var b, color_db, colors, colors_next_id, g, hex, i, j, pixels, r, ref;
       color_db = {};
       colors = [];
       colors_next_id = 0;
       pixels = [];
-      for (i = _i = 0, _ref = data.length - 1; _i <= _ref; i = _i += 4) {
+      for (i = j = 0, ref = data.length - 1; j <= ref; i = j += 4) {
         r = data[i];
         g = data[i + 1];
         b = data[i + 2];
@@ -2762,11 +2738,11 @@ function clone(obj) {
       image.src = image_base64uri;
       return image.onload = (function(_this) {
         return function() {
-          var back, canvas, ctx, image_data, image_height, image_width, pixeldata, quant, _ref;
+          var back, canvas, ctx, image_data, image_height, image_width, pixeldata, quant, ref;
           image_width = image.width;
           image_height = image.height;
           canvas = document.createElement("canvas");
-          _ref = _this.image_preview.calcSize(image.width, image.height, target_width, target_height), canvas.width = _ref[0], canvas.height = _ref[1];
+          ref = _this.image_preview.calcSize(image.width, image.height, target_width, target_height), canvas.width = ref[0], canvas.height = ref[1];
           ctx = canvas.getContext("2d");
           ctx.fillStyle = "#FFF";
           ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -2799,24 +2775,23 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/utils/ZeroFrame.coffee ---- */
+/* ---- utils/ZeroFrame.coffee ---- */
 
 
 (function() {
   var ZeroFrame,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ZeroFrame = (function(_super) {
-    __extends(ZeroFrame, _super);
+  ZeroFrame = (function(superClass) {
+    extend(ZeroFrame, superClass);
 
     function ZeroFrame(url) {
-      this.onCloseWebsocket = __bind(this.onCloseWebsocket, this);
-      this.onOpenWebsocket = __bind(this.onOpenWebsocket, this);
-      this.onRequest = __bind(this.onRequest, this);
-      this.onMessage = __bind(this.onMessage, this);
+      this.onCloseWebsocket = bind(this.onCloseWebsocket, this);
+      this.onOpenWebsocket = bind(this.onOpenWebsocket, this);
+      this.onRequest = bind(this.onRequest, this);
+      this.onMessage = bind(this.onMessage, this);
       this.url = url;
       this.waiting_cb = {};
       this.history_state = {};
@@ -2953,8 +2928,7 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ActivityList.coffee ---- */
+/* ---- ActivityList.coffee ---- */
 
 
 (function() {
@@ -3227,22 +3201,21 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/AnonUser.coffee ---- */
+/* ---- AnonUser.coffee ---- */
 
 
 (function() {
   var AnonUser,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  AnonUser = (function(_super) {
-    __extends(AnonUser, _super);
+  AnonUser = (function(superClass) {
+    extend(AnonUser, superClass);
 
     function AnonUser() {
-      this.save = __bind(this.save, this);
-      this.updateInfo = __bind(this.updateInfo, this);
+      this.save = bind(this.save, this);
+      this.updateInfo = bind(this.updateInfo, this);
       this.auth_address = null;
       this.hub = null;
       this.followed_users = {};
@@ -3319,8 +3292,7 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentCreateProfile.coffee ---- */
+/* ---- ContentCreateProfile.coffee ---- */
 
 
 (function() {
@@ -3578,23 +3550,22 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentFeed.coffee ---- */
+/* ---- ContentFeed.coffee ---- */
 
 
 (function() {
   var ContentFeed,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ContentFeed = (function(_super) {
-    __extends(ContentFeed, _super);
+  ContentFeed = (function(superClass) {
+    extend(ContentFeed, superClass);
 
     function ContentFeed() {
-      this.update = __bind(this.update, this);
-      this.render = __bind(this.render, this);
-      this.handleListTypeClick = __bind(this.handleListTypeClick, this);
+      this.update = bind(this.update, this);
+      this.render = bind(this.render, this);
+      this.handleListTypeClick = bind(this.handleListTypeClick, this);
       this.post_create = new PostCreate();
       this.post_list = new PostList();
       this.activity_list = new ActivityList();
@@ -3614,7 +3585,7 @@ function clone(obj) {
     };
 
     ContentFeed.prototype.render = function() {
-      var followed, key, like, _;
+      var _, followed, key, like;
       if (this.post_list.loaded && !Page.on_loaded.resolved) {
         Page.on_loaded.resolve();
       }
@@ -3625,14 +3596,14 @@ function clone(obj) {
         this.suggested_user_list.need_update = true;
         if (this.type === "followed") {
           this.post_list.directories = (function() {
-            var _ref, _results;
-            _ref = Page.user.followed_users;
-            _results = [];
-            for (key in _ref) {
-              followed = _ref[key];
-              _results.push("data/users/" + (key.split('/')[1]));
+            var ref, results;
+            ref = Page.user.followed_users;
+            results = [];
+            for (key in ref) {
+              followed = ref[key];
+              results.push("data/users/" + (key.split('/')[1]));
             }
-            return _results;
+            return results;
           })();
           if (Page.user.hub) {
             this.post_list.directories.push("data/users/" + Page.user.auth_address);
@@ -3640,24 +3611,24 @@ function clone(obj) {
           this.post_list.filter_post_ids = null;
         } else if (this.type === "liked") {
           this.post_list.directories = (function() {
-            var _ref, _results;
-            _ref = Page.user.likes;
-            _results = [];
-            for (like in _ref) {
-              _ = _ref[like];
-              _results.push("data/users/" + (like.split('_')[0]));
+            var ref, results;
+            ref = Page.user.likes;
+            results = [];
+            for (like in ref) {
+              _ = ref[like];
+              results.push("data/users/" + (like.split('_')[0]));
             }
-            return _results;
+            return results;
           })();
           this.post_list.filter_post_ids = (function() {
-            var _ref, _results;
-            _ref = Page.user.likes;
-            _results = [];
-            for (like in _ref) {
-              _ = _ref[like];
-              _results.push(like.split('_')[1]);
+            var ref, results;
+            ref = Page.user.likes;
+            results = [];
+            for (like in ref) {
+              _ = ref[like];
+              results.push(like.split('_')[1]);
             }
-            return _results;
+            return results;
           })();
         } else {
           this.post_list.directories = "all";
@@ -3666,14 +3637,14 @@ function clone(obj) {
         this.post_list.need_update = true;
         if (this.type === "followed") {
           this.activity_list.directories = (function() {
-            var _ref, _results;
-            _ref = Page.user.followed_users;
-            _results = [];
-            for (key in _ref) {
-              followed = _ref[key];
-              _results.push("data/users/" + (key.split('/')[1]));
+            var ref, results;
+            ref = Page.user.followed_users;
+            results = [];
+            for (key in ref) {
+              followed = ref[key];
+              results.push("data/users/" + (key.split('/')[1]));
             }
-            return _results;
+            return results;
           })();
         } else {
           this.activity_list.directories = "all";
@@ -3728,8 +3699,7 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentProfile.coffee ---- */
+/* ---- ContentProfile.coffee ---- */
 
 
 (function() {
@@ -4005,6 +3975,7 @@ function clone(obj) {
                 style: "color: " + (Text.toColor(this.user.row.auth_address))
               }, this.owned ? this.editable_user_name.render(this.user.row.user_name) : h("a", {
                 href: this.user.getLink(),
+                style: "color: " + (Text.toColor(this.user.row.auth_address)),
                 onclick: Page.handleLinkClick
               }, this.user.row.user_name)), h("div.cert_user_id", this.user.row.cert_user_id), this.owned ? h("div.intro-full", this.editable_intro.render(this.user.row.intro)) : h("div.intro-full", {
                 innerHTML: Text.renderMarked(this.user.row.intro)
@@ -4051,26 +4022,25 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ContentUsers.coffee ---- */
+/* ---- ContentUsers.coffee ---- */
 
 
 (function() {
   var ContentUsers,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  ContentUsers = (function(_super) {
-    __extends(ContentUsers, _super);
+  ContentUsers = (function(superClass) {
+    extend(ContentUsers, superClass);
 
     function ContentUsers() {
-      this.update = __bind(this.update, this);
-      this.render = __bind(this.render, this);
-      this.handleSearchInput = __bind(this.handleSearchInput, this);
-      this.handleRecentMoreClick = __bind(this.handleRecentMoreClick, this);
-      this.handleActiveMoreClick = __bind(this.handleActiveMoreClick, this);
-      this.handleSuggestedMoreClick = __bind(this.handleSuggestedMoreClick, this);
+      this.update = bind(this.update, this);
+      this.render = bind(this.render, this);
+      this.handleSearchInput = bind(this.handleSearchInput, this);
+      this.handleRecentMoreClick = bind(this.handleRecentMoreClick, this);
+      this.handleActiveMoreClick = bind(this.handleActiveMoreClick, this);
+      this.handleSuggestedMoreClick = bind(this.handleSuggestedMoreClick, this);
       this.user_list_suggested = new UserList("suggested");
       this.user_list_suggested.limit = 9;
       this.user_list_active = new UserList("active");
@@ -4133,7 +4103,7 @@ function clone(obj) {
     };
 
     ContentUsers.prototype.render = function() {
-      var _ref, _ref1, _ref2;
+      var ref, ref1, ref2;
       if (this.loaded && !Page.on_loaded.resolved) {
         Page.on_loaded.resolve();
       }
@@ -4148,15 +4118,15 @@ function clone(obj) {
       if (this.need_update) {
         this.log("Updating");
         this.need_update = false;
-        if ((_ref = this.user_list_recent) != null) {
-          _ref.need_update = true;
+        if ((ref = this.user_list_recent) != null) {
+          ref.need_update = true;
         }
-        if ((_ref1 = this.user_list_active) != null) {
-          _ref1.need_update = true;
+        if ((ref1 = this.user_list_active) != null) {
+          ref1.need_update = true;
         }
         if (Page.user.auth_address) {
-          if ((_ref2 = this.user_list_suggested) != null) {
-            _ref2.need_update = true;
+          if ((ref2 = this.user_list_suggested) != null) {
+            ref2.need_update = true;
           }
         }
       }
@@ -4204,8 +4174,7 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Head.coffee ---- */
+/* ---- Head.coffee ---- */
 
 
 (function() {
@@ -4394,9 +4363,7 @@ function clone(obj) {
 
 }).call(this);
 
-
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Post.coffee ---- */
+/* ---- Post.coffee ---- */
 
 
 (function() {
@@ -4851,26 +4818,25 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostCreate.coffee ---- */
+/* ---- PostCreate.coffee ---- */
 
 
 (function() {
   var PostCreate,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  PostCreate = (function(_super) {
-    __extends(PostCreate, _super);
+  PostCreate = (function(superClass) {
+    extend(PostCreate, superClass);
 
     function PostCreate() {
-      this.render = __bind(this.render, this);
-      this.handleUploadClick = __bind(this.handleUploadClick, this);
-      this.handlePostSubmit = __bind(this.handlePostSubmit, this);
-      this.handleImageClose = __bind(this.handleImageClose, this);
-      this.handleUpload = __bind(this.handleUpload, this);
-      this.startEdit = __bind(this.startEdit, this);
+      this.render = bind(this.render, this);
+      this.handleUploadClick = bind(this.handleUploadClick, this);
+      this.handlePostSubmit = bind(this.handlePostSubmit, this);
+      this.handleImageClose = bind(this.handleImageClose, this);
+      this.handleUpload = bind(this.handleUpload, this);
+      this.startEdit = bind(this.startEdit, this);
       this.field_post = new Autosize({
         placeholder: "Write something...",
         "class": "postfield",
@@ -4909,7 +4875,7 @@ function clone(obj) {
     };
 
     PostCreate.prototype.handlePostSubmit = function() {
-      var meta, _ref;
+      var meta, ref;
       this.field_post.loading = true;
       if (this.image.height) {
         meta = {};
@@ -4917,7 +4883,7 @@ function clone(obj) {
       } else {
         meta = null;
       }
-      Page.user.post(this.field_post.attrs.value, meta, (_ref = this.image.base64uri) != null ? _ref.replace(/.*base64,/, "") : void 0, (function(_this) {
+      Page.user.post(this.field_post.attrs.value, meta, (ref = this.image.base64uri) != null ? ref.replace(/.*base64,/, "") : void 0, (function(_this) {
         return function(res) {
           _this.field_post.loading = false;
           if (res) {
@@ -5006,27 +4972,26 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostList.coffee ---- */
+/* ---- PostList.coffee ---- */
 
 
 (function() {
   var PostList,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  PostList = (function(_super) {
-    __extends(PostList, _super);
+  PostList = (function(superClass) {
+    extend(PostList, superClass);
 
     function PostList() {
-      this.render = __bind(this.render, this);
-      this.storeMoreTag = __bind(this.storeMoreTag, this);
-      this.addScrollwatcher = __bind(this.addScrollwatcher, this);
-      this.handleMoreClick = __bind(this.handleMoreClick, this);
-      this.update = __bind(this.update, this);
-      this.queryLikes = __bind(this.queryLikes, this);
-      this.queryComments = __bind(this.queryComments, this);
+      this.render = bind(this.render, this);
+      this.storeMoreTag = bind(this.storeMoreTag, this);
+      this.addScrollwatcher = bind(this.addScrollwatcher, this);
+      this.handleMoreClick = bind(this.handleMoreClick, this);
+      this.update = bind(this.update, this);
+      this.queryLikes = bind(this.queryLikes, this);
+      this.queryComments = bind(this.queryComments, this);
       this.item_list = new ItemList(Post, "key");
       this.posts = this.item_list.items;
       this.need_update = true;
@@ -5075,29 +5040,29 @@ function clone(obj) {
       this.logStart("Update");
       return Page.cmd("dbQuery", [query, param], (function(_this) {
         return function(rows) {
-          var items, post_uris, row, _i, _len;
+          var items, j, len, post_uris, row;
           items = [];
           post_uris = [];
-          for (_i = 0, _len = rows.length; _i < _len; _i++) {
-            row = rows[_i];
+          for (j = 0, len = rows.length; j < len; j++) {
+            row = rows[j];
             row["key"] = row["site"] + "-" + row["directory"].replace("data/users/", "") + "_" + row["post_id"];
             row["post_uri"] = row["directory"].replace("data/users/", "") + "_" + row["post_id"];
             post_uris.push(row["post_uri"]);
           }
           _this.queryComments(post_uris, function(comment_rows) {
-            var comment_db, comment_row, _j, _k, _len1, _len2, _name, _ref;
+            var comment_db, comment_row, k, l, len1, len2, name, ref;
             comment_db = {};
-            for (_j = 0, _len1 = comment_rows.length; _j < _len1; _j++) {
-              comment_row = comment_rows[_j];
-              if (comment_db[_name = comment_row.site + "/" + comment_row.post_uri] == null) {
-                comment_db[_name] = [];
+            for (k = 0, len1 = comment_rows.length; k < len1; k++) {
+              comment_row = comment_rows[k];
+              if (comment_db[name = comment_row.site + "/" + comment_row.post_uri] == null) {
+                comment_db[name] = [];
               }
               comment_db[comment_row.site + "/" + comment_row.post_uri].push(comment_row);
             }
-            for (_k = 0, _len2 = rows.length; _k < _len2; _k++) {
-              row = rows[_k];
+            for (l = 0, len2 = rows.length; l < len2; l++) {
+              row = rows[l];
               row["comments"] = comment_db[row.site + "/" + row.post_uri];
-              if (((_ref = _this.filter_post_ids) != null ? _ref.length : void 0) === 1 && row.post_id === parseInt(_this.filter_post_ids[0])) {
+              if (((ref = _this.filter_post_ids) != null ? ref.length : void 0) === 1 && row.post_id === parseInt(_this.filter_post_ids[0])) {
                 row.selected = true;
               }
             }
@@ -5110,14 +5075,14 @@ function clone(obj) {
             }
           });
           return _this.queryLikes(post_uris, function(like_rows) {
-            var like_db, like_row, _j, _k, _len1, _len2;
+            var k, l, len1, len2, like_db, like_row;
             like_db = {};
-            for (_j = 0, _len1 = like_rows.length; _j < _len1; _j++) {
-              like_row = like_rows[_j];
+            for (k = 0, len1 = like_rows.length; k < len1; k++) {
+              like_row = like_rows[k];
               like_db[like_row["post_uri"]] = like_row["likes"];
             }
-            for (_k = 0, _len2 = rows.length; _k < _len2; _k++) {
-              row = rows[_k];
+            for (l = 0, len2 = rows.length; l < len2; l++) {
+              row = rows[l];
               row["likes"] = like_db[row["post_uri"]];
             }
             _this.item_list.sync(rows);
@@ -5136,10 +5101,10 @@ function clone(obj) {
     PostList.prototype.addScrollwatcher = function() {
       return setTimeout(((function(_this) {
         return function() {
-          var i, item, _i, _len, _ref;
-          _ref = Page.scrollwatcher.items;
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            item = _ref[i];
+          var i, item, j, len, ref;
+          ref = Page.scrollwatcher.items;
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            item = ref[i];
             if (item[1] === _this.tag_more) {
               Page.scrollwatcher.items.splice(i, 1);
               break;
@@ -5188,8 +5153,8 @@ function clone(obj) {
             var err;
             try {
               return post.render();
-            } catch (_error) {
-              err = _error;
+            } catch (error) {
+              err = error;
               h("div.error", ["Post render error:", err.message]);
               return Debug.formatException(err);
             }
@@ -5212,28 +5177,27 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/PostMeta.coffee ---- */
+/* ---- PostMeta.coffee ---- */
 
 
 (function() {
   var PostMeta,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  PostMeta = (function(_super) {
-    __extends(PostMeta, _super);
+  PostMeta = (function(superClass) {
+    extend(PostMeta, superClass);
 
-    function PostMeta(_at_post, _at_meta) {
-      this.post = _at_post;
-      this.meta = _at_meta;
-      this.render = __bind(this.render, this);
-      this.handleImageSettingsClick = __bind(this.handleImageSettingsClick, this);
-      this.handleImageDeleteClick = __bind(this.handleImageDeleteClick, this);
-      this.handleOptionalHelpClick = __bind(this.handleOptionalHelpClick, this);
-      this.handleImageClick = __bind(this.handleImageClick, this);
-      this.afterCreateImage = __bind(this.afterCreateImage, this);
+    function PostMeta(post, meta) {
+      this.post = post;
+      this.meta = meta;
+      this.render = bind(this.render, this);
+      this.handleImageSettingsClick = bind(this.handleImageSettingsClick, this);
+      this.handleImageDeleteClick = bind(this.handleImageDeleteClick, this);
+      this.handleOptionalHelpClick = bind(this.handleOptionalHelpClick, this);
+      this.handleImageClick = bind(this.handleImageClick, this);
+      this.afterCreateImage = bind(this.afterCreateImage, this);
       this;
     }
 
@@ -5247,8 +5211,8 @@ function clone(obj) {
               _this.image_preview.optional_info = res;
               return Page.projector.scheduleRender();
             });
-          } catch (_error) {
-            e = _error;
+          } catch (error) {
+            e = error;
             _this.log("Image preview error: " + e);
           }
           return Page.projector.scheduleRender();
@@ -5257,8 +5221,8 @@ function clone(obj) {
     };
 
     PostMeta.prototype.handleImageClick = function(e) {
-      var image, _ref;
-      if (this.image_preview.load_fullsize || ((_ref = this.image_preview.optional_info) != null ? _ref.is_downloaded : void 0)) {
+      var image, ref;
+      if (this.image_preview.load_fullsize || ((ref = this.image_preview.optional_info) != null ? ref.is_downloaded : void 0)) {
         Page.overlay.zoomImageTag(e.currentTarget, this.image_preview.width, this.image_preview.height);
       } else {
         this.image_preview.load_fullsize = true;
@@ -5314,7 +5278,7 @@ function clone(obj) {
       }
       this.post.user.hasHelp((function(_this) {
         return function(helping) {
-          var _ref;
+          var ref;
           if (!_this.menu_image) {
             _this.menu_image = new Menu();
           }
@@ -5326,7 +5290,7 @@ function clone(obj) {
             })
           ]);
           _this.menu_image.items.push(["---"]);
-          if ((_ref = _this.image_preview.optional_info) != null ? _ref.is_downloaded : void 0) {
+          if ((ref = _this.image_preview.optional_info) != null ? ref.is_downloaded : void 0) {
             _this.menu_image.items.push(["Delete image", _this.handleImageDeleteClick]);
           } else {
             _this.menu_image.items.push(["Show image", _this.handleImageClick, false]);
@@ -5338,19 +5302,19 @@ function clone(obj) {
     };
 
     PostMeta.prototype.render = function() {
-      var height, style_fullsize, style_preview, width, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8;
+      var height, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, style_fullsize, style_preview, width;
       if (this.meta.img) {
         if (!this.image_preview) {
           this.image_preview = new ImagePreview();
           this.image_preview.setPreviewData(this.meta.img);
         }
-        _ref = this.image_preview.getSize(530, 600), width = _ref[0], height = _ref[1];
-        if ((_ref1 = this.image_preview) != null ? _ref1.preview_uri : void 0) {
+        ref = this.image_preview.getSize(530, 600), width = ref[0], height = ref[1];
+        if ((ref1 = this.image_preview) != null ? ref1.preview_uri : void 0) {
           style_preview = "background-image: url(" + this.image_preview.preview_uri + ")";
         } else {
           style_preview = "";
         }
-        if (this.image_preview.load_fullsize || ((_ref2 = this.image_preview.optional_info) != null ? _ref2.is_downloaded : void 0)) {
+        if (this.image_preview.load_fullsize || ((ref2 = this.image_preview.optional_info) != null ? ref2.is_downloaded : void 0)) {
           style_fullsize = "background-image: url(" + (this.post.user.getPath()) + "/" + this.post.row.post_id + ".jpg)";
         } else {
           style_fullsize = "";
@@ -5359,22 +5323,22 @@ function clone(obj) {
           afterCreate: this.afterCreateImage,
           style: "width: " + width + "px; height: " + height + "px; " + style_preview,
           classes: {
-            downloaded: (_ref3 = this.image_preview.optional_info) != null ? _ref3.is_downloaded : void 0,
-            hasinfo: ((_ref4 = this.image_preview.optional_info) != null ? _ref4.peer : void 0) !== null,
+            downloaded: (ref3 = this.image_preview.optional_info) != null ? ref3.is_downloaded : void 0,
+            hasinfo: ((ref4 = this.image_preview.optional_info) != null ? ref4.peer : void 0) !== null,
             loading: this.image_preview.loading
           }
         }, h("a.fullsize", {
           href: "#",
           onclick: this.handleImageClick,
           style: style_fullsize
-        }), Page.server_info.rev < 1700 ? h("small.oldversion", "You need ZeroNet 0.5.0 to view this image") : void 0, ((_ref5 = this.image_preview) != null ? _ref5.optional_info : void 0) ? h("a.show", {
+        }), Page.server_info.rev < 1700 ? h("small.oldversion", "You need ZeroNet 0.5.0 to view this image") : void 0, ((ref5 = this.image_preview) != null ? ref5.optional_info : void 0) ? h("a.show", {
           href: "#",
           onclick: this.handleImageClick
-        }, h("div.title", "Loading...\nShow image")) : void 0, ((_ref6 = this.image_preview) != null ? _ref6.optional_info : void 0) ? h("a.details", {
+        }, h("div.title", "Loading...\nShow image")) : void 0, ((ref6 = this.image_preview) != null ? ref6.optional_info : void 0) ? h("a.details", {
           href: "#Settings",
           onclick: Page.returnFalse,
           onmousedown: this.handleImageSettingsClick
-        }, [h("div.size", Text.formatSize((_ref7 = this.image_preview.optional_info) != null ? _ref7.size : void 0)), h("div.peers.icon-profile"), (_ref8 = this.image_preview.optional_info) != null ? _ref8.peer : void 0, h("a.image-settings", "\u22EE"), this.menu_image ? this.menu_image.render(".menu-right") : void 0]) : void 0);
+        }, [h("div.size", Text.formatSize((ref7 = this.image_preview.optional_info) != null ? ref7.size : void 0)), h("div.peers.icon-profile"), (ref8 = this.image_preview.optional_info) != null ? ref8.peer : void 0, h("a.image-settings", "\u22EE"), this.menu_image ? this.menu_image.render(".menu-right") : void 0]) : void 0);
       }
     };
 
@@ -5386,8 +5350,7 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/Trigger.coffee ---- */
+/* ---- Trigger.coffee ---- */
 
 
 (function() {
@@ -5437,8 +5400,7 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/User.coffee ---- */
+/* ---- User.coffee ---- */
 
 
 (function() {
@@ -5999,22 +5961,21 @@ function clone(obj) {
 
 }).call(this);
 
-
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/UserList.coffee ---- */
+/* ---- UserList.coffee ---- */
 
 
 (function() {
   var UserList,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty;
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  UserList = (function(_super) {
-    __extends(UserList, _super);
+  UserList = (function(superClass) {
+    extend(UserList, superClass);
 
-    function UserList(_at_type) {
-      this.type = _at_type != null ? _at_type : "new";
-      this.render = __bind(this.render, this);
+    function UserList(type1) {
+      this.type = type1 != null ? type1 : "new";
+      this.render = bind(this.render, this);
       this.item_list = new ItemList(User, "key");
       this.users = this.item_list.items;
       this.need_update = true;
@@ -6028,7 +5989,7 @@ function clone(obj) {
       this.loading = true;
       params = {};
       if (this.search) {
-        search_where = "AND json.user_name LIKE :search_like OR user.user_name LIKE :search_like";
+        search_where = "AND (json.user_name LIKE :search_like OR user.user_name LIKE :search_like OR json.cert_user_id LIKE :search_like)";
         params["search_like"] = "%" + this.search + "%";
       } else {
         search_where = "";
@@ -6037,23 +5998,23 @@ function clone(obj) {
         query = "SELECT user.user_name, follow.*, user.*\nFROM follow\nLEFT JOIN user USING (auth_address, hub)\nWHERE\n follow.json_id = " + this.followed_by.row.json_id + "  AND user.json_id IS NOT NULL\n\nUNION\n\nSELECT user.user_name, follow.*, user.*\nFROM follow\nLEFT JOIN json ON (json.directory = 'data/userdb/' || follow.auth_address)\nLEFT JOIN user ON (user.json_id = json.json_id)\nWHERE\n follow.json_id = " + this.followed_by.row.json_id + "  AND user.json_id IS NOT NULL AND\n follow.date_added < " + (Time.timestamp() + 120) + "\nORDER BY date_added DESC\nLIMIT " + this.limit;
       } else if (this.type === "suggested") {
         followed_user_addresses = (function() {
-          var _ref, _results;
-          _ref = Page.user.followed_users;
-          _results = [];
-          for (key in _ref) {
-            val = _ref[key];
-            _results.push(key.replace(/.*\//, ""));
+          var ref, results;
+          ref = Page.user.followed_users;
+          results = [];
+          for (key in ref) {
+            val = ref[key];
+            results.push(key.replace(/.*\//, ""));
           }
-          return _results;
+          return results;
         })();
         followed_user_directories = (function() {
-          var _i, _len, _results;
-          _results = [];
-          for (_i = 0, _len = followed_user_addresses.length; _i < _len; _i++) {
-            key = followed_user_addresses[_i];
-            _results.push("data/users/" + key);
+          var i, len, results;
+          results = [];
+          for (i = 0, len = followed_user_addresses.length; i < len; i++) {
+            key = followed_user_addresses[i];
+            results.push("data/users/" + key);
           }
-          return _results;
+          return results;
         })();
         if (!followed_user_addresses.length) {
           return;
@@ -6066,11 +6027,11 @@ function clone(obj) {
       }
       return Page.cmd("dbQuery", [query, params], (function(_this) {
         return function(rows) {
-          var followed_by_displayed, row, rows_by_user, user_rows, username, _i, _len;
+          var followed_by_displayed, i, len, row, rows_by_user, user_rows, username;
           rows_by_user = {};
           followed_by_displayed = {};
-          for (_i = 0, _len = rows.length; _i < _len; _i++) {
-            row = rows[_i];
+          for (i = 0, len = rows.length; i < len; i++) {
+            row = rows[i];
             if (row.json_cert_user_id) {
               row.cert_user_id = row.json_cert_user_id;
               row.auth_address = row.json_directory.replace("data/userdb/", "").replace("data/users/", "");
@@ -6080,16 +6041,16 @@ function clone(obj) {
             }
             if (row.followed_by) {
               row.followed_by = ((function() {
-                var _j, _len1, _ref, _results;
-                _ref = row.followed_by.split(",");
-                _results = [];
-                for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-                  username = _ref[_j];
+                var j, len1, ref, results;
+                ref = row.followed_by.split(",");
+                results = [];
+                for (j = 0, len1 = ref.length; j < len1; j++) {
+                  username = ref[j];
                   if (!followed_by_displayed[username]) {
-                    _results.push(username);
+                    results.push(username);
                   }
                 }
-                return _results;
+                return results;
               })())[0];
               followed_by_displayed[row.followed_by] = true;
             }
@@ -6099,13 +6060,13 @@ function clone(obj) {
             }
           }
           user_rows = (function() {
-            var _results;
-            _results = [];
+            var results;
+            results = [];
             for (key in rows_by_user) {
               val = rows_by_user[key];
-              _results.push(val);
+              results.push(val);
             }
-            return _results;
+            return results;
           })();
           _this.item_list.sync(user_rows);
           _this.loading = false;
@@ -6147,7 +6108,7 @@ function clone(obj) {
 }).call(this);
 
 
-/* ---- /1MeFqFfFFGQfa1J3gJyYYUvb5Lksczq7nH/js/ZeroMe.coffee ---- */
+/* ---- ZeroMe.coffee ---- */
 
 
 (function() {
