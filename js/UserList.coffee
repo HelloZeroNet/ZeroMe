@@ -11,7 +11,7 @@ class UserList extends Class
 		@loading = true
 		params = {}
 		if @search
-			search_where = "AND json.user_name LIKE :search_like OR user.user_name LIKE :search_like"
+			search_where = "AND (json.user_name LIKE :search_like OR user.user_name LIKE :search_like OR json.cert_user_id LIKE :search_like)"
 			params["search_like"] = "%#{@search}%"
 		else
 			search_where = ""
