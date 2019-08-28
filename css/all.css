@@ -89,11 +89,13 @@
 .editable:hover .icon-edit { opacity: 0.7 }
 .editable .icon-edit:hover { opacity: 1; -webkit-transition: none ; -moz-transition: none ; -o-transition: none ; -ms-transition: none ; transition: none  }
 .editable .editablebuttons { text-align: right; padding-bottom: 10px }
+.editable .editablebuttons .link:focus { outline: none }
 .editable .empty { opacity: 0.6; }
 .editable.editing.overlay {
 	padding: 10px; margin-left: -10px; background-color: rgba(255,255,255,0.9);
 	-webkit-box-shadow: 0px 0px 20px #EEE; -moz-box-shadow: 0px 0px 20px #EEE; -o-box-shadow: 0px 0px 20px #EEE; -ms-box-shadow: 0px 0px 20px #EEE; box-shadow: 0px 0px 20px #EEE ; margin-bottom: -62px; z-index: 999; position: relative;
 }
+
 
 /* ---- Head.css ---- */
 

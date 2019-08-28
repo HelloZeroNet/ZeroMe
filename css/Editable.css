@@ -2,6 +2,7 @@
 .editable:hover .icon-edit { opacity: 0.7 }
 .editable .icon-edit:hover { opacity: 1; transition: none }
 .editable .editablebuttons { text-align: right; padding-bottom: 10px }
+.editable .editablebuttons .link:focus { outline: none }
 .editable .empty { opacity: 0.6; }
 .editable.editing.overlay {
 	padding: 10px; margin-left: -10px; background-color: rgba(255,255,255,0.9);
