@@ -140,6 +140,8 @@ class Post extends Class
 			@menu.items.push ["Follow in newsfeed", ( => if followed then @unfollow() else @follow() ), followed]
 			@menu.items.push ["Mute user", @user.handleMuteClick]
 			@menu.items.push ["Permalink", @getLink()]
+			if @owned
+				@menu.items.push ["Edit", ( (e) => @editable_body.handleEditClick(e) )]
 			@menu.toggle()
 		return false
 

@@ -4644,6 +4644,13 @@ function clone(obj) {
           ]);
           _this.menu.items.push(["Mute user", _this.user.handleMuteClick]);
           _this.menu.items.push(["Permalink", _this.getLink()]);
+          if (_this.owned) {
+            _this.menu.items.push([
+              "Edit", (function(e) {
+                return _this.editable_body.handleEditClick(e);
+              })
+            ]);
+          }
           return _this.menu.toggle();
         };
       })(this));
@@ -4817,6 +4824,7 @@ function clone(obj) {
   window.Post = Post;
 
 }).call(this);
+
 
 /* ---- PostCreate.coffee ---- */
 
@@ -6106,7 +6114,6 @@ function clone(obj) {
   window.UserList = UserList;
 
 }).call(this);
-
 
 /* ---- ZeroMe.coffee ---- */
 
