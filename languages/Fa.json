@@ -1,0 +1,80 @@
+{
+  "Visitor": "بازدید‌کننده",
+  "Select your account": "حساب خود را انتخاب کنید",
+  "You need a profile for this feature": "برای این ویژگی شما به یک نمایه نیاز دارید",
+
+  "Follow username mentions": "یاد‌کرد‌های نام کاربری را پیگیری کنید",
+  "Follow comments on your posts": "نظرات روی پست خودتان را پیگیری کنید",
+  "Follow new followers": "دنبال‌کنندگان جدید را پیگیری کنید",
+
+  "Follow": "پیگیری کنید",
+  "Unfollow": "لغو پیگیری",
+  "Help distribute this user's images": "به انتشار تصاویر این کاربر کمک کنید",
+  "Following": "دنبال می‌کنید",
+  "Activity feed": "خوراک فعالیت",
+  "Show more...": "نمایش بیشتر...",
+
+  " started following ": "شروع به پیگیری کرد",
+  " commented on ": "نظر داد بر روی",
+  " liked ": "پسندید",
+  "'s ": "مربوط به",
+  "_(post, like post)": "(پست، پست پسندیدن)",
+  "_(post, comment post)": "(پست، پست نظر‌دهی)",
+
+  "Cancel": "لغو",
+  "Save": "ذخیره",
+  "Delete": "حذف",
+
+  "User's profile site not loaded to your client yet.": "سایت نمایه کاربر هنوز در دستگاه شما بارگذاری نشده است",
+  "Download user's site": "بارگذاری سایت کاربر",
+
+  "Browse all \u203A": "مرور همگی \u203A ",
+  "New users": "کاربران جدید",
+  "Suggested users": "کاربران پیشنهادی",
+
+  "Create new profile": "نمایه جدید بساز",
+  "Creating new profile...": "ساخت نمایه جدید...",
+  "Checking user on selected hub...": "بررسی کاربر در مرکز انتخابی... ",
+  "User \" + Page.site_info.cert_user_id + \" already exists on this hub": "کاربر\" + Page.site_info.cert_user_id + \"از قبل در این مرکز وجود داشت",
+  "Select ID...": "انتخاب شناسه...",
+  "Seeded HUBs": "مراکز دارای عضو فعال ",
+  "Available HUBs": "مراکز در دسترس",
+  "(With this you choose where is your profile stored. There is no difference on content and you will able to reach all users from any hub)": "(با استفاده از این شما می‌توانید انتخاب کنید که نمایه شما در کجا ذخیره می‌شود. تفاوتی در محتوا نیست وشما قادر خواهید بود به همگی کاربران در هر مرکزی دسترسی داشته باشید)",
+
+  "Random ZeroNet user": "کاربر تصادفی ZeroNet",
+  "Hello ZeroMe!": "سلام ZeroMe!",
+
+  "Loading...\nShow image": "بار‌گذاری...\nنمایش تصویر",
+  "Help distribute this user's new images": " به انتشار تصاویر این کاربر کمک کنید ",
+  "Delete image": "حذف تصویر",
+  "Show image": "نمایش تصویر",
+  "'s new images": "تصاویر جدید مربوط به",
+
+  "Comment": "نظر",
+  "Add your comment": "نظرت را اضافه کن",
+  "Reply": "پاسخ",
+
+  "Everyone": "همه افراد",
+  "Followed users": "کاربران دنبال‌شده",
+  "Show more posts...": "نمایش پست‌های بیشتر...",
+  "Show more comments...": "نمایش نظر‌های بیشتر...",
+  "No posts yet": "هنوز پستی نیست",
+  "Let's follow some users!": "بیاید تعدادی کاربر را دنبال کنید!",
+
+  "Select user to post new content": "کاربر",
+  "Write something...": "چیزی بنویسید...",
+  "Submit new post": "پست جدیدی را ثبت کنید",
+  "Invalid image, only jpg format supported": "تصویر نامعتبر، تنها تصاویر با فرمت jpg پشتیبانی می‌شوند",
+
+  "Follow in newsfeed": "پیگیری در خوراک خبری",
+
+  "New users in ZeroMe": "کاربران جدید در ZeroMe",
+  "Total: ": "در مجموع",
+  " registered users": "کاربران ثبت‌شده",
+
+  " minutes ago": "دقایقی پیش",
+  " hours ago": "ساعاتی پیش",
+  " days ago": "چندین روز پیش",
+  "on ": "در ",
+  "Just now": "همین الان"
+}
