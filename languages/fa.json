@@ -18,8 +18,8 @@
   " commented on ": "نظر داد بر روی",
   " liked ": "پسندید",
   "'s ": "مربوط به",
-  "_(post, like post)": "(پست، پست پسندیدن)",
-  "_(post, comment post)": "(پست، پست نظر‌دهی)",
+  "_(post, like post)": "(پست، پست پسندیدن)_",
+  "_(post, comment post)": "(پست، پست نظر‌دهی)_",
 
   "Cancel": "لغو",
   "Save": "ذخیره",
@@ -28,7 +28,7 @@
   "User's profile site not loaded to your client yet.": "سایت نمایه کاربر هنوز در دستگاه شما بارگذاری نشده است",
   "Download user's site": "بارگذاری سایت کاربر",
 
-  "Browse all \u203A": "مرور همگی \u203A ",
+  "Browse all \u203A": "مرور همگی \u203A",
   "New users": "کاربران جدید",
   "Suggested users": "کاربران پیشنهادی",
 
@@ -59,11 +59,11 @@
   "Show more posts...": "نمایش پست‌های بیشتر...",
   "Show more comments...": "نمایش نظر‌های بیشتر...",
   "No posts yet": "هنوز پستی نیست",
-  "Let's follow some users!": "بیاید تعدادی کاربر را دنبال کنید!",
+  "Let's follow some users!": "بیاید تعدادی از کاربران را دنبال کنید!",
 
-  "Select user to post new content": "کاربر",
+  "Select user to post new content": "برای پست محتوی جدید، کاربری خود را انتخاب کنید",
   "Write something...": "چیزی بنویسید...",
-  "Submit new post": "پست جدیدی را ثبت کنید",
+  "Submit new post": "پست جدیدی را ارسال کنید",
   "Invalid image, only jpg format supported": "تصویر نامعتبر، تنها تصاویر با فرمت jpg پشتیبانی می‌شوند",
 
   "Follow in newsfeed": "پیگیری در خوراک خبری",
