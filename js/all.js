@@ -55,6 +55,7 @@
 
 }).call(this);
 
+
 /* ---- lib/Dollar.coffee ---- */
 
 
@@ -66,6 +67,7 @@
   };
 
 }).call(this);
+
 
 /* ---- lib/Promise.coffee ---- */
 
@@ -196,6 +198,7 @@
 
 }).call(this);
 
+
 /* ---- lib/Property.coffee ---- */
 
 
@@ -205,6 +208,7 @@
   };
 
 }).call(this);
+
 
 /* ---- lib/Prototypes.coffee ---- */
 
@@ -231,6 +235,7 @@
   };
 
 }).call(this);
+
 
 /* ---- lib/RateLimitCb.coffee ---- */
 
@@ -310,6 +315,7 @@
    */
 
 }).call(this);
+
 
 /* ---- lib/anime.min.js ---- */
 
@@ -1402,6 +1408,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- utils/Autosize.coffee ---- */
 
 
@@ -1469,6 +1476,7 @@ function clone(obj) {
     Autosize.prototype.storeNode = function(node) {
       this.node = node;
       if (this.attrs.focused) {
+        node.setSelectionRange(0, 0);
         node.focus();
       }
       return setTimeout((function(_this) {
@@ -1569,6 +1577,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- utils/Debug.coffee ---- */
 
 
@@ -1600,6 +1609,7 @@ function clone(obj) {
   window.Debug = new Debug();
 
 }).call(this);
+
 
 /* ---- utils/Editable.coffee ---- */
 
@@ -1711,6 +1721,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- utils/ImagePreview.coffee ---- */
 
 
@@ -1809,6 +1820,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- utils/ItemList.coffee ---- */
 
 
@@ -1861,6 +1873,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- utils/Maxheight.coffee ---- */
 
 
@@ -1895,6 +1908,7 @@ function clone(obj) {
   window.Maxheight = new Maxheight();
 
 }).call(this);
+
 
 /* ---- utils/Menu.coffee ---- */
 
@@ -2032,6 +2046,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- utils/Overlay.coffee ---- */
 
 
@@ -2149,6 +2164,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- utils/Scrollwatcher.coffee ---- */
 
 
@@ -2206,6 +2222,7 @@ function clone(obj) {
   window.Scrollwatcher = Scrollwatcher;
 
 }).call(this);
+
 
 /* ---- utils/Text.coffee ---- */
 
@@ -2492,6 +2509,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- utils/Time.coffee ---- */
 
 
@@ -2559,6 +2577,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- utils/Translate.coffee ---- */
 
 
@@ -2568,6 +2587,7 @@ function clone(obj) {
   };
 
 }).call(this);
+
 
 /* ---- utils/Uploadable.coffee ---- */
 
@@ -2775,6 +2795,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- utils/ZeroFrame.coffee ---- */
 
 
@@ -2927,6 +2948,7 @@ function clone(obj) {
   window.ZeroFrame = ZeroFrame;
 
 }).call(this);
+
 
 /* ---- ActivityList.coffee ---- */
 
@@ -3201,6 +3223,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- AnonUser.coffee ---- */
 
 
@@ -3291,6 +3314,7 @@ function clone(obj) {
   window.AnonUser = AnonUser;
 
 }).call(this);
+
 
 /* ---- ContentCreateProfile.coffee ---- */
 
@@ -3550,6 +3574,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- ContentFeed.coffee ---- */
 
 
@@ -3698,6 +3723,7 @@ function clone(obj) {
   window.ContentFeed = ContentFeed;
 
 }).call(this);
+
 
 /* ---- ContentProfile.coffee ---- */
 
@@ -4022,6 +4048,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- ContentUsers.coffee ---- */
 
 
@@ -4173,6 +4200,7 @@ function clone(obj) {
   window.ContentUsers = ContentUsers;
 
 }).call(this);
+
 
 /* ---- Head.coffee ---- */
 
@@ -4362,6 +4390,7 @@ function clone(obj) {
   window.Head = Head;
 
 }).call(this);
+
 
 /* ---- Post.coffee ---- */
 
@@ -4980,6 +5009,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- PostList.coffee ---- */
 
 
@@ -5185,6 +5215,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- PostMeta.coffee ---- */
 
 
@@ -5358,6 +5389,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- Trigger.coffee ---- */
 
 
@@ -5407,6 +5439,7 @@ function clone(obj) {
   window.Trigger = Trigger;
 
 }).call(this);
+
 
 /* ---- User.coffee ---- */
 
@@ -5969,6 +6002,7 @@ function clone(obj) {
 
 }).call(this);
 
+
 /* ---- UserList.coffee ---- */
 
 
@@ -6114,6 +6148,7 @@ function clone(obj) {
   window.UserList = UserList;
 
 }).call(this);
+
 
 /* ---- ZeroMe.coffee ---- */
 

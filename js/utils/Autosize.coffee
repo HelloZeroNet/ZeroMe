@@ -23,7 +23,9 @@ class Autosize extends Class
 	storeNode: (node) =>
 		@node = node
 		if @attrs.focused
+			node.setSelectionRange(0,0)
 			node.focus()
+
 		setTimeout =>
 			@autoHeight()
 
