@@ -9,7 +9,7 @@ class Autosize extends Class
 		@attrs.afterCreate ?= @storeNode
 		@attrs.rows ?= 1
 		@attrs.disabled ?= false
-		@attrs.value ?= ""
+		@attrs.value ?= null
 		@attrs.title_submit ?= null
 
 	@property 'loading',
@@ -64,7 +64,7 @@ class Autosize extends Class
 		return false
 
 	render: (body=null) =>
-		if body and !@attrs.value
+		if body and @attrs.value == null
 			@setValue(body)
 		if @loading
 			attrs = clone(@attrs)

@@ -55,7 +55,6 @@
 
 }).call(this);
 
-
 /* ---- lib/Dollar.coffee ---- */
 
 
@@ -67,7 +66,6 @@
   };
 
 }).call(this);
-
 
 /* ---- lib/Promise.coffee ---- */
 
@@ -198,7 +196,6 @@
 
 }).call(this);
 
-
 /* ---- lib/Property.coffee ---- */
 
 
@@ -208,7 +205,6 @@
   };
 
 }).call(this);
-
 
 /* ---- lib/Prototypes.coffee ---- */
 
@@ -235,7 +231,6 @@
   };
 
 }).call(this);
-
 
 /* ---- lib/RateLimitCb.coffee ---- */
 
@@ -315,7 +310,6 @@
    */
 
 }).call(this);
-
 
 /* ---- lib/anime.min.js ---- */
 
@@ -1408,7 +1402,6 @@ function clone(obj) {
 
 }).call(this);
 
-
 /* ---- utils/Autosize.coffee ---- */
 
 
@@ -1454,7 +1447,7 @@ function clone(obj) {
         base6.disabled = false;
       }
       if ((base7 = this.attrs).value == null) {
-        base7.value = "";
+        base7.value = null;
       }
       if ((base8 = this.attrs).title_submit == null) {
         base8.title_submit = null;
@@ -1550,7 +1543,7 @@ function clone(obj) {
       if (body == null) {
         body = null;
       }
-      if (body && !this.attrs.value) {
+      if (body && this.attrs.value === null) {
         this.setValue(body);
       }
       if (this.loading) {
@@ -1576,7 +1569,6 @@ function clone(obj) {
   window.Autosize = Autosize;
 
 }).call(this);
-
 
 /* ---- utils/Debug.coffee ---- */
 
@@ -1609,7 +1601,6 @@ function clone(obj) {
   window.Debug = new Debug();
 
 }).call(this);
-
 
 /* ---- utils/Editable.coffee ---- */
 
@@ -1721,7 +1712,6 @@ function clone(obj) {
 
 }).call(this);
 
-
 /* ---- utils/ImagePreview.coffee ---- */
 
 
@@ -1820,7 +1810,6 @@ function clone(obj) {
 
 }).call(this);
 
-
 /* ---- utils/ItemList.coffee ---- */
 
 
@@ -1873,7 +1862,6 @@ function clone(obj) {
 
 }).call(this);
 
-
 /* ---- utils/Maxheight.coffee ---- */
 
 
@@ -1908,7 +1896,6 @@ function clone(obj) {
   window.Maxheight = new Maxheight();
 
 }).call(this);
-
 
 /* ---- utils/Menu.coffee ---- */
 
@@ -2046,7 +2033,6 @@ function clone(obj) {
 
 }).call(this);
 
-
 /* ---- utils/Overlay.coffee ---- */
 
 
@@ -2164,7 +2150,6 @@ function clone(obj) {
 
 }).call(this);
 
-
 /* ---- utils/Scrollwatcher.coffee ---- */
 
 
@@ -2222,7 +2207,6 @@ function clone(obj) {
   window.Scrollwatcher = Scrollwatcher;
 
 }).call(this);
-
 
 /* ---- utils/Text.coffee ---- */
 
@@ -2509,7 +2493,6 @@ function clone(obj) {
 
 }).call(this);
 
-
 /* ---- utils/Time.coffee ---- */
 
 
@@ -2577,7 +2560,6 @@ function clone(obj) {
 
 }).call(this);
 
-
 /* ---- utils/Translate.coffee ---- */
 
 
@@ -2587,7 +2569,6 @@ function clone(obj) {
   };
 
 }).call(this);
-
 
 /* ---- utils/Uploadable.coffee ---- */
 
@@ -2795,7 +2776,6 @@ function clone(obj) {
 
 }).call(this);
 
-
 /* ---- utils/ZeroFrame.coffee ---- */
 
 
@@ -2948,7 +2928,6 @@ function clone(obj) {
   window.ZeroFrame = ZeroFrame;
 
 }).call(this);
-
 
 /* ---- ActivityList.coffee ---- */
 
@@ -3223,7 +3202,6 @@ function clone(obj) {
 
 }).call(this);
 
-
 /* ---- AnonUser.coffee ---- */
 
 
@@ -3314,7 +3292,6 @@ function clone(obj) {
   window.AnonUser = AnonUser;
 
 }).call(this);
-
 
 /* ---- ContentCreateProfile.coffee ---- */
 
@@ -3574,7 +3551,6 @@ function clone(obj) {
 
 }).call(this);
 
-
 /* ---- ContentFeed.coffee ---- */
 
 
@@ -3723,7 +3699,6 @@ function clone(obj) {
   window.ContentFeed = ContentFeed;
 
 }).call(this);
-
 
 /* ---- ContentProfile.coffee ---- */
 
@@ -4201,7 +4176,6 @@ function clone(obj) {
 
 }).call(this);
 
-
 /* ---- Head.coffee ---- */
 
 
@@ -4390,7 +4364,6 @@ function clone(obj) {
   window.Head = Head;
 
 }).call(this);
-
 
 /* ---- Post.coffee ---- */
 
@@ -4854,7 +4827,6 @@ function clone(obj) {
 
 }).call(this);
 
-
 /* ---- PostCreate.coffee ---- */
 
 
@@ -5008,7 +4980,6 @@ function clone(obj) {
   window.PostCreate = PostCreate;
 
 }).call(this);
-
 
 /* ---- PostList.coffee ---- */
 
@@ -5215,7 +5186,6 @@ function clone(obj) {
 
 }).call(this);
 
-
 /* ---- PostMeta.coffee ---- */
 
 
@@ -5389,7 +5359,6 @@ function clone(obj) {
 
 }).call(this);
 
-
 /* ---- Trigger.coffee ---- */
 
 
@@ -5439,7 +5408,6 @@ function clone(obj) {
   window.Trigger = Trigger;
 
 }).call(this);
-
 
 /* ---- User.coffee ---- */
 
@@ -6002,7 +5970,6 @@ function clone(obj) {
 
 }).call(this);
 
-
 /* ---- UserList.coffee ---- */
 
 
@@ -6148,7 +6115,6 @@ function clone(obj) {
   window.UserList = UserList;
 
 }).call(this);
-
 
 /* ---- ZeroMe.coffee ---- */
 
