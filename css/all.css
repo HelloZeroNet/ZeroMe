@@ -339,7 +339,7 @@ body.loaded { height: 100%; overflow: auto }
 
 p, h1, h2, h3, h4 { margin: 0px; padding-bottom: 0.6em; }
 
-input.text, textarea { border: 1px solid #EEE; padding: 15px 15px; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; line-height: 1.4em; }
+input.text, textarea { max-width: 100% ; border: 1px solid #EEE; padding: 15px 15px; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; line-height: 1.4em; }
 input.text:disabled, textarea:disabled { background-color: #FAFAFA; color: #9A9A9A }
 input.big { font-size: 20px; font-weight: 100; font-family: Roboto, Helvetica, Arial }
 input.search { -webkit-border-radius: 50px; -moz-border-radius: 50px; -o-border-radius: 50px; -ms-border-radius: 50px; border-radius: 50px ; padding-left: 30px; margin-bottom: 30px }
