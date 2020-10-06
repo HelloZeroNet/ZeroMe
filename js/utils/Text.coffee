@@ -21,9 +21,11 @@ class Text
 		options["sanitize"] = true
 		options["renderer"] = marked_renderer
 		text = @fixReply(text)
+		text = text.replace(/((?<=\s|^)http[s]?:\/\/.*?)(?=\s|$)/g, '<$1>')  # Auto linkify IPv6 urls by adding <> around urls
 		text = marked(text, options)
 		text = text.replace(/<a href="mailto:[^\"]+\">(.*?)<\/a>/g, '$1')  # Disable email auto-convert
 		text = text.replace(/(\s|>|^)(@[^\s]{1,50}):/g, '$1<b class="reply-name">$2</b>:')  # Highlight usernames
+		text = text.replace(/(https?:\/\/)%5B(.*?)%5D/g, '$1[$2]')  # Fix IPv6 links
 		return @fixHtmlLinks text
 
 	renderLinks: (text) =>
